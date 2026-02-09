@@ -1,80 +1,117 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { useToast } from "../contexts/ToastContext";
 
-import { useAuth } from '../contexts/AuthContext';
-import { useToast } from '../contexts/ToastContext';
+function Register() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { login } = useAuth(); // ← gets the login function from context
 
-    const { login } = useAuth();
-    const { addToast } = useToast();
-    const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await login(email, password);
-            addToast('Login Successful!', 'success');
-            navigate('/');
-        } catch (err) {
-            addToast(err, 'error');
-        }
-    };
+    try {
+      // 1. Register the user
+      const res = await axios.post("http://localhost:5000/api/auth/register", {
+        name,
+        email,
+        password,
+      });
 
-    return (
-        <div className="flex items-center justify-center min-h-[80vh] relative overflow-hidden">
-            {/* Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cinema-500/20 rounded-full blur-[100px] pointer-events-none" />
+      // 2. Automatically log the user in after successful signup
+      login(res.data.token, res.data.user);
 
-            <div className="w-full max-w-md mx-4 glass-card p-8 rounded-2xl relative z-10 animate-fade-in">
-                <div className="text-center mb-8">
-                    <h2 className="text-3xl font-display font-bold text-white mb-2">Welcome Back</h2>
-                    <p className="text-cinema-100/60">Enter your credentials to access your account</p>
-                </div>
+      // 3. Redirect based on role
+      if (res.data.user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/user/dashboard");
+      }
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="space-y-2">
-                        <label className="block text-sm font-medium text-cinema-300">Email Address</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full bg-cinema-900/50 border border-white/10 rounded-lg p-3 text-white placeholder-cinema-100/30 focus:border-cinema-500 focus:ring-1 focus:ring-cinema-500 transition-all outline-none"
-                            placeholder="you@example.com"
-                            required
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="block text-sm font-medium text-cinema-300">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full bg-cinema-900/50 border border-white/10 rounded-lg p-3 text-white placeholder-cinema-100/30 focus:border-cinema-500 focus:ring-1 focus:ring-cinema-500 transition-all outline-none"
-                            placeholder="••••••••"
-                            required
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-cinema-500 hover:bg-cinema-400 text-white font-bold py-3 rounded-lg transition-all hover:shadow-[0_0_20px_rgba(112,0,255,0.4)] hover:-translate-y-0.5"
-                    >
-                        Sign In
-                    </button>
-                </form>
-                <div className="mt-6 text-center">
-                    <p className="text-sm text-cinema-100/60">
-                        Don't have an account?{' '}
-                        <Link to="/register" className="text-cinema-300 hover:text-white font-medium transition-colors hover:underline decoration-cinema-500 decoration-2 underline-offset-4">
-                            Create one now
-                        </Link>
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
-};
+  return (
+    <div className="bg-black text-white min-h-screen flex items-center justify-center p-6">
+      <div className="border-2 border-orange-500 shadow-lg p-8 rounded-lg w-full max-w-md bg-gray-900">
+        <h2 className="text-4xl font-bold text-center mb-8">Create Account</h2>
 
-export default Login;
+        {error && (
+          <div className="bg-red-900 text-white p-3 rounded mb-4 text-center">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-lg font-semibold mb-2">Full Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-red-500"
+              placeholder="John Doe"
+            />
+          </div>
+
+          <div>
+            <label className="block text-lg font-semibold mb-2">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-red-500"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <div>
+            <label className="block text-lg font-semibold mb-2">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength="6"
+              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-red-500"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-red-600 hover:bg-red-700 disabled:bg-red-800 text-white font-bold py-4 rounded-lg text-xl transition"
+          >
+            {loading ? "Creating Account..." : "Sign Up"}
+          </button>
+        </form>
+
+        <p className="text-center mt-6 text-gray-400">
+          Already have an account?{" "}
+          <Link to="/login" className="text-red-500 hover:underline font-bold">
+            Login here
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default Register;
