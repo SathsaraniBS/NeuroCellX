@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 # PostgreSQL connection details
 # Format:
 # postgresql://username:password@host:port/database_name
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:adminbss@localhost:5133/battery_db"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:adminbss@localhost:5432/battery_db"
 
 # Create database engine (connects FastAPI to PostgreSQL)
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
