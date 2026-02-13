@@ -1,32 +1,78 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
+from pydantic import BaseModel
 
-# Create FastAPI app instance
+# Import database items
+from database import SessionLocal, engine, Base, BatteryRecord
+
+# Create tables automatically
+Base.metadata.create_all(bind=engine)
+
+# --------------------------------------------------
+# Create FastAPI app
+# --------------------------------------------------
 app = FastAPI()
 
-# Enable CORS so React frontend can communicate with backend
+# Enable CORS for React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # Allow requests from all domains (change in production)
-    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# Home route to check if server is running
+# --------------------------------------------------
+# Database Dependency (VERY IMPORTANT)
+# --------------------------------------------------
+# This creates and closes DB session automatically
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+# --------------------------------------------------
+# Request Schema (for clean JSON input)
+# --------------------------------------------------
+class BatteryInput(BaseModel):
+    voltage: float
+    temperature: float
+
+
+# --------------------------------------------------
+# Routes
+# --------------------------------------------------
+
+# Home route
 @app.get("/")
 def home():
     return {"message": "EV Battery Health Backend is Running!"}
 
 
-# Simple dummy prediction endpoint
-# Accepts voltage and temperature values from frontend
+# Prediction endpoint + Save to DB
 @app.post("/predict-dummy")
-def predict_dummy(voltage: float, temperature: float):
-    
-    # For now, we return a fixed value
-    # Later you can replace this with ML model prediction
+def predict_dummy(data: BatteryInput, db: Session = Depends(get_db)):
+
+    # Dummy ML prediction (replace later with real model)
+    predicted_soh = 95.5
+
+    # Create database record
+    record = BatteryRecord(
+        voltage=data.voltage,
+        temperature=data.temperature,
+        soh_result=predicted_soh
+    )
+
+    # Save to database
+    db.add(record)
+    db.commit()
+    db.refresh(record)
+
     return {
         "status": "Success",
-        "predicted_soh": 95.5,   # Dummy State of Health value
-        "message": "Model is not yet integrated"
+        "predicted_soh": predicted_soh,
+        "saved_id": record.id
     }
