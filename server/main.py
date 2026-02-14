@@ -1,20 +1,12 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
-# Import database items
 from database import SessionLocal, engine, Base, BatteryRecord
 
-# Create tables automatically
-Base.metadata.create_all(bind=engine)
-
-# --------------------------------------------------
-# Create FastAPI app
-# --------------------------------------------------
 app = FastAPI()
 
-# Enable CORS for React frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -22,10 +14,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --------------------------------------------------
-# Database Dependency (VERY IMPORTANT)
-# --------------------------------------------------
-# This creates and closes DB session automatically
+Base.metadata.create_all(bind=engine)
+
 def get_db():
     db = SessionLocal()
     try:
@@ -33,46 +23,35 @@ def get_db():
     finally:
         db.close()
 
-
-# --------------------------------------------------
-# Request Schema (for clean JSON input)
-# --------------------------------------------------
 class BatteryInput(BaseModel):
     voltage: float
     temperature: float
 
-
-# --------------------------------------------------
-# Routes
-# --------------------------------------------------
-
-# Home route
+# Home Route
 @app.get("/")
 def home():
     return {"message": "EV Battery Health Backend is Running!"}
 
-
-# Prediction endpoint + Save to DB
 @app.post("/predict-dummy")
 def predict_dummy(data: BatteryInput, db: Session = Depends(get_db)):
+    try:
+        predicted_soh = 95.5
 
-    # Dummy ML prediction (replace later with real model)
-    predicted_soh = 95.5
+        new_record = BatteryRecord(
+            voltage=data.voltage,
+            temperature=data.temperature,
+            soh_result=predicted_soh
+        )
 
-    # Create database record
-    record = BatteryRecord(
-        voltage=data.voltage,
-        temperature=data.temperature,
-        soh_result=predicted_soh
-    )
+        db.add(new_record)
+        db.commit()
+        db.refresh(new_record)
 
-    # Save to database
-    db.add(record)
-    db.commit()
-    db.refresh(record)
-
-    return {
-        "status": "Success",
-        "predicted_soh": predicted_soh,
-        "saved_id": record.id
-    }
+        return {
+            "status": "Success",
+            "predicted_soh": predicted_soh,
+            "saved_id": new_record.id,
+            "message": "Data saved to PostgreSQL!"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
