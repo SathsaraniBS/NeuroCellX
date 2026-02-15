@@ -33,10 +33,15 @@ const Hero = () => {
           <a href="#" className="hover:text-cyan-400">Learning Hub</a>
           <a href="#" className="hover:text-cyan-400">About</a>
         </div>
-
-        <Link to="/register" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition">
-          Sign In
+        
+        <div className="flex gap-4 mr-4">
+          <Link to="/register" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition">
+            Sign In
+          </Link>
+          <Link to="/login" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition ">
+            Login
         </Link>
+        </div>
       </nav>
 
       {/* ================= HERO SECTION ================= */}
