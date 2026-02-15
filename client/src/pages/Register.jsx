@@ -5,11 +5,11 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import { User, Mail, Lock, Eye, Facebook, Twitter  } from "lucide-react";
 
-const VoltIQRegister = () => {
+const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    
+
     const { register } = useAuth();
     const { addToast } = useToast();
     const navigate = useNavigate();
@@ -33,7 +33,7 @@ const VoltIQRegister = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,255,0.08),transparent_70%)]"></div>
 
       {/* Main Container */}
-      <div className="relative z-10 w-full max-w-md px-6">
+      <div className="mt-10 relative z-10 w-full max-w-md px-6">
 
         {/* Logo */}
         <h1 className="text-4xl font-semibold text-center mb-2 tracking-wide">
@@ -60,8 +60,11 @@ const VoltIQRegister = () => {
             <User className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
               type="text"
-              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full pl-10 pr-4 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
+              placeholder="Name"
+              required
             />
           </div>
 
@@ -70,8 +73,12 @@ const VoltIQRegister = () => {
             <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
               type="email"
-              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-10 pr-4 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
+              placeholder="Email"
+              required
+
             />
           </div>
 
@@ -80,8 +87,11 @@ const VoltIQRegister = () => {
             <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
               type="password"
-              placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-10 pr-4 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
+              placeholder="Password"
+              required
             />
           </div>
 
@@ -140,4 +150,4 @@ const VoltIQRegister = () => {
   );
 };
 
-export default VoltIQRegister;
+export default Register;
