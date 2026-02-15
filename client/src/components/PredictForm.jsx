@@ -81,7 +81,8 @@ const PredictForm = () => {
           padding: '15px',
           backgroundColor: '#f0f8ff',
           borderRadius: '8px',
-          border: '1px solid #ccc'
+          border: '1px solid #ccc',
+          color: 'black',
         }}>
           <h3>Prediction Result</h3>
           <p><strong>Status:</strong> {result.status}</p>

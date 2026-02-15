@@ -1,10 +1,11 @@
+import React from "react";
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
+import { User, Mail, Lock, Eye, Facebook, Twitter  } from "lucide-react";
 
-const Register = () => {
+const VoltIQRegister = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,69 +25,119 @@ const Register = () => {
         }
     };
 
-    return (
-        <div className="flex items-center justify-center min-h-[80vh] relative overflow-hidden">
-            {/* Background Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gold-300/20 rounded-full blur-[100px] pointer-events-none" />
 
-            <div className="w-full max-w-md mx-4 glass-card p-8 rounded-2xl relative z-10 animate-fade-in">
-                <div className="text-center mb-8">
-                    <h2 className="text-4xl font-serif font-bold text-luxury-900 dark:text-white mb-2">Join Cinemania</h2>
-                    <p className="text-luxury-500 dark:text-gold-200/60 font-serif italic">Start your cinematic journey today</p>
-                </div>
+  return (
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#050b18] via-[#071b2f] to-[#020617] text-white flex flex-col items-center justify-center relative overflow-hidden">
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="space-y-2">
-                        <label className="block text-sm font-medium text-luxury-700 dark:text-gold-200">Name</label>
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className="w-full bg-white/50 dark:bg-luxury-900/50 border border-luxury-200 dark:border-white/10 rounded-lg p-3 text-luxury-900 dark:text-white placeholder-luxury-400 dark:placeholder-white/20 focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-all outline-none"
-                            placeholder="John Doe"
-                            required
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="block text-sm font-medium text-luxury-700 dark:text-gold-200">Email Address</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full bg-white/50 dark:bg-luxury-900/50 border border-luxury-200 dark:border-white/10 rounded-lg p-3 text-luxury-900 dark:text-white placeholder-luxury-400 dark:placeholder-white/20 focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-all outline-none"
-                            placeholder="you@example.com"
-                            required
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="block text-sm font-medium text-luxury-700 dark:text-gold-200">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full bg-white/50 dark:bg-luxury-900/50 border border-luxury-200 dark:border-white/10 rounded-lg p-3 text-luxury-900 dark:text-white placeholder-luxury-400 dark:placeholder-white/20 focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-all outline-none"
-                            placeholder="••••••••"
-                            required
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-gradient-to-r from-gold-500 to-gold-300 hover:from-gold-400 hover:to-gold-300/80 text-white font-bold py-3 rounded-lg transition-all hover:shadow-[0_4px_20px_rgba(212,175,55,0.4)] hover:-translate-y-0.5"
-                    >
-                        Create Account
-                    </button>
-                </form>
-                <div className="mt-6 text-center">
-                    <p className="text-sm text-luxury-600 dark:text-gold-100/60">
-                        Already have an account?{' '}
-                        <Link to="/login" className="text-gold-600 dark:text-gold-400 hover:text-gold-500 font-medium transition-colors hover:underline decoration-gold-300 decoration-2 underline-offset-4">
-                            Sign In
-                        </Link>
-                    </p>
-                </div>
-            </div>
+      {/* Background Glow Effect */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,255,0.08),transparent_70%)]"></div>
+
+      {/* Main Container */}
+      <div className="relative z-10 w-full max-w-md px-6">
+
+        {/* Logo */}
+        <h1 className="text-4xl font-semibold text-center mb-2 tracking-wide">
+          <span className="text-white">Volt</span>
+          <span className="bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
+            IQ
+          </span>
+        </h1>
+
+        {/* Heading */}
+        <h2 className="text-2xl font-semibold text-center mt-6">
+          Sign Up and Get Started
+        </h2>
+        <p className="text-center text-gray-400 mt-2 text-sm">
+          Gain real-time insights into your EV’s battery health and performance.
+        </p>
+
+        {/* Form Card */}
+        <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="mt-8 bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-white/10 shadow-xl">
+
+          {/* Name */}
+          <div className="relative mb-4">
+            <User className="absolute left-3 top-3 text-gray-400" size={18} />
+            <input
+              type="text"
+              placeholder="Name"
+              className="w-full pl-10 pr-4 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
+            />
+          </div>
+
+          {/* Email */}
+          <div className="relative mb-4">
+            <Mail className="absolute left-3 top-3 text-gray-400" size={18} />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full pl-10 pr-4 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
+            />
+          </div>
+
+          {/* Password */}
+          <div className="relative mb-4">
+            <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full pl-10 pr-4 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
+            />
+          </div>
+
+          {/* Confirm Password */}
+          <div className="relative mb-6">
+            <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              className="w-full pl-10 pr-10 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
+            />
+            <Eye className="absolute right-3 top-3 text-gray-400 cursor-pointer" size={18} />
+          </div>
+
+          {/* Create Account Button */}
+          <button className="w-full py-3 rounded-xl font-semibold text-lg bg-gradient-to-r from-cyan-400 to-green-400 text-black hover:opacity-90 transition duration-300 shadow-lg shadow-cyan-500/20">
+            Create Account
+          </button>
+          </div>
+        </form>
+
+          {/* Sign In Link */}
+          <p className="text-center text-gray-400 mt-4 text-sm">
+            Already have an account?{" "}
+            <span className="text-cyan-400 cursor-pointer hover:underline">
+              Sign In
+            </span>
+          </p>
         </div>
-    );
+
+        {/* Social Login */}
+        <div className="mt-8 text-center">
+          <p className="text-gray-500 text-sm mb-4">Or sign up with</p>
+
+          <div className="flex justify-center gap-6">
+            <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition cursor-pointer">
+              <Facebook size={18} />
+            </div>
+
+            <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition cursor-pointer">
+              <Twitter size={18} />
+            </div>
+
+            <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition cursor-pointer">
+              G
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <p className="text-center text-gray-600 text-xs mt-10">
+          © 2026 VoltIQ. All rights reserved.
+        </p>
+
+      </div>
+  );
 };
 
-export default Register;
+export default VoltIQRegister;
