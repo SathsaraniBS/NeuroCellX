@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import Hero from '../components/Hero';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
     const { user } = useAuth();
@@ -11,6 +12,7 @@ const Home = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-luxury-950 via-black to-luxury-950 text-white font-sans">
+        <Navbar />            
             {/* Navigation */}
             <Hero />
             {/* <nav className="fixed top-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-md border-b border-white/10">
