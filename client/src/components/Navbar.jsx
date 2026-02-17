@@ -66,12 +66,11 @@ const Navbar = () => {
           >
             About
           </a>
-          <a
-            href="#learning"
+          <Link to = "/learning"
             className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
           >
             Learning Hub ▾
-          </a>
+          </Link>
         </div>
 
         <div className="flex gap-4 mr-4">

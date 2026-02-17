@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
-import { User, Mail, Lock, Eye, FaTwitter, FaLinkedinIn, FaInstagram  } from "lucide-react";
+import { User, Mail, Lock, Eye } from "lucide-react";
+import { FaTwitter  } from "react-icons/fa";
 
 const Register = () => {
     const [name, setName] = useState('');
