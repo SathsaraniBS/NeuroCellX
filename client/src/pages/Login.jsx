@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-import { Mail, Lock, Eye, EyeOff, FaTwitter, FaLinkedinIn, FaInstagram } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { FaLinkedinIn , FaTwitter } from "react-icons/fa";
 
 function Login() {
   const [email, setEmail] = useState("");
