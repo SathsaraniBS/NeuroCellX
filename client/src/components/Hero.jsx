@@ -107,13 +107,12 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-white/10 py-6 px-10 flex justify-between text-gray-500 text-sm">
+      {/* <footer className="border-t border-white/10 py-6 px-10 flex justify-between text-gray-500 text-sm">
         <span>
           Volt<span className="text-lime-400">IQ</span> © 2026
         </span>
         <span className="text-cyan-400">Powered by AI</span>
-      </footer>
+      </footer> */}
     </div>
   );
 };
