@@ -22,27 +22,7 @@ const features = [
 const Hero = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-black text-white font-sans">
-      {/* ================= NAVBAR ================= */}
-      {/* <nav className="flex justify-between items-center px-10 py-6 backdrop-blur-md bg-white/5 border-b border-white/10">
-        <h1 className="text-2xl font-bold tracking-wide text-cyan-400">
-          Volt<span className="text-lime-400">IQ</span>
-        </h1>
-
-        <div className="flex gap-8 text-gray-300">
-          <a href="#" className="hover:text-cyan-400">Features</a>
-          <a href="#" className="hover:text-cyan-400">Learning Hub</a>
-          <a href="#" className="hover:text-cyan-400">About</a>
-        </div>
-        
-        <div className="flex gap-4 mr-4">
-          <Link to="/register" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition">
-            Sign In
-          </Link>
-          <Link to="/login" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition ">
-            Login
-        </Link>
-        </div>
-      </nav> */}
+     
 
       {/* ================= HERO SECTION ================= */}
       <section className="grid md:grid-cols-2 gap-10 items-center px-10 py-20">
