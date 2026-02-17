@@ -23,7 +23,7 @@ const Hero = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-black text-white font-sans">
       {/* ================= NAVBAR ================= */}
-      <nav className="flex justify-between items-center px-10 py-6 backdrop-blur-md bg-white/5 border-b border-white/10">
+      {/* <nav className="flex justify-between items-center px-10 py-6 backdrop-blur-md bg-white/5 border-b border-white/10">
         <h1 className="text-2xl font-bold tracking-wide text-cyan-400">
           Volt<span className="text-lime-400">IQ</span>
         </h1>
@@ -42,7 +42,7 @@ const Hero = () => {
             Login
         </Link>
         </div>
-      </nav>
+      </nav> */}
 
       {/* ================= HERO SECTION ================= */}
       <section className="grid md:grid-cols-2 gap-10 items-center px-10 py-20">
