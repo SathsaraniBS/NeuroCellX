@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import Hero from '../components/Hero';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Home = () => {
     const { user } = useAuth();
@@ -12,41 +13,9 @@ const Home = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-luxury-950 via-black to-luxury-950 text-white font-sans">
+        {/* Navigation */}    
         <Navbar />            
-            {/* Navigation */}
-            <Hero />
-            {/* <nav className="fixed top-0 left-0 right-0 z-50 bg-black/60 backdrop-blur-md border-b border-white/10">
-                <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-                    <div className="text-3xl font-bold tracking-tight text-cyan-400">
-                        VoltIQ
-                    </div>
-
-                    <div className="hidden md:flex items-center space-x-10">
-                        <a href="#features" className="text-gray-300 hover:text-cyan-400 transition-colors">
-                            Features
-                        </a>
-                        <a href="#learning" className="text-gray-300 hover:text-cyan-400 transition-colors">
-                            Learning Hub
-                        </a>
-                        <a href="#about" className="text-gray-300 hover:text-cyan-400 transition-colors">
-                            About
-                        </a>
-                    </div>
-
-                    <button
-                        className="
-              px-6 py-2.5
-              bg-gradient-to-r from-cyan-500 to-blue-600
-              hover:from-cyan-400 hover:to-blue-500
-              rounded-full font-medium
-              transition-all
-              shadow-lg shadow-cyan-500/20
-            "
-                    >
-                        Sign In
-                    </button>
-                </div>
-            </nav> */}
+        <Hero />
 
             {/* Hero Section */}
             <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden">
@@ -142,10 +111,10 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Footer remains unchanged */}
-            <footer className="py-12 bg-black border-t border-white/10">
-                {/* ... footer content ... */}
-            </footer>
+            {/* Footer */}
+            <Footer />
+            {/* <footer className="py-12 bg-black border-t border-white/10">
+            </footer> */}
         </div>
 
     );
