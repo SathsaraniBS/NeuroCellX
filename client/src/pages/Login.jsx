@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-import { Mail, Lock, Eye, EyeOff, Twitter, Linkedin } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, FaTwitter, FaLinkedinIn, FaInstagram } from "lucide-react";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -145,10 +145,10 @@ function Login() {
           <p className="text-gray-500 text-sm mb-5">Or continue with</p>
           <div className="flex justify-center gap-6">
             <button className="w-12 h-12 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition">
-              <Twitter size={20} />
+              <FaTwitter size={20} />
             </button>
             <button className="w-12 h-12 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition">
-              <Linkedin size={20} />
+              <FaLinkedinIn size={20} />
             </button>
             <button className="w-12 h-12 flex items-center justify-center rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition text-lg font-bold">
               G

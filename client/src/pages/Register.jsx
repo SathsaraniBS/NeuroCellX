@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
-import { User, Mail, Lock, Eye, Facebook, Twitter  } from "lucide-react";
+import { User, Mail, Lock, Eye, FaTwitter, FaLinkedinIn, FaInstagram  } from "lucide-react";
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -132,7 +132,7 @@ const Register = () => {
             </div>
 
             <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition cursor-pointer">
-              <Twitter size={18} />
+              <FaTwitter size={18} />
             </div>
 
             <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition cursor-pointer">
