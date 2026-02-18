@@ -3,6 +3,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
+from routers import auth
 
 # Import database setup and utilities
 from database import engine, Base, SessionLocal, get_db
@@ -25,6 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
 # Automatically create all tables defined in models (Base.metadata)
 # → Good for development / quick prototyping
 # → In production: prefer Alembic migrations
