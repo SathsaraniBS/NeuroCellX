@@ -1,5 +1,7 @@
 import React from "react";
 import { Search, Clock, Eye } from "lucide-react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const guides = [
   {
@@ -66,10 +68,12 @@ const news = [
 
 export default function LearningHub() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0a0f2c] to-[#02030f] text-white px-6 md:px-16 py-10">
-      
+    
+    <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0a0f2c] to-[#02030f] text-white ">
+      {/* Navigation */}
+      <Navbar />
       {/* Header */}
-      <div className="mb-10">
+      <div className="mt-20 mb-10">
         <h1 className="text-4xl md:text-5xl font-bold mb-3">
           Learning Hub
         </h1>
@@ -208,9 +212,10 @@ export default function LearningHub() {
       </section>
 
       {/* Footer */}
-      <div className="mt-16 text-center text-gray-500 text-sm">
-        © 2026 VoltIQ. All rights reserved.
-      </div>
+       <Footer />
+
     </div>
+    
+    
   );
 }
