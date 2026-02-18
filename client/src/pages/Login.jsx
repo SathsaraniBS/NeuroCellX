@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
@@ -136,9 +136,9 @@ function Login() {
         {/* Sign up link */}
         <p className="text-center mt-8 text-gray-400 text-sm">
           Don't have an account?{" "}
-          <span className="text-cyan-400 hover:text-cyan-300 cursor-pointer transition">
+          <Link to="/register" className="text-cyan-400 hover:text-cyan-300 cursor-pointer transition">
             Sign Up
-          </span>
+          </Link>
         </p>
 
         {/* Social login */}

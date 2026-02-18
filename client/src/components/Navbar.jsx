@@ -54,12 +54,11 @@ const Navbar = () => {
           >
             Features
           </a>
-          <a
-            href="#pricing"
+          <Link to ="/landingpage"
             className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
           >
-            Pricing
-          </a>
+            Landing Page
+          </Link>
           <a
             href="#about"
             className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"

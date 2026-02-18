@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import { User, Mail, Lock, Eye } from "lucide-react";
-import { FaTwitter  } from "react-icons/fa";
+import { FaTwitter ,FaFacebook } from "react-icons/fa";
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -117,9 +117,10 @@ const Register = () => {
           {/* Sign In Link */}
           <p className="text-center text-gray-400 mt-4 text-sm">
             Already have an account?{" "}
-            <span className="text-cyan-400 cursor-pointer hover:underline">
+            <Link to="/login"
+             className="text-cyan-400 cursor-pointer hover:underline">
               Sign In
-            </span>
+            </Link>
           </p>
         </div>
 
@@ -129,7 +130,7 @@ const Register = () => {
 
           <div className="flex justify-center gap-6">
             <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition cursor-pointer">
-              <Facebook size={18} />
+              <FaFacebook size={18} />
             </div>
 
             <div className="w-12 h-12 flex items-center justify-center rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition cursor-pointer">

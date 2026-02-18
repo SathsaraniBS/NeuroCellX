@@ -58,7 +58,8 @@ const Hero = () => {
         {/* RIGHT IMAGE */}
         <div className="relative">
           <img
-            src="bg1.webp"           // ← assuming it's in /public/
+            // src="bg1.webp"           // ← assuming it's in /public/
+            src="src/assets/img2.jpeg" 
             alt="EV Battery Visualization"
             className="w-full drop-shadow-[0_0_40px_rgba(0,255,255,0.3)]"
           />
