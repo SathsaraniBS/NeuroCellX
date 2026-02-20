@@ -5,11 +5,14 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import { User, Mail, Lock, Eye } from "lucide-react";
 import { FaTwitter ,FaFacebook } from "react-icons/fa";
+import axios from "axios";
 
 const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const { register } = useAuth();
     const { addToast } = useToast();
@@ -17,15 +20,37 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // 1. Password length check (frontend)
+        if (password.length > 60) {
+            addToast("Password too long (maximum 60 characters)", "error");
+            return;
+        }
+
+        // 2. Password match check
+        if (password !== confirmPassword) {
+            addToast("Passwords do not match", "error");
+            return;
+        }
+
+        // 3. Loading start
+        setLoading(true);
+        
         try {
-            await register(name, email, password);
-            addToast('Registration Successful!', 'success');
-            navigate('/');
+            const res = await axios.post("http://127.0.0.1:8000/api/auth/register", {
+                name,
+                email,
+                password,
+            });
+
+            addToast("Registration Successful! Please login.", "success");
+            navigate("/login"); 
         } catch (err) {
-            addToast(err, 'error');
+            const message = err.response?.data?.detail || "Registration failed. Please try again.";
+            addToast(message, "error");
+        } finally {
+            setLoading(false); 
         }
     };
-
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-[#050b18] via-[#071b2f] to-[#020617] text-white flex flex-col items-center justify-center relative overflow-hidden">
@@ -93,7 +118,7 @@ const Register = () => {
               className="w-full pl-10 pr-4 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
               placeholder="Password"
               required
-            />
+            />cd 
           </div>
 
           {/* Confirm Password */}
@@ -101,8 +126,11 @@ const Register = () => {
             <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
               type="password"
-              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full pl-10 pr-10 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
+              placeholder="Confirm Password"
+              required
             />
             <Eye className="absolute right-3 top-3 text-gray-400 cursor-pointer" size={18} />
           </div>

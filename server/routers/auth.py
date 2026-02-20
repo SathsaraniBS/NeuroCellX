@@ -1,7 +1,7 @@
 # server/routers/auth.py
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, EmailStr
 from passlib.context import CryptContext
 import sqlalchemy as sa
 
@@ -9,29 +9,27 @@ from database import get_db
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
+# Password hashing configuration
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class UserCreate(BaseModel):
-    name: str
-    email: str
-    password: str
+    name: str = Field(..., min_length=2)
+    email: EmailStr 
+    password: str = Field(..., min_length=6, max_length=72)
 
 class UserLogin(BaseModel):
-    email: str
+    email: EmailStr
     password: str
 
 @router.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
-
-    # Password length check (bcrypt limit 72 bytes)
     if len(user.password.encode('utf-8')) > 72:
         raise HTTPException(
             status_code=400,
-            detail="Password too long (maximum 72 bytes)"
+            detail="Password is too long (Max 72 bytes)."
         )
     
     try:
-        # Check if email already exists
         existing = db.execute(
             sa.text("SELECT 1 FROM users WHERE email = :email"),
             {"email": user.email}
@@ -55,9 +53,12 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
         db.commit()
 
         return {"message": "User registered successfully"}
+
+    except HTTPException as http_ex:
+        raise http_ex
     except Exception as e:
         db.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Database Error: {str(e)}")
 
 @router.post("/login")
 def login(user: UserLogin, db: Session = Depends(get_db)):
