@@ -9,7 +9,6 @@ from database import get_db
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
-# Password hashing configuration
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class UserCreate(BaseModel):
@@ -23,12 +22,6 @@ class UserLogin(BaseModel):
 
 @router.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
-    if len(user.password.encode('utf-8')) > 72:
-        raise HTTPException(
-            status_code=400,
-            detail="Password is too long (Max 72 bytes)."
-        )
-    
     try:
         existing = db.execute(
             sa.text("SELECT 1 FROM users WHERE email = :email"),
@@ -41,7 +34,8 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
                 detail="Email already registered"
             )
 
-        hashed_password = pwd_context.hash(user.password)
+        safe_password = user.password[:72]
+        hashed_password = pwd_context.hash(safe_password)
 
         db.execute(
             sa.text("""
@@ -71,7 +65,7 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
         {"email": user.email}
     ).fetchone()
 
-    if not db_user or not pwd_context.verify(user.password, db_user.password):
+    if not db_user or not pwd_context.verify(user.password[:72], db_user.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid credentials"
