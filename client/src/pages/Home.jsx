@@ -113,8 +113,7 @@ const Home = () => {
 
             {/* Footer */}
             <Footer />
-            {/* <footer className="py-12 bg-black border-t border-white/10">
-            </footer> */}
+            
         </div>
 
     );

@@ -84,7 +84,7 @@ const Navbar = () => {
           hover:shadow-[0_0_30px_rgba(0,255,255,0.9)]
           border border-white/20"
         >
-          Sign In
+          Sign Up
         </Link>
         <Link to="/login" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition ">
             Login
