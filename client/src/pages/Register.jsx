@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
-import { User, Mail, Lock, Eye } from "lucide-react";
+import { User, Mail, Lock, Eye,EyeOff } from "lucide-react";
 import { FaTwitter ,FaFacebook } from "react-icons/fa";
 import axios from "axios";
 
@@ -17,6 +17,7 @@ const Register = () => {
 
     const { register } = useAuth();
     const { addToast } = useToast();
+
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -113,7 +114,7 @@ const Register = () => {
           <div className="relative mb-4">
             <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
-              type="password"
+              type= {showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-10 pr-4 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
@@ -133,7 +134,7 @@ const Register = () => {
           <div className="relative mb-6">
             <Lock className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
-              type="password"
+              type= {showPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full pl-10 pr-10 py-3 bg-transparent border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400"
@@ -150,8 +151,11 @@ const Register = () => {
           </div>
 
           {/* Create Account Button */}
-          <button className="w-full py-3 rounded-xl font-semibold text-lg bg-gradient-to-r from-cyan-400 to-green-400 text-black hover:opacity-90 transition duration-300 shadow-lg shadow-cyan-500/20">
-            Create Account
+          <button 
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 rounded-xl font-semibold text-lg bg-gradient-to-r from-cyan-400 to-green-400 text-black hover:opacity-90 transition duration-300 shadow-lg shadow-cyan-500/20">
+            {loading ? "Registering..." : "Create Account"}
           </button>
           </div>
         </form>
