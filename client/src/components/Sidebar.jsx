@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, LogOut, Settings, ExternalLink,  } from 'lucide-react';
+import { LayoutDashboard, LogOut, Settings, ExternalLink, ChartLine, History ,FileText } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const Sidebar = () => {
@@ -7,7 +7,10 @@ const Sidebar = () => {
     const { logout } = useAuth();
 
     const links = [
-        { path: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
+        { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+        { path: '/dashboard/predictions', icon: ChartLine, label: 'Predictions' },
+        { path: '/dashboard/history', icon: History, label: 'History' },
+        {path: '/dashboard/Reports', icon: FileText, label: 'Reports' },
         { path: '/dashboard/settings', icon: Settings, label: 'Settings' },
     ];
 
