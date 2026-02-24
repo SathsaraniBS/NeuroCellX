@@ -2,9 +2,10 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-
+import { useToast } from '../contexts/ToastContext';
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { FaLinkedinIn , FaTwitter } from "react-icons/fa";
+
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,40 +13,41 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
+  
+  const { addToast } = useToast();
   const { login } = useAuth(); // from your AuthContext
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
-        email,
-        password,
-      });
-
-      // Expected response: { token, user: { role, ... } }
-      login(res.data.token, res.data.user);
-
-      if (res.data.user.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/user/dashboard");
-      }
-    } catch (err) {
-      const message =
-        err.response?.data?.message ||
-        err.message ||
-        "Login failed. Please try again.";
-      setError(message);
-      console.error("Login error:", err);
-    } finally {
-      setLoading(false);
-    }
+     try {
+            await login(email, password);
+            addToast('Login Successful!', 'success');
+            navigate('/dashboard');
+        } catch (err) {
+            addToast(err, 'error');
+        }
   };
+
+    //   // Expected response: { token, user: { role, ... } }
+    //   login(res.data.token, res.data.user);
+
+    //   if (res.data.user.role === "admin") {
+    //     navigate("/admin");
+    //   } else {
+    //     navigate("/user/dashboard");
+    //   }
+    // } catch (err) {
+    //   const message =
+    //     err.response?.data?.message ||
+    //     err.message ||
+    //     "Login failed. Please try again.";
+    //   setError(message);
+    //   console.error("Login error:", err);
+    // } finally {
+    //   setLoading(false);
+    // }
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#030712] via-[#071b2f] to-[#020617] text-white relative overflow-hidden">

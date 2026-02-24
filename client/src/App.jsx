@@ -9,6 +9,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import Layout from './components/Layout';
 import LearningHub from './pages/LearningHub';
 import LandingPage from './pages/LandingPage';
+import Dashboard from './pages/Dashboard';
 // import ContactPage from './pages/ContactPage';
 
 const API_URL = "http://127.0.0.1:8000/records/";
@@ -25,6 +26,7 @@ function App() {
                             <Route path="register" element={<Register />} />
                             <Route path="learning" element={<LearningHub />} />
                             <Route path="landingpage" element={<LandingPage />} />
+                            <Route path="dashboard" element={<Dashboard />} />
                             {/* <Route path="contact" element={<ContactPage />} /> */}
                         </Route>
                         <Route path="/admin" element={<AdminDashboard />} />
