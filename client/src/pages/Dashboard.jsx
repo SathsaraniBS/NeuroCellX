@@ -1,8 +1,22 @@
 import React from 'react';
-import {Bell,User,Search,Download,FileText,AlertTriangle,TrendingUp,Moon,Sun} from "lucide-react";
+import {Bell,Search,ChartLine,History,Download,FileText,AlertTriangle,Moon} from "lucide-react";
 import Footer from '../components/Footer';
 
 function Dashboard() {
+
+   const links = [
+        { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+        { path: '/dashboard/predictions', icon:ChartLine , label: 'predictions' },
+        { path: '/dashboard/history', icon: History, label: 'History' },
+        { path: '/dashboard/reports', icon: FileText, label: 'Reports' },
+        { path: '/dashboard/settings', icon: Settings, label: 'Settings' },
+    ];
+
+    const isActive = (path) => {
+        if (path === '/dashboard' && pathname === '/dashboard') return true;
+        if (path !== '/dashboard' && pathname.startsWith(path)) return true;
+        return false;
+    };
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex flex-col">
 
