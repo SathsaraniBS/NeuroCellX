@@ -5,6 +5,8 @@ import { useToast } from '../contexts/ToastContext';
 import Hero from '../components/Hero';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import LearningHub from './pages/LearningHub';
+
 
 const Home = () => {
     const { user } = useAuth();
@@ -47,7 +49,8 @@ const Home = () => {
                             <span className="ml-2 group-hover:translate-x-1 inline-block transition-transform">→</span>
                         </button>
 
-                        <button
+                        <Link
+                            to="/LearningHub"
                             className="
                 px-10 py-5
                 bg-white/10 hover:bg-white/15
@@ -56,7 +59,7 @@ const Home = () => {
               "
                         >
                             Explore Learning Hub →
-                        </button>
+                        </Link>
                     </div>
 
                     {/* Battery Health Card */}
