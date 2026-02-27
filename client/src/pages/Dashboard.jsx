@@ -1,5 +1,5 @@
 import React from 'react';
-import {Bell,Search,ChartLine,History,Download,FileText,AlertTriangle,Moon} from "lucide-react";
+import {Bell,Search,ChartLine,History,Settings,Download,LayoutDashboard,FileText,AlertTriangle,Moon} from "lucide-react";
 import Footer from '../components/Footer';
 
 function Dashboard() {
