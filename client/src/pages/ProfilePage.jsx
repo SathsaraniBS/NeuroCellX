@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../api/api';
-import { User, Star, MapPin, Calendar, Clock, Award, LogOut, Heart, Trash2, Edit2, X, Upload, QrCode } from 'lucide-react';
+import { User,  MapPin, Calendar, Clock, Award, LogOut, Trash2, Edit2, X, Upload, QrCode } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
@@ -28,9 +28,7 @@ const ProfilePage = () => {
 
     }, [user]);
 
-    const removeFromWatchlist = async (movieId) => {
-       
-    };
+    
 
     const handleLogout = () => {
         logout();
@@ -87,14 +85,7 @@ const ProfilePage = () => {
         return now < bookingTime + 5 * 60 * 60 * 1000; // 5 hours
     };
 
-    const getTierColor = (tier) => {
-        switch (tier) {
-            case 'Platinum': return 'bg-gradient-to-r from-slate-300 via-white to-slate-300 text-slate-900';
-            case 'Gold': return 'bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 text-yellow-900';
-            case 'Silver': return 'bg-gradient-to-r from-gray-300 to-gray-400 text-gray-900';
-            default: return 'bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 text-amber-100';
-        }
-    };
+    
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-12 relative">
@@ -135,31 +126,7 @@ const ProfilePage = () => {
                             </div>
                         </div>
 
-                        <div className={`px-5 py-2.5 rounded-xl border border-white/20 flex flex-col justify-center gap-1 ${getTierColor(stats.tier)} shadow-lg min-h-[72px]`}>
-                            <div className="flex items-center gap-3">
-                                <div className="p-1.5 bg-black/10 rounded-lg">
-                                    <Star className="w-4 h-4 fill-current" />
-                                </div>
-                                <div className="leading-tight">
-                                    <p className="text-[10px] opacity-70 uppercase tracking-widest font-bold">Membership</p>
-                                    <p className="text-lg font-bold leading-none">{stats.tier}</p>
-                                </div>
-                            </div>
-                            {stats.nextThreshold && (
-                                <div className="w-full mt-0.5">
-                                    <div className="flex justify-between text-[9px] opacity-80 mb-0.5">
-                                        <span>Next: {stats.nextTier}</span>
-                                        <span>{Math.round(stats.progress)}%</span>
-                                    </div>
-                                    <div className="bg-black/20 h-1 rounded-full overflow-hidden w-28">
-                                        <div
-                                            className="h-full bg-white/80 rounded-full transition-all duration-700"
-                                            style={{ width: `${stats.progress}%` }}
-                                        />
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                       
                     </div>
                 </div>
             </div>
