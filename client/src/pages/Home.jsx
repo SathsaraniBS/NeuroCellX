@@ -5,7 +5,7 @@ import { useToast } from '../contexts/ToastContext';
 import Hero from '../components/Hero';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import LearningHub from './pages/LearningHub';
+import LearningHub from './LearningHub';
 
 
 const Home = () => {

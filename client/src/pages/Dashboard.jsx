@@ -1,6 +1,7 @@
 import React from 'react';
-import {Bell,Search,ChartLine,History,Settings,Download,LayoutDashboard,FileText,AlertTriangle,Moon} from "lucide-react";
+import {Bell,User,Search,ChartLine,History,Settings,Download,LayoutDashboard,FileText,AlertTriangle,Moon} from "lucide-react";
 import Footer from '../components/Footer';
+import Sidebar from '../components/Sidebar';
 
 function Dashboard() {
 
@@ -22,9 +23,9 @@ function Dashboard() {
 
       {/* ================= SIDEBAR + MAIN CONTEN ================= */}
       <div className="flex flex-1">
-
+        <Sidebar />
         {/* ================= SIDEBAR ================= */}
-        <aside className="w-64 bg-[#0b1220]/80 backdrop-blur-lg border-r border-cyan-500/20 p-6 hidden lg:flex flex-col">
+        {/* <aside className="w-64 bg-[#0b1220]/80 backdrop-blur-lg border-r border-cyan-500/20 p-6 hidden lg:flex flex-col">
           <h1 className="text-2xl font-bold text-cyan-400 mb-10">
             Volt<span className="text-green-400">IQ</span>
           </h1>
@@ -47,7 +48,7 @@ function Dashboard() {
               <Moon size={16} /> Dark Mode
             </button>
           </div>
-        </aside>
+        </aside> */}
 
         {/* ================= MAIN CONTENT ================= */}
         <div className="flex-1 p-6 lg:p-10 overflow-auto">
