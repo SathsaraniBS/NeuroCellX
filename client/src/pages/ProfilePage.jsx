@@ -51,7 +51,7 @@ const ProfilePage = () => {
 
           <div>
             <h2 className="text-2xl font-semibold">
-              Sathsarani Perera
+               BSS
             </h2>
             <span className="bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full text-sm">
               Analyst

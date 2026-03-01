@@ -10,6 +10,7 @@ import Layout from './components/Layout';
 import LearningHub from './pages/LearningHub';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
+import ProtectedRoute from './components/ProtectedRoute'
 // import ContactPage from './pages/ContactPage';
 
 const API_URL = "http://127.0.0.1:8000/records/";
