@@ -1,220 +1,181 @@
-import { useEffect, useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import api from '../api/api';
-import { User,  MapPin, Calendar, Clock, Award, LogOut, Trash2, Edit2, X, Upload, QrCode } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import {Camera,ShieldCheck,Mail,Smartphone,Bell,Trash2,Monitor,} from "lucide-react";
 
 const ProfilePage = () => {
-    const { user, logout } = useAuth();
-    const navigate = useNavigate();
-    const { addToast } = useToast();
+  const [twoFA, setTwoFA] = useState(true);
+  const [emailNotif, setEmailNotif] = useState(true);
+  const [smsNotif, setSmsNotif] = useState(false);
+  const [systemNotif, setSystemNotif] = useState(true);
 
-    const [isEditOpen, setIsEditOpen] = useState(false);
-    const [editForm, setEditForm] = useState({ name: '', email: '', password: '', profilePicture: '' });
-    const [updating, setUpdating] = useState(false);
-    const [selectedQR, setSelectedQR] = useState(null);
+  const Toggle = ({ enabled, setEnabled }) => (
+    <button
+      onClick={() => setEnabled(!enabled)}
+      className={`w-14 h-7 flex items-center rounded-full p-1 transition-all duration-300 ${
+        enabled ? "bg-cyan-400" : "bg-gray-600"
+      }`}
+    >
+      <div
+        className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-all duration-300 ${
+          enabled ? "translate-x-7" : "translate-x-0"
+        }`}
+      ></div>
+    </button>
+  );
 
-    useEffect(() => {
-        if (user) {
-            setEditForm({
-                name: user.name || '',
-                email: user.email || '',
-                password: '',
-                profilePicture: user.profilePicture || ''
-            });
-        }
+  return (
+    <div className="min-h-screen bg-[#050816] text-white px-10 py-8 relative overflow-hidden">
+      
+      {/* Background Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,255,255,0.08),transparent_60%)] pointer-events-none"></div>
 
+      {/* Header */}
+      <div className="relative z-10 mb-10">
+        <h1 className="text-4xl font-semibold mb-2">Profile Settings</h1>
+        <p className="text-gray-400">Manage your account information</p>
+      </div>
+
+      {/* Profile Card */}
+      <div className="relative z-10 bg-white/5 border border-cyan-400/20 rounded-2xl p-6 flex items-center justify-between mb-10 backdrop-blur-xl">
         
+        <div className="flex items-center gap-6">
+          <div className="relative">
+            <img
+              src="https://i.pravatar.cc/150?img=32"
+              alt="profile"
+              className="w-28 h-28 rounded-full border-2 border-cyan-400"
+            />
+            <button className="absolute bottom-0 right-0 bg-cyan-500 p-2 rounded-full hover:bg-cyan-400 transition">
+              <Camera size={16} />
+            </button>
+          </div>
 
-    }, [user]);
+          <div>
+            <h2 className="text-2xl font-semibold">
+              Sathsarani Perera
+            </h2>
+            <span className="bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full text-sm">
+              Analyst
+            </span>
+          </div>
+        </div>
 
-    
+        <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-green-400 text-black font-semibold hover:opacity-90 transition">
+          Edit Profile
+        </button>
+      </div>
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
-    };
+      {/* Main Grid */}
+      <div className="relative z-10 grid grid-cols-3 gap-8">
 
-    const handleFileUpload = async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+        {/* Personal Info */}
+        <div className="col-span-2 bg-white/5 border border-cyan-400/20 rounded-2xl p-6 backdrop-blur-xl">
+          <h3 className="text-xl font-semibold mb-6">Personal Information</h3>
 
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('folder', 'users');
-        setUpdating(true);
-
-        try {
-            const { data } = await api.post('/upload?folder=users', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            setEditForm(prev => ({ ...prev, profilePicture: data }));
-            addToast('Profile picture uploaded', 'success');
-        } catch (error) {
-            console.error(error);
-            addToast('Image upload failed', 'error');
-        } finally {
-            setUpdating(false);
-        }
-    };
-
-    const handleUpdateProfile = async (e) => {
-        e.preventDefault();
-        setUpdating(true);
-        try {
-            const { data } = await api.put('/users/profile', editForm);
-            addToast('Profile updated successfully', 'success');
-            setIsEditOpen(false);
-
-            if (data.token) {
-                localStorage.setItem('userInfo', JSON.stringify(data));
-            }
-            window.location.reload();
-        } catch (error) {
-            addToast(error.response?.data?.message || 'Failed to update profile', 'error');
-        } finally {
-            setUpdating(false);
-        }
-    };
-
-    
-
-    const isCancellable = (createdAt) => {
-        const bookingTime = new Date(createdAt).getTime();
-        const now = Date.now();
-        return now < bookingTime + 5 * 60 * 60 * 1000; // 5 hours
-    };
-
-    
-
-    return (
-        <div className="max-w-6xl mx-auto px-4 py-12 relative">
-            <div className="glass-card rounded-3xl p-8 mb-12 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 flex gap-2">
-                    <button
-                        onClick={() => setIsEditOpen(true)}
-                        className="flex items-center gap-2 text-luxury-500 hover:text-gold-500 font-bold transition-colors bg-white/10 p-2 rounded-lg"
-                        title="Edit Profile"
-                    >
-                        <Edit2 className="w-5 h-5" />
-                    </button>
-                    <button onClick={handleLogout} className="flex items-center gap-2 text-red-500 hover:text-red-400 font-bold transition-colors bg-white/10 p-2 rounded-lg">
-                        <LogOut className="w-5 h-5" />
-                    </button>
-                </div>
-
-                <div className="w-32 h-32 rounded-full border-4 border-gold-500/30 overflow-hidden bg-luxury-900 box-content relative group">
-                    <img
-                        src={user?.profilePicture || `https://ui-avatars.com/api/?name=${user?.name}&background=random`}
-                        alt={user?.name}
-                        className="w-full h-full object-cover"
-                    />
-                </div>
-
-                <div className="flex-1 text-center md:text-left">
-                    <h1 className="text-4xl font-serif font-bold text-luxury-900 dark:text-white mb-2">{user?.name}</h1>
-                    <p className="text-luxury-500 dark:text-gold-100/60 mb-6">{user?.email}</p>
-
-                    <div className="flex flex-wrap gap-4 justify-center md:justify-start items-start">
-                        <div className="bg-white/50 dark:bg-luxury-800/50 px-6 py-2.5 rounded-xl border border-luxury-200 dark:border-white/10 flex items-center gap-3 h-[72px]">
-                            <div className="p-2 bg-gold-500/20 rounded-lg text-gold-600 dark:text-gold-300">
-                                <Award className="w-5 h-5" />
-                            </div>
-                            <div>
-                                <p className="text-[10px] text-luxury-500 dark:text-gold-100/50 uppercase tracking-widest font-bold">Points</p>
-                                <p className="text-xl font-bold text-luxury-900 dark:text-white leading-none">{stats.points.toLocaleString()}</p>
-                            </div>
-                        </div>
-
-                       
-                    </div>
-                </div>
+          <div className="grid grid-cols-2 gap-6">
+            <div>
+              <label className="text-gray-400 text-sm">Full Name</label>
+              <input
+                type="text"
+                defaultValue="Sathsarani Perera"
+                className="w-full mt-2 p-3 bg-black/40 border border-white/10 rounded-lg focus:outline-none focus:border-cyan-400"
+              />
             </div>
 
-            {/* Edit Profile Modal */}
-            {isEditOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-                    <div className="bg-white dark:bg-luxury-900 rounded-3xl p-8 max-w-md w-full relative border border-gold-500/20 shadow-2xl animate-fade-in max-h-[90vh] overflow-y-auto">
-                        <button
-                            onClick={() => setIsEditOpen(false)}
-                            className="absolute top-4 right-4 text-luxury-400 hover:text-red-500 transition-colors"
-                        >
-                            <X className="w-6 h-6" />
-                        </button>
+            <div>
+              <label className="text-gray-400 text-sm">Phone Number</label>
+              <input
+                type="text"
+                defaultValue="+1 (555) 123-4567"
+                className="w-full mt-2 p-3 bg-black/40 border border-white/10 rounded-lg focus:outline-none focus:border-cyan-400"
+              />
+            </div>
 
-                        <h2 className="text-2xl font-serif font-bold text-luxury-900 dark:text-white mb-6">Edit Profile</h2>
+            <div>
+              <label className="text-gray-400 text-sm">Email</label>
+              <input
+                type="email"
+                defaultValue="sathsarani@example.com"
+                className="w-full mt-2 p-3 bg-black/40 border border-white/10 rounded-lg focus:outline-none focus:border-cyan-400"
+              />
+            </div>
 
-                        <form onSubmit={handleUpdateProfile} className="space-y-5">
-                            {/* Profile Picture Upload */}
-                            <div className="flex justify-center mb-4">
-                                <div className="relative group">
-                                    <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-gold-500 transition-colors">
-                                        {editForm.profilePicture ? (
-                                            <img src={editForm.profilePicture} alt="Profile" className="w-full h-full object-cover" />
-                                        ) : (
-                                            <div className="w-full h-full bg-gray-100 dark:bg-white/5 flex items-center justify-center">
-                                                <User className="w-8 h-8 text-gray-400" />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <label className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                                        <span className="text-white text-xs font-bold">{updating ? '...' : 'Upload'}</span>
-                                        <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} disabled={updating} />
-                                    </label>
-                                </div>
-                            </div>
+            <div>
+              <label className="text-gray-400 text-sm">Role</label>
+              <select className="w-full mt-2 p-3 bg-black/40 border border-white/10 rounded-lg focus:outline-none focus:border-cyan-400">
+                <option>Analyst</option>
+                <option>Admin</option>
+                <option>User</option>
+              </select>
+            </div>
+          </div>
 
-                            {/* Name */}
-                            <div>
-                                <label className="block text-sm font-bold text-luxury-700 dark:text-gold-100/70 mb-2">Display Name</label>
-                                <input
-                                    type="text"
-                                    value={editForm.name}
-                                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                                    className="w-full bg-luxury-50 dark:bg-luxury-800 border border-luxury-200 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-gold-500 transition-colors text-luxury-900 dark:text-white"
-                                    required
-                                />
-                            </div>
-
-                            {/* Email */}
-                            <div>
-                                <label className="block text-sm font-bold text-luxury-700 dark:text-gold-100/70 mb-2">Email Address</label>
-                                <input
-                                    type="email"
-                                    value={editForm.email}
-                                    onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-                                    className="w-full bg-luxury-50 dark:bg-luxury-800 border border-luxury-200 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-gold-500 transition-colors text-luxury-900 dark:text-white"
-                                    required
-                                />
-                            </div>
-
-                            {/* Password */}
-                            <div>
-                                <label className="block text-sm font-bold text-luxury-700 dark:text-gold-100/70 mb-2">New Password <span className="text-xs font-normal text-luxury-400">(leave blank to keep current)</span></label>
-                                <input
-                                    type="password"
-                                    value={editForm.password}
-                                    onChange={(e) => setEditForm({ ...editForm, password: e.target.value })}
-                                    className="w-full bg-luxury-50 dark:bg-luxury-800 border border-luxury-200 dark:border-white/10 rounded-xl px-4 py-3 outline-none focus:border-gold-500 transition-colors text-luxury-900 dark:text-white"
-                                    placeholder="••••••••"
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={updating}
-                                className="w-full bg-gold-500 hover:bg-gold-400 text-white font-bold py-3 rounded-xl transition-all shadow-lg hover:shadow-gold-500/25 disabled:opacity-50"
-                            >
-                                {updating ? 'Saving...' : 'Save Changes'}
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            )}
-
-           
+          <button className="mt-6 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-green-400 text-black font-semibold hover:opacity-90 transition">
+            Update
+          </button>
         </div>
-    );
+
+        {/* Account Actions */}
+        <div className="bg-white/5 border border-cyan-400/20 rounded-2xl p-6 backdrop-blur-xl">
+          <h3 className="text-xl font-semibold mb-6">Account Actions</h3>
+
+          <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/5 transition mb-4">
+            <div className="flex items-center gap-3">
+              <Monitor size={18} />
+              Manage Devices
+            </div>
+          </button>
+
+          <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition">
+            <div className="flex items-center gap-3">
+              <Trash2 size={18} />
+              Delete Account
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Security Section */}
+      <div className="relative z-10 mt-10 bg-white/5 border border-cyan-400/20 rounded-2xl p-6 backdrop-blur-xl">
+        <h3 className="text-xl font-semibold mb-6">Security Settings</h3>
+
+        <div className="space-y-6">
+          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <ShieldCheck size={20} />
+              Two-Factor Authentication
+            </div>
+            <Toggle enabled={twoFA} setEnabled={setTwoFA} />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Mail size={20} />
+              Email Notifications
+            </div>
+            <Toggle enabled={emailNotif} setEnabled={setEmailNotif} />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Smartphone size={20} />
+              SMS Notifications
+            </div>
+            <Toggle enabled={smsNotif} setEnabled={setSmsNotif} />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Bell size={20} />
+              System Alerts
+            </div>
+            <Toggle enabled={systemNotif} setEnabled={setSystemNotif} />
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ProfilePage;

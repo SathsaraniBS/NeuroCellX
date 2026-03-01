@@ -1,20 +1,12 @@
 import React, { useState } from "react";
-import {
-  LayoutDashboard,
-  LineChart,
-  History,
-  FileText,
-  Settings,
-  Moon,
-  ChevronRight,
-} from "lucide-react";
+import {LayoutDashboard,LineChart,History,FileText,Settings,Moon,ChevronRight,} from "lucide-react";
 
 const DashboardSidebar = () => {
   const [active, setActive] = useState("Dashboard");
   const [darkMode, setDarkMode] = useState(true);
 
   const menuItems = [
-    { name: "Dashboard", icon: <LayoutDashboard size={20} /> },
+    {path: '/dashboard',name: "Dashboard", icon: <LayoutDashboard size={20} /> },
     { name: "Predictions", icon: <LineChart size={20} /> },
     { name: "History", icon: <History size={20} /> },
     { name: "Reports", icon: <FileText size={20} /> },
@@ -82,11 +74,7 @@ const DashboardSidebar = () => {
       {/* Bottom Section */}
       <div className="relative z-10 p-6 border-t border-white/10">
         <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-gray-300">
-          <div className="flex items-center gap-3">
-            <Github size={20} />
-            <span>GitHub</span>
-          </div>
-          <ChevronRight size={18} className="text-gray-500" />
+          
         </button>
       </div>
     </div>
