@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ToastProvider } from './contexts/ToastContext';
 import React, { useState, useEffect } from 'react';
@@ -21,6 +21,7 @@ function App() {
             <ToastProvider> 
                 <AuthProvider>
                     <Routes>
+                        {/* Public Routes  */}
                         <Route path="/" element={<Layout />}>
                             <Route index element={<Home />} />
                             <Route path="login" element={<Login />} />
@@ -30,7 +31,22 @@ function App() {
                             <Route path="dashboard" element={<Dashboard />} />
                             {/* <Route path="contact" element={<ContactPage />} /> */}
                         </Route>
-                        <Route path="/admin" element={<AdminDashboard />} />
+
+                        {/* Protected Routes  */}
+                        <Route path="/dashboard" element={
+                            <ProtectedRoute>
+                                <Dashboard />
+                            </ProtectedRoute>
+                        } />
+
+                        <Route path="/admin" element={
+                            <ProtectedRoute>
+                                <AdminDashboard />
+                            </ProtectedRoute>
+                        } />
+
+                        {/* Default Route */}
+                        <Route path="*" element={<Navigate to="/login" />} />   {/* ← NEW: Catch-all redirect */}
                     </Routes>
                 </AuthProvider>
             </ToastProvider>
