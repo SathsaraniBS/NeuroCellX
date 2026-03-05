@@ -8,7 +8,7 @@ const guides = [
     title: "An Introduction to Electric Vehicles",
     category: "EV Basics",
     time: "60 min read",
-    image: "/images/ev-basics.jpg",
+    image: "/bg1.webp",
   },
   {
     title: "Maximizing Your EV's Battery Life",
@@ -69,7 +69,8 @@ const news = [
 export default function LearningHub() {
   return (
     
-    <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0a0f2c] to-[#02030f] text-white ">
+    // <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0a0f2c] to-[#02030f] text-white ">
+      <div className="relative bg-gradient-to-b from-[#050816] via-[#0a0f2c] to-black text-white pt-16 pb-10 border-t border-white/10">
       {/* Navigation */}
       <Navbar />
       {/* Header */}

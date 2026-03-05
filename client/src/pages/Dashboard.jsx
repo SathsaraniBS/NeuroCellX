@@ -57,7 +57,7 @@ function Dashboard() {
           <div className="flex justify-between items-center mb-8">
             <div>
               <h2 className="text-3xl font-semibold">
-                Good morning, <span className="text-cyan-400">Sathsarani 👋</span>
+                Good morning, <span className="text-cyan-400"> 👋</span>
               </h2>
               <p className="text-gray-400 text-sm">
                 Here’s your EV battery health overview.
