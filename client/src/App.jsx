@@ -11,6 +11,7 @@ import LearningHub from './pages/LearningHub';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute'
+import About from './pages/About';
 // import ContactPage from './pages/ContactPage';
 
 const API_URL = "http://127.0.0.1:8000/records/";
@@ -28,7 +29,8 @@ function App() {
                             <Route path="register" element={<Register />} />
                             <Route path="learning" element={<LearningHub />} />
                             <Route path="landingpage" element={<LandingPage />} />
-                            <Route path="dashboard" element={<Dashboard />} />
+                            {/* <Route path="dashboard" element={<Dashboard />} /> */}
+                            <Route path="about" element={<About />} />
                             {/* <Route path="contact" element={<ContactPage />} /> */}
                         </Route>
 
