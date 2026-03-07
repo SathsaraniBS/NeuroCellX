@@ -26,7 +26,7 @@ function Login() {
             // addToast('Login Successful!', 'success');
             // navigate('/dashboard', { replace: true });
             setLoading(true);
-            const response = await axios.post("http://127.0.0.1:8000/api/login", { 
+            const response = await axios.post("http://127.0.0.1:8000/api/auth/login", { 
             email, 
             password 
             });
