@@ -21,8 +21,18 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
      try {
+            // setLoading(true);
+            // await login(email, password);
+            // addToast('Login Successful!', 'success');
+            // navigate('/dashboard', { replace: true });
             setLoading(true);
-            await login(email, password);
+            const response = await axios.post("http://127.0.0.1:8000/api/login", { 
+            email, 
+            password 
+            });
+
+            const { token, user } = response.data;
+            login(token, user); 
             addToast('Login Successful!', 'success');
             navigate('/dashboard', { replace: true });
 
