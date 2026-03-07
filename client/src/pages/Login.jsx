@@ -21,11 +21,18 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
      try {
+            setLoading(true);
             await login(email, password);
             addToast('Login Successful!', 'success');
-            navigate('/dashboard');
+            navigate('/dashboard', { replace: true });
+
         } catch (err) {
-            addToast(err, 'error');
+            const message = err.response?.data?.message || err.message || "Login failed";
+            addToast(message, 'error');
+            setError(message);
+        }
+        finally {
+            setLoading(false);
         }
   };
 
