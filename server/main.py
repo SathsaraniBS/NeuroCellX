@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from routers import auth
+from routers import dashboard
 from database import engine, Base, get_db
 
 app = FastAPI(title="EV Battery Health Prediction System")
@@ -20,6 +21,7 @@ app.add_middleware(
 )
 
 app.include_router(auth.router)
+app.include_router(dashboard.router)
 Base.metadata.create_all(bind=engine)
 
 @app.get("/")
