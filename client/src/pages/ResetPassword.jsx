@@ -1,41 +1,28 @@
 import React from "react";
+import Footer from "../components/Footer";
 
 const ResetPassword = () => {
   return (
-    <div
-      className="min-h-screen w-full text-white flex flex-col"
-      style={{
-        backgroundImage:
-          "url('https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* Navbar */}
-      <div className="flex justify-between items-center px-10 py-5 bg-black/30 backdrop-blur-md">
-        <h1 className="text-2xl font-bold text-cyan-400">VoltIQ</h1>
+     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#030712] via-[#071b2f] to-[#020617] text-white relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,255,0.08),transparent_70%)]" />
 
-        <div className="flex gap-8 text-gray-300">
-          <span className="cursor-pointer hover:text-cyan-400">Dashboard</span>
-          <span className="cursor-pointer hover:text-cyan-400">Predictions</span>
-          <span className="cursor-pointer hover:text-cyan-400">History</span>
-          <span className="cursor-pointer hover:text-cyan-400">Reports</span>
-          <span className="cursor-pointer hover:text-cyan-400">Settings</span>
-        </div>
+      <div className="mt-10 relative z-10 w-full max-w-md px-6">
+        {/* Logo */}
+        <h1 className="text-4xl font-semibold text-center tracking-wide">
+          <span className="text-white">Volt</span>
+          <span className="bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
+            IQ
+          </span>
+        </h1>
 
-        <div className="flex items-center gap-4">
-          <span>🔔</span>
-          <img
-            src="https://randomuser.me/api/portraits/women/44.jpg"
-            alt="profile"
-            className="w-10 h-10 rounded-full border border-cyan-400"
-          />
-        </div>
-      </div>
+
+        
+
+        
 
       {/* Main Content */}
       <div className="flex flex-1 items-center justify-center px-10">
-        <div className="max-w-xl w-full bg-black/40 backdrop-blur-lg p-10 rounded-2xl shadow-xl">
 
           {/* Title */}
           <h2 className="text-4xl font-bold mb-2">Reset your password</h2>
@@ -51,7 +38,7 @@ const ResetPassword = () => {
               className="w-14 h-14 rounded-full border-2 border-cyan-400"
             />
             <p className="text-lg font-semibold">
-              Sathsarani <span className="text-gray-400">Perera</span>
+              BSS <span className="text-gray-400">Bandara</span>
             </p>
           </div>
 
@@ -102,18 +89,7 @@ const ResetPassword = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="text-center text-gray-400 text-sm pb-6">
-        <div className="flex justify-center gap-6 mb-2">
-          <span>About</span>
-          <span>Research</span>
-          <span>Documentation</span>
-          <span>Privacy Policy</span>
-          <span>Contact</span>
-          <span>GitHub</span>
-        </div>
-        © 2026 VoltIQ. All rights reserved.
-      </div>
+      <Footer />
     </div>
   );
 };
