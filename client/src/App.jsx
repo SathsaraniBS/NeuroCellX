@@ -12,6 +12,7 @@ import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute'
 import About from './pages/About';
+import ResetPassword from './pages/ResetPassword';
 // import ContactPage from './pages/ContactPage';
 
 const API_URL = "http://127.0.0.1:8000/records/";
