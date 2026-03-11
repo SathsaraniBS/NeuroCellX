@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useToast } from '../contexts/ToastContext';
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { FaLinkedinIn , FaTwitter } from "react-icons/fa";
-
+import ResetPassword from "./ResetPassword";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -147,9 +147,9 @@ function Login() {
             <input type="checkbox" className="accent-cyan-400 w-4 h-4" />
             Remember me
           </label>
-          <span className="text-cyan-400 hover:text-cyan-300 cursor-pointer transition">
+          <Link to ="/forgot-password" className="text-cyan-400 hover:text-cyan-300 cursor-pointer transition">
             Forgot password?
-          </span>
+          </Link>
         </div>
 
         {/* Sign up link */}
