@@ -3,13 +3,31 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, Field, EmailStr
 from passlib.context import CryptContext
+from jose import jwt                          
+from datetime import datetime, timedelta      
 import sqlalchemy as sa
+                        
 
 from database import get_db
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# JWT Settings                             
+SECRET_KEY = "voltiq-secret-key-change-in-production"  
+ALGORITHM = "HS256"                                     
+TOKEN_EXPIRE_HOURS = 24                                 
+
+def create_token(user_id: int, email: str, role: str): 
+    payload = {
+        "sub": str(user_id),
+        "email": email,
+        "role": role,
+        "exp": datetime.utcnow() + timedelta(hours=TOKEN_EXPIRE_HOURS)
+    }
+
+    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
 class UserCreate(BaseModel):
     name: str = Field(..., min_length=2)
@@ -70,13 +88,22 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid credentials"
         )
+    
 
+    token = create_token(
+        user_id=db_user.id,
+        email=db_user.email,
+        role=db_user.role
+    )
+
+    
     return {
         "message": "Login successful",
+        "token": token,               
         "user": {
-            "id": db_user.id,
-            "name": db_user.name,
+            "id":    db_user.id,
+            "name":  db_user.name,
             "email": db_user.email,
-            "role": db_user.role
+            "role":  db_user.role
         }
     }
