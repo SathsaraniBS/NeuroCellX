@@ -8,15 +8,26 @@ const api = axios.create({
   },
 });
 
-export const predictDummy = async (voltage, temperature) => {
-  try {
-    const response = await api.post('/predict-dummy', {
-      voltage: Number(voltage),
-      temperature: Number(temperature),
-    });
-    return response.data;
-  } catch (error) {
-    console.error("API error:", error);
-    throw error;
+// export const predictDummy = async (voltage, temperature) => {
+//   try {
+//     const response = await api.post('/predict-dummy', {
+//       voltage: Number(voltage),
+//       temperature: Number(temperature),
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("API error:", error);
+//     throw error;
+//   }
+// };
+
+// Automatically attach JWT token to every request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-};
+  return config;
+});
+
+export default api;

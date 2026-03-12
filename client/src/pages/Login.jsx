@@ -25,16 +25,20 @@ function Login() {
             // await login(email, password);
             // addToast('Login Successful!', 'success');
             // navigate('/dashboard', { replace: true });
-            setLoading(true);
-            const response = await axios.post("http://127.0.0.1:8000/api/auth/login", { 
-            email, 
-            password 
-            });
+            // setLoading(true);
+            // const response = await axios.post("http://127.0.0.1:8000/api/auth/login", { 
+            // email, 
+            // password 
+            // });
 
-            const { token, user } = response.data;
+            const data = await loginUser({ email, password });
+            const { token, user } = data;
             login(token, user); 
             addToast('Login Successful!', 'success');
-            navigate('/dashboard', { replace: true });
+            //  Role-based redirect
+            if (user.role === 'admin') navigate('/admin/users', { replace: true });
+            else if (user.role === 'engineer') navigate('/datasets', { replace: true });
+            else navigate('/dashboard', { replace: true });
 
         } catch (err) {
             const message = err.response?.data?.message || err.message || "Login failed";
