@@ -2,15 +2,22 @@ import api from './api';
 
 // Register new user
 export const registerUser = async (userData) => {
-  const response = await api.post('/auth/register', userData);
+  const response = await api.post('/api/auth/register', userData);
   return response.data;
 };
 
 // Login user - gets JWT token back
 export const loginUser = async (credentials) => {
-  const response = await api.post('/auth/login', credentials);
+  const formData = new URLSearchParams();
+  formData.append('username', credentials.email);
+  formData.append('password', credentials.password);
+
+  const response = await api.post('/api/auth/login', formData, {
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' } 
+  });
   return response.data;
 };
+
 
 // Logout - clear token
 export const logoutUser = () => {

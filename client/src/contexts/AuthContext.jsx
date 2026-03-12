@@ -1,7 +1,7 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { loginUser, logoutUser, getCurrentUser } from '../services/authService';
-
+import { useToast } from './ToastContext';
 
 // export const AuthContext = createContext(undefined);
 

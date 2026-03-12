@@ -6,6 +6,7 @@ import { useToast } from '../contexts/ToastContext';
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { FaLinkedinIn , FaTwitter } from "react-icons/fa";
 import ResetPassword from "./ResetPassword";
+import { loginUser } from "../services/authService";
 
 function Login() {
   const [email, setEmail] = useState("");
