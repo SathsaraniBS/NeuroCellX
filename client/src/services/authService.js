@@ -6,14 +6,13 @@ export const registerUser = async (userData) => {
   return response.data;
 };
 
+
+
 // Login user - gets JWT token back
 export const loginUser = async (credentials) => {
-  const formData = new URLSearchParams();
-  formData.append('username', credentials.email);
-  formData.append('password', credentials.password);
-
-  const response = await api.post('/api/auth/login', formData, {
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' } 
+  const response = await api.post('/api/auth/login', {
+    email: credentials.email,        
+    password: credentials.password   
   });
   return response.data;
 };
