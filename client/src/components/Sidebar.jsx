@@ -1,17 +1,36 @@
 import React, { useState } from "react";
-import {LayoutDashboard,LineChart,History,FileText,Settings,Moon,ChevronRight,} from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom"; 
+import { useAuth } from "../contexts/AuthContext";            
+import {LayoutDashboard,LineChart,History,FileText,Settings,Moon,LogOut,ChevronRight,} from "lucide-react";
 
 const DashboardSidebar = () => {
   const [active, setActive] = useState("Dashboard");
   const [darkMode, setDarkMode] = useState(true);
+  
+  const { user, logout } = useAuth();  
+  const navigate         = useNavigate(); 
+  const location         = useLocation(); 
 
   const menuItems = [
     {path: '/dashboard',name: "Dashboard", icon: <LayoutDashboard size={20} /> },
-    { name: "Predictions", icon: <LineChart size={20} /> },
-    { name: "History", icon: <History size={20} /> },
-    { name: "Reports", icon: <FileText size={20} /> },
-    { name: "Settings", icon: <Settings size={20} /> },
+    { path: "/dashboard/predictions",name: "Predictions", icon: <LineChart size={20} /> },
+    { path: "/dashboard/history",name: "History", icon: <History size={20} /> },
+    { path: "/dashboard/reports", name: "Reports", icon: <FileText size={20} /> },
+    { path: "/dashboard/settings",name: "Settings", icon: <Settings size={20} /> },
   ];
+
+   const isActive = (path) => {
+    if (path === '/dashboard') {
+      return location.pathname === '/dashboard';
+    }
+    return location.pathname.startsWith(path);
+  };
+
+  
+  const handleLogout = () => {
+    logout();                    
+    navigate('/login', { replace: true }); 
+  };
 
   return (
     <div className="h-screen w-72 bg-[#050816] text-white flex flex-col justify-between border-r border-cyan-500/20 relative overflow-hidden">
@@ -27,15 +46,32 @@ const DashboardSidebar = () => {
           VoltIQ
         </h1>
 
+         {/* ADDED: Show logged in user info */}
+        {user && (
+          <div className="mb-6 px-2">
+            <p className="text-white font-medium text-sm truncate">
+              {user.name || user.email}
+            </p>
+            <span className={`text-xs px-2 py-0.5 rounded-full
+              ${user.role === 'admin'    ? 'bg-red-500/20    text-red-400'    :
+                user.role === 'engineer' ? 'bg-blue-500/20   text-blue-400'   :
+                user.role === 'analyst'  ? 'bg-purple-500/20 text-purple-400' :
+                                          'bg-cyan-500/20   text-cyan-400'}`}>
+              {user.role?.charAt(0).toUpperCase() + user.role?.slice(1)}
+            </span>
+          </div>
+        )}
+
+
         {/* Navigation */}
         <nav className="space-y-3">
           {menuItems.map((item) => (
             <button
               key={item.name}
-              onClick={() => setActive(item.name)}
+              onClick={() => navigate(item.path) }
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 
               ${
-                active === item.name
+                isActive(item.path)
                   ? "bg-gradient-to-r from-cyan-500/20 to-green-400/20 border border-cyan-400/40 shadow-lg shadow-cyan-500/20 text-cyan-300"
                   : "hover:bg-white/5 text-gray-300"
               }`}
@@ -73,8 +109,16 @@ const DashboardSidebar = () => {
 
       {/* Bottom Section */}
       <div className="relative z-10 p-6 border-t border-white/10">
-        <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-gray-300">
+        {/* <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-gray-300">
           
+        </button> */}
+
+         {/* Logout Button */}
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-cyan-400 to-green-400 text-black font-semibold hover:opacity-90 transition">
+          <LogOut size={20} />
+          Log Out
         </button>
       </div>
     </div>
