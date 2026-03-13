@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Layout from './components/Layout';
 import LearningHub from './pages/LearningHub';
 import LandingPage from './pages/LandingPage';
+import About from './pages/About';
 
 // ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
@@ -17,7 +18,6 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 
 // ─── Route Guard ────────────────────────
 import ProtectedRoute from './components/ProtectedRoute'
-import About from './pages/About';
 import ResetPassword from './pages/ResetPassword';
 // import ContactPage from './pages/ContactPage';
 
