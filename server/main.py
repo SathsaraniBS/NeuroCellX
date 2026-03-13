@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import auth
 from routers import dashboard
 from database import engine, Base
+from routers import admin         
 
 app = FastAPI(
     title="VoltIQ - EV Battery Health Prediction System",
@@ -12,39 +13,34 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# ─────────────────────────────────────────
 # CORS Middleware
 # Allows React frontend to call this API
-# ─────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",      # ✅ Vite React dev server
-        "http://127.0.0.1:5173",      # ✅ alternate localhost
-    ],                                # ✅ FIXED: removed "*" - conflicts with credentials
+        "http://localhost:5173",      #  Vite React dev server
+        "http://127.0.0.1:5173",      #  alternate localhost
+    ],                                #  FIXED: removed "*" - conflicts with credentials
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# ─────────────────────────────────────────
+
 # Routers
-# ─────────────────────────────────────────
+
 app.include_router(auth.router)
 app.include_router(dashboard.router)
+app.include_router(admin.router)   
 
-# ─────────────────────────────────────────
 # Create all database tables on startup
-# ─────────────────────────────────────────
-Base.metadata.create_all(bind=engine)  # ✅ kept - creates tables automatically
+Base.metadata.create_all(bind=engine)  
 
-# ─────────────────────────────────────────
 # Health Check
 # GET /
-# ─────────────────────────────────────────
 @app.get("/")
 def home():
-    return {                           # ✅ FIXED: removed broken get_db() call
+    return {                           # FIXED: removed broken get_db() call
         "message": "VoltIQ - EV Battery Health Backend is Running!",
         "status": "online",
         "version": "1.0.0"
