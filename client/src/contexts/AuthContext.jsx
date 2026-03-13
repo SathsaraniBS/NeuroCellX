@@ -1,7 +1,7 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { loginUser, logoutUser, getCurrentUser } from '../services/authService';
-import { useToast } from './ToastContext';
+// import { useToast } from './ToastContext';
 
 // export const AuthContext = createContext(undefined);
 
@@ -17,17 +17,19 @@ export const AuthProvider = ({ children }) => {
 // On app load, check if user already logged in
   useEffect(() => {
     const savedUser = getCurrentUser();
-    if (savedUser) setUser(savedUser);
+    if (savedUser) {
+      setUser(savedUser);
+    }
     setLoading(false);
   }, []);
 
-  const login = async (email, password) => {
+  const login =  (token,user) => {
     try {
-      const data = await loginUser({ email, password });
       // Save token and user info
-      localStorage.setItem('token', data.access_token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      setUser(data.user);
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
+      
       return { success: true, user: data.user };
     } catch (error) {
       const message = error.response?.data?.detail || 'Login failed';
