@@ -60,7 +60,7 @@ const Navbar = () => {
             Landing Page
           </Link>
           <a
-            href="#about"
+            href="/about"
             className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
           >
             About
