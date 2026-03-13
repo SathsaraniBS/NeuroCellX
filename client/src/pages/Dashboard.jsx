@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
-import {
-  ChartLine, History, Settings,
-  LayoutDashboard, FileText
-} from "lucide-react";
+import {ChartLine, History, Settings,LayoutDashboard, FileText} from "lucide-react";
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
 import api from '../services/api'; 
@@ -51,10 +48,10 @@ function Dashboard() {
       <div className="flex flex-1">
         <Sidebar />
 
-        {/* ================= MAIN CONTENT ================= */}
+        {/*  MAIN CONTENT  */}
         <div className="flex-1 p-6 lg:p-10 overflow-auto">
 
-          {/* ========== TOP HEADER ========== */}
+          {/*  TOP HEADER  */}
           <div className="mb-8">
             <h2 className="text-3xl font-semibold">
               Good morning, {user?.name || user?.email || "User"}!
@@ -76,7 +73,7 @@ function Dashboard() {
             )}
           </div>
 
-          {/* ========== KPI CARDS ========== */}
+          {/*  KPI CARDS  */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
 
             {/* SOC */}
@@ -108,7 +105,7 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* ========== BATTERY LOGS TABLE ========== */}
+          {/*  BATTERY LOGS TABLE  */}
           <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
             <h3 className="text-xl font-semibold mb-4 text-cyan-400">
               Battery Logs
@@ -133,7 +130,7 @@ function Dashboard() {
                 </button>
               </div>
 
-            /* ✅ FIXED: batteryLogs.length is safe now */
+            /* batteryLogs.length is safe now */
             ) : batteryLogs.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
@@ -165,7 +162,7 @@ function Dashboard() {
                           </span>
                         </td>
                         <td className="p-4 text-gray-400">
-                          {/* ✅ FIXED: safe date parsing */}
+                          {/*  safe date parsing */}
                           {log.created_at
                             ? new Date(log.created_at).toLocaleString()
                             : 'N/A'}

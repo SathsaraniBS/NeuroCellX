@@ -5,11 +5,17 @@ import React, { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import AdminDashboard from './pages/AdminDashboard';
 import Layout from './components/Layout';
 import LearningHub from './pages/LearningHub';
 import LandingPage from './pages/LandingPage';
+
+// ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
+
+// ─── Admin Pages ────────────────────────
+import AdminDashboard from './pages/admin/AdminDashboard'; 
+
+// ─── Route Guard ────────────────────────
 import ProtectedRoute from './components/ProtectedRoute'
 import About from './pages/About';
 import ResetPassword from './pages/ResetPassword';
@@ -23,7 +29,7 @@ function App() {
             <ToastProvider> 
                 <AuthProvider>
                     <Routes>
-                        {/* Public Routes  */}
+                        {/* Public Routes (no login needed) */}
                         <Route path="/" element={<Layout />}>
                             <Route index element={<Home />} />
                             <Route path="login" element={<Login />} />
@@ -31,25 +37,27 @@ function App() {
                             <Route path="learning" element={<LearningHub />} />
                             <Route path="landingpage" element={<LandingPage />} />
                             <Route path="forgot-password" element={<ResetPassword />} />
-                            {/* <Route path="dashboard" element={<Dashboard />} /> */}
                             <Route path="about" element={<About />} />
                             {/* <Route path="contact" element={<ContactPage />} /> */}
                         </Route>
 
-                        {/* Protected Routes  */}
+                        {/* Protected Routes (login required) */}
                         <Route path="/dashboard" element={
                             <ProtectedRoute>
                                 <Dashboard />
                             </ProtectedRoute>
                         } />
 
-                        <Route path="/admin" element={
-                            <ProtectedRoute>
+                        {/* ADMIN ROUTES (admin only) */}
+
+                        {/* added import + allowedRoles */}
+                        <Route path="/admin/dashboard" element={
+                            <ProtectedRoute allowedRoles={['admin']}>
                                 <AdminDashboard />
                             </ProtectedRoute>
                         } />
 
-                        {/* Default Route */}
+                        {/* CATCH ALL — redirect to login */} 
                         <Route path="*" element={<Navigate to="/login" />} />   {/* ← NEW: Catch-all redirect */}
                     </Routes>
                 </AuthProvider>
