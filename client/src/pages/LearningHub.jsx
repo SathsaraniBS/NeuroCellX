@@ -3,6 +3,11 @@ import { Search, Clock, Eye } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+// Import images from src/assets
+import bev from "../assets/bev.jpg";  // Adjust path if in subfolder like assets/images/bev.jpg
+import phev from "../assets/phev.jpg";
+import hev from "../assets/hev.jpg";
+
 const guides = [
   {
     title: "An Introduction to Electric Vehicles",
@@ -72,21 +77,21 @@ const evTypes = [
     subtitle: "Battery Electric Vehicle",
     desc: "Fully electric vehicles powered only by batteries. They produce zero tailpipe emissions.",
     examples: "Tesla Model 3, Nissan Leaf, BYD Seal",
-    color: "black",
+    image: bev,  // Use imported image
   },
   {
     title: "PHEV",
     subtitle: "Plug-in Hybrid Electric Vehicle",
     desc: "Uses both a battery and fuel engine. Can drive short distances using battery power alone.",
     examples: "Toyota Prius Prime, Mitsubishi Outlander PHEV",
-    color: "from-green-100 to-green-50",
+    image: phev,  // Use imported image
   },
   {
     title: "HEV",
     subtitle: "Hybrid Electric Vehicle",
     desc: "Combines an electric motor with a fuel engine. Battery is charged through regenerative braking.",
     examples: "Toyota Prius, Honda Insight",
-    color: "from-yellow-100 to-yellow-50",
+    image: hev,  // Use imported image
   },
 ];
 
@@ -164,7 +169,6 @@ const faqs = [
   "How accurate are AI-based battery predictions?",
 ];
 
-
 export default function LearningHub() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex flex-col">
@@ -195,107 +199,109 @@ export default function LearningHub() {
       </section>
 
       {/* EV Basics */}
-            <section>
-              <div className="flex items-center gap-2 mb-4">
-                <h3 className="text-2xl font-bold">Electric Vehicle Basics</h3>
-              </div>
+      <section>
+        <div className="flex items-center gap-2 mb-4">
+          <h3 className="text-2xl font-bold">Types of Electric Vehicles</h3>
+        </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-10 py-20 mb-16">
-                {evTypes.map((item) => (
-                  <div
-                    key={item.title}
-                    className={`rounded-2xl border border-slate-200 bg-gradient-to-br ${item.color} shadow-sm p-6 hover:shadow-md transition`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-2xl font-bold">{item.title}</h4>
-                      <span className="text-4xl">🚘</span>
-                    </div>
-                    <p className="text-sm font-medium text-slate-500 mt-1">
-                      {item.subtitle}
-                    </p>
-                    <p className="mt-4 text-slate-700 leading-7">{item.desc}</p>
-                    <div className="mt-4 rounded-xl bg-white/70 p-3 text-sm text-slate-700">
-                      <span className="font-semibold">Examples:</span>{" "}
-                      {item.examples}
-                    </div>
-                  </div>
-                ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-10 py-20 mb-16 bg-blue-900/5">
+          {evTypes.map((item) => (
+            <div
+              key={item.title}
+              className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:shadow-md transition"
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-48 w-full object-cover mb-4"
+              />
+              <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
+              <p className="text-xl font-medium text-slate-400 mb-2">
+                {item.subtitle}
+              </p>
+              <p className="mt-4 text-slate-500 leading-7 mb-4">{item.desc}</p>
+              <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 text-sm text-white">
+                <span className="font-bold text-slate-500">Examples:</span> {item.examples}
               </div>
-            </section>
+            </div>
+          ))}
+        </div>
+      </section>
 
+
+      
 
       {/* Featured Guides */}
-              <section className="grid md:grid-cols-2 gap-10 items-center px-10 py-20 mb-16">
-                <div>
+      <section className="grid md:grid-cols-2 gap-10 items-center px-10 py-20 mb-16">
+        <div>
+          <h2 className="text-2xl font-semibold mb-6">Featured Guides</h2>
 
-                <h2 className="text-2xl font-semibold mb-6">Featured Guides</h2>
-      
-                <div className="grid md:grid-cols-3 gap-6">
-                  {guides.map((item, index) => (
-                    <div
-                      key={index}
-                      className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 backdrop-blur-lg"
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="h-48 w-full object-cover"
-                      />
-                      <div className="p-5">
-                        <span className="text-sm text-cyan-400">
-                          {item.category}
-                        </span>
-                        <h3 className="mt-2 font-semibold text-lg">
-                          {item.title}
-                        </h3>
-                        <div className="flex items-center gap-2 text-gray-400 text-sm mt-3">
-                          <Clock size={14} />
-                          {item.time}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+          <div className="grid md:grid-cols-3 gap-6">
+            {guides.map((item, index) => (
+              <div
+                key={index}
+                className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 backdrop-blur-lg"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="h-48 w-full object-cover"
+                />
+                <div className="p-5">
+                  <span className="text-sm text-cyan-400">
+                    {item.category}
+                  </span>
+                  <h3 className="mt-2 font-semibold text-lg">
+                    {item.title}
+                  </h3>
+                  <div className="flex items-center gap-2 text-gray-400 text-sm mt-3">
+                    <Clock size={14} />
+                    {item.time}
+                  </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trending Reads */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold mb-6">Trending Reads</h2>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {trending.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 backdrop-blur-lg"
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-48 w-full object-cover"
+              />
+              <div className="p-5">
+                <span className="text-sm text-cyan-400">
+                  {item.category}
+                </span>
+                <h3 className="mt-2 font-semibold text-lg">
+                  {item.title}
+                </h3>
+                <div className="flex items-center justify-between text-gray-400 text-sm mt-3">
+                  <div className="flex items-center gap-2">
+                    <Clock size={14} />
+                    {item.time}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Eye size={14} />
+                    {item.views}
+                  </div>
                 </div>
-              </section>
-      
-              {/* Trending Reads */}
-              <section className="mb-16">
-                <h2 className="text-2xl font-semibold mb-6">Trending Reads</h2>
-      
-                <div className="grid md:grid-cols-3 gap-6">
-                  {trending.map((item, index) => (
-                    <div
-                      key={index}
-                      className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 backdrop-blur-lg"
-                    >
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="h-48 w-full object-cover"
-                      />
-                      <div className="p-5">
-                        <span className="text-sm text-cyan-400">
-                          {item.category}
-                        </span>
-                        <h3 className="mt-2 font-semibold text-lg">
-                          {item.title}
-                        </h3>
-                        <div className="flex items-center justify-between text-gray-400 text-sm mt-3">
-                          <div className="flex items-center gap-2">
-                            <Clock size={14} />
-                            {item.time}
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Eye size={14} />
-                            {item.views}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Footer */}
       <Footer />
