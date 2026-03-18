@@ -175,7 +175,7 @@ const faqs = [
   "How accurate are AI-based battery predictions?",
 ];
 
-export default function LearningHub() {
+const LearningHub = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex flex-col">
       {/* Navigation */}
@@ -254,7 +254,11 @@ export default function LearningHub() {
               />
               <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
               <p className="text-xl font-medium text-slate-400 mb-2">
-                {item.subtitle}
+                {item.points.map((point, index) => (
+                  <span key={index} className="block">
+                    {point}
+                  </span>
+                ))}
               </p>
               <p className="mt-4 text-slate-500 leading-7 mb-4">{item.desc}</p>
               <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 text-sm text-white">
@@ -345,3 +349,5 @@ export default function LearningHub() {
     </div>
   );
 }
+
+export default LearningHub;
