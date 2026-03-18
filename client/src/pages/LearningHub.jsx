@@ -7,6 +7,8 @@ import Footer from "../components/Footer";
 import bev from "../assets/bev.jpg";  // Adjust path if in subfolder like assets/images/bev.jpg
 import phev from "../assets/phev.jpg";
 import hev from "../assets/hev.jpg";
+import nmc from "../assets/nmc.png";
+import ssb from "../assets/ssb.png";
 
 const guides = [
   {
@@ -95,8 +97,9 @@ const evTypes = [
   },
 ];
 
-const chemistries = [
+const evbatteyries = [
   {
+    title: "Lithium-ion (NMC)",
     name: "Lithium-ion (NMC)",
     points: [
       "High energy density",
@@ -104,6 +107,7 @@ const chemistries = [
       "Good performance and range",
     ],
     accent: "text-blue-600",
+    image: nmc,
   },
   {
     name: "Lithium Iron Phosphate (LFP)",
@@ -115,6 +119,7 @@ const chemistries = [
     accent: "text-green-600",
   },
   {
+    title: "Solid-State Batteries",
     name: "Solid-State Batteries",
     points: [
       "Emerging technology",
@@ -122,6 +127,7 @@ const chemistries = [
       "Higher energy density potential",
     ],
     accent: "text-purple-600",
+    image:ssb
   },
 ];
 
@@ -198,7 +204,7 @@ export default function LearningHub() {
         </div>
       </section>
 
-      {/* EV Basics */}
+      {/* EV Types */}
       <section>
         <div className="flex items-center gap-2 mb-4">
           <h3 className="text-2xl font-bold">Types of Electric Vehicles</h3>
@@ -229,7 +235,38 @@ export default function LearningHub() {
       </section>
 
 
-      
+      {/* EV Battery Types */}
+      <section>
+        <div className="flex items-center gap-2 mb-4">
+          <h3 className="text-2xl font-bold">Ev Battery Types</h3>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-10 py-20 mb-16 bg-blue-900/5">
+          {evbatteyries.map((item) => (
+            <div
+              key={item.title}
+              className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:shadow-md transition"
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-48 w-full object-cover mb-4"
+              />
+              <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
+              <p className="text-xl font-medium text-slate-400 mb-2">
+                {item.subtitle}
+              </p>
+              <p className="mt-4 text-slate-500 leading-7 mb-4">{item.desc}</p>
+              <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 text-sm text-white">
+                <span className="font-bold text-slate-500">Examples:</span> {item.examples}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+
 
       {/* Featured Guides */}
       <section className="grid md:grid-cols-2 gap-10 items-center px-10 py-20 mb-16">
