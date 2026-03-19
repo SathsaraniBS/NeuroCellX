@@ -9,6 +9,7 @@ import Layout from './components/Layout';
 import LearningHub from './pages/LearningHub';
 import LandingPage from './pages/LandingPage';
 import About from './pages/About';
+import BatteryTypes from './pages/BatteryTypes';
 
 // ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
@@ -38,6 +39,7 @@ function App() {
                             <Route path="landingpage" element={<LandingPage />} />
                             <Route path="forgot-password" element={<ResetPassword />} />
                             <Route path="about" element={<About />} />
+                            <Route path="battery-types" element={<BatteryTypes />} />
                             {/* <Route path="contact" element={<ContactPage />} /> */}
                         </Route>
 

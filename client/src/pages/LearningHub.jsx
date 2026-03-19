@@ -1,14 +1,10 @@
 import React from "react";
 import { Search, Clock, Eye } from "lucide-react";
+import { Link } from "react-router-dom"; // <-- ADDED: Required for <Link> components
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-// Import images from src/assets
-import bev from "../assets/bev.jpg";  // Adjust path if in subfolder like assets/images/bev.jpg
-import phev from "../assets/phev.jpg";
-import hev from "../assets/hev.jpg";
-import nmc from "../assets/nmc.png";
-import ssb from "../assets/ssb.png";
+
 
 const guides = [
   {
@@ -79,55 +75,54 @@ const evTypes = [
     subtitle: "Battery Electric Vehicle",
     desc: "Fully electric vehicles powered only by batteries. They produce zero tailpipe emissions.",
     examples: "Tesla Model 3, Nissan Leaf, BYD Seal",
-    image: bev,  // Use imported image
+    image: "src/assets/bev.jpg",  
   },
   {
     title: "PHEV",
     subtitle: "Plug-in Hybrid Electric Vehicle",
     desc: "Uses both a battery and fuel engine. Can drive short distances using battery power alone.",
     examples: "Toyota Prius Prime, Mitsubishi Outlander PHEV",
-    image: phev,  // Use imported image
+    image: "src/assets/phev.jpg", 
   },
   {
     title: "HEV",
     subtitle: "Hybrid Electric Vehicle",
     desc: "Combines an electric motor with a fuel engine. Battery is charged through regenerative braking.",
     examples: "Toyota Prius, Honda Insight",
-    image: hev,  // Use imported image
+    image: "src/assets/hev.jpg",  
   },
 ];
 
 const evbatteyries = [
   {
     title: "Lithium-ion (NMC)",
-    name: "Lithium-ion (NMC)",
     points: [
       "High energy density",
       "Widely used in EVs",
       "Good performance and range",
     ],
     accent: "text-blue-600",
-    image: nmc,
+    image: "src/assets/nmc.png"
   },
   {
-    name: "Lithium Iron Phosphate (LFP)",
+    title: "Lithium Iron Phosphate (LFP)", // <-- FIXED: Added missing title
     points: [
       "Safer and longer cycle life",
       "Lower energy density than NMC",
       "Popular in cost-efficient EVs",
     ],
     accent: "text-green-600",
+    image: "src/assets/lfp.png"
   },
   {
     title: "Solid-State Batteries",
-    name: "Solid-State Batteries",
     points: [
       "Emerging technology",
       "Potentially higher safety",
       "Higher energy density potential",
     ],
     accent: "text-purple-600",
-    image:ssb
+    image: "src/assets/ssb.png"
   },
 ];
 
@@ -193,8 +188,8 @@ const LearningHub = () => {
           </p>
 
           {/* Search */}
-          <div className="relative max-w-xl z-10">  {/* ← NEW: z-index 10 එකතු කළා (icon එක මතුවෙන්න) */}
-            <Search className="absolute left-4 top-3.5 text-gray-300 z-20" size={20} />  {/* ← NEW: size 20 ට වැඩි කළා, color gray-300 ට වෙනස් කළා, z-index 20 එකතු කළා */}
+          <div className="relative max-w-xl z-10">
+            <Search className="absolute left-4 top-3.5 text-gray-300 z-20" size={20} />
             <input
               type="text"
               placeholder="Search for guides, tips, or resources..."
@@ -206,7 +201,7 @@ const LearningHub = () => {
 
       {/* EV Types */}
       <section>
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 mb-4 px-10">
           <h3 className="text-2xl font-bold">Types of Electric Vehicles</h3>
         </div>
 
@@ -219,14 +214,14 @@ const LearningHub = () => {
               <img
                 src={item.image}
                 alt={item.title}
-                className="h-48 w-full object-cover mb-4"
+                className="h-48 w-full object-cover mb-4 rounded-lg"
               />
               <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
               <p className="text-xl font-medium text-slate-400 mb-2">
                 {item.subtitle}
               </p>
               <p className="mt-4 text-slate-500 leading-7 mb-4">{item.desc}</p>
-              <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 text-sm text-white">
+              <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 text-sm p-3 text-white">
                 <span className="font-bold text-slate-500">Examples:</span> {item.examples}
               </div>
             </div>
@@ -234,80 +229,105 @@ const LearningHub = () => {
         </div>
       </section>
 
-
       {/* EV Battery Types */}
       <section>
-        <div className="flex items-center gap-2 mb-4">
-          <h3 className="text-2xl font-bold">Ev Battery Types</h3>
+        <div className="flex items-center gap-2 mb-4 px-10">
+          <h3 className="text-2xl font-bold">EV Battery Types</h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-10 py-20 mb-16 bg-blue-900/5">
           {evbatteyries.map((item) => (
-            <div
+            <Link 
+              to = "/battery-types"
               key={item.title}
               className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:shadow-md transition"
+            >
+              {item.image && (
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="h-48 w-full object-cover mb-4 rounded-lg"
+                />
+              )}
+              <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
+              <div className="text-xl font-medium text-slate-400 mb-2">
+                {item.points.map((point, index) => (
+                  <span key={index} className="block text-sm mb-1">
+                    • {point}
+                  </span>
+                ))}
+              </div>
+              
+              {/* FIXED: Conditionally render description and examples since batteries don't have them in the array */}
+              {item.desc && <p className="mt-4 text-slate-500 leading-7 mb-4">{item.desc}</p>}
+              
+              {item.examples && (
+                <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 p-3 text-sm text-white mt-4">
+                  <span className="font-bold text-slate-500">Examples:</span> {item.examples}
+                </div>
+              )}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured Guides - FIXED STRUCTURAL TAGS */}
+      <section className="px-10 mb-16">
+        <div className="grid md:grid-cols-2 gap-10 items-center py-10">
+          <div>
+            <h2 className="text-2xl font-semibold mb-6">Featured Guides</h2>
+
+            <div className="flex gap-4 mr-4">
+              <Link to="#"
+                className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition "
+              >
+                EV Basics
+              </Link>
+              <Link to="#" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition ">
+                Charging Tips
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative h-64 md:h-80">
+            <img
+              src="src/assets/Lithiumbattery.jpg"
+              alt="Featured Guides"
+              className="w-full h-full object-cover rounded-2xl"
+            />
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 mt-10">
+          {guides.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 backdrop-blur-lg"
             >
               <img
                 src={item.image}
                 alt={item.title}
-                className="h-48 w-full object-cover mb-4"
+                className="h-48 w-full object-cover"
               />
-              <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
-              <p className="text-xl font-medium text-slate-400 mb-2">
-                {item.points.map((point, index) => (
-                  <span key={index} className="block">
-                    {point}
-                  </span>
-                ))}
-              </p>
-              <p className="mt-4 text-slate-500 leading-7 mb-4">{item.desc}</p>
-              <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 text-sm text-white">
-                <span className="font-bold text-slate-500">Examples:</span> {item.examples}
+              <div className="p-5">
+                <span className="text-sm text-cyan-400">
+                  {item.category}
+                </span>
+                <h3 className="mt-2 font-semibold text-lg">
+                  {item.title}
+                </h3>
+                <div className="flex items-center gap-2 text-gray-400 text-sm mt-3">
+                  <Clock size={14} />
+                  {item.time}
+                </div>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-
-
-
-      {/* Featured Guides */}
-      <section className="grid md:grid-cols-2 gap-10 items-center px-10 py-20 mb-16">
-        <div>
-          <h2 className="text-2xl font-semibold mb-6">Featured Guides</h2>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {guides.map((item, index) => (
-              <div
-                key={index}
-                className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 backdrop-blur-lg"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-48 w-full object-cover"
-                />
-                <div className="p-5">
-                  <span className="text-sm text-cyan-400">
-                    {item.category}
-                  </span>
-                  <h3 className="mt-2 font-semibold text-lg">
-                    {item.title}
-                  </h3>
-                  <div className="flex items-center gap-2 text-gray-400 text-sm mt-3">
-                    <Clock size={14} />
-                    {item.time}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Trending Reads */}
-      <section className="mb-16">
+      <section className="mb-16 px-10">
         <h2 className="text-2xl font-semibold mb-6">Trending Reads</h2>
 
         <div className="grid md:grid-cols-3 gap-6">
