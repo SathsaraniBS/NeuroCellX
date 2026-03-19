@@ -10,22 +10,19 @@ const BatteryTypes = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="grid md:grid-cols-2 gap-10 items-center px-10 py-20">
+     <section className="grid md:grid-cols-2 gap-10 items-center px-10 py-20">
+       {/* LEFT TEXT */}
+        <div>
+          <h2 className="text-5xl font-bold leading-tight mb-6">
+                    EV Battery Types
+          </h2>
         
-      {/* Header */}
-      <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
-        EV Battery Types
-      </h1>
-      <p className="text-gray-400 mb-6">
-        Learn about EV battery technologies and detailed industry insights.
-      </p>
 
-      {/* INTRO */}
-      <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl mb-6 shadow-lg">
-        <p className="text-gray-300 italic">
-          “The battery remains the single most expensive component in an EV,
-          and it’s the key determinant of both performance and price.”
-        </p>
+      <h2>Introduction</h2>
+      
+      <h3>“The battery remains the single most expensive component in an EV,” notes Sam Abuelsamid, principal analyst at Guidehouse Insights, “and it’s the key determinant of both performance and price.”
+      </h3>
+
       </div>
 
       {/* TYPES OVERVIEW */}
@@ -164,7 +161,6 @@ const BatteryTypes = () => {
       </div>
  
         
-      </section>
 
       {/* Footer */}
       <Footer />
