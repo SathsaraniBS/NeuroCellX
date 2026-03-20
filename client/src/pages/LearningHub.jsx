@@ -112,7 +112,7 @@ const evbatteyries = [
       "Popular in cost-efficient EVs",
     ],
     accent: "text-green-600",
-    image: "src/assets/lfp.png"
+    image: "src/assets/libattery.png"
   },
   {
     title: "Nickel Cobalt Aluminum (NCA)",
@@ -245,7 +245,7 @@ const LearningHub = () => {
           <h3 className="text-2xl font-bold">EV Battery Types</h3>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-10 py-20 mb-16 bg-blue-900/5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-10 py-20 mb-16 bg-blue-900/5">
           {evbatteyries.map((item) => (
             <Link 
               to = "/battery-types"

@@ -38,6 +38,82 @@ const BatteryTypes = () => {
           </p>
         </section>
 
+
+        {/* L SECTION */}
+        <section className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-12 shadow-lg">
+          <h2 className="text-3xl font-bold text-green-400 mb-4">
+            Lithium Iron  (nmc)
+          </h2>
+
+          <p className="text-gray-300 mb-8 text-lg">
+            NMC batteries are the most widely used type in EVs, offering a good balance of energy density, lifespan, and cost. They are commonly found in mid-range and long-range EV models.
+          </p>
+
+          {/* Key Characteristics & Advantages */}
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-xl font-semibold mb-4 text-cyan-400">
+                Key Characteristics
+              </h3>
+              <ul className="text-gray-300 space-y-2">
+                <li>• Operating voltage: 3.6-3.7V</li>
+                <li>• Energy density: 200-350Wh/kg</li>
+                <li>• Cycle life: 1,000-2,000 cycles</li>
+                <li>• Cost: Global average of $85/kWh in 2024</li>
+              </ul>
+            </div>
+
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-xl font-semibold mb-4 text-green-400">
+                Advantages
+              </h3>
+              <ul className="text-gray-300 space-y-2">
+                <li>✔ High safety (thermal stability)</li>
+                <li>✔ Long lifespan (8–10 years)</li>
+                <li>✔ Low cost</li>
+                <li>✔ Eco-friendly (no cobalt)</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Disadvantages, Applications & Market Trends - FIXED: Put these in a 3-column grid */}
+          <div className="grid md:grid-cols-3 gap-6">
+            
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-lg font-semibold mb-3 text-red-400">
+                Disadvantages
+              </h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li>• Lower energy density</li>
+                <li>• Heavier weight</li>
+                <li>• Poor performance in cold temperatures</li>
+              </ul>
+            </div>
+
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-lg font-semibold mb-3 text-yellow-400">
+                Applications & Success
+              </h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li>• Tesla Model 3/Y (Standard Range)</li>
+                <li>• BYD Blade Battery</li>
+                <li>• Commercial EVs (fast growth)</li>
+              </ul>
+            </div>
+
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-lg font-semibold mb-3 text-purple-400">
+                Market Trends
+              </h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li>• Market size: $141B (2024)</li>
+                <li>• Rapid global adoption</li>
+                <li>• Expected 300GWh installations by 2025</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
         {/* LFP SECTION */}
         <section className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-12 shadow-lg">
           <h2 className="text-3xl font-bold text-green-400 mb-4">
