@@ -115,6 +115,16 @@ const evbatteyries = [
     image: "src/assets/lfp.png"
   },
   {
+    title: "Nickel Cobalt Aluminum (NCA)",
+    points: [
+      "Lower energy density than NMC",
+      "Good performance and range",
+      "Popular in cost-efficient EVs",
+    ],
+    accent: "text-yellow-600",
+    image: "src/assets/nca.png"
+  },
+  {
     title: "Solid-State Batteries",
     points: [
       "Emerging technology",
