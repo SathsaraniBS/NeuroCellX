@@ -39,7 +39,7 @@ const BatteryTypes = () => {
         </section>
 
 
-        {/* L SECTION */}
+        {/* nmc SECTION */}
         <section className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-12 shadow-lg">
           <h2 className="text-3xl font-bold text-green-400 mb-4">
             Lithium Iron  (nmc)
@@ -68,10 +68,10 @@ const BatteryTypes = () => {
                 Advantages
               </h3>
               <ul className="text-gray-300 space-y-2">
-                <li>✔ High safety (thermal stability)</li>
-                <li>✔ Long lifespan (8–10 years)</li>
-                <li>✔ Low cost</li>
-                <li>✔ Eco-friendly (no cobalt)</li>
+                <li>High energy density: Nature Energy’s recent study confirms 30-40% higher than LFP</li>
+                <li>Superior power performance: Ideal for fast charging applications</li>
+                <li>Good high-temperature stability: Stable performance below 45°C</li>
+                <li>Mature supply chain: Global capacity exceeding 500GWh</li>
               </ul>
             </div>
           </div>
@@ -84,9 +84,11 @@ const BatteryTypes = () => {
                 Disadvantages
               </h3>
               <ul className="text-gray-300 text-sm space-y-2">
-                <li>• Lower energy density</li>
-                <li>• Heavier weight</li>
-                <li>• Poor performance in cold temperatures</li>
+                <li>• Higher costs: Raw materials account for 60% of total costs</li>
+                <li>• Cobalt dependency: Supply chain geopolitical risks</li>
+                <li>• Relatively lower safety profile: Higher thermal runaway risk compared to LFP</li>
+                <li>• Shorter cycle life: Generally lower than LFP batteries
+                </li>
               </ul>
             </div>
 
@@ -95,22 +97,13 @@ const BatteryTypes = () => {
                 Applications & Success
               </h3>
               <ul className="text-gray-300 text-sm space-y-2">
-                <li>• Tesla Model 3/Y (Standard Range)</li>
-                <li>• BYD Blade Battery</li>
-                <li>• Commercial EVs (fast growth)</li>
+                <li>• Porsche Taycan: Employs 800V high-voltage NMC battery system</li>
+                <li>• Tesla Model S/X: Long-range versions utilize high-nickel NMC batteries</li>
+                <li>• BMW i Series: Implements fifth-generation NMC battery technology</li>
               </ul>
             </div>
 
-            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
-              <h3 className="text-lg font-semibold mb-3 text-purple-400">
-                Market Trends
-              </h3>
-              <ul className="text-gray-300 text-sm space-y-2">
-                <li>• Market size: $141B (2024)</li>
-                <li>• Rapid global adoption</li>
-                <li>• Expected 300GWh installations by 2025</li>
-              </ul>
-            </div>
+            
           </div>
         </section>
 
@@ -177,52 +170,140 @@ const BatteryTypes = () => {
               </ul>
             </div>
 
-            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
-              <h3 className="text-lg font-semibold mb-3 text-purple-400">
-                Market Trends
-              </h3>
-              <ul className="text-gray-300 text-sm space-y-2">
-                <li>• Market size: $141B (2024)</li>
-                <li>• Rapid global adoption</li>
-                <li>• Expected 300GWh installations by 2025</li>
-              </ul>
-            </div>
+            
           </div>
         </section>
 
-        {/* OTHER BATTERY TYPES */}
-        <section className="grid md:grid-cols-3 gap-6 mb-12">
-          
-          {/* NMC */}
-          <div className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition duration-300">
-            <h3 className="text-xl font-semibold text-cyan-400 mb-3">
-              NMC Battery
-            </h3>
-            <p className="text-gray-400 leading-relaxed">
-              High energy density and balanced performance. Common in long-range EVs.
-            </p>
+        {/* NCA SECTION */}
+            <section className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-12 shadow-lg">
+          <h2 className="text-3xl font-bold text-green-400 mb-4">
+            Nickel-Cadmium (NCA)
+          </h2>
+
+          <p className="text-gray-300 mb-8 text-lg">
+            NCA batteries are used in premium EVs like Tesla, with high performance and energy density.
+          </p>
+
+          {/* Key Characteristics & Advantages */}
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-xl font-semibold mb-4 text-cyan-400">
+                Key Characteristics
+              </h3>
+              <ul className="text-gray-300 space-y-2">
+                <li>• Operating voltage: 3.2V</li>
+                <li>• Energy density: 90–160 Wh/kg</li>
+                <li>• Cycle life: 3,000–6,000 cycles</li>
+                <li>• Cost: ~$53/kWh (2024)</li>
+              </ul>
+            </div>
+
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-xl font-semibold mb-4 text-green-400">
+                Advantages
+              </h3>
+              <ul className="text-gray-300 space-y-2">
+                <li>✔ High safety (thermal stability)</li>
+                <li>✔ Long lifespan (8–10 years)</li>
+                <li>✔ Low cost</li>
+                <li>✔ Eco-friendly (no cobalt)</li>
+              </ul>
+            </div>
           </div>
 
-          {/* NCA */}
-          <div className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition duration-300">
-            <h3 className="text-xl font-semibold text-green-400 mb-3">
-              NCA Battery
-            </h3>
-            <p className="text-gray-400 leading-relaxed">
-              High performance and energy density, used in premium EVs like Tesla.
-            </p>
+          {/* Disadvantages, Applications & Market Trends - FIXED: Put these in a 3-column grid */}
+          <div className="grid md:grid-cols-3 gap-6">
+            
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-lg font-semibold mb-3 text-red-400">
+                Disadvantages
+              </h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li>• Lower energy density</li>
+                <li>• Heavier weight</li>
+                <li>• Poor performance in cold temperatures</li>
+              </ul>
+            </div>
+
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-lg font-semibold mb-3 text-yellow-400">
+                Applications & Success
+              </h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li>• Tesla Model 3/Y (Standard Range)</li>
+                <li>• BYD Blade Battery</li>
+                <li>• Commercial EVs (fast growth)</li>
+              </ul>
+            </div>
+
+            
+          </div>
+        </section>  
+
+        {/* Solid-State Section  */}
+        <section className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-12 shadow-lg">
+          <h2 className="text-3xl font-bold text-green-400 mb-4">
+            Solid-State Batteries
+          </h2>
+
+          <p className="text-gray-300 mb-8 text-lg">
+            Solid-state batteries are used in EVs like Tesla, with high performance and energy density.
+          </p>
+
+          {/* Key Characteristics & Advantages */}
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-xl font-semibold mb-4 text-cyan-400">
+                Key Characteristics
+              </h3>
+              <ul className="text-gray-300 space-y-2">
+                <li>• Operating voltage: 3.2V</li>
+                <li>• Energy density: 90–160 Wh/kg</li>
+                <li>• Cycle life: 3,000–6,000 cycles</li>
+                <li>• Cost: ~$53/kWh (2024)</li>
+              </ul>
+            </div>
+
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-xl font-semibold mb-4 text-green-400">
+                Advantages
+              </h3>
+              <ul className="text-gray-300 space-y-2">
+                <li>✔ High safety (thermal stability)</li>
+                <li>✔ Long lifespan (8–10 years)</li>
+                <li>✔ Low cost</li>
+                <li>✔ Eco-friendly (no cobalt)</li>
+              </ul>
+            </div>
           </div>
 
-          {/* Solid */}
-          <div className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition duration-300">
-            <h3 className="text-xl font-semibold text-purple-400 mb-3">
-              Solid-State
-            </h3>
-            <p className="text-gray-400 leading-relaxed">
-              Future technology offering higher safety and energy density.
-            </p>
-          </div>
+          {/* Disadvantages, Applications & Market Trends - FIXED: Put these in a 3-column grid */}
+          <div className="grid md:grid-cols-3 gap-6">
+            
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-lg font-semibold mb-3 text-red-400">
+                Disadvantages
+              </h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li>• Lower energy density</li>
+                <li>• Heavier weight</li>
+                <li>• Poor performance in cold temperatures</li>
+              </ul>
+            </div>
 
+            <div className="bg-black/40 p-6 rounded-xl border border-white/5">
+              <h3 className="text-lg font-semibold mb-3 text-yellow-400">
+                Applications & Success
+              </h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li>• Tesla Model 3/Y (Standard Range)</li>
+                <li>• BYD Blade Battery</li>
+                <li>• Commercial EVs (fast growth)</li>
+              </ul>
+            </div>
+
+            
+          </div>
         </section>
 
         {/* EXPERT INSIGHT */}
