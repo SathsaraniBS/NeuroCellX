@@ -5,7 +5,6 @@ import { useAuth } from "../contexts/AuthContext";
 import { useToast } from '../contexts/ToastContext';
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { FaLinkedinIn , FaTwitter } from "react-icons/fa";
-import ResetPassword from "./ResetPassword";
 import { loginUser } from "../services/authService";
 
 function Login() {
@@ -21,24 +20,21 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
      try {
-            // setLoading(true);
-            // await login(email, password);
-            // addToast('Login Successful!', 'success');
-            // navigate('/dashboard', { replace: true });
-            // setLoading(true);
-            // const response = await axios.post("http://127.0.0.1:8000/api/auth/login", { 
-            // email, 
-            // password 
-            // });
-
+          
             const data = await loginUser({ email, password });
+            // ✅ Debug - check what backend returns
+            console.log('Login response:', data);
+            console.log('User role:', data.user?.role);
+
             const { token, user } = data;
             login(token, user); 
             addToast('Login Successful!', 'success');
             //  Role-based redirect
-            if (user.role === 'admin') navigate('/admin/users', { replace: true });
-            else if (user.role === 'engineer') navigate('/datasets', { replace: true });
+            if (user.role === 'admin') navigate('/admin/dashboard', { replace: true });
+            else if (user.role === 'engineer') navigate('/engineer/dashboard', { replace: true });
             else navigate('/dashboard', { replace: true });
 
         } catch (err) {
