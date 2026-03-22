@@ -12,19 +12,9 @@ const EngineerDashboard = () => {
 
   //  State 
   const [stats, setStats]         = useState(null);
-  const [users, setUsers]         = useState([]);
   const [loading, setLoading]     = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
 
-  // Add user modal
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [newUser, setNewUser]           = useState({
-    name: '', email: '', password: '', role: 'user'
-  });
-
-  // Edit user modal
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [editUser, setEditUser]           = useState(null);
 
   // Fetch stats 
   const fetchStats = async () => {
@@ -53,48 +43,7 @@ const EngineerDashboard = () => {
     fetchUsers();
   }, []);
 
-  // Add user 
-  const handleAddUser = async () => {
-    try {
-      await api.post('/api/admin/users', newUser);
-      addToast('User created successfully!', 'success');
-      setShowAddModal(false);
-      setNewUser({ name: '', email: '', password: '', role: 'user' });
-      fetchUsers();
-      fetchStats();
-    } catch (err) {
-      addToast(err.response?.data?.detail || 'Failed to create user', 'error');
-    }
-  };
-
-  // Edit user 
-  const handleEditUser = async () => {
-    try {
-      await api.put(`/api/admin/users/${editUser.id}`, {
-        name: editUser.name,
-        role: editUser.role
-      });
-      addToast('User updated successfully!', 'success');
-      setShowEditModal(false);
-      fetchUsers();
-    } catch (err) {
-      addToast('Failed to update user', 'error');
-    }
-  };
-
-  // Delete user
-  const handleDeleteUser = async (userId, userName) => {
-    if (!window.confirm(`Delete user "${userName}"?`)) return;
-    try {
-      await api.delete(`/api/admin/users/${userId}`);
-      addToast('User deleted!', 'success');
-      fetchUsers();
-      fetchStats();
-    } catch (err) {
-      addToast('Failed to delete user', 'error');
-    }
-  };
-
+  
   // Logout 
   const handleLogout = () => {
     logout();
