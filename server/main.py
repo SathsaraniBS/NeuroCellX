@@ -5,7 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import auth
 from routers import dashboard
 from database import engine, Base
-from routers import admin         
+from routers import admin 
+from routers import datasets      
+
 
 app = FastAPI(
     title="VoltIQ - EV Battery Health Prediction System",
@@ -31,7 +33,9 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(dashboard.router)
-app.include_router(admin.router)   
+app.include_router(admin.router)  
+app.include_router(datasets.router) 
+
 
 # Create all database tables on startup
 Base.metadata.create_all(bind=engine)  

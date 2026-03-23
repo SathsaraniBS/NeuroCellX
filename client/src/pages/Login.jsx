@@ -47,26 +47,7 @@ function Login() {
         }
   };
 
-    //   // Expected response: { token, user: { role, ... } }
-    //   login(res.data.token, res.data.user);
-
-    //   if (res.data.user.role === "admin") {
-    //     navigate("/admin");
-    //   } else {
-    //     navigate("/user/dashboard");
-    //   }
-    // } catch (err) {
-    //   const message =
-    //     err.response?.data?.message ||
-    //     err.message ||
-    //     "Login failed. Please try again.";
-    //   setError(message);
-    //   console.error("Login error:", err);
-    // } finally {
-    //   setLoading(false);
-    // }
-  
-
+   
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#030712] via-[#071b2f] to-[#020617] text-white relative overflow-hidden">
       {/* Background glow */}
