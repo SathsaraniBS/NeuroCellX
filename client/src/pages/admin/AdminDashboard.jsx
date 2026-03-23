@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import api from '../../services/api';
-import { Users, Database, Activity, Plus, Wrench, BarChart3 } from 'lucide-react';
-
+import { Users, Database, Activity, Plus, Wrench, BarChart3 ,BrainCircuit, Bell} from 'lucide-react';
+import { TbLogs } from 'react-icons/tb';
 import AdminUsers from '../../components/admin/AdminUsers'; 
 
 const AdminDashboard = () => {
@@ -64,6 +64,11 @@ const AdminDashboard = () => {
           {[
             { id: 'overview', label: 'Overview',        icon: <Activity size={18} /> },
             { id: 'users',    label: 'User Management', icon: <Users size={18} /> },
+            { id: 'dataset', label: 'Dataset Management',icon: <Database size={18} /> },
+            { id: 'model', label: 'ML Model Management',icon: <BrainCircuit size={18} /> },
+            { id: 'logs',label:'System Logs',          icon: <TbLogs size={18} /> },
+            {id:  'Alerts', label: 'Alerts & Notifications', icon: <Bell size={18} /> },
+            { id: 'settings', label: 'Settings',        icon: <Wrench size={18} /> },
           ].map((tab) => (
             <button
               key={tab.id}
