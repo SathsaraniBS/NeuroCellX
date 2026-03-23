@@ -10,6 +10,7 @@ import LearningHub from './pages/LearningHub';
 import LandingPage from './pages/LandingPage';
 import About from './pages/About';
 import BatteryTypes from './pages/BatteryTypes';
+import EngineerDashboard from './pages/EngineerDashboard';
 
 // ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
@@ -49,6 +50,14 @@ function App() {
                                 <Dashboard />
                             </ProtectedRoute>
                         } />
+
+
+                        {/* ENGINEER ROUTES (engineer only) */}
+                        <Route path="/engineer/dashboard" element={
+                            <ProtectedRoute allowedRoles={['engineer', 'admin']}>
+                                <EngineerDashboard />
+                           </ProtectedRoute>
+                         } />
 
                         {/* ADMIN ROUTES (admin only) */}
 
