@@ -95,6 +95,8 @@ if HAS_PYARROW:
     import pyarrow as pa
     import pyarrow.compute as pc
 
+    from pandas.compat.pyarrow import _safe_fill_null
+
     from pandas.core.dtypes.dtypes import ArrowDtype
 
     ARROW_CMP_FUNCS = {
@@ -906,7 +908,7 @@ class ArrowExtensionArray(
         pc_func = ARROW_CMP_FUNCS[op.__name__]
         ltype = self._pa_array.type
 
-        if isinstance(other, (ExtensionArray, np.ndarray, list)):
+        if isinstance(other, (ExtensionArray, np.ndarray, list, range)):
             try:
                 boxed = self._box_pa(other)
             except pa.lib.ArrowInvalid:
@@ -915,8 +917,10 @@ class ArrowExtensionArray(
                 result = pa.array(res_values, type=pa.bool_(), from_pandas=True)
             else:
                 rtype = boxed.type
-                if (pa.types.is_timestamp(ltype) and pa.types.is_date(rtype)) or (
-                    pa.types.is_timestamp(rtype) and pa.types.is_date(ltype)
+                if (
+                    (pa.types.is_timestamp(ltype) and pa.types.is_date(rtype))
+                    or (pa.types.is_timestamp(rtype) and pa.types.is_date(ltype))
+                    or isinstance(other, range)
                 ):
                     # GH#62157 match non-pyarrow behavior
                     result = ops.invalid_comparison(self, other, op)
@@ -1402,7 +1406,7 @@ class ArrowExtensionArray(
 
         try:
             return self._from_pyarrow_array(
-                pc.fill_null(self._pa_array, fill_value=fill_value)
+                _safe_fill_null(self._pa_array, fill_value=fill_value)
             )
         except pa.ArrowNotImplementedError:
             # ArrowNotImplementedError: Function 'coalesce' has no kernel
@@ -1468,7 +1472,7 @@ class ArrowExtensionArray(
             combined = encoded.combine_chunks()
             pa_indices = combined.indices
             if pa_indices.null_count > 0:
-                pa_indices = pc.fill_null(pa_indices, -1)
+                pa_indices = _safe_fill_null(pa_indices, -1)
             indices = pa_indices.to_numpy(zero_copy_only=False, writable=True).astype(
                 np.intp, copy=False
             )
@@ -1927,7 +1931,7 @@ class ArrowExtensionArray(
                 return self._from_pyarrow_array(pa_array)
             if skipna:
                 if name == "cumsum":
-                    pa_array = pc.fill_null(pa_array, "")
+                    pa_array = _safe_fill_null(pa_array, "")
                 else:
                     # We can retain the running min/max by forward/backward filling.
                     pa_array = pc.fill_null_forward(pa_array)
