@@ -48,12 +48,13 @@ const Hero = () => {
 
           {/* This block was broken — either remove or fix */}
           {/* If you want to show the form here: */}
-          <div className="mt-10">
+          {/* <div className="mt-10">
             <h3 className="text-2xl mb-4">EV Battery Health Prediction</h3>
             <PredictForm />   
             <p className="text-gray-500">(Prediction form placeholder)</p>
-          </div>
-        </div>
+          </div>*/}
+         </div> 
+
 
         {/* RIGHT IMAGE */}
         <div className="relative">
