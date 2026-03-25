@@ -52,7 +52,8 @@ const ContactPage = () => {
     ];
 
     return (
-        <div className="pt-24 pb-20 dark:bg-black transition-colors duration-500 min-h-screen">
+        // <div className="pt-24 pb-20 dark:bg-black transition-colors duration-500 min-h-screen">
+            <div className="min-h-screen bg-[#050816] text-white px-10 py-8 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header Section */}
                 <div className="text-center max-w-3xl mx-auto mb-20 animate-fade-in">

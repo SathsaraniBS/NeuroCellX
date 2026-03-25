@@ -91,19 +91,7 @@ const Home = () => {
                         Smart Battery Management for EVs
                     </h2>
 
-                    <div className="grid md:grid-cols-3 gap-8">
-                        <div className="group bg-gradient-to-br from-gray-900 to-black border border-cyan-900/30 rounded-2xl p-8 hover:border-cyan-500/50 transition-all hover:shadow-xl hover:shadow-cyan-900/30" >
-                            <div className="w-45 h-45 mb-6 rounded-xl bg-transparent  flex items-center justify-center text-3xl">
-                                <img src="src/assets/b1.png" alt="battery icon" />
-                            </div>
-                            <h3 className="text-2xl font-bold mb-4">Predictive Intelligence</h3>
-                            <p className="text-gray-400 leading-relaxed">
-                                Predict remaining battery life with AI-powered analytics
-                            </p>
-                        </div>
-
-                        {/* ... other feature cards follow the same pattern ... */}
-                    </div>
+                    
                 </div>
             </section>
 
