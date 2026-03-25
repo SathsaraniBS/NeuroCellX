@@ -1,9 +1,11 @@
 import React from "react";
 import PredictForm from "./PredictForm";
 import { Link } from "react-router-dom";
+import { Play } from "lucide-react";
 const features = [
   {
-    icon: "📈",
+    image:"src/assets/b2.png",
+
     title: "Predictive Intelligence",
     desc: "Predict remaining battery life with AI-powered analytics.",
   },
@@ -41,8 +43,9 @@ const Hero = () => {
               Connect Your Vehicle
             </button>
 
-            <button className="px-7 py-3 border border-white/30 rounded-xl hover:bg-white/10 transition">
-              Explore Learning Hub
+            <button className="px-8 py-3 border border-white/30 rounded-xl hover:bg-white/10 transition flex items-center gap-2">
+            <Play className="w-5 h-5" />
+              Watch Demo
             </button>
           </div>
 
@@ -81,7 +84,12 @@ const Hero = () => {
               key={index}
               className="p-8 rounded-2xl backdrop-blur-lg bg-white/5 border border-white/10 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,255,255,0.25)] transition"
             >
-              <div className="text-4xl mb-4">{f.icon}</div>
+              <div className="text-xl mb-4">
+                <img src={f.image} 
+                alt={f.title}
+                className="w-32 h-32 object-cover bg-transparent rounded-xl mx-auto mb-4"
+                 />
+              </div>
               <h3 className="text-xl font-semibold mb-3">{f.title}</h3>
               <p className="text-gray-400">{f.desc}</p>
             </div>

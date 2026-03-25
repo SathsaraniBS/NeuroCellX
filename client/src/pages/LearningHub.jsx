@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useState } from "react"; // --- ADDED: useState import කරගත්තා ---
 import { Search, Clock, Eye } from "lucide-react";
-import { Link } from "react-router-dom"; // <-- ADDED: Required for <Link> components
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
-
 
 const guides = [
   {
@@ -105,7 +103,7 @@ const evbatteyries = [
     image: "src/assets/nmc.png"
   },
   {
-    title: "Lithium Iron Phosphate (LFP)", // <-- FIXED: Added missing title
+    title: "Lithium Iron Phosphate (LFP)",
     points: [
       "Safer and longer cycle life",
       "Lower energy density than NMC",
@@ -136,51 +134,30 @@ const evbatteyries = [
   },
 ];
 
-const metrics = [
-  {
-    title: "SOH",
-    full: "State of Health",
-    desc: "Shows how much battery capacity remains compared to its original condition.",
-    color: "border-green-200 bg-green-50",
-  },
-  {
-    title: "SOC",
-    full: "State of Charge",
-    desc: "Indicates the current battery charge level as a percentage of full capacity.",
-    color: "border-cyan-200 bg-cyan-50",
-  },
-  {
-    title: "RUL",
-    full: "Remaining Useful Life",
-    desc: "Estimates how long the battery can continue working before replacement is needed.",
-    color: "border-red-200 bg-red-50",
-  },
-];
-
-const degradationFactors = [
-  "High operating temperatures",
-  "Frequent fast charging",
-  "Deep discharge cycles",
-  "High cycle count",
-  "Improper charging habits",
-];
-
-const maintenanceTips = [
-  "Avoid extreme charging levels for daily use.",
-  "Keep the battery within safe temperature ranges.",
-  "Prefer moderate charging speeds when possible.",
-  "Avoid frequent full discharges.",
-  "Follow manufacturer maintenance recommendations.",
-];
-
-const faqs = [
-  "What is battery SOH?",
-  "Why does battery capacity decrease over time?",
-  "How is RUL estimated?",
-  "How accurate are AI-based battery predictions?",
-];
-
 const LearningHub = () => {
+  // --- ADDED: State එක හැදීම (search කරන වචනය තියාගන්න) ---
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // --- ADDED: Search term එකට අනුව Data filter කිරීම ---
+  const filteredEvTypes = evTypes.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.desc.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredBatteries = evbatteyries.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredGuides = guides.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredTrending = trending.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex flex-col">
       {/* Navigation */}
@@ -204,175 +181,188 @@ const LearningHub = () => {
               type="text"
               placeholder="Search for guides, tips, or resources..."
               className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 backdrop-blur-lg focus:outline-none focus:border-cyan-400 transition"
+              // --- ADDED: Input එකේ value එකයි onChange event එකයි ---
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
       </section>
 
       {/* EV Types */}
-      <section>
-        <div className="flex items-center gap-2 mb-4 px-10">
-          <h3 className="text-2xl font-bold">Types of Electric Vehicles</h3>
-        </div>
+      {/* --- ADDED: Filter වෙලා එන data නැත්නම් section එක හංගන්න පුළුවන්, දැනට තියෙන ඒවා විතරක් පෙන්නනවා --- */}
+      {filteredEvTypes.length > 0 && (
+        <section>
+          <div className="flex items-center gap-2 mb-4 px-10 mt-10">
+            <h3 className="text-2xl font-bold">Types of Electric Vehicles</h3>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-10 py-20 mb-16 bg-blue-900/5">
-          {evTypes.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:shadow-md transition"
-            >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="h-48 w-full object-cover mb-4 rounded-lg"
-              />
-              <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
-              <p className="text-xl font-medium text-slate-400 mb-2">
-                {item.subtitle}
-              </p>
-              <p className="mt-4 text-slate-500 leading-7 mb-4">{item.desc}</p>
-              <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 text-sm p-3 text-white">
-                <span className="font-bold text-slate-500">Examples:</span> {item.examples}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* EV Battery Types */}
-      <section>
-        <div className="flex items-center gap-2 mb-4 px-10">
-          <h3 className="text-2xl font-bold">EV Battery Types</h3>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-10 py-20 mb-16 bg-blue-900/5">
-          {evbatteyries.map((item) => (
-            <Link 
-              to = "/battery-types"
-              key={item.title}
-              className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,255,255,0.25)] transition"
-            >
-              {item.image && (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-10 py-10 mb-16 bg-blue-900/5">
+            {/* --- CHANGED: evTypes වෙනුවට filteredEvTypes දැම්මා --- */}
+            {filteredEvTypes.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:shadow-md transition"
+              >
                 <img
                   src={item.image}
                   alt={item.title}
                   className="h-48 w-full object-cover mb-4 rounded-lg"
                 />
-              )}
-              <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
-              <div className="text-xl font-medium text-slate-400 mb-2">
-                {item.points.map((point, index) => (
-                  <span key={index} className="block text-sm mb-1">
-                    • {point}
-                  </span>
-                ))}
-              </div>
-              
-              {/* FIXED: Conditionally render description and examples since batteries don't have them in the array */}
-              {item.desc && <p className="mt-4 text-slate-500 leading-7 mb-4">{item.desc}</p>}
-              
-              {item.examples && (
-                <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 p-3 text-sm text-white mt-4">
+                <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
+                <p className="text-xl font-medium text-slate-400 mb-2">
+                  {item.subtitle}
+                </p>
+                <p className="mt-4 text-slate-500 leading-7 mb-4">{item.desc}</p>
+                <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 text-sm p-3 text-white">
                   <span className="font-bold text-slate-500">Examples:</span> {item.examples}
                 </div>
-              )}
-            </Link>
-          ))}
-        </div>
-      </section>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
-      {/* Featured Guides - FIXED STRUCTURAL TAGS */}
-      <section className="px-10 mb-16">
-        <div className="grid md:grid-cols-2 gap-10 items-center py-10">
-          <div>
-            <h2 className="text-2xl font-semibold mb-6">Featured Guides</h2>
+      {/* EV Battery Types */}
+      {filteredBatteries.length > 0 && (
+        <section>
+          <div className="flex items-center gap-2 mb-4 px-10">
+            <h3 className="text-2xl font-bold">EV Battery Types</h3>
+          </div>
 
-            <div className="flex gap-4 mr-4">
-              <Link to="#"
-                className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition "
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-10 py-10 mb-16 bg-blue-900/5">
+            {/* --- CHANGED: evbatteyries වෙනුවට filteredBatteries දැම්මා --- */}
+            {filteredBatteries.map((item) => (
+              <Link 
+                to="/battery-types"
+                key={item.title}
+                className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,255,255,0.25)] transition"
               >
-                EV Basics
-              </Link>
-              <Link to="#" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition ">
-                Charging Tips
-              </Link>
-            </div>
-          </div>
-
-          <div className="relative h-64 md:h-80">
-            <img
-              src="src/assets/Lithiumbattery.jpg"
-              alt="Featured Guides"
-              className="w-full h-full object-cover rounded-2xl"
-            />
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6 mt-10">
-          {guides.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 backdrop-blur-lg"
-            >
-              <img
-                src={item.image}
-                alt={item.title}
-                className="h-48 w-full object-cover"
-              />
-              <div className="p-5">
-                <span className="text-sm text-cyan-400">
-                  {item.category}
-                </span>
-                <h3 className="mt-2 font-semibold text-lg">
-                  {item.title}
-                </h3>
-                <div className="flex items-center gap-2 text-gray-400 text-sm mt-3">
-                  <Clock size={14} />
-                  {item.time}
+                {item.image && (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="h-48 w-full object-cover mb-4 rounded-lg"
+                  />
+                )}
+                <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
+                <div className="text-xl font-medium text-slate-400 mb-2">
+                  {item.points.map((point, index) => (
+                    <span key={index} className="block text-sm mb-1">
+                      • {point}
+                    </span>
+                  ))}
                 </div>
+                
+                {item.desc && <p className="mt-4 text-slate-500 leading-7 mb-4">{item.desc}</p>}
+                
+                {item.examples && (
+                  <div className="rounded-xl text-slate-500 bg-slate-900/20 flex items-center gap-3 p-3 text-sm text-white mt-4">
+                    <span className="font-bold text-slate-500">Examples:</span> {item.examples}
+                  </div>
+                )}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Featured Guides */}
+      {filteredGuides.length > 0 && (
+        <section className="px-10 mb-16">
+          <div className="grid md:grid-cols-2 gap-10 items-center py-10">
+            <div>
+              <h2 className="text-2xl font-semibold mb-6">Featured Guides</h2>
+
+              <div className="flex gap-4 mr-4">
+                <Link to="#" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition ">
+                  EV Basics
+                </Link>
+                <Link to="#" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition ">
+                  Charging Tips
+                </Link>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* Trending Reads */}
-      <section className="mb-16 px-10">
-        <h2 className="text-2xl font-semibold mb-6">Trending Reads</h2>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {trending.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 backdrop-blur-lg"
-            >
+            <div className="relative h-64 md:h-80">
               <img
-                src={item.image}
-                alt={item.title}
-                className="h-48 w-full object-cover"
+                src="src/assets/Lithiumbattery.jpg"
+                alt="Featured Guides"
+                className="w-full h-full object-cover rounded-2xl"
               />
-              <div className="p-5">
-                <span className="text-sm text-cyan-400">
-                  {item.category}
-                </span>
-                <h3 className="mt-2 font-semibold text-lg">
-                  {item.title}
-                </h3>
-                <div className="flex items-center justify-between text-gray-400 text-sm mt-3">
-                  <div className="flex items-center gap-2">
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mt-10">
+            {/* --- CHANGED: guides වෙනුවට filteredGuides දැම්මා --- */}
+            {filteredGuides.map((item, index) => (
+              <div
+                key={index}
+                className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 backdrop-blur-lg"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="h-48 w-full object-cover"
+                />
+                <div className="p-5">
+                  <span className="text-sm text-cyan-400">
+                    {item.category}
+                  </span>
+                  <h3 className="mt-2 font-semibold text-lg">
+                    {item.title}
+                  </h3>
+                  <div className="flex items-center gap-2 text-gray-400 text-sm mt-3">
                     <Clock size={14} />
                     {item.time}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Eye size={14} />
-                    {item.views}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Trending Reads */}
+      {filteredTrending.length > 0 && (
+        <section className="mb-16 px-10">
+          <h2 className="text-2xl font-semibold mb-6">Trending Reads</h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* --- CHANGED: trending වෙනුවට filteredTrending දැම්මා --- */}
+            {filteredTrending.map((item, index) => (
+              <div
+                key={index}
+                className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:scale-105 transition duration-300 backdrop-blur-lg"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="h-48 w-full object-cover"
+                />
+                <div className="p-5">
+                  <span className="text-sm text-cyan-400">
+                    {item.category}
+                  </span>
+                  <h3 className="mt-2 font-semibold text-lg">
+                    {item.title}
+                  </h3>
+                  <div className="flex items-center justify-between text-gray-400 text-sm mt-3">
+                    <div className="flex items-center gap-2">
+                      <Clock size={14} />
+                      {item.time}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Eye size={14} />
+                      {item.views}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <Footer />
