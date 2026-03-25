@@ -250,7 +250,7 @@ const LearningHub = () => {
             <Link 
               to = "/battery-types"
               key={item.title}
-              className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:shadow-md transition"
+              className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,255,255,0.25)] transition"
             >
               {item.image && (
                 <img
