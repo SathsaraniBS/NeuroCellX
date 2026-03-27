@@ -12,13 +12,17 @@ import LandingPage from './pages/LandingPage';
 import About from './pages/About';
 import ContactPage from './pages/ContactPage';
 import BatteryTypes from './pages/BatteryTypes';
-import EngineerDashboard from './pages/Engineer/EngineerDashboard';
 
 // ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
+import Predictions   from './pages/Predictions'; 
 
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard'; 
+
+// ─── Engineer Pages ─────────────────────
+import EngineerDashboard from './pages/Engineer/EngineerDashboard';
+
 
 // ─── Route Guard ────────────────────────
 import ProtectedRoute from './components/ProtectedRoute'
@@ -53,6 +57,13 @@ function App() {
                                 <Dashboard />
                             </ProtectedRoute>
                         } />
+
+                        {/* Predictions page */}
+                            <Route path="/predictions" element={
+                                <ProtectedRoute>
+                                    <Predictions />
+                                </ProtectedRoute>
+                            } />
 
 
                         {/* ENGINEER ROUTES (engineer only) */}
