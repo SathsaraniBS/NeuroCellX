@@ -9,18 +9,38 @@ import os
 
 router = APIRouter(prefix="/api/predict", tags=["Predictions"])
 
-# ─────────────────────────────────────────
-# Load models on startup
-# ─────────────────────────────────────────
-MODEL_DIR = "models"
+BASE_DIR  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_DIR = os.path.join(BASE_DIR, "models")
+
+print(f"[INFO] Looking for models in: {MODEL_DIR}")
 
 def load_models():
     try:
-        rf_model  = joblib.load(f"{MODEL_DIR}/rf_soh_model.pkl")
-        svr_model = joblib.load(f"{MODEL_DIR}/svr_rul_model.pkl")
-        scaler    = joblib.load(f"{MODEL_DIR}/scaler.pkl")
+        # Check if model files exist
+        rf_path  = os.path.join(MODEL_DIR, "rf_soh_model.pkl")
+        svr_path = os.path.join(MODEL_DIR, "svr_rul_model.pkl")
+        sc_path  = os.path.join(MODEL_DIR, "scaler.pkl")
+        ft_path  = os.path.join(MODEL_DIR, "features.json")
 
-        with open(f"{MODEL_DIR}/features.json", "r") as f:
+        # ✅ Print paths for debugging
+        print(f"[INFO] RF  model path: {rf_path}")
+        print(f"[INFO] SVR model path: {svr_path}")
+        print(f"[INFO] RF  exists: {os.path.exists(rf_path)}")
+        print(f"[INFO] SVR exists: {os.path.exists(svr_path)}")
+
+        if not os.path.exists(rf_path):
+            print(f"❌ RF model not found at: {rf_path}")
+            return None, None, None, None
+
+        if not os.path.exists(svr_path):
+            print(f"❌ SVR model not found at: {svr_path}")
+            return None, None, None, None
+
+        rf_model  = joblib.load(rf_path)
+        svr_model = joblib.load(svr_path)
+        scaler    = joblib.load(sc_path)
+
+        with open(ft_path, "r") as f:
             features = json.load(f)
 
         print("✅ ML Models loaded successfully!")
