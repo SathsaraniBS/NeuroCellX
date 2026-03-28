@@ -28,11 +28,15 @@ const ContactPage = () => {
         e.preventDefault();
         setSending(true);
         try {
+            // මෙහි /contacts යැවීමෙන් baseURL (http://localhost:8000/api) + /contacts 
+            // ලෙස සම්පූර්ණ URL එක හැදේ.
             await api.post('/contacts', formData);
+            
             addToast('Message sent! We will get back to you soon.', 'success');
             setFormData({ name: '', email: '', subject: '', message: '' });
         } catch (error) {
-            addToast(error.response?.data?.message || 'Failed to send message. Please try again.', 'error');
+            console.error("Error details:", error);
+            addToast(error.response?.data?.detail || 'Failed to send message. Please try again.', 'error');
         } finally {
             setSending(false);
         }
@@ -42,25 +46,25 @@ const ContactPage = () => {
         {
             icon: MapPin,
             title: 'VoltIQ HQ',
-            details: settings.address || 'Colombo Tech Hub, Sri Lanka',
+            details: settings?.address || 'Colombo Tech Hub, Sri Lanka',
             description: 'AI-powered EV Battery Intelligence Center'
         },
         {
             icon: Phone,
             title: 'EV Support Line',
-            details: settings.contactPhone || '+94 77 123 4567',
+            details: settings?.contactPhone || '+94 77 123 4567',
             description: '24/7 Battery Monitoring & Support'
         },
         {
             icon: Mail,
             title: 'Support Email',
-            details: settings.contactEmail || 'support@voltiq.ai',
+            details: settings?.contactEmail || 'support@voltiq.ai',
             description: 'AI assistance & technical help'
         },
         {
             icon: Clock,
             title: 'System Availability',
-            details: settings.operationalHours || '24/7 Active Monitoring',
+            details: settings?.operationalHours || '24/7 Active Monitoring',
             description: 'Real-time EV battery tracking system'
         }
     ];
@@ -84,8 +88,7 @@ const ContactPage = () => {
                             <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-green-400/10 to-blue-500/10 opacity-0 group-hover:opacity-100 blur-xl transition duration-500"></div>
 
                             {/* Icon */}
-                            <div className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500/20 to-green-400/20 flex items-center justify-center shrink-0 border border-white/10 group-hover:from-cyan-400 group-hover:to-green-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.6)] transition-all duration-500"
-                            >
+                            <div className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500/20 to-green-400/20 flex items-center justify-center shrink-0 border border-white/10 group-hover:from-cyan-400 group-hover:to-green-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.6)] transition-all duration-500">
                                 <info.icon className="w-7 h-7 text-cyan-400 group-hover:text-white transition-colors duration-300" />
                             </div>
 
@@ -203,18 +206,6 @@ const ContactPage = () => {
                         />
                         <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent rounded-2xl"></div>
                     </div>
-
-                    {/* Contact Cards Grid */}
-                    {/* <div className="grid sm:grid-cols-2 gap-4">
-                        {contactInfo.map((info, index) => (
-                            <div key={index} className="p-5 bg-white/5 border border-white/10 rounded-2xl hover:border-cyan-400/50 transition-colors">
-                                <info.icon className="text-cyan-400 mb-3" size={24} />
-                                <h4 className="font-bold text-lg">{info.title}</h4>
-                                <p className="text-sm text-gray-300 mt-1">{info.details}</p>
-                                <p className="text-xs text-gray-500 mt-2">{info.description}</p>
-                            </div>
-                        ))}
-                    </div> */}
                 </div>
             </div>
 
