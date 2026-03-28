@@ -3,12 +3,7 @@ import { useNavigate }   from 'react-router-dom';
 import { useAuth }       from '../../contexts/AuthContext';
 import { useToast }      from '../../contexts/ToastContext';
 import api               from '../../services/api';
-import {
-  Upload, Database, Trash2, Eye,
-  CheckCircle, AlertTriangle, Clock,
-  FileText, LogOut, LayoutDashboard,
-  ChevronDown, X
-} from 'lucide-react';
+import {Upload, Database, Trash2, Eye,CheckCircle, AlertTriangle, Clock,FileText, LogOut, LayoutDashboard,ChevronDown, X} from 'lucide-react';
 
 const EngineerDashboard = () => {
   const { user, logout }  = useAuth();
@@ -156,6 +151,7 @@ const EngineerDashboard = () => {
           {[
             { id: 'upload',  label: 'Upload Dataset', icon: <Upload size={18} /> },
             { id: 'history', label: 'Dataset History', icon: <Database size={18} /> },
+            { id: 'predictions', label: 'Predictions', icon: <ChartLine size={18} /> },
           ].map((tab) => (
             <button
               key={tab.id}
