@@ -6,7 +6,8 @@ from routers import auth
 from routers import dashboard
 from database import engine, Base
 from routers import admin 
-from routers import datasets      
+from routers import datasets 
+from routers import contact     
 from routers import predict      
 
 
@@ -37,7 +38,7 @@ app.include_router(dashboard.router)
 app.include_router(admin.router)  
 app.include_router(datasets.router) 
 app.include_router(predict.router) 
-
+app.include_router(contact.router)
 
 # Create all database tables on startup
 Base.metadata.create_all(bind=engine)  
