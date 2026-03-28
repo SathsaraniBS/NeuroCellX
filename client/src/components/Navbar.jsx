@@ -1,99 +1,111 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { User, Menu, X, LogOut } from 'lucide-react'; // icons සඳහා
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false); // FIXED: Track scroll state
-  
-    const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+    const [isScrolled, setIsScrolled] = useState(false);
 
-  // FIXED: Add scroll event listener
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) { // Change background after 50px scroll
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+    // මෙහි user දත්ත දැනට null ලෙස ඇත. 
+    // පසුව ඔබගේ Auth Context එක හරහා මෙය සම්බන්ධ කරන්න.
+    const [user, setUser] = useState(null); 
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll); // Cleanup
-  }, []);
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
 
-  return (
-    
-    <nav
-      className={`fixed w-full top-0 z-50 py-4 h-20 text-white flex justify-between items-center shadow-md transition duration-300 ${
-        isScrolled ? 'bg-white/5 backdrop-blur-md' : ' bg-transparent'
-      }`} // FIXED: Dynamic background color
-    >
-        <div className="max-w-7xl mx-auto flex justify-between items-center w-full px-4">
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
-
-        {/* Logo */}
-        <div className="text-2xl font-semibold tracking-wide">
-          <span className="bg-gradient-to-r from-cyan-400 to-lime-400 bg-clip-text text-transparent">
-            VoltIQ
-          </span>
-        </div>
-
-        {/* Nav Links */}
-        <div className="hidden md:flex items-center gap-10 text-gray-300 font-medium">
-
-        {/* Desktop Menu */}
-          <Link to ="/" className="hover:text-cyan-400 transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]">
-            Home
-          </Link>
-          <a
-            href="#features"
-            className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
-          >
-            Features
-          </a>
-          <Link to ="/landingpage"
-            className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
-          >
-            Landing Page
-          </Link>
-          <a
-            href="/about"
-            className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
-          >
-            About
-          </a>
-          <Link to = "/learning"
-            className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
-          >
-            Learning Hub ▾
-          </Link>
-        </div>
-
-        <div className="flex gap-4 mr-4">
-
-        {/* Sign In Button */}
-        <Link to="/register"
-          className="relative px-6 py-2 rounded-lg font-semibold text-white
-          bg-gradient-to-r from-cyan-500 to-lime-400
-          hover:from-cyan-400 hover:to-lime-300
-          transition-all duration-300
-          shadow-[0_0_20px_rgba(0,255,255,0.6)]
-          hover:shadow-[0_0_30px_rgba(0,255,255,0.9)]
-          border border-white/20"
+    return (
+        <nav
+            className={`fixed w-full top-0 z-50 py-4 h-20 transition-all duration-300 flex items-center shadow-md ${
+                isScrolled ? 'bg-[#050816]/80 backdrop-blur-md border-b border-white/10' : 'bg-transparent'
+            }`}
         >
-          Sign Up
-        </Link>
-        <Link to="/login" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition ">
-            Login
-        </Link>
-        </div>
-        </div>
-    </nav>
-  );
+            <div className="max-w-7xl mx-auto flex justify-between items-center w-full px-6">
+
+                {/* Logo */}
+                <Link to="/" className="text-2xl font-bold tracking-wide">
+                    <span className="bg-gradient-to-r from-cyan-400 to-lime-400 bg-clip-text text-transparent">
+                        VoltIQ
+                    </span>
+                </Link>
+
+                {/* Desktop Nav Links */}
+                <div className="hidden md:flex items-center gap-8 text-gray-300 font-medium">
+                    <Link to="/" className="hover:text-cyan-400 transition duration-300">Home</Link>
+                    <a href="#features" className="hover:text-cyan-400 transition duration-300">Features</a>
+                    <Link to="/landingpage" className="hover:text-cyan-400 transition duration-300">Landing Page</Link>
+                    <Link to="/about" className="hover:text-cyan-400 transition duration-300">About</Link>
+                    <Link to="/learning" className="hover:text-cyan-400 transition duration-300">Learning Hub</Link>
+                </div>
+
+                {/* Right Side: Auth / Profile */}
+                <div className="flex items-center gap-4">
+                    {user ? (
+                        /* User Profile Section */
+                        <div className="flex items-center gap-3 group cursor-pointer relative">
+                            <Link to="/profile" className="flex items-center gap-2 bg-white/5 p-1 pr-4 rounded-full border border-white/10 hover:border-cyan-400/50 transition-all">
+                                <div className="w-8 h-8 rounded-full overflow-hidden border border-cyan-400/30">
+                                    {user.profilePicture ? (
+                                        <img src={user.profilePicture} alt={user.name} className="w-full h-full object-cover" />
+                                    ) : (
+                                        <div className="w-full h-full flex items-center justify-center bg-cyan-400/10">
+                                            <User className="w-4 h-4 text-cyan-400" />
+                                        </div>
+                                    )}
+                                </div>
+                                <span className="text-sm text-white font-medium hidden lg:inline">{user.name || "User"}</span>
+                            </Link>
+                        </div>
+                    ) : (
+                        /* Login / Join Section */
+                        <div className="hidden md:flex items-center gap-4">
+                            <Link to="/login" className="text-gray-300 hover:text-cyan-400 transition font-medium">
+                                Login
+                            </Link>
+                            <Link to="/register"
+                                className="px-6 py-2 rounded-lg font-semibold text-black bg-gradient-to-r from-cyan-400 to-lime-400 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300 border border-white/10"
+                            >
+                                Join Now
+                            </Link>
+                        </div>
+                    )}
+
+                    {/* Mobile Menu Button */}
+                    <button onClick={toggleMenu} className="md:hidden text-white">
+                        {isOpen ? <X size={28} /> : <Menu size={28} />}
+                    </button>
+                </div>
+            </div>
+
+            {/* Mobile Menu Dropdown */}
+            {isOpen && (
+                <div className="absolute top-20 left-0 w-full bg-[#050816] border-b border-white/10 flex flex-col p-6 gap-4 md:hidden animate-in slide-in-from-top duration-300">
+                    <Link to="/" onClick={toggleMenu} className="text-gray-300 hover:text-cyan-400">Home</Link>
+                    <Link to="/landingpage" onClick={toggleMenu} className="text-gray-300 hover:text-cyan-400">Landing Page</Link>
+                    <Link to="/about" onClick={toggleMenu} className="text-gray-300 hover:text-cyan-400">About</Link>
+                    {!user && (
+                        <div className="flex flex-col gap-3 mt-4">
+                            <Link to="/login" onClick={toggleMenu} className="text-center py-2 border border-white/10 rounded-lg">Login</Link>
+                            <Link to="/register" onClick={toggleMenu} className="text-center py-2 bg-cyan-400 text-black rounded-lg font-bold">Join Now</Link>
+                        </div>
+                    )}
+                </div>
+            )}
+        </nav>
+    );
 }
 
-export default Navbar
-    
+export default Navbar;
