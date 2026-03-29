@@ -11,7 +11,7 @@ const AdminContacts = () => {
 
     const fetchMessages = async () => {
         try {
-            const res = await api.get('/admin/contacts');
+            const res = await api.get('/contacts');
             setMessages(res.data);
         } catch (err) {
             addToast('Failed to load messages', 'error');
@@ -26,7 +26,7 @@ const AdminContacts = () => {
 
     const handleStatusUpdate = async (id) => {
         try {
-            await api.patch(`admin/contacts/${id}/status`);
+            await api.patch(`/contacts/${id}/status`);
             addToast('Marked as Replied', 'success');
             fetchMessages();
         } catch (err) {
@@ -37,7 +37,7 @@ const AdminContacts = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this message?')) {
             try {
-                await api.delete(`admin/contacts/${id}`);
+                await api.delete(`/contacts/${id}`);
                 addToast('Message deleted', 'success');
                 fetchMessages();
             } catch (err) {

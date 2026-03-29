@@ -3,10 +3,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr
 import sqlalchemy as sa
-
 from database import get_db
 
-router = APIRouter(prefix="/api/admin/contacts", tags=["Contacts"])
+router = APIRouter(prefix="/contacts", tags=["Contacts"])
 
 class ContactCreate(BaseModel):
     name: str
@@ -14,7 +13,7 @@ class ContactCreate(BaseModel):
     subject: str
     message: str
 
-@router.post("/admin/contacts")
+@router.post("/") 
 def create_contact(contact: ContactCreate, db: Session = Depends(get_db)):
     try:
         db.execute(
@@ -31,19 +30,16 @@ def create_contact(contact: ContactCreate, db: Session = Depends(get_db)):
         )
         db.commit()
         return {"message": "Message sent successfully"}
-
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Database Error: {str(e)}")
 
-
-
-@router.get("/admin/contacts")
+@router.get("/")
 def get_contacts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     try:
         records = db.execute(
             sa.text("""
-                SELECT id, name, email, subject, message, status,created_at
+                SELECT id, name, email, subject, message, status, created_at
                 FROM contacts 
                 ORDER BY id DESC
                 OFFSET :skip LIMIT :limit
