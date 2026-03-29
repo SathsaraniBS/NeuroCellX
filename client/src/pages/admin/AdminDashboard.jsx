@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import api from '../../services/api';
-import { Users, Database, Activity, Plus, Wrench, BarChart3 ,BrainCircuit, Bell} from 'lucide-react';
+import { Users, Database, Activity, Plus, Wrench, BarChart3 ,BrainCircuit, Bell,MessageSquare} from 'lucide-react';
 import { TbLogs } from 'react-icons/tb';
 import AdminUsers from '../../components/admin/AdminUsers'; 
+import AdminContacts from '../../components/admin/AdminContacts';
 
 const AdminDashboard = () => {
   const { user, logout }  = useAuth();
@@ -67,7 +68,8 @@ const AdminDashboard = () => {
             { id: 'dataset', label: 'Dataset Management',icon: <Database size={18} /> },
             { id: 'model', label: 'Model Management',icon: <BrainCircuit size={18} /> },
             { id: 'logs',label:'System Logs',          icon: <TbLogs size={18} /> },
-            {id:  'Alerts', label: 'Alerts & Notifications', icon: <Bell size={18} /> },
+            { id:  'alerts', label: 'Alerts & Notifications', icon: <Bell size={18} /> },
+            { id: "contacts", label: "Queries", icon:  <MessageSquare size={18} /> },
             { id: 'settings', label: 'Settings',        icon: <Wrench size={18} /> },
           ].map((tab) => (
             <button
@@ -192,6 +194,13 @@ const AdminDashboard = () => {
             setShowAddModal={setShowAddModal} 
             onUserChange={fetchStats} 
           />
+        )}
+
+        {activeTab === 'contacts' && (
+          <AdminContacts
+            showAddModal={showAddModal}
+            setShowAddModal={setShowAddModal}
+            onMessageChange={fetchStats} />
         )}
       </main>
     </div>

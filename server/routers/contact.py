@@ -52,3 +52,45 @@ def get_contacts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Database Error: {str(e)}")
+
+@router.get("/")
+def get_contacts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    try:
+        records = db.execute(
+            sa.text("""
+                SELECT id, name, email, subject, message, status 
+                FROM contacts 
+                ORDER BY id DESC
+                OFFSET :skip LIMIT :limit
+            """),
+            {"skip": skip, "limit": limit}
+        ).mappings().all() 
+        return records
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database Error: {str(e)}")
+
+@router.patch("/{contact_id}/status")
+def update_contact_status(contact_id: int, db: Session = Depends(get_db)):
+    try:
+        db.execute(
+            sa.text("UPDATE contacts SET status = 'Replied' WHERE id = :id"),
+            {"id": contact_id}
+        )
+        db.commit()
+        return {"message": "Status updated to Replied"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/{contact_id}")
+def delete_contact(contact_id: int, db: Session = Depends(get_db)):
+    try:
+        db.execute(
+            sa.text("DELETE FROM contacts WHERE id = :id"),
+            {"id": contact_id}
+        )
+        db.commit()
+        return {"message": "Message deleted successfully"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
