@@ -26,7 +26,7 @@ const ContactPage = () => {
         e.preventDefault();
         setSending(true);
         try {
-            await api.post('/contacts', formData);
+            await api.post('/admin/contacts', formData);
             addToast('Message sent! We will get back to you soon.', 'success');
             setFormData({ name: '', email: '', subject: '', message: '' });
         } catch (error) {
