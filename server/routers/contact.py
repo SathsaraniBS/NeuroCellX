@@ -5,7 +5,7 @@ from pydantic import BaseModel, EmailStr
 import sqlalchemy as sa
 from database import get_db
 
-router = APIRouter(prefix="/contacts", tags=["Contacts"])
+router = APIRouter(prefix="/api/contacts", tags=["Contacts"])
 
 class ContactCreate(BaseModel):
     name: str
