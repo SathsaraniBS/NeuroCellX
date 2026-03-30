@@ -70,7 +70,7 @@ const AdminDashboard = () => {
             { id: 'logs',label:'System Logs',          icon: <TbLogs size={18} /> },
             { id:  'alerts', label: 'Alerts & Notifications', icon: <Bell size={18} /> },
             { id: "contacts", label: "Queries", icon:  <MessageSquare size={18} /> },
-            { id: 'settings', label: 'Settings',        icon: <Wrench size={18} /> },
+            { id: 'settings', label: 'Settings',        icon: <Settings size={18} /> },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -98,14 +98,14 @@ const AdminDashboard = () => {
       {/* MAIN CONTENT */}
       <main className="flex-1 p-8 overflow-auto">
         {/* Header */}
-        <div className="mb-8">
+        {/* <div className="mb-8">
           <h2 className="text-3xl font-bold">
             Admin Dashboard <span className="text-cyan-400">⚡</span>
           </h2>
           <p className="text-gray-400 text-sm mt-1">
             Manage users, monitor system stats and control VoltIQ.
           </p>
-        </div>
+        </div>  *
 
         {/* OVERVIEW TAB */}
         {activeTab === 'overview' && (
