@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import api from '../../services/api';
-import { Users, Database, Activity, Plus, Wrench, BarChart3 ,BrainCircuit, Bell,MessageSquare} from 'lucide-react';
+import { Users, Database, Activity, Plus, Wrench, BarChart3 ,BrainCircuit, Bell,MessageSquare,Settings} from 'lucide-react';
 import { TbLogs } from 'react-icons/tb';
 import AdminUsers from '../../components/admin/AdminUsers'; 
 import AdminContacts from '../../components/admin/AdminContacts';
+import AdminSettings from '../../components/admin/AdminSettings';
 
 const AdminDashboard = () => {
   const { user, logout }  = useAuth();
@@ -198,6 +199,13 @@ const AdminDashboard = () => {
 
         {activeTab === 'contacts' && (
           <AdminContacts
+            showAddModal={showAddModal}
+            setShowAddModal={setShowAddModal}
+            onMessageChange={fetchStats} />
+        )}
+
+        {activeTab === 'settings' && (
+          <AdminSettings
             showAddModal={showAddModal}
             setShowAddModal={setShowAddModal}
             onMessageChange={fetchStats} />
