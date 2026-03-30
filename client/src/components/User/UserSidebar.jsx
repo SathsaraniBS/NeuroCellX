@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; 
-import { useAuth } from "../contexts/AuthContext";            
-import {LayoutDashboard,LineChart,History,FileText,Settings,Moon,LogOut,ChevronRight,} from "lucide-react";
+// ✨ FIX 1: 'Link' එක react-router-dom වෙතින් import කළා
+import { useNavigate, useLocation, Link } from "react-router-dom"; 
+import { useAuth } from "../../contexts/AuthContext";            
+// ✨ FIX 2: 'ExternalLink' එක lucide-react වෙතින් import කළා
+import { LayoutDashboard, LineChart, History, FileText, Settings, Moon, LogOut, ExternalLink } from "lucide-react";
 
-const DashboardSidebar = () => {
+const Sidebar = () => {
   const [active, setActive] = useState("Dashboard");
   const [darkMode, setDarkMode] = useState(true);
   
@@ -40,24 +42,36 @@ const DashboardSidebar = () => {
 
       {/* Top Section */}
       <div className="relative z-10 p-6">
-        
-        {/* Logo */}
-        <h1 className="text-3xl font-semibold tracking-wide bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent mb-10">
-          VoltIQ
-        </h1>
+        {/* Logo and View Site Button Row */}
+        <div className="flex justify-between items-center mb-10">
+            {/* Logo */}
+            <h1 className="text-3xl font-semibold tracking-wide bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
+              VoltIQ
+            </h1>
 
-         {/* ADDED: Show logged in user info */}
+            {/* View Site Button */}
+            <Link
+                to="/"
+                className="p-2 rounded-full transition-all duration-300 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/40 group text-cyan-400"
+                title="View Website"
+            >
+                <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
+            </Link>
+        </div>
+
+         {/* User Info Section */}
         {user && (
           <div className="mb-6 px-2">
             <p className="text-white font-medium text-sm truncate">
-              {user.name || user.email}
+              {user.name || user.email || "User"}
             </p>
             <span className={`text-xs px-2 py-0.5 rounded-full
               ${user.role === 'admin'    ? 'bg-red-500/20    text-red-400'    :
                 user.role === 'engineer' ? 'bg-blue-500/20   text-blue-400'   :
                 user.role === 'analyst'  ? 'bg-purple-500/20 text-purple-400' :
                                           'bg-cyan-500/20   text-cyan-400'}`}>
-              {user.role?.charAt(0).toUpperCase() + user.role?.slice(1)}
+              {/* ✨ FIX 3: user.role එක නැති වුණොත් Crash වෙන එක වළක්වන්න fallback එකක් දැම්මා */}
+              {user.role ? (user.role.charAt(0).toUpperCase() + user.role.slice(1)) : "User"}
             </span>
           </div>
         )}
@@ -76,7 +90,8 @@ const DashboardSidebar = () => {
                   : "hover:bg-white/5 text-gray-300"
               }`}
             >
-              <span className={`${active === item.name ? "text-cyan-300" : "text-gray-400"}`}>
+              {/* ✨ FIX 4: Icon එකේ පාට වෙනස් වෙන්න isActive(item.path) පාවිච්චි කළා */}
+              <span className={`${isActive(item.path) ? "text-cyan-300" : "text-gray-400"}`}>
                 {item.icon}
               </span>
               <span className="text-base">{item.name}</span>
@@ -109,10 +124,6 @@ const DashboardSidebar = () => {
 
       {/* Bottom Section */}
       <div className="relative z-10 p-6 border-t border-white/10">
-        {/* <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-gray-300">
-          
-        </button> */}
-
          {/* Logout Button */}
         <button 
           onClick={handleLogout}
@@ -125,4 +136,4 @@ const DashboardSidebar = () => {
   );
 };
 
-export default DashboardSidebar;
+export default Sidebar;
