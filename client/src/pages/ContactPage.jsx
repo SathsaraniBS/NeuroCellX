@@ -72,7 +72,7 @@ const ContactPage = () => {
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 px-6 py-12">
 
                 {/* Contact Cards */}
-                <div className="lg:col-span-1 space-y-6">
+                <div className="lg:col-span-1 space-y-6 w-[90%] md:w-[85%] lg:w-[75%] mx-auto md:mx-0">
                     {contactInfo.map((info, index) => (
                         <div
                             key={index}
@@ -192,9 +192,10 @@ const ContactPage = () => {
                     </form>
                 </div>
 
+               
+
                 {/* RIGHT SIDE - CONTACT INFO */}
-                <div className="space-y-8">
-                    {/* Visual Element */}
+                {/* <div className="space-y-8">
                     <div className="relative group">
                         <img
                             src="src/assets/img1.jpg"
@@ -202,7 +203,7 @@ const ContactPage = () => {
                             className="w-full rounded-2xl shadow-2xl border border-white/10 drop-shadow-[0_0_20px_rgba(34,211,238,0.2)]"
                         />
                         <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent rounded-2xl"></div>
-                    </div>
+                    </div> */}
 
                     {/* Contact Cards Grid */}
                     {/* <div className="grid sm:grid-cols-2 gap-4">
@@ -215,7 +216,7 @@ const ContactPage = () => {
                             </div>
                         ))}
                     </div> */}
-                </div>
+                {/* </div> */}
             </div>
 
             <Footer />

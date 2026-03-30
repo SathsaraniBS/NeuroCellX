@@ -42,7 +42,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex">
-
       {/* ADMIN SIDEBAR */}
       <aside className="w-64 bg-[#0b1220]/80 border-r border-cyan-500/20 flex flex-col p-6">
         {/* Logo */}

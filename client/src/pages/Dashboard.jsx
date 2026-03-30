@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import {ChartLine, History, Settings,LayoutDashboard, FileText} from "lucide-react";
 import Footer from '../components/Footer';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/User/UserSidebar';
 import api from '../services/api'; 
 
 function Dashboard() {
@@ -44,7 +44,6 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex flex-col">
-
       <div className="flex flex-1">
         <Sidebar />
 

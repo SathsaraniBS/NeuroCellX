@@ -2,7 +2,7 @@ import React from 'react';
 import { Bell, User, Search, ChartLine, History, Settings, LayoutDashboard, FileText } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import Footer from '../components/Footer';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/User/UserSidebar';
 
 function Predictions() {
 
