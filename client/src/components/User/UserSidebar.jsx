@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";            
 import { LayoutDashboard, LineChart, History, FileText, Settings, Moon, LogOut, ExternalLink } from "lucide-react";
 const Sidebar = () => {
-  const [active, setActive] = useState("Dashboard");
+  // const [active, setActive] = useState("Dashboard");
   const [darkMode, setDarkMode] = useState(true);
   
   const { user, logout } = useAuth();  
@@ -12,7 +12,7 @@ const Sidebar = () => {
 
   const menuItems = [
     { path: '/dashboard',name: "Dashboard", icon: <LayoutDashboard size={20} /> },
-    { path: "/dashboard/predictions",name: "Predictions", icon: <LineChart size={20} /> },
+    { path: "/predictions",name: "Predictions", icon: <LineChart size={20} /> },
     { path: "/dashboard/history",name: "History", icon: <History size={20} /> },
     { path: "/dashboard/reports", name: "Reports", icon: <FileText size={20} /> },
     { path: "/dashboard/settings",name: "Settings", icon: <Settings size={20} /> },

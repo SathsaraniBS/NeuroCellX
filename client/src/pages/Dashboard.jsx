@@ -51,7 +51,7 @@ function Dashboard() {
               <Search className="text-gray-400 cursor-pointer" />
               <Bell className="text-gray-400 cursor-pointer" />
               <User className="text-gray-400 cursor-pointer" />
-            </div>
+        </div>
 
         {/*  MAIN CONTENT  */}
         <div className="flex-1 p-6 lg:p-10 overflow-auto">

@@ -17,7 +17,6 @@ const AdminDashboard = () => {
   // State
   const [stats, setStats]         = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
-  
   const [showAddModal, setShowAddModal] = useState(false);
 
   // Fetch stats 
