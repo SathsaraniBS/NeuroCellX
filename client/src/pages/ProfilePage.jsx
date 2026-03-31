@@ -1,11 +1,37 @@
-import React, { useState } from "react";
-import {Camera,ShieldCheck,Mail,Smartphone,Bell,Trash2,Monitor,} from "lucide-react";
+import { useEffect, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
+import { Camera, ShieldCheck, Mail, Smartphone, Bell, Trash2, Monitor } from "lucide-react";
 
 const ProfilePage = () => {
+  const { user, updateUser } = useAuth(); 
+  const { showToast } = useToast(); 
+
   const [twoFA, setTwoFA] = useState(true);
   const [emailNotif, setEmailNotif] = useState(true);
   const [smsNotif, setSmsNotif] = useState(false);
   const [systemNotif, setSystemNotif] = useState(true);
+
+  const [fullName, setFullName] = useState(user?.name || "Sathsarani Perera");
+  const [phoneNumber, setPhoneNumber] = useState(user?.phone || "+1 (555) 123-4567");
+  const [email, setEmail] = useState(user?.email || "sathsarani@example.com");
+
+  const handleProfileUpdate = async () => {
+    // Edit user
+    try {
+      await api.put(`/api/admin/users/${editUser.id}`, {
+        name: editUser.name,
+        role: editUser.role
+      });
+      addToast('User updated successfully!', 'success');
+      setShowEditModal(false);
+      fetchUsers();
+      if (onUserChange) onUserChange(); // Highlight: Role වෙනස් වූවොත් stats update වීමට
+    } catch (err) {
+      addToast('Failed to update user', 'error');
+    }
+  };
+  
 
   const Toggle = ({ enabled, setEnabled }) => (
     <button
@@ -40,9 +66,9 @@ const ProfilePage = () => {
         <div className="flex items-center gap-6">
           <div className="relative">
             <img
-              src="https://i.pravatar.cc/150?img=32"
+              src={user?.profilePic || "https://i.pravatar.cc/150?img=32"}
               alt="profile"
-              className="w-28 h-28 rounded-full border-2 border-cyan-400"
+              className="w-28 h-28 rounded-full border-2 border-cyan-400 object-cover"
             />
             <button className="absolute bottom-0 right-0 bg-cyan-500 p-2 rounded-full hover:bg-cyan-400 transition">
               <Camera size={16} />
@@ -51,10 +77,10 @@ const ProfilePage = () => {
 
           <div>
             <h2 className="text-2xl font-semibold">
-               BSS
+               {user?.name || "BSS"}
             </h2>
             <span className="bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full text-sm">
-              Analyst
+              {user?.role || "Analyst"}
             </span>
           </div>
         </div>
@@ -74,42 +100,43 @@ const ProfilePage = () => {
           <div className="grid grid-cols-2 gap-6">
             <div>
               <label className="text-gray-400 text-sm">Full Name</label>
+              {/* FIX: added value and onChange */}
               <input
                 type="text"
-                defaultValue="Sathsarani Perera"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
                 className="w-full mt-2 p-3 bg-black/40 border border-white/10 rounded-lg focus:outline-none focus:border-cyan-400"
               />
             </div>
 
             <div>
               <label className="text-gray-400 text-sm">Phone Number</label>
+              {/* FIX: added value and onChange */}
               <input
                 type="text"
-                defaultValue="+1 (555) 123-4567"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 className="w-full mt-2 p-3 bg-black/40 border border-white/10 rounded-lg focus:outline-none focus:border-cyan-400"
               />
             </div>
 
             <div>
               <label className="text-gray-400 text-sm">Email</label>
+              {/* FIX: added value and onChange */}
               <input
                 type="email"
-                defaultValue="sathsarani@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full mt-2 p-3 bg-black/40 border border-white/10 rounded-lg focus:outline-none focus:border-cyan-400"
               />
             </div>
-
-            <div>
-              <label className="text-gray-400 text-sm">Role</label>
-              <select className="w-full mt-2 p-3 bg-black/40 border border-white/10 rounded-lg focus:outline-none focus:border-cyan-400">
-                <option>Analyst</option>
-                <option>Admin</option>
-                <option>User</option>
-              </select>
-            </div>
           </div>
 
-          <button className="mt-6 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-green-400 text-black font-semibold hover:opacity-90 transition">
+          {/* FIX: Added onClick function to the Update button */}
+          <button 
+            onClick={handleProfileUpdate}
+            className="mt-6 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-green-400 text-black font-semibold hover:opacity-90 transition"
+          >
             Update
           </button>
         </div>
@@ -139,7 +166,6 @@ const ProfilePage = () => {
         <h3 className="text-xl font-semibold mb-6">Security Settings</h3>
 
         <div className="space-y-6">
-          
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <ShieldCheck size={20} />
@@ -171,7 +197,6 @@ const ProfilePage = () => {
             </div>
             <Toggle enabled={systemNotif} setEnabled={setSystemNotif} />
           </div>
-
         </div>
       </div>
     </div>

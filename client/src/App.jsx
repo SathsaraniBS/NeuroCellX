@@ -16,7 +16,7 @@ import BatteryTypes from './pages/BatteryTypes';
 // ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
 import Predictions   from './pages/Predictions'; 
-
+import Profile from './pages/ProfilePage';
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard'; 
 
@@ -55,6 +55,13 @@ function App() {
                         <Route path="/dashboard" element={
                             <ProtectedRoute>
                                 <Dashboard />
+                            </ProtectedRoute>
+                        } />
+
+                        {/* Profile Route (profile only) */}
+                        <Route path="/profile" element={
+                            <ProtectedRoute>
+                                <Profile />
                             </ProtectedRoute>
                         } />
 
