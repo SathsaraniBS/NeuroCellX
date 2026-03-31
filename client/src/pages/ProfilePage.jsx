@@ -2,36 +2,41 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import { Camera, ShieldCheck, Mail, Smartphone, Bell, Trash2, Monitor } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
-  const { user, updateUser } = useAuth(); 
-  const { showToast } = useToast(); 
+  const navigate = useNavigate();
+  const { user, updateUser } = useAuth();
+  const { addToast } = useToast(); // මෙතන addToast හෝ showToast ඔයාගේ Context එක අනුව පාවිච්චි කරන්න
 
+  // Security Toggles සඳහා States
   const [twoFA, setTwoFA] = useState(true);
   const [emailNotif, setEmailNotif] = useState(true);
   const [smsNotif, setSmsNotif] = useState(false);
   const [systemNotif, setSystemNotif] = useState(true);
 
-  const [fullName, setFullName] = useState(user?.name || "Sathsarani Perera");
-  const [phoneNumber, setPhoneNumber] = useState(user?.phone || "+1 (555) 123-4567");
-  const [email, setEmail] = useState(user?.email || "sathsarani@example.com");
+  // Form Inputs සඳහා States
+  const [fullName, setFullName] = useState(user?.name || "");
+  const [phoneNumber, setPhoneNumber] = useState(user?.phone || "");
+  const [email, setEmail] = useState(user?.email || "");
 
+  // Profile Update Function
   const handleProfileUpdate = async () => {
-    // Edit user
     try {
-      await api.put(`/api/admin/users/${editUser.id}`, {
-        name: editUser.name,
-        role: editUser.role
+      // FIX: ඔයාගේ AuthContext එකේ updateUser function එකට data යවනවා
+      await updateUser({
+        name: fullName,
+        email: email,
+        phone: phoneNumber,
       });
-      addToast('User updated successfully!', 'success');
-      setShowEditModal(false);
-      fetchUsers();
-      if (onUserChange) onUserChange(); // Highlight: Role වෙනස් වූවොත් stats update වීමට
+
+      if (addToast) addToast('Profile updated successfully!', 'success');
+      
     } catch (err) {
-      addToast('Failed to update user', 'error');
+      if (addToast) addToast('Failed to update profile', 'error');
+      console.error(err);
     }
   };
-  
 
   const Toggle = ({ enabled, setEnabled }) => (
     <button
@@ -62,7 +67,6 @@ const ProfilePage = () => {
 
       {/* Profile Card */}
       <div className="relative z-10 bg-white/5 border border-cyan-400/20 rounded-2xl p-6 flex items-center justify-between mb-10 backdrop-blur-xl">
-        
         <div className="flex items-center gap-6">
           <div className="relative">
             <img
@@ -76,31 +80,25 @@ const ProfilePage = () => {
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold">
-               {user?.name || "BSS"}
-            </h2>
+            <h2 className="text-2xl font-semibold">{user?.name || "User Name"}</h2>
             <span className="bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full text-sm">
-              {user?.role || "Analyst"}
+              {user?.role || "Member"}
             </span>
           </div>
         </div>
-
         <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-green-400 text-black font-semibold hover:opacity-90 transition">
           Edit Profile
         </button>
       </div>
 
       {/* Main Grid */}
-      <div className="relative z-10 grid grid-cols-3 gap-8">
-
+      <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Personal Info */}
-        <div className="col-span-2 bg-white/5 border border-cyan-400/20 rounded-2xl p-6 backdrop-blur-xl">
+        <div className="md:col-span-2 bg-white/5 border border-cyan-400/20 rounded-2xl p-6 backdrop-blur-xl">
           <h3 className="text-xl font-semibold mb-6">Personal Information</h3>
-
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="text-gray-400 text-sm">Full Name</label>
-              {/* FIX: added value and onChange */}
               <input
                 type="text"
                 value={fullName}
@@ -108,10 +106,8 @@ const ProfilePage = () => {
                 className="w-full mt-2 p-3 bg-black/40 border border-white/10 rounded-lg focus:outline-none focus:border-cyan-400"
               />
             </div>
-
             <div>
               <label className="text-gray-400 text-sm">Phone Number</label>
-              {/* FIX: added value and onChange */}
               <input
                 type="text"
                 value={phoneNumber}
@@ -119,10 +115,8 @@ const ProfilePage = () => {
                 className="w-full mt-2 p-3 bg-black/40 border border-white/10 rounded-lg focus:outline-none focus:border-cyan-400"
               />
             </div>
-
-            <div>
-              <label className="text-gray-400 text-sm">Email</label>
-              {/* FIX: added value and onChange */}
+            <div className="md:col-span-2">
+              <label className="text-gray-400 text-sm">Email Address</label>
               <input
                 type="email"
                 value={email}
@@ -131,70 +125,44 @@ const ProfilePage = () => {
               />
             </div>
           </div>
-
-          {/* FIX: Added onClick function to the Update button */}
-          <button 
+          <button
             onClick={handleProfileUpdate}
             className="mt-6 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-green-400 text-black font-semibold hover:opacity-90 transition"
           >
-            Update
+            Save Changes
           </button>
         </div>
 
         {/* Account Actions */}
         <div className="bg-white/5 border border-cyan-400/20 rounded-2xl p-6 backdrop-blur-xl">
           <h3 className="text-xl font-semibold mb-6">Account Actions</h3>
-
-          <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl hover:bg-white/5 transition mb-4">
-            <div className="flex items-center gap-3">
-              <Monitor size={18} />
-              Manage Devices
-            </div>
+          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition mb-4">
+            <Monitor size={18} /> Manage Devices
           </button>
-
-          <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition">
-            <div className="flex items-center gap-3">
-              <Trash2 size={18} />
-              Delete Account
-            </div>
+          <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition">
+            <Trash2 size={18} /> Delete Account
           </button>
         </div>
       </div>
 
       {/* Security Section */}
       <div className="relative z-10 mt-10 bg-white/5 border border-cyan-400/20 rounded-2xl p-6 backdrop-blur-xl">
-        <h3 className="text-xl font-semibold mb-6">Security Settings</h3>
-
+        <h3 className="text-xl font-semibold mb-6">Security & Notifications</h3>
         <div className="space-y-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <ShieldCheck size={20} />
-              Two-Factor Authentication
-            </div>
+            <div className="flex items-center gap-3"><ShieldCheck size={20} /> Two-Factor Authentication</div>
             <Toggle enabled={twoFA} setEnabled={setTwoFA} />
           </div>
-
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Mail size={20} />
-              Email Notifications
-            </div>
+            <div className="flex items-center gap-3"><Mail size={20} /> Email Notifications</div>
             <Toggle enabled={emailNotif} setEnabled={setEmailNotif} />
           </div>
-
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Smartphone size={20} />
-              SMS Notifications
-            </div>
+            <div className="flex items-center gap-3"><Smartphone size={20} /> SMS Notifications</div>
             <Toggle enabled={smsNotif} setEnabled={setSmsNotif} />
           </div>
-
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Bell size={20} />
-              System Alerts
-            </div>
+            <div className="flex items-center gap-3"><Bell size={20} /> System Alerts</div>
             <Toggle enabled={systemNotif} setEnabled={setSystemNotif} />
           </div>
         </div>
