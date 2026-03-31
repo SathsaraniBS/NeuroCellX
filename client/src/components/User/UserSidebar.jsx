@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-// ✨ FIX 1: 'Link' එක react-router-dom වෙතින් import කළා
 import { useNavigate, useLocation, Link } from "react-router-dom"; 
 import { useAuth } from "../../contexts/AuthContext";            
-// ✨ FIX 2: 'ExternalLink' එක lucide-react වෙතින් import කළා
 import { LayoutDashboard, LineChart, History, FileText, Settings, Moon, LogOut, ExternalLink } from "lucide-react";
-
 const Sidebar = () => {
   const [active, setActive] = useState("Dashboard");
   const [darkMode, setDarkMode] = useState(true);
@@ -14,7 +11,7 @@ const Sidebar = () => {
   const location         = useLocation(); 
 
   const menuItems = [
-    {path: '/dashboard',name: "Dashboard", icon: <LayoutDashboard size={20} /> },
+    { path: '/dashboard',name: "Dashboard", icon: <LayoutDashboard size={20} /> },
     { path: "/dashboard/predictions",name: "Predictions", icon: <LineChart size={20} /> },
     { path: "/dashboard/history",name: "History", icon: <History size={20} /> },
     { path: "/dashboard/reports", name: "Reports", icon: <FileText size={20} /> },
@@ -55,7 +52,7 @@ const Sidebar = () => {
                 className="p-2 rounded-full transition-all duration-300 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/40 group text-cyan-400"
                 title="View Website"
             >
-                <ExternalLink className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <ExternalLink className="w-6 h-6 group-hover:scale-110 transition-transform" />
             </Link>
         </div>
 
@@ -70,7 +67,6 @@ const Sidebar = () => {
                 user.role === 'engineer' ? 'bg-blue-500/20   text-blue-400'   :
                 user.role === 'analyst'  ? 'bg-purple-500/20 text-purple-400' :
                                           'bg-cyan-500/20   text-cyan-400'}`}>
-              {/* ✨ FIX 3: user.role එක නැති වුණොත් Crash වෙන එක වළක්වන්න fallback එකක් දැම්මා */}
               {user.role ? (user.role.charAt(0).toUpperCase() + user.role.slice(1)) : "User"}
             </span>
           </div>
@@ -90,7 +86,6 @@ const Sidebar = () => {
                   : "hover:bg-white/5 text-gray-300"
               }`}
             >
-              {/* ✨ FIX 4: Icon එකේ පාට වෙනස් වෙන්න isActive(item.path) පාවිච්චි කළා */}
               <span className={`${isActive(item.path) ? "text-cyan-300" : "text-gray-400"}`}>
                 {item.icon}
               </span>

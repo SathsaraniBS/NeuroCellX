@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from "react-router-dom"; 
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import api from '../../services/api';
-import { Users, Database, Activity, Plus, Wrench, BarChart3 ,BrainCircuit, Bell,MessageSquare,Settings} from 'lucide-react';
+import { Users, Database, Activity, Plus, Wrench, BarChart3 ,BrainCircuit, Bell,MessageSquare,Settings,ExternalLink} from 'lucide-react';
 import { TbLogs } from 'react-icons/tb';
 import AdminUsers from '../../components/admin/AdminUsers'; 
 import AdminContacts from '../../components/admin/AdminContacts';
@@ -45,10 +45,25 @@ const AdminDashboard = () => {
       {/* ADMIN SIDEBAR */}
       <aside className="w-64 bg-[#0b1220]/80 border-r border-cyan-500/20 flex flex-col p-6">
         {/* Logo */}
-        <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent mb-2">
+        <div className="flex justify-between items-center mb-10">
+
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent mb-2">
           VoltIQ
         </h1>
+
+        {/* View Site Button */}
+            <Link
+                to="/"
+                className="p-2 rounded-full transition-all duration-300 hover:bg-cyan-500/10 border border-white/10 hover:border-cyan-400/40 group text-cyan-400"
+                title="View Website"
+            >
+                <ExternalLink className="w-6 h-6 group-hover:scale-110 transition-transform" />
+            </Link>
+
+        </div>
+
         <p className="text-xs text-gray-500 mb-8">Admin Panel</p>
+
 
         {/* Admin info */}
         <div className="mb-6 p-3 bg-white/5 rounded-xl border border-white/10">
