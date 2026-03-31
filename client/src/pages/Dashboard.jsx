@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
-import {ChartLine, History, Settings,LayoutDashboard, FileText} from "lucide-react";
+import {ChartLine, History, Settings,LayoutDashboard, FileText, Bell, User, Search} from "lucide-react";
 import Footer from '../components/Footer';
 import Sidebar from '../components/User/UserSidebar';
 import api from '../services/api'; 
@@ -46,6 +46,12 @@ function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex flex-col">
       <div className="flex flex-1">
         <Sidebar />
+
+        <div className="flex items-center gap-6">
+              <Search className="text-gray-400 cursor-pointer" />
+              <Bell className="text-gray-400 cursor-pointer" />
+              <User className="text-gray-400 cursor-pointer" />
+            </div>
 
         {/*  MAIN CONTENT  */}
         <div className="flex-1 p-6 lg:p-10 overflow-auto">
@@ -185,6 +191,8 @@ function Dashboard() {
 
         </div>
       </div>
+
+        
 
       <Footer />
     </div>
