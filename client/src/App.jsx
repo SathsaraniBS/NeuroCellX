@@ -1,7 +1,7 @@
-import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ToastProvider } from './contexts/ToastContext';
-import { SettingsProvider } from './contexts/SettingsContext'; 
+import { SettingsProvider } from './contexts/SettingsContext';
 import React, { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -15,10 +15,12 @@ import BatteryTypes from './pages/BatteryTypes';
 
 // ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
-import Predictions   from './pages/Predictions'; 
+import Predictions from './pages/Predictions';
 import Profile from './pages/ProfilePage';
+import Reports from './pages/Reports';
+
 // ─── Admin Pages ────────────────────────
-import AdminDashboard from './pages/admin/AdminDashboard'; 
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 // ─── Engineer Pages ─────────────────────
 import EngineerDashboard from './pages/Engineer/EngineerDashboard';
@@ -34,64 +36,71 @@ const API_URL = "http://127.0.0.1:8000/records/";
 function App() {
     return (
         <BrowserRouter>
-            <ToastProvider> 
+            <ToastProvider>
                 <AuthProvider>
-                    <SettingsProvider> 
+                    <SettingsProvider>
                         <Routes>
-                        {/* Public Routes (no login needed) */}
-                        <Route path="/" element={<Layout />}>
-                            <Route index element={<Home />} />
-                            <Route path="login" element={<Login />} />
-                            <Route path="register" element={<Register />} />
-                            <Route path="learning" element={<LearningHub />} />
-                            <Route path="landingpage" element={<LandingPage />} />
-                            <Route path="forgot-password" element={<ResetPassword />} />
-                            <Route path="about" element={<About />} />
-                            <Route path="battery-types" element={<BatteryTypes />} />
-                            <Route path="contact" element={<ContactPage />} />
-                        </Route>
+                            {/* Public Routes (no login needed) */}
+                            <Route path="/" element={<Layout />}>
+                                <Route index element={<Home />} />
+                                <Route path="login" element={<Login />} />
+                                <Route path="register" element={<Register />} />
+                                <Route path="learning" element={<LearningHub />} />
+                                <Route path="landingpage" element={<LandingPage />} />
+                                <Route path="forgot-password" element={<ResetPassword />} />
+                                <Route path="about" element={<About />} />
+                                <Route path="battery-types" element={<BatteryTypes />} />
+                                <Route path="contact" element={<ContactPage />} />
+                            </Route>
 
-                        {/* Protected Routes (login required) */}
-                        <Route path="/dashboard" element={
-                            <ProtectedRoute>
-                                <Dashboard />
-                            </ProtectedRoute>
-                        } />
+                            {/* Protected Routes (login required) */}
+                            <Route path="/dashboard" element={
+                                <ProtectedRoute>
+                                    <Dashboard />
+                                </ProtectedRoute>
+                            } />
 
-                        {/* Profile Route (profile only) */}
-                        <Route path="/profile" element={
-                            <ProtectedRoute>
-                                <Profile />
-                            </ProtectedRoute>
-                        } />
+                            {/* Profile Route (profile only) */}
+                            <Route path="/profile" element={
+                                <ProtectedRoute>
+                                    <Profile />
+                                </ProtectedRoute>
+                            } />
 
-                        {/* Predictions page */}
+                            {/* Predictions page */}
                             <Route path="/predictions" element={
                                 <ProtectedRoute>
                                     <Predictions />
                                 </ProtectedRoute>
                             } />
 
+                            {/* Reports page */}
+                            <Route path="/reports" element={
+                                <ProtectedRoute>
+                                    <Reports />
+                                </ProtectedRoute>
+                            } />
 
-                        {/* ENGINEER ROUTES (engineer only) */}
-                        <Route path="/engineer/dashboard" element={
-                            <ProtectedRoute allowedRoles={['engineer', 'admin']}>
-                                <EngineerDashboard />
-                           </ProtectedRoute>
-                         } />
 
-                        {/* ADMIN ROUTES (admin only) */}
+                            {/* ENGINEER ROUTES (engineer only) */}
+                            <Route path="/engineer/dashboard" element={
+                                <ProtectedRoute allowedRoles={['engineer', 'admin']}>
+                                    <EngineerDashboard />
+                                </ProtectedRoute>
+                            } />
 
-                        {/* added import + allowedRoles */}
-                        <Route path="/admin/dashboard" element={
-                            <ProtectedRoute allowedRoles={['admin']}>
-                                <AdminDashboard />
-                            </ProtectedRoute>
-                        } />
+                            {/* ADMIN ROUTES (admin only) */}
 
-                        {/* CATCH ALL — redirect to login */} 
-                        <Route path="*" element={<Navigate to="/login" />} />   {/* ← NEW: Catch-all redirect */}
-                    </Routes>
+                            {/* added import + allowedRoles */}
+                            <Route path="/admin/dashboard" element={
+                                <ProtectedRoute allowedRoles={['admin']}>
+                                    <AdminDashboard />
+                                </ProtectedRoute>
+                            } />
+
+                            {/* CATCH ALL — redirect to login */}
+                            <Route path="*" element={<Navigate to="/login" />} />   {/* ← NEW: Catch-all redirect */}
+                        </Routes>
                     </SettingsProvider>
                 </AuthProvider>
             </ToastProvider>
