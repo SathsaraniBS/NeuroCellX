@@ -7,15 +7,13 @@ import { useNavigate } from 'react-router-dom';
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { user, updateUser } = useAuth();
-  const { addToast } = useToast(); // මෙතන addToast හෝ showToast ඔයාගේ Context එක අනුව පාවිච්චි කරන්න
+  const { addToast } = useToast(); 
 
-  // Security Toggles සඳහා States
   const [twoFA, setTwoFA] = useState(true);
   const [emailNotif, setEmailNotif] = useState(true);
   const [smsNotif, setSmsNotif] = useState(false);
   const [systemNotif, setSystemNotif] = useState(true);
 
-  // Form Inputs සඳහා States
   const [fullName, setFullName] = useState(user?.name || "");
   const [phoneNumber, setPhoneNumber] = useState(user?.phone || "");
   const [email, setEmail] = useState(user?.email || "");
@@ -23,7 +21,6 @@ const ProfilePage = () => {
   // Profile Update Function
   const handleProfileUpdate = async () => {
     try {
-      // FIX: ඔයාගේ AuthContext එකේ updateUser function එකට data යවනවා
       await updateUser({
         name: fullName,
         email: email,
