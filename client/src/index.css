@@ -5,42 +5,245 @@
 @config "../tailwind.config.js";
 
 @layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply font-sans antialiased transition-colors duration-500 ease-in-out;
+    @apply font-sans antialiased;
+    @apply bg-navy-900 text-white;
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(0, 212, 212, 0.06), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(0, 180, 180, 0.04), transparent 40%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+
+  /* ── Glass Card ── */
+  .glass-card {
+    @apply bg-dark-300/60 backdrop-blur-xl;
+    @apply border border-teal-500/20;
+    @apply shadow-card-dark rounded-2xl;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  .glass-card:hover {
+    @apply border-teal-400/40 shadow-card-hover;
+  }
+
+  /* ── Metric Card (SOC, SOH, RUL cards on dashboard) ── */
+  .metric-card {
+    @apply bg-dark-300/80 backdrop-blur-xl;
+    @apply border border-teal-500/20 rounded-2xl;
+    @apply p-5 shadow-card-dark;
+    transition: all 0.3s ease;
+  }
+
+  .metric-card:hover {
+    @apply border-teal-400/50 shadow-teal-sm;
+    transform: translateY(-2px);
+  }
+
+  /* ── Primary Button (cyan gradient) ── */
+  .btn-primary {
+    @apply bg-btn-primary text-navy-900 font-semibold;
+    @apply px-6 py-2.5 rounded-xl;
+    @apply shadow-btn-glow;
+    @apply transition-all duration-300;
+    @apply hover:shadow-teal-glow hover:scale-105;
+    @apply active:scale-95;
+  }
+
+  /* ── Secondary Button ── */
+  .btn-secondary {
+    @apply bg-transparent text-teal-400 font-semibold;
+    @apply border border-teal-500/50 rounded-xl;
+    @apply px-6 py-2.5;
+    @apply transition-all duration-300;
+    @apply hover:bg-teal-500/10 hover:border-teal-400;
+  }
+
+  /* ── Sidebar Item ── */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl;
+    @apply text-gray-400 font-medium;
+    @apply transition-all duration-200;
+    @apply hover:bg-teal-500/10 hover:text-teal-400;
+    @apply cursor-pointer;
+  }
+
+  .sidebar-item.active {
+    @apply bg-teal-500/15 text-teal-400;
+    @apply border-l-2 border-teal-400;
+  }
+
+  /* ── Input Field ── */
+  .input-field {
+    @apply w-full bg-dark-200/80 backdrop-blur-sm;
+    @apply border border-teal-500/20 rounded-xl;
+    @apply px-4 py-3 text-white placeholder-gray-500;
+    @apply transition-all duration-200;
+    @apply focus:outline-none focus:border-teal-400/60 focus:shadow-teal-sm;
+    @apply focus:bg-dark-200;
+  }
+
+  /* ── Auth Card (Login/Register) ── */
+  .auth-card {
+    @apply bg-dark-300/80 backdrop-blur-2xl;
+    @apply border border-teal-500/20 rounded-3xl;
+    @apply shadow-glass p-8;
+  }
+
+  /* ── Section Title ── */
+  .section-title {
+    @apply text-2xl font-display font-semibold text-white;
+  }
+
+  .section-subtitle {
+    @apply text-gray-400 text-sm mt-1;
+  }
+
+  /* ── Status Badge ── */
+  .badge-healthy {
+    @apply bg-volt-400/15 text-volt-400 border border-volt-400/30;
+    @apply text-xs font-medium px-2.5 py-1 rounded-full;
+  }
+
+  .badge-moderate {
+    @apply bg-amber-400/15 text-amber-400 border border-amber-400/30;
+    @apply text-xs font-medium px-2.5 py-1 rounded-full;
+  }
+
+  .badge-critical {
+    @apply bg-red-500/15 text-red-400 border border-red-500/30;
+    @apply text-xs font-medium px-2.5 py-1 rounded-full;
+  }
+
+  /* ── Neon Text ── */
+  .neon-text {
+    @apply text-teal-400;
+    text-shadow: 0 0 10px rgba(0, 212, 212, 0.8),
+                 0 0 20px rgba(0, 212, 212, 0.4);
+  }
+
+  .neon-text-cyan {
+    @apply text-cyan-400;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.8),
+                 0 0 20px rgba(0, 229, 255, 0.4);
+  }
+
+  /* ── Chart Container ── */
+  .chart-container {
+    @apply bg-dark-400/60 backdrop-blur-sm;
+    @apply border border-teal-500/15 rounded-2xl;
+    @apply p-4;
+  }
+
+  /* ── Table ── */
+  .ev-table {
+    @apply w-full text-sm text-left;
+  }
+
+  .ev-table thead {
+    @apply text-teal-400 text-xs uppercase tracking-wider;
+    @apply border-b border-teal-500/20;
+  }
+
+  .ev-table tbody tr {
+    @apply border-b border-dark-100/50;
+    @apply hover:bg-teal-500/5 transition-colors;
+  }
+
+  .ev-table td, .ev-table th {
+    @apply px-4 py-3;
+  }
+
+  /* ── Divider ── */
+  .ev-divider {
+    @apply border-t border-teal-500/15 my-4;
+  }
+
+  /* ── Loading Spinner ── */
+  .ev-spinner {
+    @apply w-8 h-8 border-2 border-teal-500/20 border-t-teal-400;
+    @apply rounded-full animate-spin;
   }
 }
 
 @layer utilities {
-  .dark body {
-    @apply bg-luxury-950 text-gold-100;
-    background-image:
-      radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.08), transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(138, 106, 10, 0.05), transparent 40%);
-    background-attachment: fixed;
+
+  /* ── Teal Glow Effect ── */
+  .teal-glow {
+    box-shadow: 0 0 20px rgba(0, 212, 212, 0.3);
   }
 
-  body {
-    @apply bg-luxury-50 text-luxury-900;
-    background-image:
-      radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.1), transparent 50%),
-      radial-gradient(circle at 0% 100%, rgba(243, 229, 171, 0.3), transparent 30%);
+  /* ── Gradient Text ── */
+  .gradient-text {
+    background: linear-gradient(90deg, #00E5FF 0%, #00BFBF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .glass-card {
-    @apply dark:bg-luxury-800/60 dark:backdrop-blur-xl dark:border dark:border-white/10 bg-white/70 backdrop-blur-md border border-gray-200 shadow-lg;
+  /* ── Frosted Glass ── */
+  .frosted {
+    @apply backdrop-blur-xl bg-white/5;
   }
 
-  .neon-text {
-    @apply text-gold-400 drop-shadow-[0_0_10px_rgba(212,175,55,0.8)];
+  /* ── Scrollbar ── */
+  .scrollbar-teal::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .scrollbar-teal::-webkit-scrollbar-track {
+    @apply bg-dark-400;
+  }
+
+  .scrollbar-teal::-webkit-scrollbar-thumb {
+    @apply bg-teal-600 rounded-full;
+  }
+
+  .scrollbar-teal::-webkit-scrollbar-thumb:hover {
+    @apply bg-teal-400;
   }
 }
 
-/* Custom Scrollbar */
+/* ── Global Scrollbar ── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A1628;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D4AF37;
+  background: #00808080;
   border-radius: 10px;
 }
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00D4D4;
+}
+
+/* ── Selection Color ── */
+::selection {
+  background: rgba(0, 212, 212, 0.3);
+  color: white;
+}
+
+ 
+  
