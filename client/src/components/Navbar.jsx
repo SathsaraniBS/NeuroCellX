@@ -6,7 +6,6 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false); // Profile dropdown එක සඳහා state එක
 
-  // ඔබගේ Auth logic එක අනුව මෙය වෙනස් කරගන්න (දැනට උදාහරණයක් ලෙස true/false ලෙස භාවිතා කළ හැක)
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
   const toggleMenu = () => {
