@@ -174,7 +174,13 @@ const ResetPassword = () => {
                             {/* ✅ Back button to go back to step 1 */}
                             <button
                                 type="button"
-                                onClick={() => setStep(1)}
+                                onClick={() => {
+                                  setStep(1);
+                                  setNewPassword('');
+                                  setConfirmPassword('');
+                                  setShowPassword(false);
+
+                                }}
                                 className="flex items-center gap-2 text-gray-400 hover:text-cyan-400 transition text-sm mb-4"
                             >
                                 <ArrowLeft size={16} /> Back
