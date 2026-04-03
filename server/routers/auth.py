@@ -6,7 +6,7 @@ from passlib.context import CryptContext
 from jose import jwt                          
 from datetime import datetime, timedelta      
 import sqlalchemy as sa
-                        
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType                 
 
 from database import get_db
 
@@ -19,6 +19,18 @@ SECRET_KEY = "voltiq-secret-key-change-in-production"
 ALGORITHM = "HS256"                                     
 TOKEN_EXPIRE_HOURS = 24                                 
 
+conf = ConnectionConfig(
+    MAIL_USERNAME = "your_email@gmail.com",         
+    MAIL_PASSWORD = "your_app_password",          
+    MAIL_FROM = "your_email@gmail.com",
+    MAIL_PORT = 587,
+    MAIL_SERVER = "smtp.gmail.com",
+    MAIL_STARTTLS = True,
+    MAIL_SSL_TLS = False,
+    USE_CREDENTIALS = True,
+    VALIDATE_CERTS = True
+)
+
 def create_token(user_id: int, email: str, role: str): 
     payload = {
         "sub": str(user_id),
@@ -29,6 +41,15 @@ def create_token(user_id: int, email: str, role: str):
 
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
+async def send_reset_email(email_to: str, body: str):
+    message = MessageSchema(
+        subject="Password Reset Request",
+        recipients=[email_to],
+        body=body,
+        subtype=MessageType.html
+    )
+    fm = FastMail(conf)
+    await fm.send_message(message)
 class UserCreate(BaseModel):
     name: str = Field(..., min_length=2)
     email: EmailStr 
