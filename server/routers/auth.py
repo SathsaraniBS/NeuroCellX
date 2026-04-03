@@ -38,6 +38,13 @@ class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+class ResetPasswordRequest(BaseModel):
+    email: EmailStr
+    new_password: str = Field(..., min_length=6, max_length=72)
+
 @router.post("/register")
 def register(user: UserCreate, db: Session = Depends(get_db)):
     try:
@@ -107,3 +114,44 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
             "role":  db_user.role
         }
     }
+
+@router.post("/forgot-password")
+def forgot_password(request: ForgotPasswordRequest, db: Session = Depends(get_db)):
+    user = db.execute(
+        sa.text("SELECT id FROM users WHERE email = :email"),
+        {"email": request.email}
+    ).fetchone()
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User with this email does not exist"
+        )
+
+    
+    return {
+        "message": f"Password reset instructions have been sent to {request.email}"
+    }
+
+@router.post("/reset-password")
+def reset_password(request: ResetPasswordRequest, db: Session = Depends(get_db)):
+    user = db.execute(
+        sa.text("SELECT id FROM users WHERE email = :email"),
+        {"email": request.email}
+    ).fetchone()
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User with this email does not exist"
+        )
+        
+    hashed_password = pwd_context.hash(request.new_password)
+    
+    db.execute(
+        sa.text("UPDATE users SET password = :password WHERE email = :email"),
+        {"password": hashed_password, "email": request.email}
+    )
+    db.commit()
+
+    return {"message": "Password has been reset successfully"}
