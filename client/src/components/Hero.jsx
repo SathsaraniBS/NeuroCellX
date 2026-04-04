@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PredictForm from "./PredictForm";
 import { Link } from "react-router-dom";
-import { Play } from "lucide-react";
+import { Play, X } from "lucide-react"; // Imported X for the close button
+
 const features = [
   {
-    image:"src/assets/b2.png",
-
+    image: "src/assets/b2.png",
     title: "Predictive Intelligence",
     desc: "Predict remaining battery life with AI-powered analytics.",
   },
@@ -22,10 +22,12 @@ const features = [
 ];
 
 const Hero = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-black text-white font-sans">
-     
+  // State to manage whether the video modal is open or closed
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
 
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-black text-white font-sans relative">
+      
       {/* ================= HERO SECTION ================= */}
       <section className="grid md:grid-cols-2 gap-10 items-center px-10 py-20">
         {/* LEFT TEXT */}
@@ -43,21 +45,21 @@ const Hero = () => {
               Connect Your Vehicle
             </button>
 
-            <button className="px-8 py-3 border border-white/30 rounded-xl hover:bg-white/10 transition flex items-center gap-2">
-            <Play className="w-5 h-5" />
+            {/* Added onClick handler to open the video modal */}
+            <button 
+              onClick={() => setIsVideoOpen(true)}
+              className="px-8 py-3 border border-white/30 rounded-xl hover:bg-white/10 transition flex items-center gap-2"
+            >
+              <Play className="w-5 h-5" />
               Watch Demo
             </button>
           </div>
-
-          
-         </div> 
-
+        </div>
 
         {/* RIGHT IMAGE */}
         <div className="relative">
           <img
-            // src="bg1.webp"           // ← assuming it's in /public/
-            src="src/assets/img2.jpeg" 
+            src="src/assets/img2.jpeg"
             alt="EV Battery Visualization"
             className="w-full drop-shadow-[0_0_40px_rgba(0,255,255,0.3)]"
           />
@@ -65,7 +67,44 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* ... rest of your sections remain almost the same ... */}
+      {/* ================= VIDEO MODAL ================= */}
+      {isVideoOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
+          <div className="relative w-full max-w-4xl bg-slate-900 rounded-2xl overflow-hidden border border-white/20 shadow-2xl shadow-cyan-500/20">
+            
+            {/* Close Button */}
+            <button
+              onClick={() => setIsVideoOpen(false)}
+              className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-red-500 text-white rounded-full transition"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Video Container */}
+            <div className="aspect-video w-full bg-black">
+              {/* If using a local video file: */}
+              <video 
+                className="w-full h-full object-cover" 
+                controls 
+                autoPlay 
+                src="src/assets/evVideo.mp4" /* <-- Change this to your actual video path */
+              >
+                Your browser does not support the video tag.
+              </video>
+
+              {/* OR, if using a YouTube embed, comment the video tag above and uncomment this iframe: */}
+              {/* <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1"
+                title="Product Demo"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe> 
+              */}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* FEATURES */}
       <section className="px-10 pb-20">
@@ -76,13 +115,19 @@ const Hero = () => {
           {features.map((f, index) => (
             <div
               key={index}
-              className="p-8 rounded-2xl backdrop-blur-lg bg-white/5 border border-white/10 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,255,255,0.25)] transition"
+              className="p-8 rounded-2xl backdrop-blur-lg bg-white/5 border border-white/10 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,255,255,0.25)] transition flex flex-col items-center text-center"
             >
-              <div className="text-xl mb-4">
-                <img src={f.image} 
-                alt={f.title}
-                className="w-32 h-32 object-cover bg-transparent rounded-xl mx-auto mb-4"
-                 />
+              <div className="mb-4">
+                {/* Added a conditional check so it renders the image if it exists, or the emoji icon if it doesn't */}
+                {f.image ? (
+                  <img
+                    src={f.image}
+                    alt={f.title}
+                    className="w-32 h-32 object-cover bg-transparent rounded-xl mx-auto"
+                  />
+                ) : (
+                  <span className="text-6xl inline-block mb-4">{f.icon}</span>
+                )}
               </div>
               <h3 className="text-xl font-semibold mb-3">{f.title}</h3>
               <p className="text-gray-400">{f.desc}</p>
@@ -91,12 +136,6 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* <footer className="border-t border-white/10 py-6 px-10 flex justify-between text-gray-500 text-sm">
-        <span>
-          Volt<span className="text-lime-400">IQ</span> © 2026
-        </span>
-        <span className="text-cyan-400">Powered by AI</span>
-      </footer> */}
     </div>
   );
 };
