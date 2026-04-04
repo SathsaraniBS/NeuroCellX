@@ -177,7 +177,7 @@ const BatteryTypes = () => {
         {/* NCA SECTION */}
             <section className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-12 shadow-lg">
           <h2 className="text-3xl font-bold text-green-400 mb-4">
-            Nickel-Cadmium (NCA)
+            Nickel Cadmium (NCA)
           </h2>
 
           <p className="text-gray-300 mb-8 text-lg">

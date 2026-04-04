@@ -8,6 +8,7 @@ import { TbLogs } from 'react-icons/tb';
 import AdminUsers from '../../components/admin/AdminUsers'; 
 import AdminContacts from '../../components/admin/AdminContacts';
 import AdminSettings from '../../components/admin/AdminSettings';
+import AdminDatasetManagement from '../../components/admin/AdminDatasetManagement';
 
 const AdminDashboard = () => {
   const { user, logout }  = useAuth();
@@ -111,15 +112,6 @@ const AdminDashboard = () => {
 
       {/* MAIN CONTENT */}
       <main className="flex-1 p-8 overflow-auto">
-        {/* Header */}
-        {/* <div className="mb-8">
-          <h2 className="text-3xl font-bold">
-            Admin Dashboard <span className="text-cyan-400">⚡</span>
-          </h2>
-          <p className="text-gray-400 text-sm mt-1">
-            Manage users, monitor system stats and control VoltIQ.
-          </p>
-        </div>  *
 
         {/* OVERVIEW TAB */}
         {activeTab === 'overview' && (
@@ -208,6 +200,13 @@ const AdminDashboard = () => {
             setShowAddModal={setShowAddModal} 
             onUserChange={fetchStats} 
           />
+        )}
+
+        {activeTab === 'dataset' && (
+          <AdminDatasetManagement
+            showAddModal={showAddModal}
+            setShowAddModal={setShowAddModal}
+            onMessageChange={fetchStats} />
         )}
 
         {activeTab === 'contacts' && (
