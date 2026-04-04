@@ -1,8 +1,12 @@
-import React, { useState } from "react"; // --- ADDED: useState import කරගත්තා ---
+import React, { useState } from "react"; 
 import { Search, Clock, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
+// 👇 ADDED: Import the EVChatbot component (Adjust the path if your component is in a different folder)
+import EVChatbot from "../components/EVChatbot/EVChatbot"; 
+// 👆 ADDED
 
 const guides = [
   {
@@ -135,10 +139,8 @@ const evbatteyries = [
 ];
 
 const LearningHub = () => {
-  // --- ADDED: State එක හැදීම (search කරන වචනය තියාගන්න) ---
   const [searchTerm, setSearchTerm] = useState("");
 
-  // --- ADDED: Search term එකට අනුව Data filter කිරීම ---
   const filteredEvTypes = evTypes.filter((item) =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.desc.toLowerCase().includes(searchTerm.toLowerCase())
@@ -190,7 +192,6 @@ const LearningHub = () => {
       </section>
 
       {/* EV Types */}
-      {/* --- ADDED: Filter වෙලා එන data නැත්නම් section එක හංගන්න පුළුවන්, දැනට තියෙන ඒවා විතරක් පෙන්නනවා --- */}
       {filteredEvTypes.length > 0 && (
         <section>
           <div className="flex items-center gap-2 mb-4 px-10 mt-10">
@@ -198,7 +199,6 @@ const LearningHub = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-10 py-10 mb-16 bg-blue-900/5">
-            {/* --- CHANGED: evTypes වෙනුවට filteredEvTypes දැම්මා --- */}
             {filteredEvTypes.map((item) => (
               <div
                 key={item.title}
@@ -231,7 +231,6 @@ const LearningHub = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-10 py-10 mb-16 bg-blue-900/5">
-            {/* --- CHANGED: evbatteyries වෙනුවට filteredBatteries දැම්මා --- */}
             {filteredBatteries.map((item) => (
               <Link 
                 to="/battery-types"
@@ -294,7 +293,6 @@ const LearningHub = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mt-10">
-            {/* --- CHANGED: guides වෙනුවට filteredGuides දැම්මා --- */}
             {filteredGuides.map((item, index) => (
               <div
                 key={index}
@@ -329,7 +327,6 @@ const LearningHub = () => {
           <h2 className="text-2xl font-semibold mb-6">Trending Reads</h2>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {/* --- CHANGED: trending වෙනුවට filteredTrending දැම්මා --- */}
             {filteredTrending.map((item, index) => (
               <div
                 key={index}
@@ -364,7 +361,14 @@ const LearningHub = () => {
         </section>
       )}
 
-      {/* Footer */}
+      {/* 👇 ADDED: The EVChatbot Component */}
+      {/* We place it here so it renders on top of the page content, right before the footer.
+          Ensure your EVChatbot component has CSS like "position: fixed" so it floats correctly. */}
+      <EVChatbot />
+      {/* 👆 ADDED */}
+
+      
+      
       <Footer />
     </div>
   );
