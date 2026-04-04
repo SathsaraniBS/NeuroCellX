@@ -5,7 +5,6 @@ import { useToast } from '../contexts/ToastContext';
 import Hero from '../components/Hero';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import LearningHub from './LearningHub';
 
 
 const Home = () => {
@@ -14,7 +13,9 @@ const Home = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-luxury-950 via-black to-luxury-950 text-white font-sans">
+        // <div className="min-h-screen bg-gradient-to-b from-luxury-950 via-black to-luxury-950 text-white font-sans">
+        <div className="min-h-screen bg-gradient-to-b from-navy-950 via-dark-500 to-navy-950 text-white font-sans">
+
         {/* Navigation */}    
         <Navbar />            
         <Hero />
@@ -50,7 +51,7 @@ const Home = () => {
                         </button>
 
                         <Link
-                            to="/LearningHub"
+                            to="/learning"
                             className="
                 px-10 py-5
                 bg-white/10 hover:bg-white/15
@@ -85,7 +86,7 @@ const Home = () => {
             </section>
 
             {/* Features Section */}
-            <section className="py-24 bg-black/40">
+            {/* <section className="py-24 bg-black/40">
                 <div className="max-w-7xl mx-auto px-6">
                     <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
                         Smart Battery Management for EVs
@@ -93,7 +94,7 @@ const Home = () => {
 
                     
                 </div>
-            </section>
+            </section> */}
 
             {/* Footer */}
             <Footer />

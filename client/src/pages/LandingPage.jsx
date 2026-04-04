@@ -16,7 +16,7 @@ const LandingPage = () => {
         <div className="container mx-auto px-6 relative z-10 text-center">
           <div className="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 rounded-full mb-8">
             <Zap className="w-4 h-4 text-blue-400" />
-            <span className="text-sm font-semibold text-blue-300 tracking-wide uppercase">VoltWise – Intelligent System</span>
+            <span className="text-sm font-semibold text-blue-300 tracking-wide uppercase">VoltIQ – Intelligent System</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white tracking-tight leading-tight">
             AI-Powered Battery <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">Health Monitoring</span>
@@ -184,7 +184,7 @@ const LandingPage = () => {
             <div className="col-span-1 md:col-span-1">
               <div className="flex items-center space-x-2 mb-6">
                 <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white font-bold">V</div>
-                <span className="text-2xl font-bold text-white tracking-tighter">VoltWise</span>
+                <span className="text-2xl font-bold text-white tracking-tighter">VoltIQ</span>
               </div>
               <p className="text-sm text-gray-500 leading-relaxed">
                 Advanced AI solutions for electric vehicle longevity and safety monitoring.
@@ -219,7 +219,7 @@ const LandingPage = () => {
             </div>
           </div>
           <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-600">
-            <p>© 2026 VoltWise – All Rights Reserved. Built for Academic Research.</p>
+            <p>© 2026 VoltIQ – All Rights Reserved. Built for Academic Research.</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
                <span className="hover:text-white cursor-pointer">Security Status</span>
                <span className="hover:text-white cursor-pointer">API Docs</span>

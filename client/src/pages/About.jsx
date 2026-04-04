@@ -2,7 +2,7 @@ import React from 'react';
 import { Bell, User, Search, ChartLine, History, Settings, LayoutDashboard, FileText } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
 
 function About() {
 
@@ -12,8 +12,10 @@ function About() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex flex-col">
+    {/* // <div className="bg-gradient-to-b from-luxury-950 via-black to-luxury-950"> */}
+    {/* // <div className="bg-gradient-to-b from-navy-950 via-dark-500 to-navy-950">  */}
 
-        <Navbar />
+        {/* <Navbar /> */}
 
         <div className="flex-1 p-6 lg:p-10 overflow-auto">
 

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { user, updateUser } = useAuth();
-  const { addToast } = useToast(); 
+  const { addToast } = useToast();
 
   const [twoFA, setTwoFA] = useState(true);
   const [emailNotif, setEmailNotif] = useState(true);
@@ -28,7 +28,7 @@ const ProfilePage = () => {
       });
 
       if (addToast) addToast('Profile updated successfully!', 'success');
-      
+
     } catch (err) {
       if (addToast) addToast('Failed to update profile', 'error');
       console.error(err);
@@ -38,21 +38,39 @@ const ProfilePage = () => {
   const Toggle = ({ enabled, setEnabled }) => (
     <button
       onClick={() => setEnabled(!enabled)}
-      className={`w-14 h-7 flex items-center rounded-full p-1 transition-all duration-300 ${
-        enabled ? "bg-cyan-400" : "bg-gray-600"
-      }`}
+      className={`w-14 h-7 flex items-center rounded-full p-1 transition-all duration-300 ${enabled ? "bg-cyan-400" : "bg-gray-600"
+        }`}
     >
       <div
-        className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-all duration-300 ${
-          enabled ? "translate-x-7" : "translate-x-0"
-        }`}
+        className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-all duration-300 ${enabled ? "translate-x-7" : "translate-x-0"
+          }`}
       ></div>
     </button>
   );
 
   return (
     <div className="min-h-screen bg-[#050816] text-white px-10 py-8 relative overflow-hidden">
-      
+      {/* Features Section */}
+      <section className="grid bg-black md:grid-cols-2 gap-10 items-center px-10 py-20">
+       {/* LEFT TEXT */}
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-left mb-16">
+            Profile
+          </h2>
+        </div>
+
+        {/* RIGHT IMAGE */}
+        <div className="relative">
+          <img
+            // src="bg1.webp"           // ← assuming it's in /public/
+            src="src/assets/img2.jpeg" 
+            alt="EV Battery Visualization"
+            className="w-full drop-shadow-[0_0_40px_rgba(0,255,255,0.3)]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-lime-400/20 blur-3xl -z-10"></div>
+        </div>
+
+      </section>
       {/* Background Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,255,255,0.08),transparent_60%)] pointer-events-none"></div>
 
