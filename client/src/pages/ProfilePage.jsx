@@ -55,8 +55,10 @@ const ProfilePage = () => {
        {/* LEFT TEXT */}
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-left mb-16">
-            Profile
+            Profile  Settings
           </h2>
+          <p className="text-gray-400">Manage your account information</p>
+
         </div>
 
         {/* RIGHT IMAGE */}
