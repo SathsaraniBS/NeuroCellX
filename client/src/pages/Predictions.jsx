@@ -1,3 +1,4 @@
+// src/pages/Predictions.jsx
 import React, { useState }       from 'react';  
 import { useAuth }               from '../contexts/AuthContext';   
 import { useToast }              from '../contexts/ToastContext';  
@@ -83,37 +84,41 @@ function Predictions() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex flex-col">
-      <div className="flex flex-1">
+    <div className="min-h-screen bg-gradient-to-br from-[#050b18] via-[#071b2f] to-[#020617] text-white flex flex-col relative overflow-hidden">
+      
+      {/* Subtle Background Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,255,255,0.05),transparent_50%)] pointer-events-none" />
 
-        {/*  Sidebar */}
+      <div className="flex flex-1 relative z-10">
+
+        {/* Sidebar */}
         <Sidebar />
 
         <div className="flex-1 p-6 lg:p-10 overflow-auto">
 
           {/* Header */}
           <div className="mb-8">
-            <h2 className="text-3xl font-semibold">
-              Battery Predictions <span className="text-cyan-400">⚡</span>
+            <h2 className="text-3xl font-semibold tracking-wide">
+              Battery <span className="bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">Predictions</span>
             </h2>
-            <p className="text-gray-400 text-sm mt-1">
-              Enter battery sensor values to predict SOH and RUL.
+            <p className="text-gray-400 text-sm mt-2">
+              Enter battery sensor values to predict SOH and RUL using the VoltIQ engine.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
             {/* ══════ INPUT FORM ══════ */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-              <h3 className="text-lg font-semibold text-cyan-400 mb-6">
-                Battery Sensor Inputs
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl rounded-2xl p-8">
+              <h3 className="text-lg font-semibold text-cyan-400 mb-6 flex items-center gap-2">
+                <Zap size={20} /> Sensor Inputs
               </h3>
 
-              <div className="space-y-4">
+              <div className="space-y-5">
 
                 {/* Voltage */}
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">
+                  <label className="text-sm text-gray-400 mb-1.5 block">
                     Voltage (V)
                   </label>
                   <input
@@ -122,16 +127,16 @@ function Predictions() {
                     step="0.01"
                     value={inputs.voltage}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-cyan-400/60"
+                    className="w-full px-4 py-3 bg-transparent border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 transition placeholder-gray-500"
                   />
-                  <p className="text-gray-500 text-xs mt-1">
+                  <p className="text-gray-500 text-xs mt-1.5">
                     Normal range: 2.5V - 4.2V
                   </p>
                 </div>
 
                 {/* Current */}
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">
+                  <label className="text-sm text-gray-400 mb-1.5 block">
                     Current (A)
                   </label>
                   <input
@@ -140,16 +145,16 @@ function Predictions() {
                     step="0.01"
                     value={inputs.current}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-cyan-400/60"
+                    className="w-full px-4 py-3 bg-transparent border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 transition placeholder-gray-500"
                   />
-                  <p className="text-gray-500 text-xs mt-1">
+                  <p className="text-gray-500 text-xs mt-1.5">
                     Negative = discharging, Positive = charging
                   </p>
                 </div>
 
                 {/* Temperature */}
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">
+                  <label className="text-sm text-gray-400 mb-1.5 block">
                     Temperature (°C)
                   </label>
                   <input
@@ -158,16 +163,16 @@ function Predictions() {
                     step="0.1"
                     value={inputs.temperature}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-cyan-400/60"
+                    className="w-full px-4 py-3 bg-transparent border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 transition placeholder-gray-500"
                   />
-                  <p className="text-gray-500 text-xs mt-1">
+                  <p className="text-gray-500 text-xs mt-1.5">
                     Normal range: 15°C - 35°C
                   </p>
                 </div>
 
                 {/* Cycle Count */}
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">
+                  <label className="text-sm text-gray-400 mb-1.5 block">
                     Cycle Count
                   </label>
                   <input
@@ -176,16 +181,16 @@ function Predictions() {
                     step="1"
                     value={inputs.cycle_count}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-cyan-400/60"
+                    className="w-full px-4 py-3 bg-transparent border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 transition placeholder-gray-500"
                   />
-                  <p className="text-gray-500 text-xs mt-1">
+                  <p className="text-gray-500 text-xs mt-1.5">
                     Number of charge/discharge cycles
                   </p>
                 </div>
 
                 {/* Capacity */}
                 <div>
-                  <label className="text-sm text-gray-400 mb-1 block">
+                  <label className="text-sm text-gray-400 mb-1.5 block">
                     Capacity (Ah)
                   </label>
                   <input
@@ -194,9 +199,9 @@ function Predictions() {
                     step="0.001"
                     value={inputs.capacity}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-cyan-400/60"
+                    className="w-full px-4 py-3 bg-transparent border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 transition placeholder-gray-500"
                   />
-                  <p className="text-gray-500 text-xs mt-1">
+                  <p className="text-gray-500 text-xs mt-1.5">
                     Initial capacity: 2.0353 Ah
                   </p>
                 </div>
@@ -205,7 +210,7 @@ function Predictions() {
                 <button
                   onClick={handlePredict}
                   disabled={loading}
-                  className="w-full py-4 mt-2 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold text-lg hover:brightness-110 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3.5 mt-4 rounded-xl font-semibold text-lg bg-gradient-to-r from-cyan-400 to-green-400 text-black hover:opacity-90 transition duration-300 shadow-lg shadow-cyan-500/20 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <span className="flex items-center justify-center gap-3">
@@ -224,115 +229,126 @@ function Predictions() {
             {/* ══════ RESULTS ══════ */}
             <div>
               {!predicted ? (
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 h-full flex items-center justify-center">
-                  <div className="text-center">
-                    <Battery size={64} className="text-gray-600 mx-auto mb-4" />
-                    <p className="text-gray-400 text-lg">
-                      Enter sensor values and click
-                    </p>
-                    <p className="text-cyan-400 font-semibold">
-                      "Predict SOH & RUL"
-                    </p>
+                <div className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl rounded-2xl p-6 h-full flex flex-col items-center justify-center">
+                  <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mb-6 border border-white/10">
+                    <Battery size={48} className="text-cyan-500/50" />
                   </div>
+                  <p className="text-gray-400 text-lg text-center px-8">
+                    Enter the sensor parameters and click <br/>
+                    <span className="text-cyan-400 font-semibold">Predict SOH & RUL</span> <br/>
+                    to generate a health analysis.
+                  </p>
                 </div>
 
               ) : result && (
-                <div className="space-y-4">
+                <div className="space-y-6">
 
                   {/* SOH Card */}
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                    <p className="text-gray-400 text-sm mb-1">
+                  <div className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl rounded-2xl p-6">
+                    <p className="text-gray-400 text-sm mb-2 font-medium uppercase tracking-wider">
                       State of Health (SOH)
                     </p>
                     <div className="flex items-end gap-3">
                       <p className={`text-6xl font-bold ${healthColor[result.health_status] || 'text-white'}`}>
                         {result.soh}%
                       </p>
-                      <span className="text-2xl mb-2">{result.health_icon}</span>
+                      <span className="text-3xl mb-2">{result.health_icon}</span>
                     </div>
-                    <div className={`inline-block mt-2 px-3 py-1 rounded-full text-sm font-semibold
-                      ${result.health_color === 'green'  ? 'bg-green-500/20  text-green-400'  :
-                        result.health_color === 'blue'   ? 'bg-blue-500/20   text-blue-400'   :
-                        result.health_color === 'yellow' ? 'bg-yellow-500/20 text-yellow-400' :
-                                                           'bg-red-500/20    text-red-400'}`}>
+                    <div className={`inline-block mt-3 px-4 py-1.5 rounded-lg text-sm font-semibold border
+                      ${result.health_color === 'green'  ? 'bg-green-500/10 border-green-500/20 text-green-400'  :
+                        result.health_color === 'blue'   ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'   :
+                        result.health_color === 'yellow' ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400' :
+                                                           'bg-red-500/10 border-red-500/20 text-red-400'}`}>
                       {result.health_status}
                     </div>
 
                     {/* SOH Progress Bar */}
-                    <div className="mt-4">
-                      <div className="w-full bg-white/10 rounded-full h-3">
+                    <div className="mt-5">
+                      <div className="w-full bg-white/10 rounded-full h-2">
                         <div
-                          className={`h-3 rounded-full transition-all duration-1000
-                            ${result.soh >= 90 ? 'bg-green-400'  :
-                              result.soh >= 80 ? 'bg-blue-400'   :
-                              result.soh >= 70 ? 'bg-yellow-400' :
-                                                 'bg-red-400'}`}
+                          className={`h-2 rounded-full transition-all duration-1000
+                            ${result.soh >= 90 ? 'bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.5)]'  :
+                              result.soh >= 80 ? 'bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.5)]'   :
+                              result.soh >= 70 ? 'bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.5)]' :
+                                                 'bg-red-400 shadow-[0_0_10px_rgba(248,113,113,0.5)]'}`}
                           style={{ width: `${result.soh}%` }}
                         />
                       </div>
                     </div>
                   </div>
 
-                  {/* RUL Card */}
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                    <p className="text-gray-400 text-sm mb-1">
-                      Remaining Useful Life (RUL)
-                    </p>
-                    <p className={`text-5xl font-bold
-                      ${result.rul_color === 'green'  ? 'text-green-400'  :
-                        result.rul_color === 'yellow' ? 'text-yellow-400' :
-                                                        'text-red-400'}`}>
-                      {result.rul_cycles} cycles
-                    </p>
-                    <p className="text-gray-400 text-sm mt-2">
-                      {result.rul_status}
-                    </p>
+                  <div className="grid grid-cols-2 gap-6">
+                    {/* RUL Card */}
+                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl rounded-2xl p-6">
+                      <p className="text-gray-400 text-xs mb-2 font-medium uppercase tracking-wider">
+                        Remaining Useful Life
+                      </p>
+                      <p className={`text-4xl font-bold
+                        ${result.rul_color === 'green'  ? 'text-green-400'  :
+                          result.rul_color === 'yellow' ? 'text-yellow-400' :
+                                                          'text-red-400'}`}>
+                        {result.rul_cycles}
+                      </p>
+                      <p className="text-gray-500 text-sm mt-1">
+                        cycles
+                      </p>
+                      <p className="text-gray-400 text-xs mt-3 bg-white/5 p-2 rounded-lg border border-white/5">
+                        {result.rul_status}
+                      </p>
+                    </div>
+
+                    {/* Driving Range Card */}
+                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl rounded-2xl p-6">
+                      <p className="text-gray-400 text-xs mb-2 font-medium uppercase tracking-wider">
+                        Estimated Range
+                      </p>
+                      <p className="text-4xl font-bold text-purple-400 drop-shadow-[0_0_8px_rgba(192,132,252,0.3)]">
+                        {result.estimated_range_km}
+                      </p>
+                      <p className="text-gray-500 text-sm mt-1">
+                        kilometers
+                      </p>
+                      <p className="text-gray-400 text-xs mt-3 bg-white/5 p-2 rounded-lg border border-white/5">
+                        Based on current SOH
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Driving Range Card */}
-                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                    <p className="text-gray-400 text-sm mb-1">
-                      Estimated Driving Range
-                    </p>
-                    <p className="text-5xl font-bold text-purple-400">
-                      {result.estimated_range_km} km
-                    </p>
-                    <p className="text-gray-400 text-sm mt-2">
-                      Based on current SOH
-                    </p>
+                  {/* Action Buttons */}
+                  <div className="grid grid-cols-2 gap-4 pt-2">
+                    {/* View Reports Button */}
+                    <button
+                      onClick={() => navigate('/reports')}
+                      className="w-full py-3.5 rounded-xl border border-white/20 bg-transparent text-gray-300 hover:bg-white/10 hover:text-white transition flex items-center justify-center gap-2 font-medium"
+                    >
+                      <Download size={18} /> View Reports
+                    </button>
+
+                    {/* New Prediction */}
+                    <button
+                      onClick={() => { setResult(null); setPredicted(false); }}
+                      className="w-full py-3.5 rounded-xl border border-white/20 bg-transparent text-gray-300 hover:bg-white/10 hover:text-white transition flex items-center justify-center gap-2 font-medium"
+                    >
+                      <RefreshCw size={18} /> Reset Data
+                    </button>
                   </div>
 
-                  {/*  Save as Report Button */}
+                  {/* Save as Report Button */}
                   <button
                     onClick={handleSaveReport}
                     disabled={saving}
-                    className="w-full py-3 rounded-xl bg-white/10 border border-cyan-500/30 text-cyan-400 font-semibold hover:bg-cyan-500/20 transition flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="w-full py-3.5 rounded-xl border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-semibold hover:bg-cyan-500/20 transition flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     {saving ? (
                       <span className="flex items-center gap-2">
                         <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
-                        Saving...
+                        Saving Report...
                       </span>
                     ) : (
-                      '💾 Save as Report'
+                      '💾 Save Analysis Report'
                     )}
                   </button>
 
-                  {/* View Reports Button */}
-                  <button
-                    onClick={() => navigate('/reports')}
-                    className="w-full py-3 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5 transition flex items-center justify-center gap-2"
-                  >
-                    <Download size={16} /> View All Reports
-                  </button>
-
-                  {/* New Prediction */}
-                  <button
-                    onClick={() => { setResult(null); setPredicted(false); }}
-                    className="w-full py-3 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5 transition flex items-center justify-center gap-2"
-                  >
-                    <RefreshCw size={16} /> New Prediction
-                  </button>
                 </div>
               )}
             </div>
