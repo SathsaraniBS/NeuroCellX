@@ -1,6 +1,7 @@
 # server/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routers.chatbot import router as chatbot_router  
 
 from routers import auth
 from routers import dashboard
@@ -39,6 +40,7 @@ app.include_router(admin.router)
 app.include_router(datasets.router) 
 app.include_router(predict.router) 
 app.include_router(contact.router)
+app.include_router(chatbot_router, prefix="/api")
 
 # Create all database tables on startup
 Base.metadata.create_all(bind=engine)  
@@ -52,3 +54,7 @@ def home():
         "status": "online",
         "version": "1.0.0"
     }
+
+@app.get("/")
+def root():
+    return {"message": "VoltIQ API Running!"}

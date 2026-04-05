@@ -4,7 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+api_key = os.getenv("ANTHROPIC_API_KEY")
+client = anthropic.Anthropic(api_key=api_key)
 
 EV_SYSTEM_PROMPT = """
 You are VoltBot, an expert AI assistant for VoltIQ — an EV Battery Health Prediction platform.
@@ -30,10 +31,14 @@ Rules:
 """
 
 def get_ev_response(messages: list) -> str:
-    response = client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=1024,
-        system=EV_SYSTEM_PROMPT,
-        messages=messages
-    )
-    return response.content[0].text
+    try:
+        response = client.messages.create(
+            model="claude-3-5-sonnet-20240620",  
+            max_tokens=1024,
+            system=EV_SYSTEM_PROMPT,
+            messages=messages
+        )
+        return response.content[0].text
+    except Exception as e:
+        print(f"Claude API Error: {str(e)}") 
+        raise e

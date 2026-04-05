@@ -14,8 +14,10 @@ class ChatRequest(BaseModel):
 @router.post("/chat")
 async def chat(request: ChatRequest):
     try:
-        messages = [{"role": m.role, "content": m.content} for m in request.messages]
-        reply = get_ev_response(messages)
+        formatted_messages = [{"role": m.role, "content": m.content} for m in request.messages]
+        
+        reply = get_ev_response(formatted_messages)
         return {"reply": reply}
     except Exception as e:
+        print(f"Chat Route Error: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
