@@ -12,7 +12,7 @@ import LandingPage from './pages/LandingPage';
 import About from './pages/About';
 import ContactPage from './pages/ContactPage';
 import BatteryTypes from './pages/BatteryTypes';
-
+import Charging from './pages/Charging';  // ← NEW: Import Charging page
 // ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
 import Predictions from './pages/Predictions';
@@ -51,6 +51,7 @@ function App() {
                                 <Route path="about" element={<About />} />
                                 <Route path="battery-types" element={<BatteryTypes />} />
                                 <Route path="contact" element={<ContactPage />} />
+                                <Route path="charging" element={<Charging />} />  {/* ← NEW: Charging page route */}
                             </Route>
 
                             {/* Protected Routes (login required) */}
