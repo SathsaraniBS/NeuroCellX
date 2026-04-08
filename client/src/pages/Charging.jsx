@@ -55,7 +55,7 @@ const STATION_TYPES = [
     {
         id: 1,
         title: "Private / Home",
-        image: "src/assets/ev5.png", // Updated fallback image
+        image: "src/assets/evhome.png", // Updated fallback image
         bullets: [
             "Installed in private residences or apartment complexes.",
             "Usually Level 1 or Level 2 chargers for overnight use."
@@ -79,7 +79,7 @@ function Charging() {
     const [chargingData, setChargingData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentSlide, setCurrentSlide] = useState(0);
-    
+
     // New state to control video playback
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
@@ -306,23 +306,23 @@ function Charging() {
                         <div className="w-full md:w-1/2 relative rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)] bg-black aspect-video group">
                             {!isVideoPlaying ? (
                                 /* Custom Thumbnail Overlay that disappears on click */
-                                <div 
+                                <div
                                     className="absolute inset-0 z-10 cursor-pointer"
                                     onClick={() => setIsVideoPlaying(true)}
                                 >
-                                    <img 
-                                        src="https://img.youtube.com/vi/NWWW-bh_P_Q/maxresdefault.jpg" 
-                                        alt="Video Thumbnail" 
+                                    <img
+                                        src="https://img.youtube.com/vi/NWWW-bh_P_Q/maxresdefault.jpg"
+                                        alt="Video Thumbnail"
                                         className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
                                     />
                                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
-                                    
+
                                     <div className="absolute inset-0 flex items-center justify-center">
                                         <div className="bg-cyan-500 text-[#050816] rounded-full p-4 flex items-center justify-center hover:scale-110 hover:shadow-[0_0_20px_rgba(34,211,238,0.6)] transition-all duration-300">
                                             <PlayCircle size={40} className="fill-current" />
                                         </div>
                                     </div>
-                                    
+
                                     {/* Mock Video Info Overlay */}
                                     <div className="absolute top-4 left-4 flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black font-bold text-xs shadow-lg">MG</div>
@@ -368,6 +368,36 @@ function Charging() {
                         </div>
 
                     </div>
+                </section>
+
+                <section className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12 bg-white">
+
+                    {/* Left Content Column */}
+                    <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-[#2E77AE] tracking-tight leading-tight">
+                            {content.title}
+                        </h2>
+
+                        <h3 className="text-xl md:text-2xl font-bold text-[#4BA1CC]">
+                            {content.sub_title}
+                        </h3>
+
+                        <p className="text-gray-700 text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
+                            {content.description}
+                        </p>
+                    </div>
+
+                    {/* Right Image Column */}
+                    <div className="w-full md:w-1/2">
+                        <div className="relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                            <img
+                                src={content.image_url}
+                                alt="EV Cost Savings"
+                                className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-500"
+                            />
+                        </div>
+                    </div>
+
                 </section>
 
             </main>

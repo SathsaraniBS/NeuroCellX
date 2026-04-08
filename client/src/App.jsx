@@ -18,6 +18,8 @@ import Dashboard from './pages/Dashboard';
 import Predictions from './pages/Predictions';
 import Profile from './pages/ProfilePage';
 import Reports from './pages/Reports';
+import PublicCharging from './pages/PublicCharging';
+import Homecharging from './pages/Homecharging';
 
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -55,6 +57,17 @@ function App() {
                             </Route>
 
                             {/* Protected Routes (login required) */}
+                            
+                            <Route path="/homecharging" element={
+                                <ProtectedRoute>
+                                    <Homecharging />
+                                </ProtectedRoute>
+                            }/>
+                            <Route path="/publiccharging" element={
+                                <ProtectedRoute>
+                                    <PublicCharging />
+                                </ProtectedRoute>
+                            } />
                             <Route path="/dashboard" element={
                                 <ProtectedRoute>
                                     <Dashboard />

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false); // Profile dropdown එක සඳහා state එක
-
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isChargingOpen, setIsChargingOpen] = useState(false); // State for Charging dropdown
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
   const toggleMenu = () => {
@@ -28,16 +28,18 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed w-full top-0 z-50 py-4 h-20 text-white flex justify-between items-center shadow-md transition duration-300 ${
-        isScrolled ? 'bg-white/5 backdrop-blur-md' : ' bg-transparent'
+        isScrolled ? 'bg-[#0f172a]/80 backdrop-blur-md border-b border-white/10' : ' bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center w-full px-4 text-white">
 
         {/* Logo */}
         <div className="text-2xl font-semibold tracking-wide">
-          <span className="bg-gradient-to-r from-cyan-400 to-lime-400 bg-clip-text text-transparent">
-            VoltIQ
-          </span>
+          <Link to="/">
+            <span className="bg-gradient-to-r from-cyan-400 to-lime-400 bg-clip-text text-transparent">
+                VoltIQ
+            </span>
+          </Link>
         </div>
 
         {/* Nav Links */}
@@ -63,11 +65,48 @@ const Navbar = () => {
             About
           </a>
 
-          <Link to="/charging"
-            className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
+          {/* Charging Dropdown */}
+          <div 
+            className="relative group"
+            onMouseEnter={() => setIsChargingOpen(true)}
+            onMouseLeave={() => setIsChargingOpen(false)}
           >
-            Charging
-          </Link>
+            <Link to="/charging"
+              className="flex items-center gap-1 hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)] focus:outline-none"
+            >
+              Charging <span className={`transition-transform duration-200 ${isChargingOpen ? 'rotate-180' : ''}`}>▾</span>
+            </Link>
+
+            {isChargingOpen && (
+              <div className="absolute left-0 mt-0 w-48 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
+                <Link 
+                  to="/charging/stations" 
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+                >
+                  Find Stations
+                </Link>
+                <Link 
+                  to="/homecharging" 
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+                >
+                  HOME CHARGING
+                </Link>
+                <Link 
+                  to="/publiccharging" 
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+                >
+                  PUBLIC CHARGING
+                </Link>
+                <Link 
+                  to="/charging/compare" 
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+                >
+                  TRIP PLANNER
+                </Link>
+              </div>
+            )}
+          </div>
+
           <Link to="/learning"
             className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
           >
@@ -132,7 +171,7 @@ const Navbar = () => {
                   </Link>
                   <hr className="my-1 border-white/5" />
                   <button 
-                    onClick={() => setIsLoggedIn(false)} // මෙහි Logout logic එක ඇතුළත් කරන්න
+                    onClick={() => setIsLoggedIn(false)}
                     className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition"
                   >
                     Log Out
