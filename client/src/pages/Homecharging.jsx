@@ -15,6 +15,32 @@ import { useLocation, Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
+const FALLBACK_CHARGING_DATA = [
+    {   
+        id: 1, 
+        level_name: "Level 1", 
+        voltage: "120V", 
+        image: "src/assets/level1.png", // Updated fallback image
+        description: "Standard home outlet. Best for overnight charging at home.", 
+        // iconType: "level1" 
+    },
+    { 
+        id: 2, 
+        level_name: "Level 2", 
+        voltage: "240V", 
+        image: "src/assets/level2.png", // Updated fallback image
+        description: "Fast home and public charging. Ideal for daily drivers.", 
+        // iconType: "level2" 
+    },
+    { 
+        id: 3, 
+        level_name: "DC Fast", 
+        voltage: "480V+", 
+        image: "src/assets/level3.png", // Updated fallback image
+        description: "Rapid commercial charging for long-distance travel.", 
+        // iconType: "dcfast" 
+    }
+];
 
 function Homecharging() {
 
