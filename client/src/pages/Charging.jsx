@@ -375,15 +375,16 @@ function Charging() {
                     {/* Left Content Column */}
                     <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
                         <h2 className="text-3xl md:text-4xl font-extrabold text-[#2E77AE] tracking-tight leading-tight">
-                            {content.title}
+                            But, how much does charging cost you?
                         </h2>
 
                         <h3 className="text-xl md:text-2xl font-bold text-[#4BA1CC]">
-                            {content.sub_title}
+                            It’s cheaper than conventional fuel!
+
                         </h3>
 
                         <p className="text-gray-700 text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
-                            {content.description}
+                            When it comes to EV charging, you're in for a money-saving ride, one doesn’t have to worry about increasing petrol/diesel prices everyday The EV and charging industries are working for faster and cheaper charging.
                         </p>
                     </div>
 
@@ -391,7 +392,7 @@ function Charging() {
                     <div className="w-full md:w-1/2">
                         <div className="relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
                             <img
-                                src={content.image_url}
+                                src="src/assets/vs.png"
                                 alt="EV Cost Savings"
                                 className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-500"
                             />
