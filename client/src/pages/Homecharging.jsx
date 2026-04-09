@@ -43,6 +43,7 @@ const FALLBACK_CHARGING_DATA = [
 ];
 
 function Homecharging() {
+    const [loading, setLoading] = useState(true); 
 
     return (
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans">
@@ -94,16 +95,7 @@ function Homecharging() {
                             )}
                         </div>
 
-                        {/* Text Area */}
-                        <div className="lg:w-1/3">
-                            <div className="bg-cyan-500/10 border border-cyan-500/20 p-8 rounded-3xl relative">
-                                <h3 className="text-2xl font-black mb-4 uppercase text-white">What are charging levels?</h3>
-                                <p className="text-gray-400 text-base leading-relaxed mb-6">
-                                    Charging speed is determined by the "Level" of the charger. From standard wall outlets to high-speed DC stations, we help you pick the right power for your journey.
-                                </p>
-                                <div className="h-1.5 w-16 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-full" />
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </section>
