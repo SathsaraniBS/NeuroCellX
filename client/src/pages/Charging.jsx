@@ -46,9 +46,30 @@ const DUMMY_VEHICLES = [
 ];
 
 const FALLBACK_CHARGING_DATA = [
-    { id: 1, level_name: "Level 1", voltage: "120V", description: "Standard home outlet. Best for overnight charging at home.", iconType: "level1" },
-    { id: 2, level_name: "Level 2", voltage: "240V", description: "Fast home and public charging. Ideal for daily drivers.", iconType: "level2" },
-    { id: 3, level_name: "DC Fast", voltage: "480V+", description: "Rapid commercial charging for long-distance travel.", iconType: "dcfast" }
+    {   
+        id: 1, 
+        level_name: "Level 1", 
+        voltage: "120V", 
+        image: "src/assets/level1.png", // Updated fallback image
+        description: "Standard home outlet. Best for overnight charging at home.", 
+        // iconType: "level1" 
+    },
+    { 
+        id: 2, 
+        level_name: "Level 2", 
+        voltage: "240V", 
+        image: "src/assets/level2.png", // Updated fallback image
+        description: "Fast home and public charging. Ideal for daily drivers.", 
+        // iconType: "level2" 
+    },
+    { 
+        id: 3, 
+        level_name: "DC Fast", 
+        voltage: "480V+", 
+        image: "src/assets/level3.png", // Updated fallback image
+        description: "Rapid commercial charging for long-distance travel.", 
+        // iconType: "dcfast" 
+    }
 ];
 
 const STATION_TYPES = [
@@ -184,7 +205,7 @@ function Charging() {
                                 ) : (
                                     chargingData.map((level) => (
                                         <div key={level.id} className="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md hover:bg-white/10 transition-all group">
-                                            {renderChargingIcon(level.iconType)}
+                                        <img src={level.image} alt={level.level_name} className="w-25 h-25mb-6 object-contain" />
                                             <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition-colors">{level.level_name}</h3>
                                             <h4 className="text-3xl font-black text-white/90 mb-4">{level.voltage}</h4>
                                             <p className="text-gray-400 text-sm leading-relaxed">{level.description}</p>
@@ -400,6 +421,14 @@ function Charging() {
                     </div>
 
                 </section>
+
+                 <section className="max-w-7xl mx-auto px-6 py-24 relative">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase tracking-wide">
+                            Calculate the cost of charging your EV at home here
+                        </h2>
+                    </div>
+                    </section>
 
             </main>
 
