@@ -9,123 +9,87 @@ import {
     Leaf,
     Wind,
     Navigation,
-    Info
+    Info,
+    Home,
+    Smartphone,
+    CreditCard
 } from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const FALLBACK_CHARGING_DATA = [
-    {   
-        id: 1, 
-        level_name: "Level 1", 
-        voltage: "120V", 
-        image: "src/assets/level1.png", // Updated fallback image
-        description: "Standard home outlet. Best for overnight charging at home.", 
-        // iconType: "level1" 
+    {
+        id: 1,
+        level_name: "Level 1",
+        voltage: "120V",
+        image: "/src/assets/level1.png", 
+        description: "Standard home outlet. Best for overnight charging at home.",
+        color: "from-blue-400 to-cyan-500"
     },
-    { 
-        id: 2, 
-        level_name: "Level 2", 
-        voltage: "240V", 
-        image: "src/assets/level2.png", // Updated fallback image
-        description: "Fast home and public charging. Ideal for daily drivers.", 
-        // iconType: "level2" 
+    {
+        id: 2,
+        level_name: "Level 2",
+        voltage: "240V",
+        image: "/src/assets/level2.png", 
+        description: "Fast home and public charging. Ideal for daily drivers.",
+        color: "from-cyan-400 to-teal-500"
     },
-    { 
-        id: 3, 
-        level_name: "DC Fast", 
-        voltage: "480V+", 
-        image: "src/assets/level3.png", // Updated fallback image
-        description: "Rapid commercial charging for long-distance travel.", 
-        // iconType: "dcfast" 
+    {
+        id: 3,
+        level_name: "DC Fast",
+        voltage: "480V+",
+        image: "/src/assets/level3.png", 
+        description: "Rapid commercial charging for long-distance travel.",
+        color: "from-teal-400 to-lime-500"
     }
 ];
 
 function Homecharging() {
-    const [loading, setLoading] = useState(true); 
+    const [chargingLevels, setChargingLevels] = useState(FALLBACK_CHARGING_DATA);
 
     return (
-        <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans">
+        <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans overflow-x-hidden">
             <Navbar />
-            <section className="min-h-screen relative bg-[url('/src/assets/evhome.png')] bg-black/10 bg-blend-multiply bg-center bg-cover bg-no-repeat flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-20">
-                <div className="text-center text-white p-6 sm:p-8 max-w-3xl mx-auto">
-                    <div className="title mb-6 font-bold">
 
+            {/* --- HERO SECTION --- */}
+            <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+                {/* Background Image with Zoom Effect */}
+                <div className="absolute inset-0 z-0">
+                    <img 
+                        src="/src/assets/evhome.png" 
+                        alt="EV Charging at Home" 
+                        className="w-full h-full object-cover opacity-100 animate-slow-zoom"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#050816]/60 via-transparent to-[#050816]" />
+                </div>
 
-                    </div>
+                <div className="relative z-10 text-center px-6 max-w-4xl">
+                    <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight">
+                        POWER YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">JOURNEY</span> FROM HOME
+                    </h1>
+                    <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto">
+                        Turn your garage into a personal refueling station. Smart, efficient, and always ready for the road.
+                    </p>
                 </div>
             </section>
 
-            <section className="py-24 relative overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
+            
 
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="text-center mb-20 space-y-4">
-                        <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
-                            Charge your EV while you recharge
-
-                        </h2>
-                        <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
-                            Make your home your very own personal EV charging station by transforming your garage or driveway into a power source for your electric vehicle. With easy options available to charge at home, you’re just a plug away from a convenient and hassle-free charging experience.
-
-
-                        </p>
-
-                         <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
-                            From the comfort of your home
-
-                        </h2>
-                    </div>
-
-                    <div className="flex flex-col lg:flex-row items-center gap-16">
-                        {/* Cards Grid */}
-                        <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {loading ? (
-                                <div className="col-span-3 text-center py-20"><div className="animate-spin h-10 w-10 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto" /></div>
-                            ) : (
-                                chargingData.map((level) => (
-                                    <div key={level.id} className="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md hover:bg-white/10 transition-all group">
-                                        <img src={level.image} alt={level.level_name} className="w-25 h-25mb-6 object-contain" />
-                                        <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition-colors">{level.level_name}</h3>
-                                        <h4 className="text-3xl font-black text-white/90 mb-4">{level.voltage}</h4>
-                                        <p className="text-gray-400 text-sm leading-relaxed">{level.description}</p>
-                                    </div>
-                                ))
-                            )}
-                        </div>
-
-                        
-                    </div>
-                </div>
-            </section>
-
-
-
+           
 
             <Footer />
 
-
-
-
-
-
-
-
-
-
-
-
-            {/* Added some custom keyframes for the zoom effect */}
+            {/* Custom Styles */}
             <style>{`
-        @keyframes slow-zoom {
-          0% { transform: scale(1); }
-          100% { transform: scale(1.1); }
-        }
-        .animate-slow-zoom {
-          animation: slow-zoom 20s infinite alternate linear;
-        }
-      `}</style>
+                @keyframes slow-zoom {
+                    0% { transform: scale(1); }
+                    100% { transform: scale(1.1); }
+                }
+                .animate-slow-zoom {
+                    animation: slow-zoom 20s infinite alternate linear;
+                }
+            `}</style>
         </div>
     );
 }

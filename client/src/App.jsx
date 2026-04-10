@@ -53,11 +53,15 @@ function App() {
                                 <Route path="about" element={<About />} />
                                 <Route path="battery-types" element={<BatteryTypes />} />
                                 <Route path="contact" element={<ContactPage />} />
-                                <Route path="charging" element={<Charging />} />  {/* ← NEW: Charging page route */}
                             </Route>
 
                             {/* Protected Routes (login required) */}
-                            
+                            <Route path="charging" element={
+                                <ProtectedRoute>
+                                <Charging />
+                                </ProtectedRoute>
+                            } /> 
+
                             <Route path="/homecharging" element={
                                 <ProtectedRoute>
                                     <Homecharging />
