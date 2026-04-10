@@ -9,7 +9,8 @@ from database import engine, Base
 from routers import admin 
 from routers import datasets 
 from routers import contact     
-from routers import predict      
+from routers import predict    
+from routers import calculator  
 
 
 app = FastAPI(
@@ -17,8 +18,6 @@ app = FastAPI(
     description="AI-powered EV battery SOH, SOC and RUL prediction API",
     version="1.0.0"
 )
-
-EXCHANGE_RATE_API_URL = "https://v6.exchangerate-api.com/v6/YOUR_API_KEY/latest/USD"
 
 # CORS Middleware
 # Allows React frontend to call this API
@@ -43,6 +42,7 @@ app.include_router(datasets.router)
 app.include_router(predict.router) 
 app.include_router(contact.router)
 app.include_router(chatbot_router, prefix="/api")
+app.include_router(calculator.router)  
 
 # Create all database tables on startup
 Base.metadata.create_all(bind=engine)  
@@ -60,29 +60,3 @@ def home():
 @app.get("/")
 def root():
     return {"message": "VoltIQ API Running!"}
-
-
-@app.get("/calculate")
-def get_ev_data(battery_kwh: float, charger_kw: float, country_code: str):
-    # 1. Fetch electricity rate from your DB (Mocking here for brevity)
-    # rate = db.query(ElectricityRate).filter(...) 
-    local_rate = 4.0  # e.g., 4 units
-    currency = "INR"
-
-    # 2. Logic for Charging Time
-    charging_time = battery_kwh / charger_kw
-
-    # 3. Logic for Cost
-    total_cost_local = battery_kwh * local_rate
-
-    return {
-        "charging_time_hours": round(charging_time, 2),
-        "total_cost": round(total_cost_local, 2),
-        "currency": currency
-    }
-
-@app.get("/exchange-rates")
-def get_rates():
-    # Fetch real-time rates to allow users to toggle between currencies
-    response = requests.get(EXCHANGE_RATE_API_URL)
-    return response.json()["conversion_rates"]
