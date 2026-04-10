@@ -1,208 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Zap, 
-  Battery, 
-  Gauge, 
-  ChevronRight, 
-  ShieldCheck, 
-  Globe, 
-  Leaf, 
-  Wind,
-  Navigation,
-  Info
-} from "lucide-react";
-import { useLocation, Link } from "react-router-dom";
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import React from 'react';
 
-// EV Specific Sample Data
-const DUMMY_VEHICLES = [
-  {
-    _id: "ev1",
-    title: "Model Zenith S",
-    poster: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop",
-    range: "420 miles",
-    topSpeed: "155 mph",
-    acceleration: "3.1s",
-    tagline: "The Future of Sustainable Performance",
-    description: "Experience the pinnacle of electric engineering. The Zenith S combines industry-leading range with breathtaking acceleration, all wrapped in a zero-emission package."
-  },
-  {
-    _id: "ev2",
-    title: "EcoRunner SUV",
-    poster: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2072&auto=format&fit=crop",
-    range: "310 miles",
-    topSpeed: "130 mph",
-    acceleration: "5.4s",
-    tagline: "Adventure without Compromise",
-    description: "Built for the rugged outdoors, the EcoRunner SUV features dual-motor all-wheel drive and a reinforced battery chassis designed for any terrain."
-  },
-  {
-    _id: "ev3",
-    title: "Volt City Compact",
-    poster: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=2070&auto=format&fit=crop",
-    range: "250 miles",
-    topSpeed: "95 mph",
-    acceleration: "7.2s",
-    tagline: "Master the Modern Urban Jungle",
-    description: "Agile, smart, and fully connected. The Volt City is the perfect companion for urban commuters looking to slash their carbon footprint."
-  }
-];
-
-function About() {
-  const { pathname } = useLocation();
-  
-  // State management for the Hero Carousel
-  const [vehicles] = useState(DUMMY_VEHICLES);
-  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
-  const activeEV = vehicles[currentHeroIndex];
-
-  // Auto-rotate hero section every 6 seconds
-  useEffect(() => {
-    if (vehicles.length <= 1) return;
-    const interval = setInterval(() => {
-      setCurrentHeroIndex((prev) => (prev + 1) % vehicles.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [vehicles.length]);
-
+const HomeFeatures = () => {
   return (
-    <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans">
-      <Navbar />
-      <div className="-mt-20 flex-grow">
-        {/* Hero Section */}
-        {activeEV && (
-          <div className="relative h-screen w-full overflow-hidden">
-            <div className="absolute inset-0 transition-opacity duration-1000 ease-in-out">
-              <img
-                key={activeEV._id}
-                src={activeEV?.poster}
-                alt={activeEV?.title}
-                className="w-full h-full object-cover scale-105 animate-slow-zoom"
-              />
-              {/* Gradient Overlays */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
-            </div>
+    <div className="max-w-6xl mx-auto px-6 py-16 font-sans bg-white">
+      {/* Main Heading */}
+      <h2 className="text-center text-[#2b6cb0] font-bold text-xl md:text-2xl mb-14 uppercase tracking-wider">
+        From the comfort of your home
+      </h2>
 
-            <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
-              <div className="max-w-3xl space-y-6 pt-20">
-                <div className="flex items-center gap-2 text-cyan-400 font-bold tracking-widest uppercase text-sm animate-fade-in">
-                  <Zap size={18} className="fill-cyan-400" />
-                  <span>Next-Gen Mobility</span>
-                </div>
-                
-                <h1 className="text-6xl md:text-8xl font-black text-white leading-tight tracking-tight">
-                  {activeEV?.title}
-                </h1>
-                
-                <p className="text-xl text-cyan-100/80 font-medium italic">
-                  "{activeEV?.tagline}"
-                </p>
-
-                {/* Specs Bar */}
-                <div className="flex flex-wrap items-center gap-8 text-white py-4">
-                  <div className="flex flex-col border-l-2 border-cyan-500 pl-4">
-                    <span className="text-xs uppercase text-gray-400 font-bold tracking-widest">Range</span>
-                    <span className="text-2xl font-mono font-bold flex items-center gap-2">
-                      <Battery className="text-green-400" /> {activeEV?.range}
-                    </span>
-                  </div>
-                  <div className="flex flex-col border-l-2 border-cyan-500 pl-4">
-                    <span className="text-xs uppercase text-gray-400 font-bold tracking-widest">0-60 MPH</span>
-                    <span className="text-2xl font-mono font-bold flex items-center gap-2">
-                      <Wind className="text-blue-400" /> {activeEV?.acceleration}
-                    </span>
-                  </div>
-                  <div className="flex flex-col border-l-2 border-cyan-500 pl-4">
-                    <span className="text-xs uppercase text-gray-400 font-bold tracking-widest">Top Speed</span>
-                    <span className="text-2xl font-mono font-bold flex items-center gap-2">
-                      <Gauge className="text-purple-400" /> {activeEV?.topSpeed}
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-lg text-gray-300 leading-relaxed max-w-xl">
-                  {activeEV?.description}
-                </p>
-
-                <div className="flex gap-4 pt-6">
-                  <Link
-                    to={`/inventory/${activeEV?._id}`}
-                    className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
-                  >
-                    Configure Now
-                    <ChevronRight className="w-5 h-5" />
-                  </Link>
-                  <button
-                    className="px-10 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/20 rounded-lg font-bold flex items-center gap-2 transition-all backdrop-blur-md"
-                  >
-                    <Info className="w-5 h-5" />
-                    Technical Specs
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Custom Indicators */}
-            <div className="absolute bottom-12 right-12 flex flex-col gap-4 z-20">
-               {vehicles.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentHeroIndex(idx)}
-                  className={`h-1 transition-all duration-500 ${
-                    idx === currentHeroIndex ? 'bg-cyan-400 w-16' : 'bg-white/30 w-8 hover:bg-white/60'
-                  }`}
-                  aria-label={`Slide ${idx + 1}`}
-                />
-              ))}
-            </div>
+      {/* Grid Container for the 3 columns */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+        
+        {/* Column 1: Easy and convenient */}
+        <div className="flex flex-col items-center">
+          {/* Icon */}
+          <div className="text-[#38b2ac] mb-6">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <path d="M9 22V12h6v10"></path>
+            </svg>
           </div>
-        )}
-
-        {/* Feature Grid Section */}
-        <div className="bg-[#050816] py-24 relative z-10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-              <div className="space-y-4 p-8 rounded-2xl bg-white/5 border border-white/10">
-                <div className="w-16 h-16 bg-cyan-500/20 rounded-full flex items-center justify-center mx-auto">
-                  <ShieldCheck className="text-cyan-400 w-8 h-8" />
-                </div>
-                <h3 className="text-2xl font-bold">Safe & Secure</h3>
-                <p className="text-gray-400">5-Star safety ratings across our entire fleet with advanced autopilot features.</p>
-              </div>
-              <div className="space-y-4 p-8 rounded-2xl bg-white/5 border border-white/10">
-                <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
-                  <Leaf className="text-green-400 w-8 h-8" />
-                </div>
-                <h3 className="text-2xl font-bold">100% Sustainable</h3>
-                <p className="text-gray-400">Responsibly sourced battery materials and carbon-neutral manufacturing processes.</p>
-              </div>
-              <div className="space-y-4 p-8 rounded-2xl bg-white/5 border border-white/10">
-                <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto">
-                  <Globe className="text-blue-400 w-8 h-8" />
-                </div>
-                <h3 className="text-2xl font-bold">Global Charging</h3>
-                <p className="text-gray-400">Access to over 50,000+ Superchargers worldwide for seamless long-distance travel.</p>
-              </div>
-            </div>
-          </div>
+          {/* Title */}
+          <h3 className="text-2xl font-bold text-[#38a1c5] mb-4">Easy and convenient</h3>
+          {/* Description */}
+          <p className="text-gray-600 text-[15px] leading-relaxed">
+            Just like your phones and computers, you can charge your EVs at home with an AC Fast Charger. These smart chargers are easy to operate through mobile apps and you can remotely start or stop your charging sessions.
+          </p>
         </div>
-      </div>
-      <Footer />
 
-      {/* Added some custom keyframes for the zoom effect */}
-      <style>{`
-        @keyframes slow-zoom {
-          0% { transform: scale(1); }
-          100% { transform: scale(1.1); }
-        }
-        .animate-slow-zoom {
-          animation: slow-zoom 20s infinite alternate linear;
-        }
-      `}</style>
+        {/* Column 2: Less expensive */}
+        <div className="flex flex-col items-center">
+          {/* Icon */}
+          <div className="text-[#38b2ac] mb-6">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+            </svg>
+          </div>
+          {/* Title */}
+          <h3 className="text-2xl font-bold text-[#38a1c5] mb-4">Less expensive</h3>
+          {/* Description */}
+          <p className="text-gray-600 text-[15px] leading-relaxed">
+            Around 52%* Indians reported that fuel hikes have highly impacted them. With EVs, you can save more since the electricity tariff** at homes is much lower than conventional fuel rates!
+            <br /><br />
+            Most EVs come with a portable charging cable which is compatible with a 15 Ampere charging cable. Along with that, you can also get an AC Fast charger installed at home or
+          </p>
+        </div>
+
+        {/* Column 3: Safe and Secure */}
+        <div className="flex flex-col items-center">
+          {/* Icon */}
+          <div className="text-[#38b2ac] mb-6">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+            </svg>
+          </div>
+          {/* Title */}
+          <h3 className="text-2xl font-bold text-[#38a1c5] mb-4">Safe and Secure</h3>
+          {/* Description */}
+          <p className="text-gray-600 text-[15px] leading-relaxed">
+            By charging your EV at home/offices, you can charge in a familiar, safe and secure environment
+          </p>
+        </div>
+
+      </div>
     </div>
   );
-}
+};
 
-export default About;
+export default HomeFeatures;
