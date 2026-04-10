@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
     Zap,
     Battery,
@@ -18,36 +18,31 @@ import { useLocation, Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-const FALLBACK_CHARGING_DATA = [
+const Home_Charging_Benefits = [
     {
         id: 1,
-        level_name: "Level 1",
-        voltage: "120V",
-        image: "/src/assets/level1.png", 
-        description: "Standard home outlet. Best for overnight charging at home.",
+        Icon: Zap, // Capitalized for easier component rendering
+        title: "Easy and convenient",
+        description: "Just like your phones and computers, you can charge your EVs at home with an AC Fast Charger. These smart chargers are easy to operate through mobile apps and you can remotely start or stop your charging sessions.",
         color: "from-blue-400 to-cyan-500"
     },
     {
         id: 2,
-        level_name: "Level 2",
-        voltage: "240V",
-        image: "/src/assets/level2.png", 
-        description: "Fast home and public charging. Ideal for daily drivers.",
+        Icon: Battery,
+        title: "Less expensive",
+        description: "With global energy prices fluctuating, switching to electric mobility has become the smartest financial move. By charging at home, you can reduce your daily commute costs by up to 70% compared to traditional internal combustion engines. Most modern EVs support universal smart-charging integration, allowing you to power up using standard home outlets or dedicated high-speed AC units while optimizing for the lowest off-peak electricity tariffs.",
         color: "from-cyan-400 to-teal-500"
     },
     {
         id: 3,
-        level_name: "DC Fast",
-        voltage: "480V+",
-        image: "/src/assets/level3.png", 
-        description: "Rapid commercial charging for long-distance travel.",
+        Icon: Gauge,
+        title: "Safe and Secure",
+        description: "By charging your EV at home/offices, you can charge in a familiar, safe and secure environment.",
         color: "from-teal-400 to-lime-500"
     }
 ];
 
 function Homecharging() {
-    const [chargingLevels, setChargingLevels] = useState(FALLBACK_CHARGING_DATA);
-
     return (
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans overflow-x-hidden">
             <Navbar />
@@ -74,9 +69,46 @@ function Homecharging() {
                 </div>
             </section>
 
-            
+            <section className="py-24 relative overflow-hidden">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
 
-           
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="text-center mb-20 space-y-4">
+                        <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
+                            Charge your EV while you recharge
+                        </h2>
+                        <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
+                            Make your home your very own personal EV charging station by transforming your garage or driveway into a power source for your electric vehicle. With easy options available to charge at home, you’re just a plug away from a convenient and hassle-free charging experience.
+                        </p>
+                        <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase mt-8">
+                            From the comfort of your home
+                        </h2>
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row items-center justify-center gap-16">
+                        {/* Cards Grid */}
+                        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {Home_Charging_Benefits.map((level) => {
+                                const IconComponent = level.Icon; // Extract the icon component
+
+                                return (
+                                    <div key={level.id} className="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md hover:bg-white/10 transition-all group">
+                                        {/* Render the Lucide icon properly */}
+                                        <IconComponent className="w-16 h-16 mb-6 text-white group-hover:text-cyan-400 transition-colors" />
+                                        
+                                        <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition-colors">
+                                            {level.title}
+                                        </h3>
+                                        <p className="text-gray-400 text-sm leading-relaxed">
+                                            {level.description}
+                                        </p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <Footer />
 
