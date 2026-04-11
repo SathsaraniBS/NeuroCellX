@@ -48,6 +48,44 @@ const Public_Charging_Trends = [
       }
 ];
 
+const EVEcosystem = () => {
+  const networks = [
+    {
+      title: "Public Charging Network",
+      items: [
+        "Run by independent or oil marketing companies or government authorities",
+        "Accessible to all compatible Electric Vehicles",
+        "Developing in cities, highways, fuel stations, public parking lots"
+      ]
+    },
+    {
+      title: "Manufacturer-Specific Networks",
+      items: [
+        "Set up by EV Manufacturers",
+        "Seamlessly integrate with specific vehicle makes",
+        "Offer benefits and incentives for customers"
+      ]
+    },
+    {
+      title: "Charge Point Operators",
+      items: [
+        "Independent companies and startups creating solutions for local conditions",
+        "Accessible to all compatible EV makes and models",
+        "Promote competition and increase availability"
+      ]
+    },
+    {
+      title: "Individual Owners",
+      items: [
+        "Private individuals or small businesses",
+        "Can be for captive or public usage",
+        "Incremental source of income"
+      ]
+    }
+
+  ];
+
+
 function PublicCharging() {
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -171,6 +209,37 @@ function PublicCharging() {
           </div>
         </div>
       </section>
+
+      <section className="p-8 bg-white font-sans">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-2xl font-bold text-center text-sky-700 uppercase tracking-wide mb-8">
+          Developing the Right Ecosystem for Building EV Charging Network
+        </h2>
+        
+        <p className="text-gray-700 leading-relaxed mb-12 text-justify">
+          Key collaborations between energy providers, automakers, and tech startups are proving to be a great addition when it comes to India's public charging network...
+          <span className="block mt-4 font-semibold italic">To understand in detail, let us look at different types of charging network operators:</span>
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {networks.map((network, index) => (
+            <div key={index} className="flex flex-col">
+              <h3 className="text-lg font-extrabold text-sky-500 text-center h-16 flex items-center justify-center mb-4">
+                {network.title}
+              </h3>
+              <ul className="space-y-3">
+                {network.items.map((item, idx) => (
+                  <li key={idx} className="flex items-start text-sm text-gray-600">
+                    <span className="text-emerald-500 mr-2 text-xl">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
 
       <section className="max-w-7xl mx-auto px-6 py-10">
         <img
