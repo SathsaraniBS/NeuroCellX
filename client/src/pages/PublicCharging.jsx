@@ -49,7 +49,6 @@ const Public_Charging_Trends = [
 ];
 
 const Charging_Networks = [
-
   {
     id: 1,
     title: "Public Charging Networks",
@@ -58,8 +57,7 @@ const Charging_Networks = [
       "Accessible to all compatible Electric Vehicles",
       "Developing in cities, highways, fuel stations, public parking lots"
     ],
-    image: "src/assets/evhome.png", // Updated fallback image
-
+    image: "src/assets/network1.png",
   },
   {
     id: 2,
@@ -69,8 +67,7 @@ const Charging_Networks = [
       "Seamlessly integrate with specific vehicle makes",
       "Offer benefits and incentives for customers"
     ],
-    image: "src/assets/evstation.png", // Updated fallback image
-
+    image: "src/assets/network2.png",
   },
   {
     id: 3,
@@ -80,8 +77,7 @@ const Charging_Networks = [
       "Accessible to all compatible EV makes and models",
       "Promote competition and increase availability"
     ],
-    image: "src/assets/evstation.png", // Updated fallback image
-
+    image: "src/assets/network3.png",
   },
   {
     id: 4,
@@ -91,52 +87,13 @@ const Charging_Networks = [
       "Can be for captive or public usage",
       "Incremental source of income"
     ],
-    image: "src/assets/evhome.png", // Updated fallback image
+    image: "src/assets/network4.png",
   }
 ];
-
-const EVEcosystem = () => {
-  const networks = [
-    {
-      title: "Public Charging Network",
-      items: [
-        "Run by independent or oil marketing companies or government authorities",
-        "Accessible to all compatible Electric Vehicles",
-        "Developing in cities, highways, fuel stations, public parking lots"
-      ]
-    },
-    {
-      title: "Manufacturer-Specific Networks",
-      items: [
-        "Set up by EV Manufacturers",
-        "Seamlessly integrate with specific vehicle makes",
-        "Offer benefits and incentives for customers"
-      ]
-    },
-    {
-      title: "Charge Point Operators",
-      items: [
-        "Independent companies and startups creating solutions for local conditions",
-        "Accessible to all compatible EV makes and models",
-        "Promote competition and increase availability"
-      ]
-    },
-    {
-      title: "Individual Owners",
-      items: [
-        "Private individuals or small businesses",
-        "Can be for captive or public usage",
-        "Incremental source of income"
-      ]
-    }
-
-  ];
-}
 
 function PublicCharging() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Carousel Handlers (Fixed to use Public_Charging_Trends instead of STATION_TYPES)
   const handlePrevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? Public_Charging_Trends.length - 1 : prev - 1));
   };
@@ -278,28 +235,51 @@ function PublicCharging() {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-10 py-15 mb-16 bg-blue-900/5">
-          {Charging_Networks.map((network) => (
-            <div
-              key={network.title}
-              className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:shadow-md transition"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <img
-                  src={network.image}
-                  alt={network.title}
-                  className="h-full w-full object-cover mb-4 rounded-lg"
-                />
+
+      </section>
+
+      <section className="max-w-7xl mx-auto px-6 py-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20 space-y-4">
+            <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
+              Developing the right ecosystem for building EV charging network
+            </h2>
+          </div>
+          <div className="grid md:grid-cols-2 gap-12 items-center bg-white/5 border border-white/10 rounded-[40px] p-10 overflow-hidden relative mb-16">
+            <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
+              Key collaborations between energy providers, automakers, and tech startups are proving to be a great addition when it comes to India's public charging network. To accelerate the adoption of electric vehicles, the Indian government issued revised consolidated guidelines and standards for charging infrastructure on January 14, 2022, ensuring safe, reliable, and affordable charging. In addition, charging network operators across India are tying up with businesses and other automakers to help expand the EV footprint and provide a comprehensive list of services to EV owners.
+            </p>
+            <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
+              To understand in detail, let us look at different types of charging network operators:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-10 py-10 mb-16 bg-blue-900/5">
+            {Charging_Networks.map((network) => (
+              <div
+                key={network.id}
+                className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:border-cyan-400 hover:shadow-[0_0_30px_rgba(0,255,255,0.25)] transition"
+              >
+                {network.image && (
+                  <img
+                    src={network.image}
+                    alt={network.title}
+                    className="h-48 w-full object-cover mb-4 rounded-lg"
+                  />
+                )}
+                <h4 className="text-2xl font-bold mb-2">{network.title}</h4>
+                <div className="text-xl font-medium text-slate-400 mb-2">
+                  {network.bullets.map((bullet, index) => (
+                    <span key={index} className="block text-sm mb-1">
+                      • {bullet}
+                    </span>
+                  ))}
+                </div>
               </div>
-
-
-
-
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-
-
       </section>
 
       <Footer />
