@@ -5,8 +5,8 @@ import requests
 
 router = APIRouter()
 
-EXCHANGE_RATE_API_URL = "https://v6.exchangerate-api.com/v6/YOUR_API_KEY/latest/USD"
-
+# EXCHANGE_RATE_API_URL = "https://v6.exchangerate-api.com/v6/f60a6456694f6d2072a33adb/latest/USD"
+EXCHANGE_RATE_API_URL = "https://v6.exchangerate-api.com"
 @router.get("/calculate")
 def get_ev_data(battery_kwh: float, charger_kw: float, country_code: str):
     local_rate = 4.0 

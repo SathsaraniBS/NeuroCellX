@@ -1,43 +1,47 @@
-import React from 'react';
-import {
-    Zap,
-    Battery,
-    Gauge,
-    icons,
-    // ... other imports stay the same
-} from "lucide-react";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Heart, Home, DollarSign, ShieldCheck } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { IoWalletOutline } from "react-icons/io5";
-import { MdOutlineEnergySavingsLeaf,MdSavings} from "react-icons/md"; 
-import { BsLightningCharge } from "react-icons/bs"; 
-import { FaMoneyBillWave } from "react-icons/fa";
+import EVCalculator from '../components/EVCalculator';
+
 const Home_Charging_Benefits = [
     {
         id: 1,
-        icons:IoWalletOutline ,// Ensure paths are correct
         title: "Easy and convenient",
-        description: "Just like your phones and computers, you can charge your EVs at home with an AC Fast Charger. These smart chargers are easy to operate through mobile apps and you can remotely start or stop your charging sessions.",
-        color: "from-blue-400 to-cyan-500"
+        image: "/src/assets/ev8.png", // Note: For best results, use .png or .jpg for web images instead of .ico
+        description: "Just like your phones and computers, you can charge your EVs at home with an AC Fast Charger. These smart chargers are easy to operate through mobile apps.",
+        color: "group-hover:shadow-[0_0_30px_rgba(34,211,238,0.2)]" // Cyan glow
     },
     {
         id: 2,
-        // icons:MdOutlineEnergySavingsLeaf ,
-        icons:MdSavings ,
         title: "Less expensive",
-        description: "With global energy prices fluctuating, switching to electric mobility has become the smartest financial move. By charging at home, you can reduce your daily commute costs by up to 70% compared to traditional internal combustion engines.",
-        color: "from-cyan-400 to-teal-500"
+        image: "/src/assets/ev9.png",
+        description: "With global energy prices fluctuating, switching to electric mobility has become the smartest financial move. Reduce your daily commute costs by up to 70%.",
+        color: "group-hover:shadow-[0_0_30px_rgba(163,230,53,0.2)]" // Lime glow
     },
     {
         id: 3,
-        icons:BsLightningCharge ,
         title: "Safe and Secure",
-        description: "By charging your EV at home/offices, you can charge in a familiar, safe and secure environment.",
-        color: "from-teal-400 to-lime-500"
+        image: "/src/assets/ev10.png",
+        description: "By charging your EV at home/offices, you can charge in a familiar, safe and secure environment with built-in surge protection and battery health monitoring.",
+        color: "group-hover:shadow-[0_0_30px_rgba(96,165,250,0.2)]" // Blue glow
     }
 ];
 
 function Homecharging() {
+    // State to handle bookmarking/saving specific charging benefits or guides
+    const [savedGuides, setSavedGuides] = useState([]);
+
+    const handleSaveGuide = (e, id) => {
+        e.preventDefault(); // Stops the <Link> from redirecting when clicking the heart button
+        if (savedGuides.includes(id)) {
+            setSavedGuides(savedGuides.filter(itemId => itemId !== id));
+        } else {
+            setSavedGuides([...savedGuides, id]);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans overflow-x-hidden">
             <Navbar />
@@ -48,12 +52,12 @@ function Homecharging() {
                     <img
                         src="/src/assets/evhome.png"
                         alt="EV Charging at Home"
-                        className="w-full h-full object-cover opacity-100 animate-slow-zoom"
+                        className="w-full h-full object-cover opacity-60 animate-slow-zoom"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#050816]/60 via-transparent to-[#050816]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#050816]/80 via-transparent to-[#050816]" />
                 </div>
 
-                <div className="relative z-10 text-center px-6 max-w-4xl">
+                <div className="relative z-10 text-center px-6 max-w-4xl mt-20">
                     <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
                         POWER YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">JOURNEY</span> FROM HOME
                     </h1>
@@ -65,46 +69,48 @@ function Homecharging() {
 
             {/* --- BENEFITS SECTION --- */}
             <section className="py-24 relative overflow-hidden">
+                {/* Background ambient glow */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
 
-                <div className="max-w-7xl mx-auto px-6">
+                <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <div className="text-center mb-20 space-y-4">
-                        <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
+                        <h2 className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
                             Charge your EV while you recharge
                         </h2>
                         <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
                             Make your home your very own personal EV charging station. You’re just a plug away from a convenient and hassle-free charging experience.
                         </p>
-                        <h2 className="text-2xl md:text-4xl font-bold text-white uppercase mt-8">
-                            From the comfort of your home
-                        </h2>
-                        
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-10 py-15 mb-16 bg-blue-900/5">
                         {Home_Charging_Benefits.map((benefit) => (
                             <div
-                                key={benefit.id}
-                                className="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md hover:bg-white/10 transition-all group flex flex-col items-start"
+                                key={benefit.title}
+                                className="rounded-2xl border border-white/20 bg-gradient-to-br shadow-sm p-6 hover:shadow-md transition"
                             >
-                                {/* Fixed Image Rendering */}
-                                {benefit.icons ? (
-                                    <benefit.icons className={`w-12 h-12 mb-6 text-cyan-400`} />
-                                ) : (
-                                    <icons.IoWalletOutline className={`w-12 h-12 mb-6 text-cyan-400`} />
-                                )}
+                                <div className="flex items-center justify-between mb-4">
+                                <img
+                                    src={benefit.image}
+                                    alt={benefit.title}
+                                    className="h-full w-full object-cover mb-4 rounded-lg"
+                                />
+                                </div>
+                                <h3 className="text-2xl font-bold text-[#38a1c5] mb-4">{benefit.title}</h3>
+                                <p className="text-gray-600 text-[15px] leading-relaxed mb-4">{benefit.description}</p>
+                                
 
-                                <h3 className="text-xl font-bold mb-3 group-hover:text-cyan-400 transition-colors">
-                                    {benefit.title}
-                                </h3>
-                                <p className="text-gray-400 text-sm leading-relaxed">
-                                    {benefit.description}
-                                </p>
+                                
+                                
                             </div>
                         ))}
                     </div>
+
+
                 </div>
             </section>
+
+            {/* Ensure your EVCalculator component is styled to match the dark theme internally */}
+            <EVCalculator />
 
             <Footer />
 
