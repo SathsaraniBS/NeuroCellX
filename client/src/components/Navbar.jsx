@@ -47,12 +47,48 @@ const Navbar = () => {
           <Link to="/" className="hover:text-cyan-400 transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]">
             Home
           </Link>
-          <a
-            href="#features"
-            className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
+          {/* Charging Dropdown */}
+          <div 
+            className="relative group"
+            onMouseEnter={() => setIsChargingOpen(true)}
+            onMouseLeave={() => setIsChargingOpen(false)}
           >
-            Features
-          </a>
+            <Link to="/battery"
+              className="flex items-center gap-1 hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)] focus:outline-none"
+            >
+              Battery  <span className={`transition-transform duration-200 ${isChargingOpen ? 'rotate-180' : ''}`}>▾</span>
+            </Link>
+
+            {isChargingOpen && (
+              <div className="absolute left-0 mt-0 w-48 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
+                <Link 
+                  to="/charging/stations" 
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+                >
+                  Types of EV Battery
+                </Link>
+                <Link 
+                  to="/homecharging" 
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+                >
+                  Battery Life
+                </Link>
+                <Link 
+                  to="/publiccharging" 
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+                >
+                  Battery Safety
+                </Link>
+                <Link 
+                  to="/charging/compare" 
+                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+                >
+                  Repair & Maintenance
+                </Link>
+              </div>
+            )}
+          </div>
+
           <Link to="/landingpage"
             className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
           >
