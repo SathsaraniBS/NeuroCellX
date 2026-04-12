@@ -110,15 +110,7 @@ function Homecharging() {
                                         alt={benefit.title}
                                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
-                                    <button 
-                                        onClick={() => toggleSave(benefit.id)}
-                                        className="absolute top-4 right-4 p-2.5 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white hover:text-red-400 transition-colors"
-                                    >
-                                        <Heart 
-                                            size={18} 
-                                            fill={savedGuides.includes(benefit.id) ? "currentColor" : "none"} 
-                                        />
-                                    </button>
+                                    
                                 </div>
 
                                 {/* Content */}
