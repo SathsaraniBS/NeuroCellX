@@ -76,11 +76,8 @@ const NETWORKS = [
   }
 ];
 
-const PublicCharging = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+const Batterylife = () => {
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev === TRENDS.length - 1 ? 0 : prev + 1));
-  const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? TRENDS.length - 1 : prev - 1));
 
   return (
     <div className="min-h-screen bg-[#050816] text-white font-sans selection:bg-cyan-500/30">
@@ -211,4 +208,4 @@ const PublicCharging = () => {
   );
 };
 
-export default PublicCharging;
+export default Batterylife;

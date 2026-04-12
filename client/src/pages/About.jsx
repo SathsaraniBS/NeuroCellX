@@ -1,70 +1,102 @@
-import React from 'react';
+import React from "react";
 
-const HomeFeatures = () => {
+export default function BatteryLife() {
   return (
-    <div className="max-w-6xl mx-auto px-6 py-16 font-sans bg-white">
-      {/* Main Heading */}
-      <h2 className="text-center text-[#2b6cb0] font-bold text-xl md:text-2xl mb-14 uppercase tracking-wider">
-        From the comfort of your home
-      </h2>
+    <div className="min-h-screen bg-[#0b0f1a] text-white p-6 md:p-12">
+      {/* Header */}
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+          EV Battery Life
+        </h1>
+        <p className="text-gray-300 max-w-3xl">
+          As electric vehicles evolve, battery technology plays a crucial role in
+          performance, range, and sustainability. Discover how EV batteries work
+          and what impacts their lifespan.
+        </p>
+      </div>
 
-      {/* Grid Container for the 3 columns */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
-        
-        {/* Column 1: Easy and convenient */}
-        <div className="flex flex-col items-center">
-          {/* Icon */}
-          <div className="text-[#38b2ac] mb-6">
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <path d="M9 22V12h6v10"></path>
-            </svg>
-          </div>
-          {/* Title */}
-          <h3 className="text-2xl font-bold text-[#38a1c5] mb-4">Easy and convenient</h3>
-          {/* Description */}
-          <p className="text-gray-600 text-[15px] leading-relaxed">
-            Just like your phones and computers, you can charge your EVs at home with an AC Fast Charger. These smart chargers are easy to operate through mobile apps and you can remotely start or stop your charging sessions.
+      {/* Section 1 */}
+      <div className="max-w-6xl mx-auto mt-12 grid md:grid-cols-2 gap-8">
+        <div className="bg-white/5 backdrop-blur-lg p-6 rounded-2xl border border-cyan-500/20 shadow-lg">
+          <h2 className="text-xl font-semibold mb-4 text-cyan-400">
+            The Building Blocks of Battery Endurance
+          </h2>
+          <p className="text-gray-300 leading-relaxed">
+            The lifespan and stability of EV batteries define the driving
+            experience. Modern innovations have significantly improved battery
+            durability, ensuring reliable performance and longer range.
+          </p>
+          <p className="text-gray-300 mt-4">
+            Two key components contribute to battery longevity:
+            <span className="text-cyan-400"> Battery Cells</span> and
+            <span className="text-cyan-400"> Battery Management System (BMS)</span>.
           </p>
         </div>
 
-        {/* Column 2: Less expensive */}
-        <div className="flex flex-col items-center">
-          {/* Icon */}
-          <div className="text-[#38b2ac] mb-6">
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-            </svg>
-          </div>
-          {/* Title */}
-          <h3 className="text-2xl font-bold text-[#38a1c5] mb-4">Less expensive</h3>
-          {/* Description */}
-          <p className="text-gray-600 text-[15px] leading-relaxed">
-            Around 52%* Indians reported that fuel hikes have highly impacted them. With EVs, you can save more since the electricity tariff** at homes is much lower than conventional fuel rates!
-            <br /><br />
-            Most EVs come with a portable charging cable which is compatible with a 15 Ampere charging cable. Along with that, you can also get an AC Fast charger installed at home or
-          </p>
+        {/* Image Placeholder */}
+        <div className="bg-white/5 backdrop-blur-lg p-6 rounded-2xl border border-cyan-500/20 flex items-center justify-center">
+          <img
+            src="/battery-types.png"
+            alt="Battery Types"
+            className="rounded-xl shadow-lg"
+          />
         </div>
+      </div>
 
-        {/* Column 3: Safe and Secure */}
-        <div className="flex flex-col items-center">
-          {/* Icon */}
-          <div className="text-[#38b2ac] mb-6">
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-            </svg>
-          </div>
-          {/* Title */}
-          <h3 className="text-2xl font-bold text-[#38a1c5] mb-4">Safe and Secure</h3>
-          {/* Description */}
-          <p className="text-gray-600 text-[15px] leading-relaxed">
-            By charging your EV at home/offices, you can charge in a familiar, safe and secure environment
-          </p>
+      {/* Battery Types */}
+      <div className="max-w-6xl mx-auto mt-12">
+        <h2 className="text-2xl font-semibold mb-6 text-cyan-400">
+          Battery Cell Types
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {["Prismatic", "Cylindrical", "Pouch"].map((type, i) => (
+            <div
+              key={i}
+              className="bg-white/5 p-6 rounded-2xl border border-cyan-500/20 hover:border-cyan-400 transition"
+            >
+              <div className="h-32 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-xl mb-4" />
+              <h3 className="text-lg font-semibold text-white">{type} Cells</h3>
+              <p className="text-gray-400 text-sm mt-2">
+                {type === "Cylindrical"
+                  ? "Small, cost-effective cells commonly used in EVs and electronics."
+                  : type === "Prismatic"
+                  ? "Compact rectangular cells offering efficient space utilization."
+                  : "Flexible lightweight cells used in modern EV designs."}
+              </p>
+            </div>
+          ))}
         </div>
+      </div>
 
+      {/* Details Section */}
+      <div className="max-w-6xl mx-auto mt-12">
+        <h2 className="text-2xl font-semibold mb-6 text-cyan-400">
+          Cells: Heart of the EV Battery
+        </h2>
+
+        <div className="bg-white/5 backdrop-blur-lg p-6 rounded-2xl border border-cyan-500/20">
+          <ul className="space-y-4 text-gray-300">
+            <li>
+              Lithium-ion batteries are widely used in EVs and come in different
+              formats such as cylindrical, prismatic, and pouch.
+            </li>
+            <li>
+              Cylindrical cells are enclosed in rigid cylinders, making them
+              durable and cost-effective.
+            </li>
+            <li>
+              Prismatic cells use rectangular casings, improving space efficiency
+              and stability.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Footer Glow */}
+      <div className="mt-16 text-center text-gray-500 text-sm">
+        Futuristic EV Learning Hub • Battery Insights
       </div>
     </div>
   );
-};
-
-export default HomeFeatures;
+}
