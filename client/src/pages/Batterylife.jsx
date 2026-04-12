@@ -90,11 +90,26 @@ const Batterylife = () => {
         
         <div className="relative z-10 text-center px-4">
           <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4">
-            Charge Up <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">Anywhere</span>
+            HOW LONG DO ELECTRIC VEHICLE BATTERIES LAST?
           </h1>
           <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl font-light">
-            Empowering your journey with a seamless, global EV charging ecosystem.
+          As electric vehicles race ahead in the innovation lane, one component stands out at the centre of this revolution: the battery. Keep scrolling as we unveil its remarkable technology and impressive longevity.
           </p>
+
+          <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 mt-8">
+            The Building Blocks of Battery Endurance
+            </h2>
+
+            <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl font-light">
+                In the world of EVs, the lifespan and stability of batteries form the cornerstone of a superior driving experience. In recent years, this has become a possibility due to the evolution of battery technology which has further enhanced battery endurance. These innovative measures have enabled EV batteries to stand the test of time, ensuring dependable performance, extended range, and a sustainable driving future.
+
+            </p>
+
+            <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl font-light">
+                The two main components that contribute to battery longevity are the Battery cells and BMS, the heart and the brain, of your Electric Vehicle battery. Let’s explore them in detail.
+
+            </p>
+
         </div>
       </header>
 
