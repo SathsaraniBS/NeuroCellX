@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, Zap, ShieldCheck, Banknote, LayoutGrid } from "lucide-react";
+import { Heart, Zap, ShieldCheck, Banknote, LayoutGrid, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -47,12 +47,25 @@ const BatteryTypes = [
 ];
 
 function Battery() {
+    // Original state for guides
     const [savedGuides, setSavedGuides] = useState([]);
+    
+    // NEW: State for the battery slider
+    const [currentSlide, setCurrentSlide] = useState(0);
 
     const toggleSave = (id) => {
         setSavedGuides(prev =>
             prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
         );
+    };
+
+    // NEW: Functions to handle slider navigation
+    const nextSlide = () => {
+        setCurrentSlide((prev) => (prev === BatteryTypes.length - 1 ? 0 : prev + 1));
+    };
+
+    const prevSlide = () => {
+        setCurrentSlide((prev) => (prev === 0 ? BatteryTypes.length - 1 : prev - 1));
     };
 
     return (
@@ -117,43 +130,45 @@ function Battery() {
                 </div>
             </section>
 
-             {/* Trends Slider */}
-        <section className="py-24">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-            <h2 className="text-3xl md:text-5xl font-black uppercase max-w-xl">
-              Changing Trends in <span className="text-lime-400">Public Charging</span>
-            </h2>
-            <div className="flex gap-3">
-              <button onClick={prevSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
-                <ChevronLeft className="group-hover:scale-110" />
-              </button>
-              <button onClick={nextSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
-                <ChevronRight className="group-hover:scale-110" />
-              </button>
-            </div>
-          </div>
+            {/* --- TRENDS SLIDER --- */}
+            <section className="py-24 max-w-7xl mx-auto px-6">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+                    
+                    <div className="flex gap-3">
+                        <button onClick={prevSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
+                            <ChevronLeft className="group-hover:scale-110" />
+                        </button>
+                        <button onClick={nextSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
+                            <ChevronRight className="group-hover:scale-110" />
+                        </button>
+                    </div>
+                </div>
 
-          <div className="relative grid md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-7 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl h-auto">
-              <img 
-                src={TRENDS[currentSlide].image} 
-                alt={TRENDS[currentSlide].title} 
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-            
-            <div className="md:col-span-5 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md p-10 rounded-[40px] border border-white/10 relative">
-               <span className="absolute -top-10 right-10 text-8xl font-black text-white/5">
-                0{TRENDS[currentSlide].id}
-               </span>
-               <Zap className="text-cyan-400 mb-6" size={40} />
-               <h3 className="text-3xl font-bold mb-4">{TRENDS[currentSlide].title}</h3>
-               <p className="text-gray-400 text-lg leading-relaxed">
-                 {TRENDS[currentSlide].description}
-               </p>
-            </div>
-          </div>
-        </section>
+                <div className="relative grid md:grid-cols-12 gap-8 items-center">
+                    <div className="md:col-span-7 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl h-[500px]">
+                        <img 
+                            src={BatteryTypes[currentSlide].image} 
+                            alt={BatteryTypes[currentSlide].title} 
+                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                        />
+                    </div>
+                    
+                    <div className="md:col-span-5 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md p-10 rounded-[40px] border border-white/10 relative">
+                        <span className="absolute -top-10 right-10 text-8xl font-black text-white/5">
+                            0{BatteryTypes[currentSlide].id}
+                        </span>
+                        <Zap className="text-cyan-400 mb-6" size={40} />
+                        <h3 className="text-3xl font-bold mb-4">{BatteryTypes[currentSlide].title}</h3>
+                        <p className="text-gray-400 text-lg leading-relaxed">
+                            {BatteryTypes[currentSlide].description}
+                        </p>
+                        <h4 className="text-xl font-semibold mt-6 mb-2">{BatteryTypes[currentSlide].sub_title}</h4>
+                        <p className="text-gray-400 text-lg leading-relaxed">
+                            {BatteryTypes[currentSlide].sub_description}
+                        </p>
+                    </div>
+                </div>
+            </section>
 
             <Footer />
 
