@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart, Zap, ShieldCheck, Banknote, LayoutGrid, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -7,7 +7,7 @@ const BatteryTypes = [
     {
         id: 1,
         title: "Lithium-ion batteries",
-        image: "/src/assets/anatomy.png",
+        image: "/src/assets/battery1.png",
         description: "These are the most widely used type of EV batteries, as they have a high energy density, meaning they can store more energy per unit mass than other batteries. There are 2 types of Lithium ion batteries that are widely used in electric vehicles – LFP (Lithium Ferrous Phosphate) and NMC (Nickel Manganese Cobalt).",
         sub_title: "Did you know?",
         sub_description: "LFP batteries have excellent thermal stability and safety due to which they are more tolerant of high temperatures making them a safer choice for EV batteries.",
@@ -17,7 +17,7 @@ const BatteryTypes = [
     {
         id: 2,
         title: "Nickel-metal hydride batteries",
-        image: "/src/assets/ev9.png",
+        image: "/src/assets/battery2.png",
         description: "These are another type of EV batteries that are often used in hybrid vehicles, which combine an electric motor with a gasoline engine.",
         sub_title: "Did you know?",
         sub_description: "These batteries were used in some of the earliest electric vehicles in the 90s, but due to its disadvantages like extremely high cost most manufacturers stopped using it.",
@@ -49,6 +49,51 @@ const BatteryTypes = [
 function Battery() {
     const [savedGuides, setSavedGuides] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
+
+    // Moved from the incorrectly formatted BatteryTable component
+    const [batteries, setBatteries] = useState([
+        {
+            id: 1,
+            name: "Lithium-ion",
+            benefits: "High energy density, high power-to-weight ratio, efficient, durable, safe",
+            drawbacks: "Expensive, sensitive to temperature, need careful management"
+        },
+        {
+            id: 2,
+            name: "Nickel-metal hydride",
+            benefits: "Cheaper, more reliable, longer lifespan, more life cycles than lithium-ion",
+            drawbacks: "Lower energy density, lower power-to-weight ratio, heavier, bulkier, memory effect"
+        },
+        {
+            id: 3,
+            name: "Lead-acid",
+            benefits: "Cheap, easy to recycle",
+            drawbacks: "Low energy density, low power-to-weight ratio, inefficient, less durable, less safe"
+        },
+        {
+            id: 4,
+            name: "Sodium-ion Batteries",
+            benefits: "Cheaper as compared to lithium-ion batteries",
+            drawbacks: "Low energy density and power-to-weight ratio. Still in the development phase, can be used for low range electric vehicles"
+        }
+    ]);
+
+    // Fetch from FastAPI backend
+    useEffect(() => {
+        const fetchBatteries = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/batteries');
+                if (response.ok) {
+                    const data = await response.json();
+                    setBatteries(data);
+                }
+            } catch (error) {
+                console.error("Failed to fetch batteries, using fallback data.", error);
+            }
+        };
+        // Uncomment to fetch from API
+        // fetchBatteries();
+    }, []);
 
     const toggleSave = (id) => {
         setSavedGuides(prev =>
@@ -110,7 +155,7 @@ function Battery() {
                             </h1>
 
                             <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto mb-4">
-                                Imagine driving a car that runs on electricity instead of gas. A car that emits zero pollution and saves you money on fuel. A car that is quiet, smooth, and smart. That’s what electric vehicles (EVs) offer.
+                                Imagine driving a car that runs on electricity instead of fuel. A car that emits zero pollution and saves you money on fuel. A car that is quiet, smooth, and smart. That’s what electric vehicles (EVs) offer.
                             </p>
 
                             <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto mb-10">
@@ -128,7 +173,6 @@ function Battery() {
             {/* --- TRENDS SLIDER --- */}
             <section className="py-24 max-w-7xl mx-auto px-6">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-                    
                     <div className="flex gap-3">
                         <button onClick={prevSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
                             <ChevronLeft className="group-hover:scale-110" />
@@ -158,15 +202,56 @@ function Battery() {
                             {BatteryTypes[currentSlide].description}
                         </p>
                         
-                        {/* Styled the subtitle so it stands out more */}
                         <h4 className="text-2xl font-bold text-cyan-300 mt-6 mb-2">
                             {BatteryTypes[currentSlide].sub_title}
                         </h4>
                         
-                        {/* Ensure the sub-description has a slightly different color to distinguish it */}
                         <p className="text-gray-400 text-base leading-relaxed italic border-l-4 border-cyan-500/50 pl-4">
                             {BatteryTypes[currentSlide].sub_description}
                         </p>
+                    </div>
+                </div>
+            </section>
+
+            {/* --- TABLE SECTION --- */}
+            <section className="py-12 max-w-6xl mx-auto px-6">
+                <h3 className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto text-center mb-16">
+                    Types of batteries used in an electric vehicle
+                </h3>
+
+                <div className="flex flex-col space-y-4">
+                    {/* Table Headers */}
+                    <div className="grid grid-cols-3 gap-4 mb-2 text-center font-semibold text-white">
+                        <div className="border-4 border-teal-200 rounded-2xl py-4 flex items-center justify-center">
+                            Types of EV Battery
+                        </div>
+                        <div className="border-4 border-blue-300 rounded-2xl py-4 flex items-center justify-center">
+                            Benefits
+                        </div>
+                        <div className="border-4 border-blue-400 rounded-2xl py-4 flex items-center justify-center">
+                            Drawbacks
+                        </div>
+                    </div>
+
+                    {/* Table Rows */}
+                    <div className="flex flex-col rounded-2xl overflow-hidden shadow-lg border border-white/10">
+                        {batteries.map((battery, index) => (
+                            <div 
+                                key={battery.id} 
+                                // Added text-gray-900 so the text is visible against the light background
+                                className={`grid grid-cols-3 gap-4 p-6 items-center text-gray-900 ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
+                            >
+                                <div className="text-center font-bold">
+                                    {battery.name}
+                                </div>
+                                <div className="text-sm px-4">
+                                    {battery.benefits}
+                                </div>
+                                <div className="text-sm px-4">
+                                    {battery.drawbacks}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
