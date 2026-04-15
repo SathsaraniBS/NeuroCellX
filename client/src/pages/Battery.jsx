@@ -49,7 +49,9 @@ const BatteryTypes = [
 function Battery() {
     const [savedGuides, setSavedGuides] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
-
+    const [faqs, setFaqs] = useState([]);
+    const [articles, setArticles] = useState([]);
+    const [openFaqId, setOpenFaqId] = useState(null);
     // Moved from the incorrectly formatted BatteryTable component
     const [batteries, setBatteries] = useState([
         {
@@ -125,15 +127,13 @@ function Battery() {
                 </div>
 
                 <div className="relative z-10 text-center px-6 max-w-5xl mt-10">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm font-medium mb-6 animate-pulse">
-                        <Zap size={14} />
-                        Next-Gen Home Infrastructure
-                    </div>
+
 
                     <div className="relative z-10 text-center px-6 max-w-4xl mt-20">
                         <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
-                            EV Battery Anatomy
+                            BATTERIES THAT ARE CHARGING THE FUTURE
                         </h1>
+
                     </div>
                 </div>
             </section>
@@ -142,15 +142,18 @@ function Battery() {
             <section className="py-32 relative">
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
                 <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-lime-600/10 blur-[150px] -z-10" />
-                
-                <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto text-center mb-16">
-                    Explore the heart of electric vehicles with a deep dive into EV batteries. From Lithium-ion to Solid-State, we'll unravel the science behind these energy powerhouses. Get ready to supercharge your knowledge and learn how different batteries drive the electric future!
-                </p>
+
+
 
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+
                         <div className="max-w-2xl">
-                            <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
+
+                            <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto  mb-16">
+                                Explore the heart of electric vehicles with a deep dive into EV batteries. From Lithium-ion to Solid-State, we'll unravel the science behind these energy powerhouses. Get ready to supercharge your knowledge and learn how different batteries drive the electric future!
+                            </p>
+                            <h1 className="text-5xl md:text-7xl font-black mb-6 mt-8 tracking-tight uppercase">
                                 How do they run?
                             </h1>
 
@@ -165,6 +168,13 @@ function Battery() {
                             <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
                                 There’s more than one type? Yes.
                             </h1>
+                        </div>
+
+                        <div className="relative group">
+                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                            <div className="relative bg-black rounded-3xl overflow-hidden border border-white/10">
+                                <img src="src/assets/evanatomy.png" alt="EV Anatomy" className="w-full aspect-video object-cover" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -185,13 +195,13 @@ function Battery() {
 
                 <div className="relative grid md:grid-cols-12 gap-8 items-center">
                     <div className="md:col-span-7 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl h-[500px]">
-                        <img 
-                            src={BatteryTypes[currentSlide].image} 
-                            alt={BatteryTypes[currentSlide].title} 
+                        <img
+                            src={BatteryTypes[currentSlide].image}
+                            alt={BatteryTypes[currentSlide].title}
                             className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                         />
                     </div>
-                    
+
                     <div className="md:col-span-5 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md p-10 rounded-[40px] border border-white/10 relative">
                         <span className="absolute -top-10 right-10 text-8xl font-black text-white/5">
                             0{BatteryTypes[currentSlide].id}
@@ -201,11 +211,11 @@ function Battery() {
                         <p className="text-gray-300 text-lg leading-relaxed mb-6">
                             {BatteryTypes[currentSlide].description}
                         </p>
-                        
+
                         <h4 className="text-2xl font-bold text-cyan-300 mt-6 mb-2">
                             {BatteryTypes[currentSlide].sub_title}
                         </h4>
-                        
+
                         <p className="text-gray-400 text-base leading-relaxed italic border-l-4 border-cyan-500/50 pl-4">
                             {BatteryTypes[currentSlide].sub_description}
                         </p>
@@ -236,8 +246,8 @@ function Battery() {
                     {/* Table Rows */}
                     <div className="flex flex-col rounded-2xl overflow-hidden shadow-lg border border-white/10">
                         {batteries.map((battery, index) => (
-                            <div 
-                                key={battery.id} 
+                            <div
+                                key={battery.id}
                                 // Added text-gray-900 so the text is visible against the light background
                                 className={`grid grid-cols-3 gap-4 p-6 items-center text-gray-900 ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
                             >
@@ -255,6 +265,94 @@ function Battery() {
                     </div>
                 </div>
             </section>
+
+            <section className="py-32 relative">
+                <div className="max-w-7xl mx-auto px-4 py-12 font-sans">
+
+                    {/* FAQ Section */}
+                    <h2 className="text-center text-2xl font-bold text-[#2a7ba8] mb-10 tracking-wide uppercase">
+                        Frequently Asked Questions
+                    </h2>
+
+                    <div className="mb-12">
+                        {faqs.map((faq) => (
+                            <div key={faq.id} className="border-b border-gray-200">
+                                <button
+                                    onClick={() => toggleFaq(faq.id)}
+                                    className="w-full flex justify-between items-center py-5 text-left focus:outline-none"
+                                >
+                                    <span className="font-semibold text-gray-900 text-lg">
+                                        {faq.question}
+                                    </span>
+                                    <svg
+                                        className={`w-6 h-6 text-[#2a7ba8] transform transition-transform duration-200 ${openFaqId === faq.id ? 'rotate-180' : ''}`}
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                                {openFaqId === faq.id && (
+                                    <div className="pb-5 text-gray-600">
+                                        {faq.answer}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Divider with Read More Button */}
+                    <div className="relative mb-12">
+                        {/* The green line */}
+                        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                            <div className="w-full border-t-2 border-[#28a167]"></div>
+                        </div>
+                        {/* The button resting on the line */}
+                        <div className="relative flex justify-start">
+                            <button className="bg-[#28a167] text-white font-bold py-3 px-8 text-sm tracking-wider hover:bg-[#218555] transition-colors">
+                                READ MORE
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Articles Carousel Section */}
+                    <div className="flex items-center justify-between gap-4">
+                        {/* Left Arrow */}
+                        <button className="bg-gray-200 hover:bg-gray-300 p-2 flex-shrink-0 transition-colors">
+                            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+
+                        {/* Cards Container */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                            {articles.map((article) => (
+                                <div key={article.id} className="flex flex-col items-center group cursor-pointer">
+                                    {/* Image Placeholder (replace src with actual image_url) */}
+                                    <div className="w-full h-48 bg-white border border-gray-100 flex items-center justify-center p-4 mb-4 shadow-sm hover:shadow-md transition-shadow">
+                                        {/* <img src={article.image_url} alt={article.title} className="max-h-full max-w-full object-contain" /> */}
+                                        <div className="text-gray-400 text-xs text-center border-2 border-dashed border-gray-200 w-full h-full flex items-center justify-center">
+                                            Image: {article.title.substring(0, 15)}...
+                                        </div>
+                                    </div>
+
+                                    <h3 className="text-center text-[#2a7ba8] font-medium px-4 hover:underline">
+                                        {article.title}
+                                    </h3>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Right Arrow */}
+                        <button className="bg-[#2a7ba8] hover:bg-[#1f6288] p-2 flex-shrink-0 transition-colors">
+                            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
 
             <Footer />
 
