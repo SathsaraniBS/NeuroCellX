@@ -49,10 +49,32 @@ const BatteryTypes = [
 function Battery() {
     const [savedGuides, setSavedGuides] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [faqs, setFaqs] = useState([]);
-    const [articles, setArticles] = useState([]);
     const [openFaqId, setOpenFaqId] = useState(null);
-    // Moved from the incorrectly formatted BatteryTable component
+    
+    const [faqs, setFaqs] = useState([
+        { id: 1, question: "How long do EV batteries last?", answer: "Most EV batteries are designed to last 10-20 years. Manufacturers typically provide warranties for 8 years or 100,000 miles." },
+        { id: 2, question: "Can EV batteries be recycled?", answer: "Yes, up to 95% of the materials in an EV battery can be recovered and recycled for use in new batteries." },
+        { id: 3, question: "Does weather affect battery range?", answer: "Extreme cold or hot temperatures can temporarily reduce the driving range of an electric vehicle by affecting battery chemistry and requiring more energy for climate control." }
+    ]);
+
+    const [articles, setArticles] = useState([
+        { 
+            id: 1, 
+            title: "The Future of Solid-State Batteries", 
+            image: "/src/assets/evanatomy.png" 
+        },
+        { 
+            id: 2, 
+            title: "How to Maximize Your EV Range", 
+            image: "/src/assets/ev2.png" 
+        },
+        { 
+            id: 3, 
+            title: "Battery Recycling Innovations", 
+            image: "/src/assets/article3.png" 
+        }
+    ]);
+
     const [batteries, setBatteries] = useState([
         {
             id: 1,
@@ -93,9 +115,13 @@ function Battery() {
                 console.error("Failed to fetch batteries, using fallback data.", error);
             }
         };
-        // Uncomment to fetch from API
+        // Uncomment the line below when your backend is running
         // fetchBatteries();
     }, []);
+
+    const toggleFaq = (id) => {
+        setOpenFaqId(openFaqId === id ? null : id);
+    };
 
     const toggleSave = (id) => {
         setSavedGuides(prev =>
@@ -127,13 +153,10 @@ function Battery() {
                 </div>
 
                 <div className="relative z-10 text-center px-6 max-w-5xl mt-10">
-
-
                     <div className="relative z-10 text-center px-6 max-w-4xl mt-20">
                         <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
                             BATTERIES THAT ARE CHARGING THE FUTURE
                         </h1>
-
                     </div>
                 </div>
             </section>
@@ -143,13 +166,10 @@ function Battery() {
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
                 <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-lime-600/10 blur-[150px] -z-10" />
 
-
-
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
 
                         <div className="max-w-2xl">
-
                             <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto  mb-16">
                                 Explore the heart of electric vehicles with a deep dive into EV batteries. From Lithium-ion to Solid-State, we'll unravel the science behind these energy powerhouses. Get ready to supercharge your knowledge and learn how different batteries drive the electric future!
                             </p>
@@ -173,7 +193,7 @@ function Battery() {
                         <div className="relative group">
                             <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
                             <div className="relative bg-black rounded-3xl overflow-hidden border border-white/10">
-                                <img src="src/assets/evanatomy.png" alt="EV Anatomy" className="w-full aspect-video object-cover" />
+                                <img src="/src/assets/evanatomy.png" alt="EV Anatomy" className="w-full aspect-video object-cover" />
                             </div>
                         </div>
                     </div>
@@ -206,7 +226,7 @@ function Battery() {
                         <span className="absolute -top-10 right-10 text-8xl font-black text-white/5">
                             0{BatteryTypes[currentSlide].id}
                         </span>
-                        <Zap className="text-cyan-400 mb-6" size={40} />
+                        <div className="mb-6">{BatteryTypes[currentSlide].icon}</div>
                         <h3 className="text-3xl font-bold mb-4">{BatteryTypes[currentSlide].title}</h3>
                         <p className="text-gray-300 text-lg leading-relaxed mb-6">
                             {BatteryTypes[currentSlide].description}
@@ -248,7 +268,6 @@ function Battery() {
                         {batteries.map((battery, index) => (
                             <div
                                 key={battery.id}
-                                // Added text-gray-900 so the text is visible against the light background
                                 className={`grid grid-cols-3 gap-4 p-6 items-center text-gray-900 ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
                             >
                                 <div className="text-center font-bold">
@@ -266,7 +285,7 @@ function Battery() {
                 </div>
             </section>
 
-            <section className="py-32 relative">
+            <section className="py-32 relative bg-white rounded-t-[3rem] mt-12">
                 <div className="max-w-7xl mx-auto px-4 py-12 font-sans">
 
                     {/* FAQ Section */}
@@ -302,11 +321,9 @@ function Battery() {
 
                     {/* Divider with Read More Button */}
                     <div className="relative mb-12">
-                        {/* The green line */}
                         <div className="absolute inset-0 flex items-center" aria-hidden="true">
                             <div className="w-full border-t-2 border-[#28a167]"></div>
                         </div>
-                        {/* The button resting on the line */}
                         <div className="relative flex justify-start">
                             <button className="bg-[#28a167] text-white font-bold py-3 px-8 text-sm tracking-wider hover:bg-[#218555] transition-colors">
                                 READ MORE
@@ -317,7 +334,7 @@ function Battery() {
                     {/* Articles Carousel Section */}
                     <div className="flex items-center justify-between gap-4">
                         {/* Left Arrow */}
-                        <button className="bg-gray-200 hover:bg-gray-300 p-2 flex-shrink-0 transition-colors">
+                        <button className="bg-gray-200 hover:bg-gray-300 p-2 flex-shrink-0 transition-colors rounded-md">
                             <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
@@ -327,15 +344,20 @@ function Battery() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
                             {articles.map((article) => (
                                 <div key={article.id} className="flex flex-col items-center group cursor-pointer">
-                                    {/* Image Placeholder (replace src with actual image_url) */}
-                                    <div className="w-full h-48 bg-white border border-gray-100 flex items-center justify-center p-4 mb-4 shadow-sm hover:shadow-md transition-shadow">
-                                        {/* <img src={article.image_url} alt={article.title} className="max-h-full max-w-full object-contain" /> */}
-                                        <div className="text-gray-400 text-xs text-center border-2 border-dashed border-gray-200 w-full h-full flex items-center justify-center">
-                                            Image: {article.title.substring(0, 15)}...
-                                        </div>
+                                    {/* FIX: Replaced placeholder div with an actual image tag */}
+                                    <div className="w-full h-48 bg-gray-100 border border-gray-200 flex items-center justify-center mb-4 shadow-sm hover:shadow-md transition-shadow overflow-hidden rounded-md">
+                                        <img 
+                                            src={article.image} 
+                                            alt={article.title} 
+                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                            onError={(e) => {
+                                                e.target.onerror = null; 
+                                                e.target.src = "https://via.placeholder.com/400x300?text=Image+Not+Found";
+                                            }}
+                                        />
                                     </div>
 
-                                    <h3 className="text-center text-[#2a7ba8] font-medium px-4 hover:underline">
+                                    <h3 className="text-center text-[#2a7ba8] font-medium px-4 group-hover:underline">
                                         {article.title}
                                     </h3>
                                 </div>
@@ -343,7 +365,7 @@ function Battery() {
                         </div>
 
                         {/* Right Arrow */}
-                        <button className="bg-[#2a7ba8] hover:bg-[#1f6288] p-2 flex-shrink-0 transition-colors">
+                        <button className="bg-[#2a7ba8] hover:bg-[#1f6288] p-2 flex-shrink-0 transition-colors rounded-md">
                             <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
@@ -352,7 +374,6 @@ function Battery() {
 
                 </div>
             </section>
-
 
             <Footer />
 
