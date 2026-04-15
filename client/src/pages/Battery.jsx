@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Zap, ShieldCheck, Banknote, LayoutGrid, ChevronLeft, ChevronRight } from "lucide-react";
+import { Zap, ShieldCheck, Banknote, LayoutGrid, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, BatteryCharging } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -8,70 +8,80 @@ const BatteryTypes = [
         id: 1,
         title: "Lithium-ion batteries",
         image: "/src/assets/battery1.png",
-        description: "These are the most widely used type of EV batteries, as they have a high energy density, meaning they can store more energy per unit mass than other batteries. There are 2 types of Lithium ion batteries that are widely used in electric vehicles – LFP (Lithium Ferrous Phosphate) and NMC (Nickel Manganese Cobalt).",
+        description: "These are the most widely used type of EV batteries, possessing a high energy density. This means they can store more energy per unit mass than other batteries. The two widely used variants are LFP (Lithium Ferrous Phosphate) and NMC (Nickel Manganese Cobalt).",
         sub_title: "Did you know?",
-        sub_description: "LFP batteries have excellent thermal stability and safety due to which they are more tolerant of high temperatures making them a safer choice for EV batteries.",
-        icon: <Zap className="text-cyan-400" size={20} />,
+        sub_description: "LFP batteries have excellent thermal stability, making them highly tolerant to high temperatures and a safer choice for EVs.",
+        icon: <Zap className="text-cyan-400" size={24} />,
         glowColor: "group-hover:shadow-cyan-500/20"
     },
     {
         id: 2,
         title: "Nickel-metal hydride batteries",
         image: "/src/assets/battery2.png",
-        description: "These are another type of EV batteries that are often used in hybrid vehicles, which combine an electric motor with a gasoline engine.",
+        description: "Often used in hybrid vehicles, these batteries combine an electric motor with a gasoline engine, acting as a reliable bridge between traditional and future mobility.",
         sub_title: "Did you know?",
-        sub_description: "These batteries were used in some of the earliest electric vehicles in the 90s, but due to its disadvantages like extremely high cost most manufacturers stopped using it.",
-        icon: <Banknote className="text-lime-400" size={20} />,
+        sub_description: "These were used in some of the earliest electric vehicles in the 90s. However, due to high costs and memory effect, most manufacturers shifted to Lithium-ion.",
+        icon: <Banknote className="text-lime-400" size={24} />,
         glowColor: "group-hover:shadow-lime-500/20"
     },
     {
         id: 3,
         title: "Lead-acid batteries",
         image: "/src/assets/ev10.png",
-        description: "These are the oldest type of EV batteries, and they are still used in some low-cost or low-performance EVs such as three wheelers and two wheelers.",
+        description: "The oldest type of EV batteries, still heavily utilized in low-cost or low-performance EVs such as three-wheelers and two-wheelers.",
         sub_title: "Did you know?",
-        sub_description: "Lead-acid batteries are the traditional type of battery used in most gasoline vehicles to crank the engine.",
-        icon: <ShieldCheck className="text-blue-400" size={20} />,
+        sub_description: "Lead-acid batteries are the traditional power source used in almost all gasoline vehicles to crank the internal combustion engine.",
+        icon: <ShieldCheck className="text-blue-400" size={24} />,
         glowColor: "group-hover:shadow-blue-500/20"
     },
     {
         id: 4,
         title: "Sodium-ion battery",
         image: "/src/assets/ev11.png",
-        description: "Acting as an alternative due to increased demand of lithium ion batteries, these batteries are still in development for their usage in EVs and delivery low cost vehicles!",
+        description: "An emerging alternative to lithium-ion. These batteries are currently in intensive development to deliver low-cost, sustainable electric vehicles.",
         sub_title: "Did you know?",
-        sub_description: "Solid state sodium ion batteries don’t use liquid electrolyte like other batteries, they use solid electrolytes!",
-        icon: <LayoutGrid className="text-yellow-400" size={20} />,
+        sub_description: "Solid-state sodium-ion batteries eliminate liquid electrolytes entirely, opting for solid electrolytes which drastically improves safety!",
+        icon: <LayoutGrid className="text-yellow-400" size={24} />,
         glowColor: "group-hover:shadow-yellow-500/20"
     }
 ];
 
 function Battery() {
-    const [savedGuides, setSavedGuides] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [openFaqId, setOpenFaqId] = useState(null);
-    
-    const [faqs, setFaqs] = useState([
-        { id: 1, question: "How long do EV batteries last?", answer: "Most EV batteries are designed to last 10-20 years. Manufacturers typically provide warranties for 8 years or 100,000 miles." },
-        { id: 2, question: "Can EV batteries be recycled?", answer: "Yes, up to 95% of the materials in an EV battery can be recovered and recycled for use in new batteries." },
-        { id: 3, question: "Does weather affect battery range?", answer: "Extreme cold or hot temperatures can temporarily reduce the driving range of an electric vehicle by affecting battery chemistry and requiring more energy for climate control." }
+    const [articleIndex, setArticleIndex] = useState(0); // Added State for Articles Carousel
+
+    const [faqs] = useState([
+        { id: 1, question: "How long do EV batteries last?", answer: "Most EV batteries are engineered to last 10-20 years. Manufacturers typically provide warranties guaranteeing performance for 8 years or 100,000 miles." },
+        { id: 2, question: "Can EV batteries be recycled?", answer: "Yes, up to 95% of the rare earth metals and materials in an EV battery can be recovered and recycled for use in next-generation batteries." },
+        { id: 3, question: "Does weather affect battery range?", answer: "Extreme cold or hot temperatures can temporarily reduce driving range by altering battery chemistry efficiency and requiring extra energy for thermal management." }
     ]);
 
-    const [articles, setArticles] = useState([
-        { 
-            id: 1, 
-            title: "The Future of Solid-State Batteries", 
-            image: "/src/assets/evanatomy.png" 
+    const [articles] = useState([
+        {
+            id: 1,
+            title: "Electric Vehicle Design: The Anatomy of an Electric Car",
+            image: "/src/assets/evanatomy.png",
+            tag: "Design"
         },
-        { 
-            id: 2, 
-            title: "How to Maximize Your EV Range", 
-            image: "/src/assets/ev2.png" 
+        {
+            id: 2,
+            title: "Inside an Electric Vehicle Battery: What You Need to Know",
+            image: "/src/assets/ev2.png",
+            tag: "Technology"
         },
-        { 
-            id: 3, 
-            title: "Battery Recycling Innovations", 
-            image: "/src/assets/article3.png" 
+        {
+            id: 3,
+            title: "Breathe New Life: Repurposing Used Lithium-Ion Batteries (LIBs)",
+            image: "/src/assets/article3.png",
+            tag: "Sustainability"
+
+        },
+        {
+            id: 4,
+            title: "History of EV's",
+            image: "/src/assets/ev12.png",
+            tag: "History"
         }
     ]);
 
@@ -79,30 +89,30 @@ function Battery() {
         {
             id: 1,
             name: "Lithium-ion",
-            benefits: "High energy density, high power-to-weight ratio, efficient, durable, safe",
-            drawbacks: "Expensive, sensitive to temperature, need careful management"
+            benefits: "High energy density, superior power-to-weight ratio, efficient, durable, safe.",
+            drawbacks: "Expensive, sensitive to extreme temperatures, requires complex thermal management."
         },
         {
             id: 2,
             name: "Nickel-metal hydride",
-            benefits: "Cheaper, more reliable, longer lifespan, more life cycles than lithium-ion",
-            drawbacks: "Lower energy density, lower power-to-weight ratio, heavier, bulkier, memory effect"
+            benefits: "Highly reliable, longer overall lifespan, more life cycles than standard lithium-ion.",
+            drawbacks: "Lower energy density, heavier, bulkier, susceptible to memory effect."
         },
         {
             id: 3,
             name: "Lead-acid",
-            benefits: "Cheap, easy to recycle",
-            drawbacks: "Low energy density, low power-to-weight ratio, inefficient, less durable, less safe"
+            benefits: "Extremely cost-effective, easily and widely recycled.",
+            drawbacks: "Low energy density, heavy, inefficient, shorter lifecycle, environmentally toxic if mishandled."
         },
         {
             id: 4,
-            name: "Sodium-ion Batteries",
-            benefits: "Cheaper as compared to lithium-ion batteries",
-            drawbacks: "Low energy density and power-to-weight ratio. Still in the development phase, can be used for low range electric vehicles"
+            name: "Sodium-ion",
+            benefits: "Significantly cheaper materials compared to lithium, abundant resources.",
+            drawbacks: "Lower power-to-weight ratio. Still in developmental phases for long-range applications."
         }
     ]);
 
-    // Fetch from FastAPI backend
+    // FastAPI Backend Fetch
     useEffect(() => {
         const fetchBatteries = async () => {
             try {
@@ -112,21 +122,14 @@ function Battery() {
                     setBatteries(data);
                 }
             } catch (error) {
-                console.error("Failed to fetch batteries, using fallback data.", error);
+                console.error("Failed to fetch batteries from FastAPI, using fallback data.", error);
             }
         };
-        // Uncomment the line below when your backend is running
         // fetchBatteries();
     }, []);
 
     const toggleFaq = (id) => {
         setOpenFaqId(openFaqId === id ? null : id);
-    };
-
-    const toggleSave = (id) => {
-        setSavedGuides(prev =>
-            prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-        );
     };
 
     const nextSlide = () => {
@@ -136,6 +139,25 @@ function Battery() {
     const prevSlide = () => {
         setCurrentSlide((prev) => (prev === 0 ? BatteryTypes.length - 1 : prev - 1));
     };
+
+    // --- Added Articles Carousel Logic ---
+    const nextArticle = () => {
+        setArticleIndex((prev) => (prev + 1) % articles.length);
+    };
+
+    const prevArticle = () => {
+        setArticleIndex((prev) => (prev - 1 + articles.length) % articles.length);
+    };
+
+    const getVisibleArticles = () => {
+        const visible = [];
+        // Displays 3 cards at a time based on the current index
+        for (let i = 0; i < 3; i++) {
+            visible.push(articles[(articleIndex + i) % articles.length]);
+        }
+        return visible;
+    };
+    // -------------------------------------
 
     return (
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
@@ -147,53 +169,52 @@ function Battery() {
                     <img
                         src="/src/assets/anatomy.png"
                         alt="EV Battery Anatomy"
-                        className="w-full h-full object-cover opacity-70 animate-slow-zoom"
+                        className="w-full h-full object-cover opacity-40 animate-slow-zoom"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#050816]/80 via-transparent to-[#050816]" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#050816] via-transparent to-[#050816]" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-transparent to-[#050816]" />
                 </div>
 
                 <div className="relative z-10 text-center px-6 max-w-5xl mt-10">
-                    <div className="relative z-10 text-center px-6 max-w-4xl mt-20">
-                        <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
-                            BATTERIES THAT ARE CHARGING THE FUTURE
-                        </h1>
-                    </div>
+
+                    <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase leading-tight">
+                        BATTERIES THAT ARE <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">CHARGING THE FUTURE</span>
+                    </h1>
                 </div>
             </section>
 
-            {/* --- BENEFITS SECTION --- */}
-            <section className="py-32 relative">
-                <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
-                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-lime-600/10 blur-[150px] -z-10" />
+            {/* --- INTRO SECTION --- */}
+            <section className="py-24 relative overflow-hidden">
+                <div className="absolute top-1/4 left-0 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
 
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div className="space-y-8">
+                            <div>
+                                <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase text-white mb-6">
+                                    How do they <span className="text-cyan-400">run?</span>
+                                </h2>
+                                <p className="text-lg text-slate-400 leading-relaxed">
+                                    Imagine driving a vehicle that runs purely on electrons instead of combustible fuel. Zero emissions, drastically reduced daily costs, and a ride that is whisper-quiet, incredibly smooth, and highly intelligent.
+                                </p>
+                            </div>
 
-                        <div className="max-w-2xl">
-                            <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto  mb-16">
-                                Explore the heart of electric vehicles with a deep dive into EV batteries. From Lithium-ion to Solid-State, we'll unravel the science behind these energy powerhouses. Get ready to supercharge your knowledge and learn how different batteries drive the electric future!
-                            </p>
-                            <h1 className="text-5xl md:text-7xl font-black mb-6 mt-8 tracking-tight uppercase">
-                                How do they run?
-                            </h1>
-
-                            <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto mb-4">
-                                Imagine driving a car that runs on electricity instead of fuel. A car that emits zero pollution and saves you money on fuel. A car that is quiet, smooth, and smart. That’s what electric vehicles (EVs) offer.
-                            </p>
-
-                            <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto mb-10">
-                                But EVs are not all the same. They use different kinds of batteries to store and deliver electricity. Each battery has its own pros and cons, depending on how you use your car.
-                            </p>
-
-                            <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
-                                There’s more than one type? Yes.
-                            </h1>
+                            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                                <h3 className="text-xl font-bold text-lime-400 mb-3 uppercase tracking-wider">There’s more than one type?</h3>
+                                <p className="text-slate-300 leading-relaxed">
+                                    Absolutely. EVs utilize different chemical architectures to store and distribute electricity. Every battery chemistry offers a unique balance of energy density, lifecycle, and thermal stability tailored to specific mobility needs.
+                                </p>
+                            </div>
                         </div>
 
                         <div className="relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                            <div className="relative bg-black rounded-3xl overflow-hidden border border-white/10">
-                                <img src="/src/assets/evanatomy.png" alt="EV Anatomy" className="w-full aspect-video object-cover" />
+                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                            <div className="relative bg-[#0a0f25] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                                <img src="/src/assets/evanatomy.png" alt="EV Anatomy Architecture" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
+                                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6">
+                                    <p className="text-sm text-cyan-400 font-mono tracking-widest uppercase">Platform Architecture</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -201,20 +222,23 @@ function Battery() {
             </section>
 
             {/* --- TRENDS SLIDER --- */}
-            <section className="py-24 max-w-7xl mx-auto px-6">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <section className="py-24 max-w-7xl mx-auto px-6 relative">
+                <div className="absolute right-0 top-1/2 w-96 h-96 bg-lime-600/10 blur-[150px] -z-10" />
+
+                <div className="flex justify-between items-end mb-12">
+                    <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight">Battery <span className="text-cyan-400">Technologies</span></h2>
                     <div className="flex gap-3">
-                        <button onClick={prevSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
-                            <ChevronLeft className="group-hover:scale-110" />
+                        <button onClick={prevSlide} className="p-3 bg-white/5 hover:bg-cyan-500/20 border border-white/10 rounded-full transition-all text-white hover:text-cyan-400">
+                            <ChevronLeft size={24} />
                         </button>
-                        <button onClick={nextSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
-                            <ChevronRight className="group-hover:scale-110" />
+                        <button onClick={nextSlide} className="p-3 bg-white/5 hover:bg-cyan-500/20 border border-white/10 rounded-full transition-all text-white hover:text-cyan-400">
+                            <ChevronRight size={24} />
                         </button>
                     </div>
                 </div>
 
-                <div className="relative grid md:grid-cols-12 gap-8 items-center">
-                    <div className="md:col-span-7 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl h-[500px]">
+                <div className="relative grid lg:grid-cols-12 gap-8 items-center">
+                    <div className="lg:col-span-7 rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl h-[450px] bg-[#0a0f25]">
                         <img
                             src={BatteryTypes[currentSlide].image}
                             alt={BatteryTypes[currentSlide].title}
@@ -222,61 +246,59 @@ function Battery() {
                         />
                     </div>
 
-                    <div className="md:col-span-5 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md p-10 rounded-[40px] border border-white/10 relative">
-                        <span className="absolute -top-10 right-10 text-8xl font-black text-white/5">
+                    <div className="lg:col-span-5 bg-white/[0.03] backdrop-blur-xl p-10 rounded-[2rem] border border-white/10 relative shadow-2xl">
+                        <span className="absolute -top-8 right-8 text-8xl font-black text-white/[0.03] select-none pointer-events-none">
                             0{BatteryTypes[currentSlide].id}
                         </span>
-                        <div className="mb-6">{BatteryTypes[currentSlide].icon}</div>
+
+                        <div className="inline-flex p-3 rounded-xl bg-white/5 border border-white/10 mb-6">
+                            {BatteryTypes[currentSlide].icon}
+                        </div>
+
                         <h3 className="text-3xl font-bold mb-4">{BatteryTypes[currentSlide].title}</h3>
-                        <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                        <p className="text-slate-400 text-lg leading-relaxed mb-8">
                             {BatteryTypes[currentSlide].description}
                         </p>
 
-                        <h4 className="text-2xl font-bold text-cyan-300 mt-6 mb-2">
-                            {BatteryTypes[currentSlide].sub_title}
-                        </h4>
-
-                        <p className="text-gray-400 text-base leading-relaxed italic border-l-4 border-cyan-500/50 pl-4">
-                            {BatteryTypes[currentSlide].sub_description}
-                        </p>
+                        <div className="p-5 rounded-xl bg-gradient-to-br from-cyan-950/40 to-transparent border border-cyan-500/20">
+                            <h4 className="text-sm font-bold text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                <Zap size={14} />
+                                {BatteryTypes[currentSlide].sub_title}
+                            </h4>
+                            <p className="text-slate-300 text-sm leading-relaxed">
+                                {BatteryTypes[currentSlide].sub_description}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* --- TABLE SECTION --- */}
-            <section className="py-12 max-w-6xl mx-auto px-6">
-                <h3 className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto text-center mb-16">
-                    Types of batteries used in an electric vehicle
-                </h3>
+            {/* --- COMPARISON TABLE SECTION --- */}
+            <section className="py-24 max-w-6xl mx-auto px-6">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-4">Chemical <span className="text-lime-400">Comparison</span></h2>
+                    <p className="text-slate-400 text-lg max-w-2xl mx-auto">Analyze the operational benefits and systemic drawbacks of different power units.</p>
+                </div>
 
-                <div className="flex flex-col space-y-4">
-                    {/* Table Headers */}
-                    <div className="grid grid-cols-3 gap-4 mb-2 text-center font-semibold text-white">
-                        <div className="border-4 border-teal-200 rounded-2xl py-4 flex items-center justify-center">
-                            Types of EV Battery
-                        </div>
-                        <div className="border-4 border-blue-300 rounded-2xl py-4 flex items-center justify-center">
-                            Benefits
-                        </div>
-                        <div className="border-4 border-blue-400 rounded-2xl py-4 flex items-center justify-center">
-                            Drawbacks
-                        </div>
+                <div className="rounded-2xl border border-white/10 bg-[#0a0f25]/50 backdrop-blur-md overflow-hidden shadow-2xl">
+                    {/* Headers */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 bg-white/5 border-b border-white/10 text-sm uppercase tracking-wider font-bold text-cyan-400">
+                        <div className="p-6">Chemistry Type</div>
+                        <div className="p-6 md:border-l border-white/10">Key Benefits</div>
+                        <div className="p-6 md:border-l border-white/10 text-lime-400">Drawbacks</div>
                     </div>
 
-                    {/* Table Rows */}
-                    <div className="flex flex-col rounded-2xl overflow-hidden shadow-lg border border-white/10">
-                        {batteries.map((battery, index) => (
-                            <div
-                                key={battery.id}
-                                className={`grid grid-cols-3 gap-4 p-6 items-center text-gray-900 ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
-                            >
-                                <div className="text-center font-bold">
+                    {/* Rows */}
+                    <div className="divide-y divide-white/5">
+                        {batteries.map((battery) => (
+                            <div key={battery.id} className="grid grid-cols-1 md:grid-cols-3 transition-colors hover:bg-white/[0.02]">
+                                <div className="p-6 font-bold text-lg flex items-center">
                                     {battery.name}
                                 </div>
-                                <div className="text-sm px-4">
+                                <div className="p-6 md:border-l border-white/5 text-slate-300 text-sm leading-relaxed">
                                     {battery.benefits}
                                 </div>
-                                <div className="text-sm px-4">
+                                <div className="p-6 md:border-l border-white/5 text-slate-400 text-sm leading-relaxed">
                                     {battery.drawbacks}
                                 </div>
                             </div>
@@ -285,93 +307,97 @@ function Battery() {
                 </div>
             </section>
 
-            <section className="py-32 relative bg-white rounded-t-[3rem] mt-12">
-                <div className="max-w-7xl mx-auto px-4 py-12 font-sans">
+            {/* --- KNOWLEDGE BASE (FAQ & Articles) --- */}
+            <section className="py-24 relative mt-12 border-t border-white/10 bg-[#070b1e]">
+                <div className="max-w-7xl mx-auto px-6">
 
-                    {/* FAQ Section */}
-                    <h2 className="text-center text-2xl font-bold text-[#2a7ba8] mb-10 tracking-wide uppercase">
-                        Frequently Asked Questions
-                    </h2>
+                    {/* FAQ Area */}
+                    <div className="max-w-3xl mx-auto mb-32">
+                        <h2 className="text-center text-3xl font-black text-white mb-12 tracking-wide uppercase">
+                            Frequently Asked <span className="text-cyan-400">Questions</span>
+                        </h2>
 
-                    <div className="mb-12">
-                        {faqs.map((faq) => (
-                            <div key={faq.id} className="border-b border-gray-200">
-                                <button
-                                    onClick={() => toggleFaq(faq.id)}
-                                    className="w-full flex justify-between items-center py-5 text-left focus:outline-none"
+                        <div className="space-y-4">
+                            {faqs.map((faq) => (
+                                <div
+                                    key={faq.id}
+                                    className={`rounded-xl border transition-all duration-300 ${openFaqId === faq.id ? 'bg-white/10 border-cyan-500/30' : 'bg-white/5 border-white/10 hover:border-white/20'}`}
                                 >
-                                    <span className="font-semibold text-gray-900 text-lg">
-                                        {faq.question}
-                                    </span>
-                                    <svg
-                                        className={`w-6 h-6 text-[#2a7ba8] transform transition-transform duration-200 ${openFaqId === faq.id ? 'rotate-180' : ''}`}
-                                        fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    <button
+                                        onClick={() => toggleFaq(faq.id)}
+                                        className="w-full flex justify-between items-center p-6 text-left focus:outline-none"
                                     >
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </button>
-                                {openFaqId === faq.id && (
-                                    <div className="pb-5 text-gray-600">
-                                        {faq.answer}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Divider with Read More Button */}
-                    <div className="relative mb-12">
-                        <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                            <div className="w-full border-t-2 border-[#28a167]"></div>
-                        </div>
-                        <div className="relative flex justify-start">
-                            <button className="bg-[#28a167] text-white font-bold py-3 px-8 text-sm tracking-wider hover:bg-[#218555] transition-colors">
-                                READ MORE
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Articles Carousel Section */}
-                    <div className="flex items-center justify-between gap-4">
-                        {/* Left Arrow */}
-                        <button className="bg-gray-200 hover:bg-gray-300 p-2 flex-shrink-0 transition-colors rounded-md">
-                            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </button>
-
-                        {/* Cards Container */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-                            {articles.map((article) => (
-                                <div key={article.id} className="flex flex-col items-center group cursor-pointer">
-                                    {/* FIX: Replaced placeholder div with an actual image tag */}
-                                    <div className="w-full h-48 bg-gray-100 border border-gray-200 flex items-center justify-center mb-4 shadow-sm hover:shadow-md transition-shadow overflow-hidden rounded-md">
-                                        <img 
-                                            src={article.image} 
-                                            alt={article.title} 
-                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                            onError={(e) => {
-                                                e.target.onerror = null; 
-                                                e.target.src = "https://via.placeholder.com/400x300?text=Image+Not+Found";
-                                            }}
+                                        <span className="font-semibold text-white text-lg">
+                                            {faq.question}
+                                        </span>
+                                        <ChevronDown
+                                            className={`text-cyan-400 transform transition-transform duration-300 ${openFaqId === faq.id ? 'rotate-180' : ''}`}
+                                            size={20}
                                         />
+                                    </button>
+                                    <div
+                                        className={`overflow-hidden transition-all duration-300 ease-in-out ${openFaqId === faq.id ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
+                                    >
+                                        <p className="p-6 pt-0 text-slate-400 leading-relaxed border-t border-white/5 mt-2">
+                                            {faq.answer}
+                                        </p>
                                     </div>
-
-                                    <h3 className="text-center text-[#2a7ba8] font-medium px-4 group-hover:underline">
-                                        {article.title}
-                                    </h3>
                                 </div>
                             ))}
                         </div>
-
-                        {/* Right Arrow */}
-                        <button className="bg-[#2a7ba8] hover:bg-[#1f6288] p-2 flex-shrink-0 transition-colors rounded-md">
-                            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
                     </div>
 
+                    {/* Articles Area */}
+                    <div>
+                        <div className="flex justify-between items-end border-b border-white/10 pb-6 mb-10">
+                            <h2 className="text-3xl font-black uppercase tracking-tight">Latest <span className="text-lime-400">Insights</span></h2>
+                        </div>
+
+                        {/* Articles Carousel Section */}
+                        <div className="flex items-center justify-between gap-4">
+                            {/* Left Arrow */}
+                            <button onClick={prevArticle} className="bg-gray-200 hover:bg-gray-300 p-2 flex-shrink-0 transition-colors rounded-md">
+                                <svg className="w-6 h-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+
+                            {/* Cards Container - Using dynamically sliced array */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
+                                {getVisibleArticles().map((article, idx) => (
+                                    <div key={`${article.id}-${idx}`} className="group cursor-pointer flex flex-col bg-white/5 rounded-2xl border border-white/10 overflow-hidden hover:border-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/10">
+                                        <div className="w-full h-56 overflow-hidden relative">
+                                            <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-xs font-bold text-lime-400 uppercase tracking-wider">
+                                                {article.tag}
+                                            </div>
+                                            <img
+                                                src={article.image}
+                                                alt={article.title}
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = "https://via.placeholder.com/400x300/0a0f25/22d3ee?text=Image+Not+Found";
+                                                }}
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f25] to-transparent opacity-80" />
+                                        </div>
+                                        <div className="p-6">
+                                            <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors leading-snug">
+                                                {article.title}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Right Arrow */}
+                            <button onClick={nextArticle} className="bg-[#2a7ba8] hover:bg-[#1f6288] p-2 flex-shrink-0 transition-colors rounded-md">
+                                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
