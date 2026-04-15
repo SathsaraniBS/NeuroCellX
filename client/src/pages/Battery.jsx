@@ -1,34 +1,48 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Heart, Zap, ShieldCheck, Banknote, LayoutGrid } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import EVCalculator from '../components/EVCalculator';
 
-const Home_Charging_Benefits = [
+const BatteryTypes = [
     {
         id: 1,
         title: "Lithium-ion batteries",
         image: "/src/assets/anatomy.png",
-        description: "Lithium-ion batteries are the backbone of modern electric vehicles, offering high energy density and long lifespan.",
+        description: "These are the most widely used type of EV batteries, as they have a high energy density, meaning they can store more energy per unit mass than other batteries. There are 2 types of Lithium ion batteries that are widely used in electric vehicles – LFP (Lithium Ferrous Phosphate) and NMC (Nickel Manganese Cobalt).",
+        sub_title: "Did you know?",
+        sub_description: "LFP batteries have excellent thermal stability and safety due to which they are more tolerant of high temperatures making them a safer choice for EV batteries.",
         icon: <Zap className="text-cyan-400" size={20} />,
         glowColor: "group-hover:shadow-cyan-500/20"
     },
     {
         id: 2,
-        title: "Cost Efficient",
+        title: "Nickel-metal hydride batteries",
         image: "/src/assets/ev9.png",
-        description: "With global energy prices fluctuating, switching to electric mobility is a smart financial move. Reduce your daily commute costs by up to 70%.",
+        description: "These are another type of EV batteries that are often used in hybrid vehicles, which combine an electric motor with a gasoline engine.",
+        sub_title: "Did you know?",
+        sub_description: "These batteries were used in some of the earliest electric vehicles in the 90s, but due to its disadvantages like extremely high cost most manufacturers stopped using it.",
         icon: <Banknote className="text-lime-400" size={20} />,
         glowColor: "group-hover:shadow-lime-500/20"
     },
     {
         id: 3,
-        title: "Safe and Secure",
+        title: "Lead-acid batteries",
         image: "/src/assets/ev10.png",
-        description: "Charge in a familiar, secure environment with built-in surge protection and battery health monitoring tailored for your home infrastructure.",
+        description: "These are the oldest type of EV batteries, and they are still used in some low-cost or low-performance EVs such as three wheelers and two wheelers.",
+        sub_title: "Did you know?",
+        sub_description: "Lead-acid batteries are the traditional type of battery used in most gasoline vehicles to crank the engine.",
         icon: <ShieldCheck className="text-blue-400" size={20} />,
         glowColor: "group-hover:shadow-blue-500/20"
+    },
+    {
+        id: 4,
+        title: "Sodium-ion battery",
+        image: "/src/assets/ev11.png",
+        description: "Acting as an alternative due to increased demand of lithium ion batteries, these batteries are still in development for their usage in EVs and delivery low cost vehicles!",
+        sub_title: "Did you know?",
+        sub_description: "Solid state sodium ion batteries don’t use liquid electrolyte like other batteries, they use solid electrolytes!",
+        icon: <LayoutGrid className="text-yellow-400" size={20} />,
+        glowColor: "group-hover:shadow-yellow-500/20"
     }
 ];
 
@@ -63,13 +77,9 @@ function Battery() {
                     </div>
 
                     <div className="relative z-10 text-center px-6 max-w-4xl mt-20">
-
                         <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
                             EV Battery Anatomy
                         </h1>
-
-
-
                     </div>
                 </div>
             </section>
@@ -79,39 +89,71 @@ function Battery() {
                 {/* Visual accents */}
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
                 <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-lime-600/10 blur-[150px] -z-10" />
-                     <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto">
-                                Explore the heart of electric vehicles with a deep dive into EV batteries. From Lithium-ion to Solid-State, we'll unravel the science behind these energy powerhouses. Get ready to supercharge your knowledge and learn how different batteries drive the electric future!
-                            </p>
+                
+                <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto text-center mb-16">
+                    Explore the heart of electric vehicles with a deep dive into EV batteries. From Lithium-ion to Solid-State, we'll unravel the science behind these energy powerhouses. Get ready to supercharge your knowledge and learn how different batteries drive the electric future!
+                </p>
+
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
                         <div className="max-w-2xl">
-                           
                             <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
                                 How do they run?
                             </h1>
 
-                            <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto">
+                            <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto mb-4">
                                 Imagine driving a car that runs on electricity instead of gas. A car that emits zero pollution and saves you money on fuel. A car that is quiet, smooth, and smart. That’s what electric vehicles (EVs) offer.
                             </p>
 
-                            <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto">
+                            <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto mb-10">
                                 But EVs are not all the same. They use different kinds of batteries to store and deliver electricity. Each battery has its own pros and cons, depending on how you use your car.
                             </p>
 
                             <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
                                 There’s more than one type? Yes.
-
                             </h1>
                         </div>
-
                     </div>
-
                 </div>
             </section>
 
-            <section className="py-32 relative">
-            </section>
+             {/* Trends Slider */}
+        <section className="py-24">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <h2 className="text-3xl md:text-5xl font-black uppercase max-w-xl">
+              Changing Trends in <span className="text-lime-400">Public Charging</span>
+            </h2>
+            <div className="flex gap-3">
+              <button onClick={prevSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
+                <ChevronLeft className="group-hover:scale-110" />
+              </button>
+              <button onClick={nextSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
+                <ChevronRight className="group-hover:scale-110" />
+              </button>
+            </div>
+          </div>
 
+          <div className="relative grid md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-7 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl h-auto">
+              <img 
+                src={TRENDS[currentSlide].image} 
+                alt={TRENDS[currentSlide].title} 
+                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              />
+            </div>
+            
+            <div className="md:col-span-5 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md p-10 rounded-[40px] border border-white/10 relative">
+               <span className="absolute -top-10 right-10 text-8xl font-black text-white/5">
+                0{TRENDS[currentSlide].id}
+               </span>
+               <Zap className="text-cyan-400 mb-6" size={40} />
+               <h3 className="text-3xl font-bold mb-4">{TRENDS[currentSlide].title}</h3>
+               <p className="text-gray-400 text-lg leading-relaxed">
+                 {TRENDS[currentSlide].description}
+               </p>
+            </div>
+          </div>
+        </section>
 
             <Footer />
 
