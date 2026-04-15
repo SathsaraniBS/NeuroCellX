@@ -47,10 +47,7 @@ const BatteryTypes = [
 ];
 
 function Battery() {
-    // Original state for guides
     const [savedGuides, setSavedGuides] = useState([]);
-    
-    // NEW: State for the battery slider
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const toggleSave = (id) => {
@@ -59,7 +56,6 @@ function Battery() {
         );
     };
 
-    // NEW: Functions to handle slider navigation
     const nextSlide = () => {
         setCurrentSlide((prev) => (prev === BatteryTypes.length - 1 ? 0 : prev + 1));
     };
@@ -99,7 +95,6 @@ function Battery() {
 
             {/* --- BENEFITS SECTION --- */}
             <section className="py-32 relative">
-                {/* Visual accents */}
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
                 <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-lime-600/10 blur-[150px] -z-10" />
                 
@@ -159,11 +154,17 @@ function Battery() {
                         </span>
                         <Zap className="text-cyan-400 mb-6" size={40} />
                         <h3 className="text-3xl font-bold mb-4">{BatteryTypes[currentSlide].title}</h3>
-                        <p className="text-gray-400 text-lg leading-relaxed">
+                        <p className="text-gray-300 text-lg leading-relaxed mb-6">
                             {BatteryTypes[currentSlide].description}
                         </p>
-                        <h4 className="text-xl font-semibold mt-6 mb-2">{BatteryTypes[currentSlide].sub_title}</h4>
-                        <p className="text-gray-400 text-lg leading-relaxed">
+                        
+                        {/* Styled the subtitle so it stands out more */}
+                        <h4 className="text-2xl font-bold text-cyan-300 mt-6 mb-2">
+                            {BatteryTypes[currentSlide].sub_title}
+                        </h4>
+                        
+                        {/* Ensure the sub-description has a slightly different color to distinguish it */}
+                        <p className="text-gray-400 text-base leading-relaxed italic border-l-4 border-cyan-500/50 pl-4">
                             {BatteryTypes[currentSlide].sub_description}
                         </p>
                     </div>
