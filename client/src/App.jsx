@@ -20,6 +20,7 @@ import Profile from './pages/ProfilePage';
 import Reports from './pages/Reports';
 import PublicCharging from './pages/PublicCharging';
 import Homecharging from './pages/Homecharging';
+import Battery from './pages/Battery';
 
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -56,6 +57,13 @@ function App() {
                             </Route>
 
                             {/* Protected Routes (login required) */}
+
+                            <Route path="/battery" element={
+                                <ProtectedRoute>
+                                    <Battery />
+                                </ProtectedRoute>
+                            } />
+
                             <Route path="charging" element={
                                 <ProtectedRoute>
                                 <Charging />
