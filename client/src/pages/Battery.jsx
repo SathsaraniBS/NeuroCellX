@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Zap, ShieldCheck, Banknote, LayoutGrid, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, BatteryCharging } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -47,9 +48,10 @@ const BatteryTypes = [
 ];
 
 function Battery() {
+    const navigate = useNavigate(); // Added for navigation
     const [currentSlide, setCurrentSlide] = useState(0);
     const [openFaqId, setOpenFaqId] = useState(null);
-    const [articleIndex, setArticleIndex] = useState(0); // Added State for Articles Carousel
+    const [articleIndex, setArticleIndex] = useState(0); 
 
     const [faqs] = useState([
         { id: 1, question: "How long do EV batteries last?", answer: "Most EV batteries are engineered to last 10-20 years. Manufacturers typically provide warranties guaranteeing performance for 8 years or 100,000 miles." },
@@ -57,31 +59,36 @@ function Battery() {
         { id: 3, question: "Does weather affect battery range?", answer: "Extreme cold or hot temperatures can temporarily reduce driving range by altering battery chemistry efficiency and requiring extra energy for thermal management." }
     ]);
 
+    // Added paths to the articles
     const [articles] = useState([
         {
             id: 1,
             title: "Electric Vehicle Design: The Anatomy of an Electric Car",
             image: "/src/assets/evanatomy.png",
-            tag: "Design"
+            tag: "Design",
+            path: "/ev-architecture" // Added route path here
         },
         {
             id: 2,
             title: "Inside an Electric Vehicle Battery: What You Need to Know",
             image: "/src/assets/ev2.png",
-            tag: "Technology"
+            tag: "Technology",
+            path: "#"
         },
         {
             id: 3,
             title: "Breathe New Life: Repurposing Used Lithium-Ion Batteries (LIBs)",
             image: "/src/assets/article3.png",
-            tag: "Sustainability"
+            tag: "Sustainability",
+            path: "#"
 
         },
         {
             id: 4,
             title: "History of EV's",
             image: "/src/assets/ev12.png",
-            tag: "History"
+            tag: "History",
+            path: "#"
         }
     ]);
 
@@ -140,7 +147,6 @@ function Battery() {
         setCurrentSlide((prev) => (prev === 0 ? BatteryTypes.length - 1 : prev - 1));
     };
 
-    // --- Added Articles Carousel Logic ---
     const nextArticle = () => {
         setArticleIndex((prev) => (prev + 1) % articles.length);
     };
@@ -151,13 +157,18 @@ function Battery() {
 
     const getVisibleArticles = () => {
         const visible = [];
-        // Displays 3 cards at a time based on the current index
         for (let i = 0; i < 3; i++) {
             visible.push(articles[(articleIndex + i) % articles.length]);
         }
         return visible;
     };
-    // -------------------------------------
+
+    // Added function to handle article clicks
+    const handleArticleClick = (path) => {
+        if (path && path !== "#") {
+            navigate(path);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
@@ -176,7 +187,6 @@ function Battery() {
                 </div>
 
                 <div className="relative z-10 text-center px-6 max-w-5xl mt-10">
-
                     <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase leading-tight">
                         BATTERIES THAT ARE <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">CHARGING THE FUTURE</span>
@@ -365,7 +375,11 @@ function Battery() {
                             {/* Cards Container - Using dynamically sliced array */}
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
                                 {getVisibleArticles().map((article, idx) => (
-                                    <div key={`${article.id}-${idx}`} className="group cursor-pointer flex flex-col bg-white/5 rounded-2xl border border-white/10 overflow-hidden hover:border-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/10">
+                                    <div 
+                                        key={`${article.id}-${idx}`} 
+                                        onClick={() => handleArticleClick(article.path)} // Added click event here
+                                        className="group cursor-pointer flex flex-col bg-white/5 rounded-2xl border border-white/10 overflow-hidden hover:border-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/10"
+                                    >
                                         <div className="w-full h-56 overflow-hidden relative">
                                             <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-xs font-bold text-lime-400 uppercase tracking-wider">
                                                 {article.tag}
@@ -376,7 +390,7 @@ function Battery() {
                                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                                 onError={(e) => {
                                                     e.target.onerror = null;
-                                                    e.target.src = "https://via.placeholder.com/400x300/0a0f25/22d3ee?text=Image+Not+Found";
+                                                    
                                                 }}
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f25] to-transparent opacity-80" />
