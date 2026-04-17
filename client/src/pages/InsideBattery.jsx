@@ -12,8 +12,7 @@ const InsideBattery = () => {
     <div className="min-h-screen bg-[#050816] text-slate-200 flex flex-col font-sans selection:bg-cyan-500 selection:text-white relative z-0">
       <Navbar />
 
-      {/* Main Content Wrapper */}
-      <main className="flex-grow flex flex-col relative overflow-hidden">
+      <div className="flex-grow flex flex-col relative overflow-hidden">
 
         {/* Ambient Background Glows for EV Tech Feel */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-600/20 blur-[120px] rounded-full pointer-events-none -z-10"></div>
@@ -60,17 +59,7 @@ const InsideBattery = () => {
                 At the heart of an EV battery lies the single battery cell, the smallest power unit. These cells are connected in series or parallel to form different battery modules, and multiple modules are then linked in series to create the power battery pack.
 
               </p>
-            </div>
-
-           
-              
-            
-              
-
-           
-        
-
-            
+            </div> 
 
             {/* 5. Vehicle Control Unit */}
             <div className="bg-white/[0.03] border border-white/5 rounded-2xl p-8 hover:bg-white/[0.05] transition-colors duration-300">
@@ -102,60 +91,8 @@ const InsideBattery = () => {
           </div>
         </section>
 
-        {/* Safety Features Cards Section */}
-        <section className="py-16 px-6 sm:px-12 lg:px-24 mb-20 relative">
-          <div className="max-w-6xl mx-auto">
-            
-            <p className="text-xl text-slate-300 text-center mb-12 font-light max-w-3xl mx-auto">
-              For instance, modern EVs host a range of specialized safety features that improve security and comfort for drivers. These include:
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-              
-              {/* Battery Safety Card */}
-              <div className="bg-gradient-to-br from-white/10 to-transparent border border-cyan-500/20 rounded-3xl p-8 backdrop-blur-sm shadow-xl">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="p-3 bg-cyan-500/20 rounded-xl">
-                    <svg className="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                  <h2 className="text-2xl font-bold text-white tracking-wide">Battery Safety</h2>
-                </div>
-                <ul className="space-y-6">
-                  {batterySafety.map((feature, index) => (
-                    <li key={index} className="flex items-start text-slate-300 text-lg group">
-                      <CheckIcon />
-                      <span className="leading-snug group-hover:text-white transition-colors">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Passenger Safety Card */}
-              <div className="bg-gradient-to-br from-white/10 to-transparent border border-emerald-500/20 rounded-3xl p-8 backdrop-blur-sm shadow-xl">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="p-3 bg-emerald-500/20 rounded-xl">
-                    <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  </div>
-                  <h2 className="text-2xl font-bold text-white tracking-wide">Passenger Safety</h2>
-                </div>
-                <ul className="space-y-6">
-                  {passengerSafety.map((feature, index) => (
-                    <li key={index} className="flex items-start text-slate-300 text-lg group">
-                      <CheckIcon />
-                      <span className="leading-snug group-hover:text-white transition-colors">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-            </div>
-          </div>
-        </section>
-      </main>
+        
+      </div>
 
       <Footer />
     </div>

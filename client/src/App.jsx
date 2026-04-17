@@ -22,6 +22,7 @@ import PublicCharging from './pages/PublicCharging';
 import Homecharging from './pages/Homecharging';
 import Battery from './pages/Battery';
 import EVArchitecture from './pages/EVArchitecture';
+import InsideBattery from './pages/InsideBattery';
 
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -33,7 +34,6 @@ import EngineerDashboard from './pages/Engineer/EngineerDashboard';
 // ─── Route Guard ────────────────────────
 import ProtectedRoute from './components/ProtectedRoute'
 import ResetPassword from './pages/ResetPassword';
-import InsideBattery from './components/InsideBattery';
 // import ContactPage from './pages/ContactPage';
 
 const API_URL = "http://127.0.0.1:8000/records/";
