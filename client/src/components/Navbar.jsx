@@ -76,13 +76,13 @@ const Navbar = () => {
                   Battery Life
                 </Link>
                 <Link 
-                  to="/battery/battery-safety" 
+                  to="/battery-safety" 
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   Battery Safety
                 </Link>
                 <Link 
-                  to="/battery/repair" 
+                  to="/battery/repurposing" 
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   Repair & Maintenance

@@ -4,120 +4,13 @@ import { Zap, ShieldCheck, Banknote, LayoutGrid, ChevronLeft, ChevronRight, Chev
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-const BatteryTypes = [
-    {
-        id: 1,
-        title: "Lithium-ion batteries",
-        image: "/src/assets/battery1.png",
-        description: "These are the most widely used type of EV batteries, possessing a high energy density. This means they can store more energy per unit mass than other batteries. The two widely used variants are LFP (Lithium Ferrous Phosphate) and NMC (Nickel Manganese Cobalt).",
-        sub_title: "Did you know?",
-        sub_description: "LFP batteries have excellent thermal stability, making them highly tolerant to high temperatures and a safer choice for EVs.",
-        icon: <Zap className="text-cyan-400" size={24} />,
-        glowColor: "group-hover:shadow-cyan-500/20"
-    },
-    {
-        id: 2,
-        title: "Nickel-metal hydride batteries",
-        image: "/src/assets/battery2.png",
-        description: "Often used in hybrid vehicles, these batteries combine an electric motor with a gasoline engine, acting as a reliable bridge between traditional and future mobility.",
-        sub_title: "Did you know?",
-        sub_description: "These were used in some of the earliest electric vehicles in the 90s. However, due to high costs and memory effect, most manufacturers shifted to Lithium-ion.",
-        icon: <Banknote className="text-lime-400" size={24} />,
-        glowColor: "group-hover:shadow-lime-500/20"
-    },
-    {
-        id: 3,
-        title: "Lead-acid batteries",
-        image: "/src/assets/ev10.png",
-        description: "The oldest type of EV batteries, still heavily utilized in low-cost or low-performance EVs such as three-wheelers and two-wheelers.",
-        sub_title: "Did you know?",
-        sub_description: "Lead-acid batteries are the traditional power source used in almost all gasoline vehicles to crank the internal combustion engine.",
-        icon: <ShieldCheck className="text-blue-400" size={24} />,
-        glowColor: "group-hover:shadow-blue-500/20"
-    },
-    {
-        id: 4,
-        title: "Sodium-ion battery",
-        image: "/src/assets/ev11.png",
-        description: "An emerging alternative to lithium-ion. These batteries are currently in intensive development to deliver low-cost, sustainable electric vehicles.",
-        sub_title: "Did you know?",
-        sub_description: "Solid-state sodium-ion batteries eliminate liquid electrolytes entirely, opting for solid electrolytes which drastically improves safety!",
-        icon: <LayoutGrid className="text-yellow-400" size={24} />,
-        glowColor: "group-hover:shadow-yellow-500/20"
-    }
-];
+
 
 function Batterysafety() {
     const navigate = useNavigate(); // Added for navigation
     const [currentSlide, setCurrentSlide] = useState(0);
     const [openFaqId, setOpenFaqId] = useState(null);
-    const [articleIndex, setArticleIndex] = useState(0); 
-
-    const [faqs] = useState([
-        { id: 1, question: "How long do EV batteries last?", answer: "Most EV batteries are engineered to last 10-20 years. Manufacturers typically provide warranties guaranteeing performance for 8 years or 100,000 miles." },
-        { id: 2, question: "Can EV batteries be recycled?", answer: "Yes, up to 95% of the rare earth metals and materials in an EV battery can be recovered and recycled for use in next-generation batteries." },
-        { id: 3, question: "Does weather affect battery range?", answer: "Extreme cold or hot temperatures can temporarily reduce driving range by altering battery chemistry efficiency and requiring extra energy for thermal management." }
-    ]);
-
-    // Added paths to the articles
-    const [articles] = useState([
-        {
-            id: 1,
-            title: "Electric Vehicle Design: The Anatomy of an Electric Car",
-            image: "/src/assets/evanatomy.png",
-            tag: "Design",
-            path: "/ev-architecture" // Added route path here
-        },
-        {
-            id: 2,
-            title: "Inside an Electric Vehicle Battery: What You Need to Know",
-            image: "/src/assets/ev2.png",
-            tag: "Technology",
-            path: "/inside-battery"
-        },
-        {
-            id: 3,
-            title: "Breathe New Life: Repurposing Used Lithium-Ion Batteries (LIBs)",
-            image: "/src/assets/article3.png",
-            tag: "Sustainability",
-            path: "#"
-
-        },
-        {
-            id: 4,
-            title: "History of EV's",
-            image: "/src/assets/ev12.png",
-            tag: "History",
-            path: "#"
-        }
-    ]);
-
-    const [batteries, setBatteries] = useState([
-        {
-            id: 1,
-            name: "Lithium-ion",
-            benefits: "High energy density, superior power-to-weight ratio, efficient, durable, safe.",
-            drawbacks: "Expensive, sensitive to extreme temperatures, requires complex thermal management."
-        },
-        {
-            id: 2,
-            name: "Nickel-metal hydride",
-            benefits: "Highly reliable, longer overall lifespan, more life cycles than standard lithium-ion.",
-            drawbacks: "Lower energy density, heavier, bulkier, susceptible to memory effect."
-        },
-        {
-            id: 3,
-            name: "Lead-acid",
-            benefits: "Extremely cost-effective, easily and widely recycled.",
-            drawbacks: "Low energy density, heavy, inefficient, shorter lifecycle, environmentally toxic if mishandled."
-        },
-        {
-            id: 4,
-            name: "Sodium-ion",
-            benefits: "Significantly cheaper materials compared to lithium, abundant resources.",
-            drawbacks: "Lower power-to-weight ratio. Still in developmental phases for long-range applications."
-        }
-    ]);
+    const [articleIndex, setArticleIndex] = useState(0);
 
     // FastAPI Backend Fetch
     useEffect(() => {
@@ -174,55 +67,290 @@ function Batterysafety() {
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
             <Navbar />
 
-            {/* --- HERO SECTION --- */}
-            <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src="/src/assets/anatomy.png"
-                        alt="EV Battery Anatomy"
-                        className="w-full h-full object-cover opacity-40 animate-slow-zoom"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#050816] via-transparent to-[#050816]" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-transparent to-[#050816]" />
-                </div>
+             {/* HERO SECTION */}
+                <section className="relative h-screen w-full overflow-hidden">
+                    <div className="absolute inset-0">
+                        <img
+                            src="/src/assets/evsafety.png"
+                            className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
+                    </div>
 
-                <div className="relative z-10 text-center px-6 max-w-5xl mt-10">
-                    <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase leading-tight">
-                        Discover what makes your EV batteries safe <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">CHARGING THE FUTURE</span>
-                    </h1>
+                    <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+                        <div className="max-w-3xl space-y-6 pt-20">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-bold tracking-widest uppercase text-xs animate-fade-in">
+                                <Zap size={14} className="fill-cyan-400" />
+                                <span>Next-Gen Mobility</span>
+                            </div>
+                            <h1 className="text-6xl md:text-8xl font-black leading-tight tracking-tighter">{activeEV?.title}</h1>
+                            <p className="text-xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">"{activeEV?.tagline}"</p>
 
-                    <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto">
-                       Learn all about the robust safety measures that ensure EV’s battery is not just powerful, but also secure.
-                    </p>
-                </div>
-            </section>
+                            <div className="flex flex-wrap gap-4">
+                                <Link to={`/inventory/${activeEV?._id}`} className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-black rounded-xl font-black uppercase tracking-wide flex items-center gap-2 transition-all hover:shadow-[0_0_25px_rgba(6,182,212,0.6)]">
+                                    Configure Now <ChevronRight size={20} />
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
             {/* --- INTRO SECTION --- */}
-            <section className="py-24 relative overflow-hidden">
-                <div className="absolute top-1/4 left-0 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
+            <section className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 font-sans bg-white">
+                {/* Top Header Section */}
+                <div className="text-center mb-16">
+                    <p className="text-gray-800 text-sm md:text-base max-w-5xl mx-auto mb-8">
+                        Learn about the robust safety measures in place to ensure your electric vehicle's battery is not just a power source but a secure one. We've got your back on the road to a safer, cleaner tomorrow.
+                    </p>
+                    <h2 className="text-2xl md:text-4xl font-bold text-[#3B82F6] uppercase tracking-wide mb-6">
+                        DISCOVER WHAT MAKES YOUR EV BATTERIES SAFE
+                    </h2>
+                    <p className="text-gray-800 text-base md:text-lg">
+                        Learn all about the robust safety measures that ensure EV's battery is not just powerful, but also secure.
+                    </p>
+                </div>
 
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        
-                           
-                       
+                {/* Two Column Layout */}
+                <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+                    {/* Left Column: Image */}
+                    <div className="w-full lg:w-1/2">
+                        {/* Note: Replace the src with the actual image path in your public folder or asset imports */}
+                        <img
+                            src="/src/assets/ssb.png"
+                            alt="Cylindrical EV battery cells in a pack on an assembly line"
+                            className="w-full h-auto object-cover rounded shadow-sm"
+                        />
+                    </div>
+
+                    {/* Right Column: Content */}
+                    <div className="w-full lg:w-1/2">
+                        <h3 className="text-xl md:text-2xl font-bold text-[#3B82F6] uppercase mb-6 text-center lg:text-left">
+                            THE “SAFETY FIRST” DESIGN APPROACH
+                        </h3>
+                        <p className="text-gray-800 mb-6 leading-relaxed">
+                            Electric vehicle batteries are designed meticulously to endure the test of time and work under varied weather conditions. To achieve this, EV batteries undergo rigorous safety testing.
+                        </p>
+
+                        <ul className="space-y-4">
+                            <li className="flex items-start">
+                                <span className="mr-3 mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gray-800"></span>
+                                <p className="text-gray-800 leading-relaxed">
+                                    <strong className="font-bold text-black">Temperature management-</strong> EV batteries excel in temperature regulation. They employ advanced thermal management systems to prevent overheating and enhance safety.
+                                </p>
+                            </li>
+                            <li className="flex items-start">
+                                <span className="mr-3 mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gray-800"></span>
+                                <p className="text-gray-800 leading-relaxed">
+                                    <strong className="font-bold text-black">Stringent testing-</strong> Before they find a place in your vehicle, EV batteries are subjected to some of the most rigorous safety tests. These include extreme weather simulations and physical impact tests and testing performance with local road and weather conditions.
+                                </p>
+                            </li>
+                            <li className="flex items-start">
+                                <span className="mr-3 mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gray-800"></span>
+                                <p className="text-gray-800 leading-relaxed">
+                                    <strong className="font-bold text-black">Safety Enhancements-</strong> EV batteries also come with multiple layers of safety features such as protective casings, fail-safe circuits, and advanced software algorithms that monitor battery health in real-time.
+                                </p>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </section>
 
             <section className="py-24 max-w-7xl mx-auto px-6 relative">
-                <div className="absolute right-0 top-1/2 w-96 h-96 bg-lime-600/10 blur-[150px] -z-10" />
+                <div className="grid md:grid-cols-2 gap-12 items-center bg-white/5 border border-white/10 rounded-[40px] p-10 overflow-hidden relative">
+                    <div>
+                        <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                            Thoroughly tested for a <span className="text-cyan-400">reliable drive</span>
+                        </h2>
+                        <p className="text-gray-400 text-lg mb-8">
+                            Batteries used in electric cars undergo rigorous testing for almost every imaginable road condition, including those rare ones you'd likely never encounter. Before becoming the heart of your vehicle, your EV battery faces many extreme situations. 
 
-                <div className="flex justify-between items-end mb-12">
-                    
+                        </p>
+                        <p className="text-gray-400 text-lg mb-8">
+                            Sophisticated computer simulations further assess its behaviour across a myriad of conditions. So, as you drive down the road, know that your EV's battery isn't just efficient—it's exceptionally reliable.
 
-                
+                        </p>
+                        
+                    </div>
+                    <div className="relative group">
+                        {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
+                        <img
+                            src="src/assets/ev4.png"
+                            alt="EV Battery"
+                            className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
+                        />
+                        <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
+                    </div>
                 </div>
             </section>
 
-           
-                                        
+            <section className="max-w-5xl mx-auto px-4 py-16 sm:px-6 lg:px-8 font-sans bg-white">
+      
+      {/* DID YOU KNOW Section */}
+      <div className="mb-16">
+        <h2 className="text-2xl md:text-3xl font-bold text-[#3B82F6] uppercase tracking-wide text-center mb-8">
+          DID YOU KNOW?
+        </h2>
+        <p className="text-gray-800 text-base md:text-lg mb-6 leading-relaxed">
+          MG ZS EV battery conforms to the most advanced safety tests and its battery safety management meets stringent requirements to enhance overall durability, maintain stable battery operation and ensures a longer lifespan in Indian environmental conditions.
+        </p>
+        <ul className="list-disc pl-8 space-y-2 text-gray-800 text-base md:text-lg">
+          <li>ASIL – D: Enhanced Safety Integrity Level</li>
+          <li>IP69K: Better Dust & Water Resistance Rating</li>
+          <li>UL2580: Safety Management System</li>
+        </ul>
+      </div>
+
+      {/* YOUR BIT IN ENSURING BATTERY SAFETY Section */}
+      <div className="mb-16">
+        <h2 className="text-2xl md:text-3xl font-bold text-[#3B82F6] uppercase tracking-wide text-center mb-8">
+          YOUR BIT IN ENSURING BATTERY SAFETY
+        </h2>
+        <p className="text-gray-800 text-base md:text-lg mb-6 leading-relaxed">
+          Safety isn't just about the initial design; it's also about maintenance. Here's how you can ensure the longevity and safety of your EV battery
+        </p>
+        <ul className="list-disc pl-8 space-y-2 text-gray-800 text-base md:text-lg">
+          <li>Maintain proper charging habits.</li>
+          <li>Regular software and firmware updates.</li>
+          <li>Scheduled maintenance checks.</li>
+        </ul>
+      </div>
+
+      {/* FACTORS AFFECTING THE PERFORMANCE Section */}
+      <div>
+        <h2 className="text-2xl md:text-3xl font-bold text-[#3B82F6] uppercase tracking-wide text-center mb-8">
+          FACTORS AFFECTING THE PERFORMANCE OF EV BATTERIES
+        </h2>
+        <p className="text-gray-800 text-base md:text-lg leading-relaxed">
+          EV batteries can be affected due to various reasons, some of them are:
+        </p>
+      </div>
+
+    </section>
+
+     <section className="py-24 max-w-7xl mx-auto px-6 relative">
+                <div className="grid md:grid-cols-2 gap-12 items-center bg-white/5 border border-white/10 rounded-[40px] p-10 overflow-hidden relative">
+                    
+                     <div className="relative group">
+                        {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
+                        <img
+                            src="src/assets/ev4.png"
+                            alt="EV Battery"
+                            className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
+                        />
+                        <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
+                    </div>
+
+                    <div>
+                        <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                            Thermal runaway
+                        </h2>
+                        <p className="text-gray-400 text-lg mb-8">
+                            A rapid increase in temperature and pressure within the battery cell leading to destabilising and degradation of battery content. Though lithium-ion batteries are a part of the BMS (battery management system) which regulates the current flow and battery temperature while charging the batteries, one can still follow the simplest ways to ensure extra safety,
+
+
+                        </p>
+                        <p className="text-gray-400 text-lg mb-8">
+                            EVs should be charged in well-ventilated open spaces to maintain the temperature of the batteries.
+
+                        </p>
+
+                         <p className="text-gray-400 text-lg mb-8">
+                            Avoid charging beyond the standard and recommended charging time.
+
+                        </p>
+
+                         <p className="text-gray-400 text-lg mb-8">
+                            Ensure Regular vehicle service and checkups.
+
+                        </p>
+                        
+                    </div>
+                   
+                </div>
+            </section>
+
+             <section className="py-24 max-w-7xl mx-auto px-6 relative">
+                <div className="grid md:grid-cols-2 gap-12 items-center bg-white/5 border border-white/10 rounded-[40px] p-10 overflow-hidden relative">
+                    <div>
+                        <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                            Overcharging or <span className="text-cyan-400">undercharging </span>
+                        </h2>
+                        <p className="text-gray-400 text-lg mb-8">
+                            A condition where the battery is charged beyond its capacity which can lead to early deterioration of battery's state of health and performance. Timely and mindful charging can protect the battery from early-stage damage.
+
+                        </p>
+                        
+                        
+                    </div>
+                    <div className="relative group">
+                        {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
+                        <img
+                            src="src/assets/ev4.png"
+                            alt="EV Battery"
+                            className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
+                        />
+                        <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
+                    </div>
+                </div>
+            </section>
+
+             <section className="py-24 max-w-7xl mx-auto px-6 relative">
+                <div className="grid md:grid-cols-2 gap-12 items-center bg-white/5 border border-white/10 rounded-[40px] p-10 overflow-hidden relative">
+                    
+                     <div className="relative group">
+                        {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
+                        <img
+                            src="src/assets/ev4.png"
+                            alt="EV Battery"
+                            className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
+                        />
+                        <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
+                    </div>
+
+                    <div>
+                        <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                            Mechanical damage
+
+                        </h2>
+                        <p className="text-gray-400 text-lg mb-8">
+                            A physical impact or deformation of the battery due to a physical impact might to lead internal damages in certain cases which can affect the battery performance hence, an immediate follow-up checkup with the vendor will ensure battery health and safety to the customer. The authorised vendor will check for any damage caused to the battery and take necessary actions to safeguard the vehicle. 
+
+
+                        </p>
+                        
+
+                    </div>
+                   
+                </div>
+            </section>
+
+              <section className="py-24 max-w-7xl mx-auto px-6 relative">
+                <div className="grid md:grid-cols-2 gap-12 items-center bg-white/5 border border-white/10 rounded-[40px] p-10 overflow-hidden relative">
+                    <div>
+                        <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                            Cell imbalance
+
+                        </h2>
+                        <p className="text-gray-400 text-lg mb-8">
+                            A mismatch in the state of charge or state of health of the individual cells in a battery pack, resulting in reduced performance, accelerated degradation. Imbalanced cells lock away otherwise usable energy and increase battery degradation. Batteries that are out of balance cannot be fully charged or fully discharged, hence keeping an eye on the discharge pattern of the battery and immediately reporting in case of anomaly.
+
+                        </p>
+                        
+                        
+                    </div>
+                    <div className="relative group">
+                        {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
+                        <img
+                            src="src/assets/ev4.png"
+                            alt="EV Battery"
+                            className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
+                        />
+                        <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
+                    </div>
+                </div>
+            </section>
+
 
             <Footer />
 

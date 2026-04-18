@@ -23,7 +23,7 @@ import Homecharging from './pages/Homecharging';
 import Battery from './pages/Battery';
 import EVArchitecture from './pages/EVArchitecture';
 import InsideBattery from './pages/InsideBattery';
-
+import Batterysafety from './pages/Batterysafety';
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard';
 
@@ -63,6 +63,12 @@ function App() {
                             <Route path="/battery" element={
                                 <ProtectedRoute>
                                     <Battery />
+                                </ProtectedRoute>
+                            } />
+
+                            <Route path="/battery-safety" element={
+                                <ProtectedRoute>
+                                    <Batterysafety />
                                 </ProtectedRoute>
                             } />
 
