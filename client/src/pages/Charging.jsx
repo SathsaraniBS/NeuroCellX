@@ -16,8 +16,7 @@ const DUMMY_VEHICLES = [
     {
         _id: "ev1",
         title: "Model Zenith S",
-        // poster: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop",
-        image: "src/assets/carouselimg1.avif",
+        image: "src/assets/carousel-img1.jpg",
         range: "420 miles",
         topSpeed: "155 mph",
         acceleration: "3.1s",
@@ -27,7 +26,7 @@ const DUMMY_VEHICLES = [
     {
         _id: "ev2",
         title: "EcoRunner SUV",
-        poster: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2072&auto=format&fit=crop",
+        image:"src/assets/carousel-img2.jpg",
         range: "310 miles",
         topSpeed: "130 mph",
         acceleration: "5.4s",
@@ -37,7 +36,7 @@ const DUMMY_VEHICLES = [
     {
         _id: "ev3",
         title: "Volt City Compact",
-        poster: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=2070&auto=format&fit=crop",
+        image:"src/assets/carousel-img3.jpg",
         range: "250 miles",
         topSpeed: "95 mph",
         acceleration: "7.2s",
@@ -158,7 +157,7 @@ function Charging() {
                 <section className="relative h-screen w-full overflow-hidden">
                     <div className="absolute inset-0">
                         <img
-                            src={activeEV?.poster}
+                            src={activeEV?.image}
                             alt={activeEV?.title}
                             className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
                         />
