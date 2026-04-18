@@ -16,7 +16,8 @@ const DUMMY_VEHICLES = [
     {
         _id: "ev1",
         title: "Model Zenith S",
-        poster: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop",
+        // poster: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop",
+        image: "src/assets/carouselimg1.avif",
         range: "420 miles",
         topSpeed: "155 mph",
         acceleration: "3.1s",

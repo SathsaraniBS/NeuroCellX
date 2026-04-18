@@ -11,6 +11,7 @@ function Batterysafety() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [openFaqId, setOpenFaqId] = useState(null);
     const [articleIndex, setArticleIndex] = useState(0);
+    const [activeEV, setActiveEV] = useState(null);
 
     // FastAPI Backend Fetch
     useEffect(() => {
@@ -71,7 +72,7 @@ function Batterysafety() {
                 <section className="relative h-screen w-full overflow-hidden">
                     <div className="absolute inset-0">
                         <img
-                            src="/src/assets/evsafety.png"
+                            src="/src/assets/ev3.png"
                             className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
@@ -87,11 +88,7 @@ function Batterysafety() {
                             <h1 className="text-6xl md:text-8xl font-black leading-tight tracking-tighter">{activeEV?.title}</h1>
                             <p className="text-xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">"{activeEV?.tagline}"</p>
 
-                            <div className="flex flex-wrap gap-4">
-                                <Link to={`/inventory/${activeEV?._id}`} className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-black rounded-xl font-black uppercase tracking-wide flex items-center gap-2 transition-all hover:shadow-[0_0_25px_rgba(6,182,212,0.6)]">
-                                    Configure Now <ChevronRight size={20} />
-                                </Link>
-                            </div>
+                            
                         </div>
                     </div>
                 </section>
@@ -175,7 +172,7 @@ function Batterysafety() {
                     <div className="relative group">
                         {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
                         <img
-                            src="src/assets/ev4.png"
+                            src="src/assets/evsafety1.png"
                             alt="EV Battery"
                             className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
                         />
@@ -234,7 +231,7 @@ function Batterysafety() {
                      <div className="relative group">
                         {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
                         <img
-                            src="src/assets/ev4.png"
+                            src="src/assets/evsafety2.png"
                             alt="EV Battery"
                             className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
                         />
