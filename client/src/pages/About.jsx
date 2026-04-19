@@ -50,16 +50,19 @@ function RepairandMaintenance() {
             <Navbar />
 
             {/* HERO SECTION */}
-            <section className="relative h-[70vh] w-full overflow-hidden flex items-center">
+            {/* FIXED: Increased height to min-h-[80vh] or full screen so the image isn't aggressively cropped */}
+            <section className="relative min-h-[80vh] lg:min-h-screen w-full overflow-hidden flex items-center">
                 <div className="absolute inset-0">
-                    {/* Placeholder for your image - added a fallback dark gradient */}
                     <img 
                         src="/src/assets/evrepair-img.png" 
                         alt="Hero" 
-                        className="w-full h-full object-cover opacity-40 scale-105 animate-slow-zoom"
-                        onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80"; }} 
+                        /* FIXED: Removed opacity-90 to make image clear, added object-center */
+                        className="w-full h-full object-cover object-center"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#02040a]/10 via-[#02040a]/80 to-[#02040a]" />
+                    {/* FIXED: Changed overlay to a left-to-right gradient. Dark on the left for text, clear on the right for the image */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#02040a] via-[#02040a]/60 to-transparent" />
+                    {/* Added a subtle bottom gradient just so it blends smoothly into the next dark section */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-transparent to-transparent opacity-80" />
                 </div>
                 
                 <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
@@ -82,8 +85,12 @@ function RepairandMaintenance() {
             </section>
 
             {/* WHY MAINTENANCE MATTERS */}
-            <section className="relative h-[70vh] w-full overflow-hidden flex items-center bg-[url('/src/assets/evrepair-img2.png') ">
-                <div className="max-w-7xl mx-auto">
+            {/* FIXED: Added missing closing bracket ] and background sizing classes to the bg-[url(...)] property */}
+            <section className="relative py-24 w-full overflow-hidden flex items-center bg-[url('/src/assets/evrepair-img2.png')] bg-cover bg-center">
+                {/* Added a dark overlay to this section so the text remains readable over the background image */}
+                <div className="absolute inset-0 bg-[#02040a]/80" />
+                
+                <div className="max-w-7xl mx-auto relative z-10 px-6 w-full">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         {/* Summary Header */}
                         <div className="lg:col-span-1 flex flex-col justify-center pr-8">

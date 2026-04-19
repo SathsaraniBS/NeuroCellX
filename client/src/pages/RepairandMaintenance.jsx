@@ -115,25 +115,114 @@ function RepairandMaintenance() {
         { 
             id: 2,
             question: "How to get the battery repaired ?", 
-            answer: "Yes, up to 95% of the rare earth metals and materials in an EV battery can be recovered and recycled for use in next-generation batteries."
+            answer: (
+            <div className="space-y-4">
+                <p>
+                    When there is a defect in a battery, meaning the battery is not functioning properly or discharging faster than usual, it is advisable to take it to a battery repair center.
+
+                </p>
+                <p>
+                   When a lithium-ion battery arrives at the battery repair center, it usually goes through three important phases:
+
+                </p>
+
+                 <p>
+                   <b>1. Test and diagnosis: </b>the battery is tested and checked for damages. The diagnosis will help the repair center understand what needs to be done to fix it and determine the next possible steps.
+
+                </p>
+
+                 <p>
+                   <b>2. Repair: </b>A team of high-voltage specialists will repair the battery, replace certain parts of the pack, and restore it to its original condition (defective module which have degraded/ lost power are replaced) Leak test will be performed after the repair activity.
+
+                </p>
+
+                <p>
+                   <b>3. Return: </b>the repaired battery will find its way back to the customer, ready to be used in their electric car. The authorized person at the dealer end will reinstall the battery in the car and perform a final check to ensure that everything is functioning well.
+
+                </p>
+            </div>
+        )
         },
         { 
             id: 3, 
             question: "What will be estimated cost of repair if SOH % drop from 80% to 70% ?", 
-            answer: "Extreme cold or hot temperatures can temporarily reduce driving range by altering battery chemistry efficiency and requiring extra energy for thermal management."
+            answer: (
+            <div className="space-y-4">
+                <p>
+                    A battery consists of several modules. The cost for replacing an individual module can come up to approximately Rs. 1.2 Lacs. The total cost will depend on the number of modules to be replaced, for example ZS EV has total of 120 cells in 6 modules present in a battery.
+
+                </p>
+                
+            </div>
+        )
          },
         { 
             id: 4, 
             question: "How can the battery life of a car be increased ?", 
-            answer: "Most EV batteries are engineered to last 10-20 years. Manufacturers typically provide warranties guaranteeing performance for 8 years or 100,000 miles." 
+            answer: (
+            <div className="space-y-4">
+                <p>
+                  The battery can have a very long life if the following factors are kept under control:
+
+                </p>
+
+                <p>
+                   <b>1. Keep the battery cool and be careful in extreme temperatures: </b>Batteries that deal with extreme temperatures can be damaged, so it is important to keep the battery cool, especially in hot climates. Extreme cold can also have a negative effect on the battery. Try to Park under a shade as and when possible.
+
+                </p>
+
+                 <p>
+                   <b>2. Avoid rapid charging frequently: </b>While rapid charging is a convenient way to charge your battery,  it  can put a strain on the battery and impact  its lifespan. If you can, charge your battery slowly and steadily and only use rapid charging when necessary.
+
+                </p>
+
+                <p>
+                   <b>3. Do not drain the battery completely: </b>It’s important to avoid draining the battery completely as this can also damage it. Try to keep the battery above 20% to avoid putting strain on the battery.
+
+                </p>
+
+                <p>
+                   <b>4. Keep an eye on the Battery: </b> It’s important to keep an eye on the battery and be aware of any changes. If you notice anything unusual, take the car to an authorized workshop to have it checked out.
+
+                </p>
+
+                <p>
+                   <b>5. Avoid frequent charging to keep SOC at 100% always.  </b> (If one is driving within the city limits, keep the SOC between 30 to 80%, it will improve Battery health, 100% charge may be planned for outstation Trips)
+
+                </p>
+                
+            </div>
+        )
         }
     ]);
 
     const [articles] = useState([
-        { id: 1, title: "Electric Vehicle Design: The Anatomy of an Electric Car", image: "/src/assets/evanatomy.png", tag: "Design", path: "/ev-architecture" },
-        { id: 2, title: "Inside an Electric Vehicle Battery: What You Need to Know", image: "/src/assets/ev2.png", tag: "Technology", path: "/inside-battery" },
-        { id: 3, title: "Breathe New Life: Repurposing Used Lithium-Ion Batteries", image: "/src/assets/article3.png", tag: "Sustainability", path: "#" },
-        { id: 4, title: "History of EV's", image: "/src/assets/ev12.png", tag: "History", path: "#" }
+        { 
+            id: 1, 
+            title: "Electric Vehicle Design: The Anatomy of an Electric Car", 
+            image: "/src/assets/evanatomy.png", 
+            tag: "Design", 
+            path: "/ev-architecture"
+        },
+        { 
+            id: 2, 
+            title: "Inside an Electric Vehicle Battery: What You Need to Know", image: "/src/assets/libattery-img.png", 
+            tag: "Technology", 
+            path: "/inside-battery" 
+        },
+        { 
+            id: 3, 
+            title: "Breathe New Life: Repurposing Used Lithium-Ion Batteries", image: "/src/assets/article3.png", 
+            tag: "Sustainability", 
+            path: "#" 
+        },
+        { 
+            id: 4, 
+            title: "History of EV's", 
+            image: "/src/assets/ev12.png", 
+            tag: "History", 
+            path: "#" 
+        }
     ]);
 
     // FastAPI Backend Fetch (Commented out until ready)
@@ -168,39 +257,45 @@ function RepairandMaintenance() {
     };
 
     return (
-        <div className="min-h-screen bg-[#050816] text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30">
+        <div className="min-h-screen bg-[#02040a] text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30">
             <Navbar />
 
             {/* HERO SECTION */}
-            <section className="relative h-screen w-full overflow-hidden">
+            <section className="relative min-h-[80vh] lg:min-h-screen w-full overflow-hidden flex items-center">
                 <div className="absolute inset-0">
-                    <img
-                        src="/src/assets/evrepair-img.png"
-                        alt="EV Repair Hero"
-                        className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000 opacity-50"
+                    <img 
+                        src="/src/assets/evrepair-img.png" 
+                        alt="Hero" 
+                        /* FIXED: Removed opacity-90 to make image clear, added object-center */
+                        className="w-full h-full object-cover object-center"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/70 to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/80 to-transparent" />
+                    {/* FIXED: Changed overlay to a left-to-right gradient. Dark on the left for text, clear on the right for the image */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#02040a] via-[#02040a]/60 to-transparent" />
+                    {/* Added a subtle bottom gradient just so it blends smoothly into the next dark section */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-transparent to-transparent opacity-80" />
                 </div>
-
-                <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
-                    <div className="max-w-3xl space-y-6 pt-20">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-bold tracking-widest uppercase text-xs backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-                            <Zap size={14} className="fill-cyan-400" />
-                            <span>Next-Gen Mobility Maintenance</span>
+                
+                <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+                    <div className="max-w-3xl space-y-6">
+                        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 font-mono text-xs tracking-widest uppercase">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                            </span>
+                            System Health Protocols
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black text-white leading-tight tracking-tighter drop-shadow-lg">
+                        <h1 className="text-6xl md:text-8xl font-black text-white leading-none tracking-tighter">
                             {activeEV.title}
                         </h1>
-                        <p className="text-xl text-cyan-100/80 font-medium italic border-l-4 border-cyan-500 pl-4 bg-gradient-to-r from-cyan-500/10 to-transparent py-2">
-                            "{activeEV.tagline}"
+                        <p className="text-xl md:text-2xl text-cyan-100/60 font-light max-w-xl">
+                            {activeEV.tagline}
                         </p>
                     </div>
                 </div>
             </section>
 
             {/* INTRO SECTION */}
-            <section className="max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8 relative z-10 -mt-32">
+            <section className="max-w-7xl mx-auto px-4 py-20 mt-10 sm:px-6 lg:px-8 relative z-10 -mt-32">
                 <div className="bg-[#0a0f25]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
                     <div className="text-center mb-16">
                         <p className="text-slate-300 text-lg md:text-xl max-w-4xl mx-auto leading-relaxed">

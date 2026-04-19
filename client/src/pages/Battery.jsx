@@ -71,7 +71,7 @@ function Battery() {
         {
             id: 2,
             title: "Inside an Electric Vehicle Battery: What You Need to Know",
-            image: "/src/assets/ev2.png",
+            image: "/src/assets/libattery-img.png", 
             tag: "Technology",
             path: "/inside-battery"
         },
