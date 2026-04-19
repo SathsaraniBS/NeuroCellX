@@ -24,6 +24,7 @@ import Battery from './pages/Battery';
 import EVArchitecture from './pages/EVArchitecture';
 import InsideBattery from './pages/InsideBattery';
 import Batterysafety from './pages/Batterysafety';
+import RepairandMaintenance from './pages/RepairandMaintenance';
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard';
 
@@ -81,6 +82,12 @@ function App() {
                             <Route path="/inside-battery" element={
                                 <ProtectedRoute>
                                     <InsideBattery />
+                                </ProtectedRoute>
+                            } />
+
+                            <Route path="/repair-and-maintenance" element={
+                                <ProtectedRoute>
+                                    <RepairandMaintenance />
                                 </ProtectedRoute>
                             } />
 
