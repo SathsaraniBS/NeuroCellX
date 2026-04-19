@@ -1,112 +1,155 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
-  Zap, ShieldCheck, ThermometerSnowflake, 
-  BatteryCharging, BatteryMedium, BatteryWarning 
+    Zap, ShieldCheck, ThermometerSnowflake, 
+    BatteryCharging, BatteryMedium, BatteryWarning 
 } from "lucide-react";
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const leftColumnTips = [
-    {
-        id: 1,
-        title: "Replace Damaged Components",
-        description: "Certified professionals will advise replacing failing cells to prevent degradation across the entire battery pack.",
-        icon: <ShieldCheck className="text-cyan-400" size={20} />
-    },
-    {
-        id: 2,
-        title: "Ensure Regular Checks",
-        description: "Scheduled health assessments ensure your SOH (State of Health) remains within optimal manufacturer parameters.",
-        icon: <Zap className="text-cyan-400" size={20} />
-    },
-    {
-        id: 3,
-        title: "Thermal Management",
-        description: "Modern cooling systems actively manage pack temperatures to prevent degradation from extreme heat or cold.",
-        icon: <ThermometerSnowflake className="text-cyan-400" size={20} />
-    },
-    {
-        id: 4,
-        title: "Equalization Charging",
-        description: "The BMS balances the charge across all individual cells to maximize the usable capacity of the pack.",
-        icon: <BatteryCharging className="text-cyan-400" size={20} />
-    }
+    { id: 1, title: "Replace Damaged Components", description: "Certified professionals will advise replacing failing cells to prevent degradation.", icon: <ShieldCheck className="text-cyan-400" size={20} /> },
+    { id: 2, title: "Ensure Regular Checks", description: "Scheduled health assessments ensure your SOH remains within optimal parameters.", icon: <Zap className="text-cyan-400" size={20} /> },
+    { id: 3, title: "Thermal Management", description: "Modern cooling systems actively manage pack temperatures to prevent extreme heat/cold degradation.", icon: <ThermometerSnowflake className="text-cyan-400" size={20} /> }
 ];
 
 const rightColumnTips = [
-    {
-        id: 5,
-        title: "Optimal Charge Range",
-        description: "Maintaining a 20% to 80% charge level significantly reduces cyclic stress on lithium-ion chemistry.",
-        icon: <BatteryMedium className="text-cyan-400" size={20} />
-    },
-    {
-        id: 6,
-        title: "Minimize Fast Charging",
-        description: "DC fast charging generates high internal heat. Frequent use can accelerate internal resistance growth.",
-        icon: <BatteryWarning className="text-cyan-400" size={20} />
-    }
+    { id: 4, title: "Equalization Charging", description: "The BMS balances the charge across all individual cells to maximize usable capacity.", icon: <BatteryCharging className="text-cyan-400" size={20} /> },
+    { id: 5, title: "Optimal Charge Range", description: "Maintaining a 20% to 80% charge level significantly reduces cyclic stress.", icon: <BatteryMedium className="text-cyan-400" size={20} /> },
+    { id: 6, title: "Minimize Fast Charging", description: "DC fast charging generates high internal heat. Frequent use can accelerate resistance.", icon: <BatteryWarning className="text-cyan-400" size={20} /> }
 ];
 
 const TipCard = ({ tip }) => (
-    <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-white/10 hover:border-cyan-500/50 hover:bg-white/10 transition-all duration-500 flex gap-5 mb-6 group">
-        <div className="flex-shrink-0">
-            <div className="w-12 h-12 bg-gradient-to-br from-cyan-600 to-blue-700 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] group-hover:scale-110 transition-transform">
-                <span className="font-bold text-white text-lg">{tip.id}</span>
+    <div className="group relative bg-slate-900/40 backdrop-blur-md p-6 rounded-2xl border border-white/5 hover:border-cyan-500/50 transition-all duration-500 flex gap-5 mb-6 overflow-hidden">
+        {/* Animated Background Glow */}
+        <div className="absolute -inset-px bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        
+        <div className="relative flex-shrink-0">
+            <div className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 transition-all">
+                <span className="font-mono font-bold text-cyan-400 text-lg">{tip.id}</span>
             </div>
         </div>
-        <div>
+        
+        <div className="relative">
             <div className="flex items-center gap-2 mb-2">
                 {tip.icon}
-                <h3 className="text-xl font-bold text-white">{tip.title}</h3>
+                <h3 className="text-xl font-bold text-white tracking-tight">{tip.title}</h3>
             </div>
             <p className="text-slate-400 text-sm md:text-base leading-relaxed">{tip.description}</p>
         </div>
     </div>
 );
 
-const BatteryMaintenanceTips = () => {
+function RepairandMaintenance() {
+    const [activeEV] = useState({ 
+        title: "Advanced EV Care", 
+        tagline: "Precision maintenance for the electric era." 
+    });
+
     return (
-        <section className="bg-[#050816] py-20 px-4 md:px-8 font-sans min-h-screen">
-            <div className="max-w-7xl mx-auto">
+        <div className="min-h-screen bg-[#02040a] text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30">
+            <Navbar />
+
+            {/* HERO SECTION */}
+            <section className="relative h-[70vh] w-full overflow-hidden flex items-center">
+                <div className="absolute inset-0">
+                    {/* Placeholder for your image - added a fallback dark gradient */}
+                    <img 
+                        src="/src/assets/evrepair-img.png" 
+                        alt="Hero" 
+                        className="w-full h-full object-cover opacity-40 scale-105 animate-slow-zoom"
+                        onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80"; }} 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#02040a]/10 via-[#02040a]/80 to-[#02040a]" />
+                </div>
                 
-                {/* Header */}
-                <div className="text-center mb-16">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-bold tracking-widest uppercase text-xs">
-                        <Zap size={14} className="fill-cyan-400" />
-                        <span>VoltIQ Technical Guide</span>
-                    </div>
-                    <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
-                        Battery <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Maintenance</span> Tips
-                    </h2>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-                    {/* Left Column */}
-                    <div className="flex flex-col">
-                        {leftColumnTips.map(tip => (
-                            <TipCard key={tip.id} tip={tip} />
-                        ))}
-                    </div>
-
-                    {/* Right Column */}
-                    <div className="flex flex-col">
-                        {/* Featured Image - Now Clear and Full */}
-                        <div className="relative overflow-hidden rounded-3xl mb-8 h-72 md:h-[400px] border border-white/10 shadow-2xl">
-                            <img 
-                                src="/src/assets/maintenance-img2.png" 
-                                alt="EV Maintenance" 
-                                className="w-full h-full object-cover opacity-100" 
-                            />
+                <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
+                    <div className="max-w-3xl space-y-6">
+                        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 font-mono text-xs tracking-widest uppercase">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                            </span>
+                            System Health Protocols
                         </div>
-                        
-                        {/* Remaining Tips - Properly nested inside the right column div */}
-                        {rightColumnTips.map(tip => (
-                            <TipCard key={tip.id} tip={tip} />
-                        ))}
+                        <h1 className="text-6xl md:text-8xl font-black text-white leading-none tracking-tighter">
+                            {activeEV.title}
+                        </h1>
+                        <p className="text-xl md:text-2xl text-cyan-100/60 font-light max-w-xl">
+                            {activeEV.tagline}
+                        </p>
                     </div>
                 </div>
-            </div>
-        </section>
-    );
-};
+            </section>
 
-export default BatteryMaintenanceTips;
+            {/* WHY MAINTENANCE MATTERS */}
+            <section className="relative h-[70vh] w-full overflow-hidden flex items-center bg-[url('/src/assets/evrepair-img2.png') ">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Summary Header */}
+                        <div className="lg:col-span-1 flex flex-col justify-center pr-8">
+                            <h2 className="text-4xl font-black text-white leading-tight uppercase mb-6">
+                                Why <span className="text-cyan-500">Longevity</span> Matters
+                            </h2>
+                            <p className="text-slate-400 border-l-2 border-cyan-900 pl-6 py-2">
+                                Proactive management of the high-voltage system ensures peak efficiency and protects your vehicle's residual value.
+                            </p>
+                        </div>
+
+                        {/* Feature Grid */}
+                        <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {[
+                                { title: "Maximize Lifespan", desc: "Reduce chemical degradation through intelligent cycle management.", icon: <Zap className="text-cyan-400" /> },
+                                { title: "Enhance Range", desc: "Proper cell balancing ensures every kWh is usable.", icon: <BatteryCharging className="text-blue-400" /> },
+                                { title: "Warranty Safety", desc: "Maintain digital logs required for manufacturer battery guarantees.", icon: <ShieldCheck className="text-emerald-400" /> }
+                            ].map((item, index) => (
+                                <div key={index} className="p-8 rounded-3xl bg-slate-900/50 border border-white/5 hover:bg-slate-800/50 transition-colors">
+                                    <div className="mb-4">{item.icon}</div>
+                                    <h4 className="text-xl font-bold text-white mb-2">{item.title}</h4>
+                                    <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* TIPS SECTION */}
+            <section className="py-24 px-6 relative">
+                {/* Background Decoration */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-500/5 via-transparent to-transparent pointer-events-none" />
+                
+                <div className="max-w-7xl mx-auto relative z-10">
+                    <div className="text-center mb-20">
+                        <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
+                            BMS OPTIMIZATION <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 italic">TIPS</span>
+                        </h2>
+                        <div className="h-1 w-24 bg-cyan-500 mx-auto rounded-full" />
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12">
+                        <div className="flex flex-col">
+                            {leftColumnTips.map(tip => <TipCard key={tip.id} tip={tip} />)}
+                        </div>
+                        <div className="flex flex-col">
+                            {rightColumnTips.map(tip => <TipCard key={tip.id} tip={tip} />)}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <Footer />
+
+            <style>{`
+                @keyframes slow-zoom {
+                    0% { transform: scale(1); }
+                    100% { transform: scale(1.1); }
+                }
+                .animate-slow-zoom {
+                    animation: slow-zoom 20s infinite alternate linear;
+                }
+            `}</style>
+        </div>
+    );
+}
+
+export default RepairandMaintenance;
