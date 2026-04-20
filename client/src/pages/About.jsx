@@ -6,9 +6,15 @@ import {
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-// Enhanced SafetyCard with structured, scalable theming
-const SafetyCard = ({ icon: Icon, title, desc, theme = "cyan" }) => {
-  // Using an object maps classes cleanly without relying on fragile string splitting
+// IMPORT YOUR IMAGES HERE
+import bgImageMain from "../assets/bg.png";
+import ev4 from "../assets/ev4.png";
+import evsafety3 from "../assets/evsafety3.png";
+import evsafety4 from "../assets/evsafety4.png";
+// ADDED THE MISSING ev11 IMPORT:
+import ev11 from "../assets/ev11.png"; 
+
+const SafetyCard = ({ icon: Icon, title, desc, theme = "cyan", bgImage }) => {
   const themes = {
     cyan: {
       text: "text-cyan-400",
@@ -39,19 +45,34 @@ const SafetyCard = ({ icon: Icon, title, desc, theme = "cyan" }) => {
   const current = themes[theme];
 
   return (
-    <div className={`bg-[url('/src/assets/evsafety4.png')] bg-cover bg-center bg-fixed shadow-[0_0_20px_rgba(0,0,0,0.15] backdrop-blur-md border rounded-2xl p-6 transition-all duration-500 group cursor-default ${current.border} ${current.hover}`}>
-      <div className={`w-14 h-14 flex items-center justify-center rounded-xl mb-5 group-hover:scale-110 transition-transform duration-300 ${current.iconBg}`}>
-        <Icon className={`w-7 h-7 ${current.text}`} />
+    <div className={`relative bg-white/5 backdrop-blur-md border rounded-2xl p-6 transition-all duration-500 group cursor-default overflow-hidden ${current.border} ${current.hover}`}>
+      
+      {/* Background Image Layer: Opacity increased to 20% so it's visible */}
+      {bgImage && (
+        <div 
+          className="absolute inset-0 z-0 opacity-20 group-hover:opacity-40 transition-opacity duration-500 bg-cover bg-center"
+          style={{ backgroundImage: `url(${bgImage})` }}
+        />
+      )}
+
+      {/* Content Layer */}
+      <div className="relative z-10">
+        <div className={`w-14 h-14 flex items-center justify-center rounded-xl mb-5 group-hover:scale-110 transition-transform duration-300 ${current.iconBg}`}>
+          <Icon className={`w-7 h-7 ${current.text}`} />
+        </div>
+        <h3 className="text-white text-xl font-bold mb-3">{title}</h3>
+        <p className="text-slate-400 text-sm md:text-base leading-relaxed">{desc}</p>
       </div>
-      <h3 className="text-white text-xl font-bold mb-3">{title}</h3>
-      <p className="text-slate-400 text-sm md:text-base leading-relaxed">{desc}</p>
     </div>
   );
 };
 
 const EVBatterySafetyPage = () => {
   return (
-    <div className="min-h-screen bg-[url('/src/assets/bg.png')] bg-cover bg-center bg-fixed text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30">
+    <div 
+      className="min-h-screen bg-cover bg-center bg-fixed text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30"
+      style={{ backgroundImage: `url(${bgImageMain})` }}
+    >
       <Navbar />
 
       <div className="flex-grow relative overflow-hidden py-12 md:py-16">
@@ -62,10 +83,8 @@ const EVBatterySafetyPage = () => {
        
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           
-          {/* Hero Section - Fixed Grid Alignment & Removed awkward margins */}
-          <div className="grid md:grid-cols-2 gap-8 bg-transparent  md:gap-12 items-center  p-8 md:p-12 mb-20 overflow-hidden  relative">
-            
-            {/* Header Section */}
+          {/* Hero Section */}
+          <div className="grid md:grid-cols-2 gap-8 bg-transparent md:gap-12 items-center p-8 md:p-12 mb-20 overflow-hidden relative">
             <div className="relative z-10 text-center md:text-left">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight leading-tight">
                 EV Battery <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">Safety</span>
@@ -75,11 +94,10 @@ const EVBatterySafetyPage = () => {
               </p>
             </div>
 
-            {/* Hero Image Section */}
             <div className="relative z-10 rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(6,182,212,0.15)] group h-64 md:h-[350px] lg:h-[400px]">
               <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/80 via-transparent to-transparent z-10"></div>
               <img
-                src="/src/assets/ev4.png"
+                src={ev4}
                 alt="VoltIQ EV Safety Architecture"
                 className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
               />
@@ -98,18 +116,21 @@ const EVBatterySafetyPage = () => {
                 icon={Thermometer}
                 title="Temperature Management"
                 desc="Advanced thermal systems actively regulate pack temperatures to prevent overheating and thermal degradation."
+                bgImage={evsafety4}
               />
               <SafetyCard
                 theme="cyan"
                 icon={BatteryCharging}
                 title="Stringent Testing"
                 desc="Subjected to extreme weather simulations, vibration analysis, and impact tests to guarantee structural integrity."
+                bgImage={ev4}
               />
               <SafetyCard
                 theme="cyan"
                 icon={ShieldCheck}
                 title="Safety Enhancements"
                 desc="Features titanium protective casing, fail-safe disconnect circuits, and real-time BMS monitoring."
+                bgImage={evsafety3}
               />
             </div>
           </div>
@@ -126,18 +147,21 @@ const EVBatterySafetyPage = () => {
                 icon={Cpu}
                 title="Advanced Simulations"
                 desc="AI-powered digital twin simulations predict battery behavior across millions of virtual miles."
+                bgImage={evsafety3}
               />
               <SafetyCard
                 theme="green"
                 icon={ShieldCheck}
                 title="Extreme Conditions"
                 desc="Verified operations in environments ranging from arctic freezes to desert heatwaves."
+                bgImage={evsafety4}
               />
               <SafetyCard
                 theme="green"
                 icon={BatteryCharging}
                 title="Performance Stability"
                 desc="Engineered chemistries ensure consistent voltage output and minimal degradation over thousands of cycles."
+                bgImage={ev4}
               />
             </div>
           </div>
@@ -182,18 +206,21 @@ const EVBatterySafetyPage = () => {
                 icon={BatteryCharging}
                 title="Proper Charging"
                 desc="Avoid consistent 100% charges for daily driving. Utilize the 20-80% rule to minimize cell stress."
+                bgImage={ev11}
               />
               <SafetyCard
                 theme="blue"
                 icon={Cpu}
                 title="Software Updates"
                 desc="Always install OTA (Over-The-Air) updates to ensure your BMS has the latest safety algorithms."
+                bgImage={evsafety3}
               />
               <SafetyCard
                 theme="blue"
                 icon={Wrench}
                 title="Routine Inspections"
                 desc="Schedule annual undercarriage and coolant level inspections with certified VoltIQ technicians."
+                bgImage={evsafety4}
               />
             </div>
           </div>
