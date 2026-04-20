@@ -283,7 +283,7 @@ function Batterysafety() {
                     <div className="relative group">
                         {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
                         <img
-                            src="src/assets/ev4.png"
+                            src="src/assets/evsafety3.png"
                             alt="EV Battery"
                             className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
                         />
@@ -339,7 +339,7 @@ function Batterysafety() {
                     <div className="relative group">
                         {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
                         <img
-                            src="src/assets/ev4.png"
+                            src="src/assets/evsafety3.png"
                             alt="EV Battery"
                             className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
                         />

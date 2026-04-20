@@ -1,162 +1,250 @@
-import React, { useState } from 'react';
+import React from "react";
 import { 
-    Zap, ShieldCheck, ThermometerSnowflake, 
-    BatteryCharging, BatteryMedium, BatteryWarning 
+  ShieldCheck, Thermometer, BatteryCharging, 
+  AlertTriangle, Cpu, Wrench, Zap 
 } from "lucide-react";
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-const leftColumnTips = [
-    { id: 1, title: "Replace Damaged Components", description: "Certified professionals will advise replacing failing cells to prevent degradation.", icon: <ShieldCheck className="text-cyan-400" size={20} /> },
-    { id: 2, title: "Ensure Regular Checks", description: "Scheduled health assessments ensure your SOH remains within optimal parameters.", icon: <Zap className="text-cyan-400" size={20} /> },
-    { id: 3, title: "Thermal Management", description: "Modern cooling systems actively manage pack temperatures to prevent extreme heat/cold degradation.", icon: <ThermometerSnowflake className="text-cyan-400" size={20} /> }
-];
+// Enhanced SafetyCard with structured, scalable theming
+const SafetyCard = ({ icon: Icon, title, desc, theme = "cyan" }) => {
+  // Using an object maps classes cleanly without relying on fragile string splitting
+  const themes = {
+    cyan: {
+      text: "text-cyan-400",
+      iconBg: "bg-cyan-500/10",
+      border: "border-cyan-500/20",
+      hover: "hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.15)]"
+    },
+    green: {
+      text: "text-emerald-400",
+      iconBg: "bg-emerald-500/10",
+      border: "border-emerald-500/20",
+      hover: "hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]"
+    },
+    red: {
+      text: "text-rose-400",
+      iconBg: "bg-rose-500/10",
+      border: "border-rose-500/20",
+      hover: "hover:border-rose-500/50 hover:shadow-[0_0_20px_rgba(244,63,94,0.15)]"
+    },
+    blue: {
+      text: "text-blue-400",
+      iconBg: "bg-blue-500/10",
+      border: "border-blue-500/20",
+      hover: "hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]"
+    }
+  };
 
-const rightColumnTips = [
-    { id: 4, title: "Equalization Charging", description: "The BMS balances the charge across all individual cells to maximize usable capacity.", icon: <BatteryCharging className="text-cyan-400" size={20} /> },
-    { id: 5, title: "Optimal Charge Range", description: "Maintaining a 20% to 80% charge level significantly reduces cyclic stress.", icon: <BatteryMedium className="text-cyan-400" size={20} /> },
-    { id: 6, title: "Minimize Fast Charging", description: "DC fast charging generates high internal heat. Frequent use can accelerate resistance.", icon: <BatteryWarning className="text-cyan-400" size={20} /> }
-];
+  const current = themes[theme];
 
-const TipCard = ({ tip }) => (
-    <div className="group relative bg-slate-900/40 backdrop-blur-md p-6 rounded-2xl border border-white/5 hover:border-cyan-500/50 transition-all duration-500 flex gap-5 mb-6 overflow-hidden">
-        {/* Animated Background Glow */}
-        <div className="absolute -inset-px bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
-        <div className="relative flex-shrink-0">
-            <div className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-cyan-500/50 group-hover:bg-cyan-500/10 transition-all">
-                <span className="font-mono font-bold text-cyan-400 text-lg">{tip.id}</span>
-            </div>
-        </div>
-        
-        <div className="relative">
-            <div className="flex items-center gap-2 mb-2">
-                {tip.icon}
-                <h3 className="text-xl font-bold text-white tracking-tight">{tip.title}</h3>
-            </div>
-            <p className="text-slate-400 text-sm md:text-base leading-relaxed">{tip.description}</p>
-        </div>
+  return (
+    <div className={`bg-[url('/src/assets/evsafety4.png')] bg-cover bg-center bg-fixed shadow-[0_0_20px_rgba(0,0,0,0.15] backdrop-blur-md border rounded-2xl p-6 transition-all duration-500 group cursor-default ${current.border} ${current.hover}`}>
+      <div className={`w-14 h-14 flex items-center justify-center rounded-xl mb-5 group-hover:scale-110 transition-transform duration-300 ${current.iconBg}`}>
+        <Icon className={`w-7 h-7 ${current.text}`} />
+      </div>
+      <h3 className="text-white text-xl font-bold mb-3">{title}</h3>
+      <p className="text-slate-400 text-sm md:text-base leading-relaxed">{desc}</p>
     </div>
-);
+  );
+};
 
-function RepairandMaintenance() {
-    const [activeEV] = useState({ 
-        title: "Advanced EV Care", 
-        tagline: "Precision maintenance for the electric era." 
-    });
+const EVBatterySafetyPage = () => {
+  return (
+    <div className="min-h-screen bg-[url('/src/assets/bg.png')] bg-cover bg-center bg-fixed text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30">
+      <Navbar />
 
-    return (
-        <div className="min-h-screen bg-[#02040a] text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30">
-            <Navbar />
+      <div className="flex-grow relative overflow-hidden py-12 md:py-16">
+        
+        {/* Background Glowing Orbs */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+       
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          
+          {/* Hero Section - Fixed Grid Alignment & Removed awkward margins */}
+          <div className="grid md:grid-cols-2 gap-8 bg-transparent  md:gap-12 items-center  p-8 md:p-12 mb-20 overflow-hidden  relative">
+            
+            {/* Header Section */}
+            <div className="relative z-10 text-center md:text-left">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 tracking-tight leading-tight">
+                EV Battery <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">Safety</span>
+              </h1>
+              <p className="text-slate-400 text-base md:text-lg max-w-xl mx-auto md:mx-0 leading-relaxed">
+                Learn about the robust safety measures that ensure your EV battery is not just powerful, but secure. Designed for durability, tested for absolute reliability.
+              </p>
+            </div>
 
-            {/* HERO SECTION */}
-            {/* FIXED: Increased height to min-h-[80vh] or full screen so the image isn't aggressively cropped */}
-            <section className="relative min-h-[80vh] lg:min-h-screen w-full overflow-hidden flex items-center">
-                <div className="absolute inset-0">
-                    <img 
-                        src="/src/assets/evrepair-img.png" 
-                        alt="Hero" 
-                        /* FIXED: Removed opacity-90 to make image clear, added object-center */
-                        className="w-full h-full object-cover object-center"
-                    />
-                    {/* FIXED: Changed overlay to a left-to-right gradient. Dark on the left for text, clear on the right for the image */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#02040a] via-[#02040a]/60 to-transparent" />
-                    {/* Added a subtle bottom gradient just so it blends smoothly into the next dark section */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-transparent to-transparent opacity-80" />
-                </div>
-                
-                <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
-                    <div className="max-w-3xl space-y-6">
-                        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/5 text-cyan-400 font-mono text-xs tracking-widest uppercase">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-                            </span>
-                            System Health Protocols
-                        </div>
-                        <h1 className="text-6xl md:text-8xl font-black text-white leading-none tracking-tighter">
-                            {activeEV.title}
-                        </h1>
-                        <p className="text-xl md:text-2xl text-cyan-100/60 font-light max-w-xl">
-                            {activeEV.tagline}
-                        </p>
-                    </div>
-                </div>
-            </section>
+            {/* Hero Image Section */}
+            <div className="relative z-10 rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(6,182,212,0.15)] group h-64 md:h-[350px] lg:h-[400px]">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/80 via-transparent to-transparent z-10"></div>
+              <img
+                src="/src/assets/ev4.png"
+                alt="VoltIQ EV Safety Architecture"
+                className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          </div>
 
-            {/* WHY MAINTENANCE MATTERS */}
-            {/* FIXED: Added missing closing bracket ] and background sizing classes to the bg-[url(...)] property */}
-            <section className="relative py-24 w-full overflow-hidden flex items-center bg-[url('/src/assets/evrepair-img2.png')] bg-cover bg-center">
-                {/* Added a dark overlay to this section so the text remains readable over the background image */}
-                <div className="absolute inset-0 bg-[#02040a]/80" />
-                
-                <div className="max-w-7xl mx-auto relative z-10 px-6 w-full">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {/* Summary Header */}
-                        <div className="lg:col-span-1 flex flex-col justify-center pr-8">
-                            <h2 className="text-4xl font-black text-white leading-tight uppercase mb-6">
-                                Why <span className="text-cyan-500">Longevity</span> Matters
-                            </h2>
-                            <p className="text-slate-400 border-l-2 border-cyan-900 pl-6 py-2">
-                                Proactive management of the high-voltage system ensures peak efficiency and protects your vehicle's residual value.
-                            </p>
-                        </div>
+          {/* Safety Features */}
+          <div className="mb-24">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
+              <ShieldCheck className="text-cyan-400" size={32} />
+              Safety First Design
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <SafetyCard
+                theme="cyan"
+                icon={Thermometer}
+                title="Temperature Management"
+                desc="Advanced thermal systems actively regulate pack temperatures to prevent overheating and thermal degradation."
+              />
+              <SafetyCard
+                theme="cyan"
+                icon={BatteryCharging}
+                title="Stringent Testing"
+                desc="Subjected to extreme weather simulations, vibration analysis, and impact tests to guarantee structural integrity."
+              />
+              <SafetyCard
+                theme="cyan"
+                icon={ShieldCheck}
+                title="Safety Enhancements"
+                desc="Features titanium protective casing, fail-safe disconnect circuits, and real-time BMS monitoring."
+              />
+            </div>
+          </div>
 
-                        {/* Feature Grid */}
-                        <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {[
-                                { title: "Maximize Lifespan", desc: "Reduce chemical degradation through intelligent cycle management.", icon: <Zap className="text-cyan-400" /> },
-                                { title: "Enhance Range", desc: "Proper cell balancing ensures every kWh is usable.", icon: <BatteryCharging className="text-blue-400" /> },
-                                { title: "Warranty Safety", desc: "Maintain digital logs required for manufacturer battery guarantees.", icon: <ShieldCheck className="text-emerald-400" /> }
-                            ].map((item, index) => (
-                                <div key={index} className="p-8 rounded-3xl bg-slate-900/50 border border-white/5 hover:bg-slate-800/50 transition-colors">
-                                    <div className="mb-4">{item.icon}</div>
-                                    <h4 className="text-xl font-bold text-white mb-2">{item.title}</h4>
-                                    <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
+          {/* Reliability Section */}
+          <div className="mb-24">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
+              <Cpu className="text-emerald-400" size={32} />
+              Tested for Reliability
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <SafetyCard
+                theme="green"
+                icon={Cpu}
+                title="Advanced Simulations"
+                desc="AI-powered digital twin simulations predict battery behavior across millions of virtual miles."
+              />
+              <SafetyCard
+                theme="green"
+                icon={ShieldCheck}
+                title="Extreme Conditions"
+                desc="Verified operations in environments ranging from arctic freezes to desert heatwaves."
+              />
+              <SafetyCard
+                theme="green"
+                icon={BatteryCharging}
+                title="Performance Stability"
+                desc="Engineered chemistries ensure consistent voltage output and minimal degradation over thousands of cycles."
+              />
+            </div>
+          </div>
 
-            {/* TIPS SECTION */}
-            <section className="py-24 px-6 relative">
-                {/* Background Decoration */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-500/5 via-transparent to-transparent pointer-events-none" />
-                
-                <div className="max-w-7xl mx-auto relative z-10">
-                    <div className="text-center mb-20">
-                        <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
-                            BMS OPTIMIZATION <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 italic">TIPS</span>
-                        </h2>
-                        <div className="h-1 w-24 bg-cyan-500 mx-auto rounded-full" />
-                    </div>
+          {/* Did You Know Section */}
+          <div className="mb-24 bg-gradient-to-br from-cyan-900/30 to-blue-900/30 backdrop-blur-md border border-cyan-500/30 rounded-3xl p-8 md:p-12 shadow-xl">
+            <div className="flex flex-col md:flex-row gap-8 items-center">
+              <div className="flex-1">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                  Did You <span className="text-cyan-400">Know?</span>
+                </h2>
+                <p className="text-slate-300 text-lg leading-relaxed mb-8 max-w-3xl">
+                  Modern EV batteries must meet strict global safety standards before they ever hit the road, ensuring high durability across diverse environmental conditions.
+                </p>
+                <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-cyan-100 font-medium">
+                  <li className="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/5">
+                    <Zap size={20} className="text-cyan-400 flex-shrink-0" /> 
+                    <span className="text-sm">ASIL-D Automotive Safety Integrity</span>
+                  </li>
+                  <li className="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/5">
+                    <Zap size={20} className="text-cyan-400 flex-shrink-0" /> 
+                    <span className="text-sm">IP69K Dust & Water Protection</span>
+                  </li>
+                  <li className="flex items-center gap-3 bg-white/5 p-3 rounded-lg border border-white/5">
+                    <Zap size={20} className="text-cyan-400 flex-shrink-0" /> 
+                    <span className="text-sm">UL2580 Certified Protocols</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12">
-                        <div className="flex flex-col">
-                            {leftColumnTips.map(tip => <TipCard key={tip.id} tip={tip} />)}
-                        </div>
-                        <div className="flex flex-col">
-                            {rightColumnTips.map(tip => <TipCard key={tip.id} tip={tip} />)}
-                        </div>
-                    </div>
-                </div>
-            </section>
+          {/* User Responsibility */}
+          <div className="mb-24">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
+              <Wrench className="text-blue-400" size={32} />
+              Your Role in Battery Safety
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <SafetyCard
+                theme="blue"
+                icon={BatteryCharging}
+                title="Proper Charging"
+                desc="Avoid consistent 100% charges for daily driving. Utilize the 20-80% rule to minimize cell stress."
+              />
+              <SafetyCard
+                theme="blue"
+                icon={Cpu}
+                title="Software Updates"
+                desc="Always install OTA (Over-The-Air) updates to ensure your BMS has the latest safety algorithms."
+              />
+              <SafetyCard
+                theme="blue"
+                icon={Wrench}
+                title="Routine Inspections"
+                desc="Schedule annual undercarriage and coolant level inspections with certified VoltIQ technicians."
+              />
+            </div>
+          </div>
 
-            <Footer />
+          {/* Risk Factors */}
+          <div className="mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold mb-8 text-white flex items-center gap-3">
+              <AlertTriangle className="text-rose-400" size={32} />
+              Known Risk Factors
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <SafetyCard
+                theme="red"
+                icon={AlertTriangle}
+                title="Thermal Runaway"
+                desc="A rare cascade event where a damaged cell overheating triggers adjacent cells. Modern packs use firewalls to isolate this."
+              />
+              <SafetyCard
+                theme="red"
+                icon={BatteryCharging}
+                title="Chronic Overcharging"
+                desc="Leaving the vehicle plugged in at 100% in extreme heat can lead to accelerated internal resistance and swelling."
+              />
+              <SafetyCard
+                theme="red"
+                icon={Wrench}
+                title="Mechanical Damage"
+                desc="Severe undercarriage impacts from road debris can pierce the armor plating, compromising the hermetic seal."
+              />
+              <SafetyCard
+                theme="red"
+                icon={Zap}
+                title="Severe Cell Imbalance"
+                desc="When cells drift too far apart in voltage, the BMS may restrict power output to prevent localized over-discharging."
+              />
+            </div>
+          </div>
 
-            <style>{`
-                @keyframes slow-zoom {
-                    0% { transform: scale(1); }
-                    100% { transform: scale(1.1); }
-                }
-                .animate-slow-zoom {
-                    animation: slow-zoom 20s infinite alternate linear;
-                }
-            `}</style>
+          {/* CTA */}
+          <div className="text-center py-12">
+            <button className="px-10 py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold text-lg shadow-[0_0_30px_rgba(6,182,212,0.4)] hover:shadow-[0_0_50px_rgba(6,182,212,0.6)] hover:-translate-y-1 transition-all duration-300">
+              Access VoltIQ Dashboard
+            </button>
+          </div>
+
         </div>
-    );
-}
+      </div>
 
-export default RepairandMaintenance;
+      <Footer />
+    </div>
+  );
+};
+
+export default EVBatterySafetyPage;
