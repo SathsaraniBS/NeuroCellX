@@ -97,9 +97,9 @@ function Batterylife() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden border-b border-cyan-500/20">
-          <div className="absolute inset-0 bg-[url('/src/assets/evstation.png')] bg-cover bg-center scale-105 animate-slow-zoom opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/80 to-transparent" />
+        <section className="relative h-screen w-full flex items-center justify-center overflow-hidden border-b border-cyan-500/20">
+          <div className="absolute inset-0 bg-[url('/src/assets/evstation.png')] bg-cover bg-center scale-105 animate-slow-zoom opacity-80" />
+          <div className="absolute inset-0 " />
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-900/30 to-emerald-900/30 mix-blend-overlay" />
           
           <div className="relative z-10 text-center px-6 max-w-4xl mx-auto mt-20">
