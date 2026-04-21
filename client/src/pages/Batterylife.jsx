@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Zap, ChevronRight, ChevronLeft, MapPin, BatteryCharging, ShieldCheck, Globe } from "lucide-react";
+import React, { useState } from 'react';
+import {Zap,MapPin,BatteryCharging,BatteryMedium,BatteryWarning,ShieldCheck,Globe,ThermometerSnowflake} from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -8,7 +8,7 @@ const TRENDS = [
   {
     id: 1,
     title: "Growing number of public charging stations",
-    image: "src/assets/evhome.png", // Ensure paths are correct
+    image: "src/assets/evhome.png",
     description: "The surge in public charging stations parallels the rise of EVs. Accessibility has been greatly enhanced, not just within cities but also for longer journeys, as charging facilities now dot the highways, boosting the appeal of EVs for their convenience."
   },
   {
@@ -25,7 +25,7 @@ const TRENDS = [
   },
   {
     id: 4,
-    title: "Charging Hubs ",
+    title: "Charging Hubs",
     image: "src/assets/evstation.png",
     description: "Charging hubs provide multiple charging points in a centralized location, especially those designed for fleets or high-traffic areas. These hubs are equipped with fast charging options, making them ideal for busy urban areas or locations where various EVs converge. Charging hubs streamline journey planning by offering a reliable and efficient charging solution in one place."
   },
@@ -76,11 +76,74 @@ const NETWORKS = [
   }
 ];
 
-function Batterylife() {
-  // Added state to track the current slide
-  const [currentSlide, setCurrentSlide] = useState(0);
+const leftColumnTips = [
+  {
+    id: 1,
+    description: "Lithium-ion batteries (LiB) uses different types of cells according to different type of usages e.g. cylindrical, prismatic and pouch.",
+  },
+  {
+    id: 2,
+    description: "A cylindrical cell is a cell enclosed in a rigid cylinder can. Cylindrical cells are small and round, making it possible to stack them in devices of all sizes. They are the most commonly used cell type due to their lower cost. These are often used in laptop batteries and even EVs.",
+  },
+  {
+    id: 3,
+    description: "A prismatic cell is a cell whose chemistry is enclosed in a rigid casing. Its rectangular shape allows efficiently stacking multiple units in a battery module. Prismatic cells are designed are thin and light. They can use either steel or aluminium casing, which makes them more stable.",
+  },
+  {
+    id: 4,
+    description: "For the same volume, stacked prismatic cells can release more energy at once, offering better performance. Theoretically, The energy density of prismatic cells is higher than cylindrical cells.",
+  }
+];
 
-  // Added functions to handle the next and previous buttons
+const rightColumnTips = [
+  {
+    id: 5,
+    description: "A pouch cell is a type of lithium-ion battery used in electric vehicles (EVs). They are characterised by their lightweight design and flexibility, making them a popular choice for some EV manufacturers. The batteries are made up of multiple layers of electrode materials and separators enclosed in a flexible, heat-sealed pouch. They offer advantages such as design flexibility, reduced weight, and efficient space utilization within an EV's battery pack.",
+  },
+  {
+    id: 6,
+    description: "Currently Prismatic cells are most widely used worldwide in EVs and Energy Storage solutions (ESS). Prismatic cells are also two types – the electrode sheet inside the casing (anode, separator, cathode) is either stacked or rolled and flattened.",
+  }
+];
+
+// Add your video data here
+const VIDEO_DATA = [
+  { id: 1, title: "Battery Crush Test", youtube_id: "dQw4w9WgXcQ" }, // Replace with real IDs
+  { id: 2, title: "Thermal Runaway Prevention", youtube_id: "dQw4w9WgXcQ" },
+  { id: 3, title: "Water Ingress Testing (IP67)", youtube_id: "dQw4w9WgXcQ" },
+  { id: 4, title: "Nail Penetration Safety Test", youtube_id: "dQw4w9WgXcQ" }
+];
+
+const TipCard = ({ tip }) => (
+  <div className="group relative bg-[#0a1122]/80 backdrop-blur-md p-6 rounded-2xl border border-white/5 hover:border-cyan-500/40 transition-all duration-300 flex gap-5 mb-6 overflow-hidden shadow-lg hover:shadow-cyan-500/10 hover:-translate-y-1">
+    <div className="absolute top-0 left-0 w-1 h-full bg-transparent group-hover:bg-cyan-500 transition-colors duration-300" />
+
+    <div className="relative">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="font-mono text-sm font-bold text-cyan-500/50">0{tip.id}</span>
+      </div>
+      <p className="text-slate-400 text-sm leading-relaxed">{tip.description}</p>
+    </div>
+  </div>
+);
+
+function Batterylife() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  // Initialize state with the actual video data
+  const [videos, setVideos] = useState(VIDEO_DATA);
+  const [page, setPage] = useState(0);
+
+  // Pagination Logic
+  const videosPerPage = 2;
+  const totalPages = Math.ceil(videos.length / videosPerPage);
+  
+  // Calculate which videos to show based on the current page
+  const displayedVideos = videos.slice(
+    page * videosPerPage, 
+    (page + 1) * videosPerPage
+  );
+
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev === TRENDS.length - 1 ? 0 : prev + 1));
   };
@@ -94,40 +157,272 @@ function Batterylife() {
       <Navbar />
 
       {/* Hero Section */}
-      <header className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-[url('/src/assets/evstation.png')] bg-cover bg-center scale-105 animate-slow-zoom" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#050816]/60 via-[#050816]/40 to-[#050816]" />
-        
-        <div className="relative z-10 text-center px-4">
-          <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4">
-            HOW LONG DO ELECTRIC VEHICLE BATTERIES LAST?
-          </h1>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl font-light">
-          As electric vehicles race ahead in the innovation lane, one component stands out at the centre of this revolution: the battery. Keep scrolling as we unveil its remarkable technology and impressive longevity.
-          </p>
+      </section>
 
-          <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4 mt-8">
-            The Building Blocks of Battery Endurance
-            </h2>
-
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl font-light">
-                In the world of EVs, the lifespan and stability of batteries form the cornerstone of a superior driving experience. In recent years, this has become a possibility due to the evolution of battery technology which has further enhanced battery endurance. These innovative measures have enabled EV batteries to stand the test of time, ensuring dependable performance, extended range, and a sustainable driving future.
+      {/* Intro Section */}
+      <section className="py-24 max-w-7xl mx-auto px-6 relative">
+        <div className="grid md:grid-cols-2 gap-12 items-center bg-transparent p-10 overflow-hidden relative">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+              HOW LONG DO <span className="text-cyan-400">ELECTRIC VEHICLE BATTERIES LAST?</span>
+            </h1>
+            <p className="text-gray-400 text-lg mb-8">
+              As electric vehicles race ahead in the innovation lane, one component stands out at the centre of this revolution: the battery. Keep scrolling as we unveil its remarkable technology and impressive longevity.
             </p>
 
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl font-light mt-4">
-                The two main components that contribute to battery longevity are the Battery cells and BMS, the heart and the brain, of your Electric Vehicle battery. Let’s explore them in detail.
+            <h1 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+              The Building Blocks of <span className="text-cyan-400">Battery Endurance</span>
+            </h1>
+
+            <p className="text-gray-400 text-lg mb-8">
+              In the world of EVs, the lifespan and stability of batteries form the cornerstone of a superior driving experience. In recent years, this has become a possibility due to the evolution of battery technology which has further enhanced battery endurance. These innovative measures have enabled EV batteries to stand the test of time, ensuring dependable performance, extended range, and a sustainable driving future.
             </p>
+
+            <p className="text-gray-400 text-lg mb-8">
+              The two main components that contribute to battery longevity are the Battery cells and BMS, the heart and the brain, of your Electric Vehicle battery. Let's explore them in detail.
+            </p>
+          </div>
+          <div className="relative group">
+            <img
+              src="src/assets/evbattery-cells.png"
+              alt="EV Battery"
+              className="w-full h-full object-cover shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
+            />
+            <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
+          </div>
         </div>
-      </header>
+      </section>
 
-      <main className="max-w-7xl mx-auto px-6">
-        
-        
+      {/* Cells Section */}
+      <section className="py-24 max-w-7xl mx-auto px-6 relative">
+        <div className="grid md:grid-cols-2 gap-12 items-center bg-transparent p-10 overflow-hidden relative">
+          <div className="relative group">
+            <img
+              src="src/assets/evbattery-cells.png"
+              alt="EV Battery"
+              className="w-full h-full object-cover shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
+            />
+            <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
+          </div>
+          <div>
+            <h1 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+              CELLS: HEARTBEAT OF THE <span className="text-cyan-400">ELECTRIC VEHICLE BATTERY</span>
+            </h1>
 
-        
+            <p className="text-gray-400 text-lg mb-4">
+              Lithium-ion batteries (LiB) uses different types of cells according to different type of usages e.g. cylindrical, prismatic and pouch.
+            </p>
 
-        
-      </main>
+            <p className="text-gray-400 text-lg mb-4">
+              A cylindrical cell is a cell enclosed in a rigid cylinder can. Cylindrical cells are small and round, making it possible to stack them in devices of all sizes. They are the most commonly used cell type due to their lower cost. These are often used in laptop batteries and even EVs.
+            </p>
+
+            <p className="text-gray-400 text-lg mb-4">
+              A prismatic cell is a cell whose chemistry is enclosed in a rigid casing. Its rectangular shape allows efficiently stacking multiple units in a battery module. Prismatic cells are designed are thin and light. They can use either steel or aluminium casing, which makes them more stable.
+            </p>
+
+            <p className="text-gray-400 text-lg mb-4">
+              For the same volume, stacked prismatic cells can release more energy at once, offering better performance. Theoretically, the energy density of prismatic cells is higher than cylindrical cells.
+            </p>
+
+            <p className="text-gray-400 text-lg mb-4">
+              A pouch cell is a type of lithium-ion battery used in electric vehicles (EVs). They are characterised by their lightweight design and flexibility, making them a popular choice for some EV manufacturers. The batteries are made up of multiple layers of electrode materials and separators enclosed in a flexible, heat-sealed pouch. They offer advantages such as design flexibility, reduced weight, and efficient space utilization within an EV's battery pack.
+            </p>
+
+            <p className="text-gray-400 text-lg mb-4">
+              Currently Prismatic cells are most widely used worldwide in EVs and Energy Storage solutions (ESS). Prismatic cells are also two types – the electrode sheet inside the casing (anode, separator, cathode) is either stacked or rolled and flattened.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Tips Section */}
+      <section className="py-20 px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-white">
+              CELLS: HEARTBEAT OF THE{" "}
+              <span className="transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                ELECTRIC VEHICLE BATTERY
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Left Column Tips */}
+            <div className="flex flex-col">
+              {leftColumnTips.map(tip => (
+                <TipCard key={tip.id} tip={tip} />
+              ))}
+            </div>
+
+            {/* Right Column Tips + Image */}
+            <div className="flex flex-col">
+              <div className="relative overflow-hidden rounded-2xl mb-6 h-64 md:h-80 border border-white/10 shadow-lg group">
+                <img
+                  src="/src/assets/maintenance-img2.png"
+                  alt="EV Maintenance"
+                  className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                  onError={(e) => { e.target.src = "https://via.placeholder.com/600x400/0a1122/ffffff?text=Maintenance"; }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#02040a] via-transparent to-transparent" />
+              </div>
+
+              {rightColumnTips.map(tip => (
+                <TipCard key={tip.id} tip={tip} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute top-1/4 left-0 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
+
+        <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div className="space-y-8">
+                    <div>
+                        <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase text-white mb-6">
+                            BMS: The brain behind <span className="text-cyan-400"> the operations</span>
+                        </h2>
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                        <h3 className="text-xl font-bold text-lime-400 mb-3 uppercase tracking-wider">What is BMS:</h3>
+                        <p className="text-slate-300 leading-relaxed">
+                            A Battery Management System, commonly referred to as BMS, is an intelligent electronic system designed to oversee and manage EV batteries. It monitors and manages the battery's performance and charging while ensuring optimal conditions for the cells inside the battery modules
+                        </p>
+
+                        <h3 className="text-xl font-bold text-lime-400 mt-6 mb-6 uppercase tracking-wider">What does it do:</h3>
+                        <p className="text-slate-300 leading-relaxed">
+                              It meticulously oversees battery parameters like charge, voltage, and temperature while ensuring all individual cells in the battery pack charge and discharge evenly, thus maximizing efficiency and lifespan. It also safeguards the battery from potential harm due to overcharging, overheating, or deep discharging.
+                        </p>
+
+                          <h3 className="text-xl font-bold text-lime-400 mt-6 mb-6 uppercase tracking-wider">Why is it important: </h3>
+                        <p className="text-slate-300 leading-relaxed">
+                              BMS acts like the central nervous system for an EV's battery. By constantly optimizing performance and ensuring safe operation, an efficient BMS significantly slows down battery degradation, ensuring your EV battery remains healthy and lasts longer.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="relative group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                    <div className="relative bg-[#0a0f25] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src="/src/assets/bms.png" alt="EV Anatomy Architecture" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute top-1/4 left-0 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
+
+        <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+              <div className="relative group">
+                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                    <div className="relative bg-[#0a0f25] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                        <img src="/src/assets/bms.png" alt="EV Anatomy Architecture" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
+                        
+                    </div>
+                </div>
+                <div className="space-y-8">
+                    <div>
+                        <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase text-white mb-6">
+                            Innovations Lighting the  <span className="text-cyan-400"> Path Forward</span>
+                        </h2>
+
+                        <p className="text-slate-300 leading-relaxed">
+                              Our electric future is powered by innovation. Every day, advancements in battery technology push the boundaries of what's possible, ensuring that the electric journey is both impressive in range and lasting in longevity. Two such innovations in the space are: 
+                        </p>
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                        <h3 className="text-xl font-bold text-lime-400 mb-3 uppercase tracking-wider">The rise in energy density:</h3>
+                        <p className="text-slate-300 leading-relaxed">
+                              Ongoing research is enabling batteries to pack more energy in the same footprint. This not only promises extended EV ranges but also contributes to the battery's overall longevity!
+                        </p>
+
+                        <h3 className="text-xl font-bold text-lime-400 mt-6 mb-6 uppercase tracking-wider">Building India’s EV ecosystem: </h3>
+                        <p className="text-slate-300 leading-relaxed">
+                              India is also set on expanding the EV ecosystem through innovative partnerships with leaders in Battery Technology, Charging Infrastructure, Product Development, Technology Innovation, AI implementation & Electronics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section className="max-w-5xl mx-auto px-4 py-12 font-sans">
+        {/* Header */}
+        <h2 className="text-2xl md:text-3xl font-bold text-center text-[#2b70a0] tracking-wide mb-10">
+          BATTERY TESTS | QUALITY ASSURANCE
+        </h2>
+
+        {/* Video Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {displayedVideos.map((video) => (
+            <div key={video.id} className="flex flex-col items-center">
+              {/* 16:9 Aspect Ratio Container for YouTube iFrame */}
+              <div className="w-full aspect-video bg-gray-200 shadow-md relative">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={`https://www.youtube.com/embed/${video.youtube_id}?rel=0`}
+                  title={video.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute top-0 left-0 w-full h-full object-cover"
+                ></iframe>
+              </div>
+              {/* Video Caption */}
+              <p className="mt-3 text-white text-sm md:text-base font-medium text-center">
+                {video.title}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-center items-center space-x-3 mt-8">
+          <button 
+            onClick={() => setPage(Math.max(0, page - 1))}
+            disabled={page === 0}
+            className={`w-9 h-9 flex items-center justify-center rounded transition-colors ${
+              page === 0 
+                ? 'bg-gray-800 text-gray-500 cursor-not-allowed' 
+                : 'bg-[#2b70a0] text-white hover:bg-blue-800'
+            }`}
+          >
+            {/* Left Arrow SVG */}
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <button 
+            onClick={() => setPage(page + 1)}
+            disabled={page >= totalPages - 1 || videos.length === 0}
+            className={`w-9 h-9 flex items-center justify-center rounded transition-colors ${
+              page >= totalPages - 1 || videos.length === 0
+                ? 'bg-gray-800 text-gray-500 cursor-not-allowed' 
+                : 'bg-[#2b70a0] text-white hover:bg-blue-800'
+            }`}
+          >
+            {/* Right Arrow SVG */}
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </section>
 
       <Footer />
 
