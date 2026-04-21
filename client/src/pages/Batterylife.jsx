@@ -108,10 +108,10 @@ const rightColumnTips = [
 
 // Add your video data here
 const VIDEO_DATA = [
-  { id: 1, title: "Battery Crush Test", youtube_id: "dQw4w9WgXcQ" }, // Replace with real IDs
-  { id: 2, title: "Thermal Runaway Prevention", youtube_id: "dQw4w9WgXcQ" },
-  { id: 3, title: "Water Ingress Testing (IP67)", youtube_id: "dQw4w9WgXcQ" },
-  { id: 4, title: "Nail Penetration Safety Test", youtube_id: "dQw4w9WgXcQ" }
+  { id: 1, title: "Battery Crush Test", youtube_id: "1W0w2lEwOPY" }, // Replace with real IDs
+  { id: 2, title: "Thermal Runaway Prevention", youtube_id: "8svJ02q4Oeo" },
+  { id: 3, title: "Water Ingress Testing (IP67)", youtube_id: "8svJ02q4Oeo" },
+  { id: 4, title: "Nail Penetration Safety Test", youtube_id: "7_2ZTIQH1eQ" },
 ];
 
 const TipCard = ({ tip }) => (
@@ -362,7 +362,7 @@ function Batterylife() {
       <section className="max-w-5xl mx-auto px-4 py-12 font-sans">
         {/* Header */}
         <h2 className="text-2xl md:text-3xl font-bold text-center text-[#2b70a0] tracking-wide mb-10">
-          BATTERY TESTS | QUALITY ASSURANCE
+          BATTERY TESTS <span className="text-cyan-400">|</span> QUALITY ASSURANCE
         </h2>
 
         {/* Video Grid */}
