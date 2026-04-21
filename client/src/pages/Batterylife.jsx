@@ -76,8 +76,18 @@ const NETWORKS = [
   }
 ];
 
-const Batterylife = () => {
+function Batterylife() {
+  // Added state to track the current slide
+  const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Added functions to handle the next and previous buttons
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === TRENDS.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? TRENDS.length - 1 : prev - 1));
+  };
 
   return (
     <div className="min-h-screen bg-[#050816] text-white font-sans selection:bg-cyan-500/30">
@@ -102,14 +112,11 @@ const Batterylife = () => {
 
             <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl font-light">
                 In the world of EVs, the lifespan and stability of batteries form the cornerstone of a superior driving experience. In recent years, this has become a possibility due to the evolution of battery technology which has further enhanced battery endurance. These innovative measures have enabled EV batteries to stand the test of time, ensuring dependable performance, extended range, and a sustainable driving future.
-
             </p>
 
-            <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl font-light">
+            <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl font-light mt-4">
                 The two main components that contribute to battery longevity are the Battery cells and BMS, the heart and the brain, of your Electric Vehicle battery. Let’s explore them in detail.
-
             </p>
-
         </div>
       </header>
 
@@ -128,7 +135,6 @@ const Batterylife = () => {
               </p>
               <p>
                 To support the transition to electric mobility and maintain an optimal ratio of approximately 1 charger for every 40 electric vehicles, millions of new charging stations will need to be installed annually. By 2030, the global charging infrastructure is projected to reach several million units, ensuring convenient, reliable, and widespread access for EV users everywhere.
-
               </p>
             </div>
           </div>
@@ -221,6 +227,6 @@ const Batterylife = () => {
       `}</style>
     </div>
   );
-};
+}
 
 export default Batterylife;

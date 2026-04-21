@@ -21,6 +21,7 @@ import Reports from './pages/Reports';
 import PublicCharging from './pages/PublicCharging';
 import Homecharging from './pages/Homecharging';
 import Battery from './pages/Battery';
+import Batterylife from './pages/Batterylife';
 import EVArchitecture from './pages/EVArchitecture';
 import InsideBattery from './pages/InsideBattery';
 import Batterysafety from './pages/Batterysafety';
@@ -64,6 +65,12 @@ function App() {
                             <Route path="/battery" element={
                                 <ProtectedRoute>
                                     <Battery />
+                                </ProtectedRoute>
+                            } />
+
+                            <Route path="/battery-life" element={
+                                <ProtectedRoute>
+                                    <Batterylife />
                                 </ProtectedRoute>
                             } />
 

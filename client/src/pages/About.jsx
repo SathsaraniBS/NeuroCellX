@@ -50,8 +50,8 @@ const SafetyCard = ({ icon: Icon, title, desc, theme = "cyan", bgImage }) => {
       {/* Background Image Layer: Opacity increased to 20% so it's visible */}
       {bgImage && (
         <div 
-          className="absolute inset-0 z-0 opacity-20 group-hover:opacity-40 transition-opacity duration-500 bg-cover bg-center"
-          style={{ backgroundImage: `url(${bgImage})` }}
+          className="absolute inset-0 z-0 opacity-20 group-hover:opacity-40 transition-opacity duration-500 bg-cover bg-center bg-[url('/src/assets/bg.png')]"
+           
         />
       )}
 
@@ -70,8 +70,8 @@ const SafetyCard = ({ icon: Icon, title, desc, theme = "cyan", bgImage }) => {
 const EVBatterySafetyPage = () => {
   return (
     <div 
-      className="min-h-screen bg-cover bg-center bg-fixed text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30"
-      style={{ backgroundImage: `url(${bgImageMain})` }}
+      className="min-h-screen bg-cover bg-center bg-fixed text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30 bg-[url('/src/assets/bg.png')] "
+      
     >
       <Navbar />
 
@@ -97,7 +97,7 @@ const EVBatterySafetyPage = () => {
             <div className="relative z-10 rounded-3xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(6,182,212,0.15)] group h-64 md:h-[350px] lg:h-[400px]">
               <div className="absolute inset-0 bg-gradient-to-t from-[#050816]/80 via-transparent to-transparent z-10"></div>
               <img
-                src={ev4}
+                src="/src/assets/ev4.png"
                 alt="VoltIQ EV Safety Architecture"
                 className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
               />
@@ -116,7 +116,7 @@ const EVBatterySafetyPage = () => {
                 icon={Thermometer}
                 title="Temperature Management"
                 desc="Advanced thermal systems actively regulate pack temperatures to prevent overheating and thermal degradation."
-                bgImage={evsafety4}
+                image="a"
               />
               <SafetyCard
                 theme="cyan"

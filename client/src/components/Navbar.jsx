@@ -70,7 +70,7 @@ const Navbar = () => {
                   Types of EV Battery
                 </Link>
                 <Link 
-                  to="/battery/battery-life" 
+                  to="/battery-life" 
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   Battery Life
