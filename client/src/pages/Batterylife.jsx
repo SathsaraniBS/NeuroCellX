@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Zap,MapPin,BatteryCharging,BatteryMedium,BatteryWarning,ShieldCheck,Globe,ThermometerSnowflake,ChevronDown,ChevronLeft,ChevronRight} from "lucide-react";
+import { Zap, MapPin, BatteryCharging, BatteryMedium, BatteryWarning, ShieldCheck, Globe, ThermometerSnowflake, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -129,18 +129,18 @@ const TipCard = ({ tip }) => (
 
 function Batterylife() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  
+
   // Initialize state with the actual video data
   const [videos, setVideos] = useState(VIDEO_DATA);
   const [page, setPage] = useState(0);
-  
+
   // Pagination Logic
   const videosPerPage = 2;
   const totalPages = Math.ceil(videos.length / videosPerPage);
-  
+
   // Calculate which videos to show based on the current page
   const displayedVideos = videos.slice(
-    page * videosPerPage, 
+    page * videosPerPage,
     (page + 1) * videosPerPage
   );
 
@@ -153,75 +153,122 @@ function Batterylife() {
   };
 
   // State Management
-      const [openFaqId, setOpenFaqId] = useState(null);
-      const [articleIndex, setArticleIndex] = useState(0);
-  
-      const [faqs] = useState([
-          { 
-              id: 1, 
-              question: "Can I change the battery in the EV post 8 years? What will be the cost of it?", 
-              answer: (
-              <div className="space-y-4">
-                  <p>A battery’s state of health (SOH) report is required to demonstrate its potential usefulness in an EV. It describes the overall condition of a battery and shows how much longer it can last before it needs replacement.</p>
-                  <p>After the battery SOH has dropped below 70-80% capacity, it can be refurbished into a battery with better health {'>'}80%. However, it is also possible that a battery can be repaired by replacing weak or defective cells or components hence, 100% SOH cannot be achieved. Improving the SOH from say 60% to 80% by replacing few modules will definitely help in increasing the range.</p>
-              </div>
-          )
-          },
-          { 
-              id: 2,
-              question: "How to get the battery repaired?", 
-              answer: (
-              <div className="space-y-4">
-                  <p>When there is a defect in a battery, meaning the battery is not functioning properly or discharging faster than usual, it is advisable to take it to a battery repair center.</p>
-                  <p>When a lithium-ion battery arrives at the battery repair center, it usually goes through three important phases:</p>
-                  <ul className="list-disc pl-5 space-y-2 text-slate-400">
-                      <li><strong className="text-white">Test and diagnosis:</strong> The battery is tested and checked for damages. The diagnosis will help the repair center understand what needs to be done to fix it.</li>
-                      <li><strong className="text-white">Repair:</strong> A team of high-voltage specialists will repair the battery, replace certain parts of the pack, and restore it to its original condition.</li>
-                      <li><strong className="text-white">Return:</strong> The repaired battery will find its way back to the customer, ready to be used in their electric car.</li>
-                  </ul>
-              </div>
-          )
-          },
-          { 
-              id: 3, 
-              question: "What will be estimated cost of repair if SOH % drop from 80% to 70%?", 
-              answer: (
-              <div className="space-y-4">
-                  <p>A battery consists of several modules. The cost for replacing an individual module can come up to approximately Rs. 1.2 Lacs. The total cost will depend on the number of modules to be replaced. For example, a ZS EV has a total of 120 cells in 6 modules present in a battery.</p>
-              </div>
-          )
-           },
-          { 
-              id: 4, 
-              question: "How can the battery life of a car be increased?", 
-              answer: (
-              <div className="space-y-4">
-                  <p>The battery can have a very long life if the following factors are kept under control:</p>
-                  <ol className="list-decimal pl-5 space-y-2 text-slate-400">
-                      <li><strong className="text-white">Keep the battery cool:</strong> Batteries that deal with extreme temperatures can be damaged. Park under a shade as and when possible.</li>
-                      <li><strong className="text-white">Avoid rapid charging frequently:</strong> While convenient, it puts a strain on the battery. Charge slowly and steadily when possible.</li>
-                      <li><strong className="text-white">Do not drain completely:</strong> Try to keep the battery above 20% to avoid putting strain on the chemistry.</li>
-                      <li><strong className="text-white">Keep an eye on the Battery:</strong> Be aware of any changes and visit an authorized workshop if anything is unusual.</li>
-                      <li><strong className="text-white">Avoid frequent 100% charging:</strong> If driving within city limits, keep the SOC between 30% to 80%. Save 100% charges for outstation trips.</li>
-                  </ol>
-              </div>
-          )
-          }
-      ]);
-  
-      
+  const [openFaqId, setOpenFaqId] = useState(null);
+  const [articleIndex, setArticleIndex] = useState(0);
 
-      const toggleFaq = (id) => setOpenFaqId(openFaqId === id ? null : id);
-    
-    const handleArticleClick = (path) => { if (path && path !== "#") navigate(path); };
+  const [faqs] = useState([
+    {
+      id: 1,
+      question: "How much is the life of EV/Battery in EV ?",
+      answer: (
+        <div className="space-y-4">
+          <p>
+            Li-Ion batteries endure 10 to 15 years before needing to be replaced or refurbished depending on the usage and charging pattern. The ZS EV’s LFP type battery has a charging capacity of 2000-2500 cycles (one charging cycle is equivalent to one cycle of complete charging and discharging of the battery). Considering the vehicle is charged twice a week, it would take around 20 years to complete this. However, batteries life depends on many external factors which are as follow:
 
-    const getVisibleArticles = () => {
-        const visible = [];
-        for (let i = 0; i < 3; i++) {
-            visible.push(articles[(articleIndex + i) % articles.length]);
-        }
-        return visible;
-    };
+          </p>
+
+          <ol className="list-decimal pl-5 space-y-2 text-slate-400">
+
+            <li>Time (calendar aging) </li>
+
+
+            <li>Thermal expansion and contraction due to temperature fluctuations
+
+            </li>
+
+
+            <li>Operating at high and low state of charge (time spent at high or low state of charge)
+
+            </li>
+
+            <li>High current charging
+            </li>
+
+            <li>Charge and discharge cycles
+
+            </li>
+
+          </ol>
+
+        </div>
+      )
+    },
+    {
+      id: 2,
+      question: "How can the battery life of a car be increased ?",
+      answer: (
+        <div className="space-y-4">
+          <p>The battery can have a very long life if the following factors are kept under control:
+
+          </p>
+
+          <ol className="list-decimal pl-5 space-y-2 text-slate-400">
+
+            <li><strong className="text-white">Keep the battery cool and be careful in extreme temperatures: </strong> Batteries that deal with extreme temperatures can be damaged, so it is important to keep the battery cool, especially in hot climates. Extreme cold can also have a negative effect on the battery. Try to Park under a shade as and when possible.</li>
+
+            <li><strong className="text-white">Avoid rapid charging frequently: </strong> While rapid charging is a convenient way to charge your battery, it’s not the best for its longevity. Rapid charging can put a strain on the battery and shorten its lifespan. If you can, charge your battery slowly and steadily and only use rapid charging when necessary.</li>
+
+            <li><strong className="text-white">Do not drain the battery completely: </strong>  It’s important to avoid draining the battery completely as this can also damage it. Try to keep the battery above 20% to avoid putting strain on the battery.</li>
+
+            <li><strong className="text-white">Keep an Eye on the Battery: </strong> It’s important to keep an eye on the battery and be aware of any changes. If you notice anything unusual, take the car to an authorized workshop to have it checked out.</li>
+
+            <li><strong className="text-white">Avoid frequent charging to keep SOC at 100% always. </strong> (If one is driving within the city limits, keep the SOC between 30 to 80%, it will improve Battery health, 100% charge may be planned for outstation Trips)</li>
+
+
+          </ol>
+        </div>
+      )
+    },
+    {
+      id: 3,
+      question: "What will be the impact on performance if the SOH drop to 70% or 80% ?",
+      answer: (
+        <div className="space-y-4">
+          <p>When there is a drop in SOH of battery to 70% or 80% there will be drop in performance range. For example, if a battery with 100% SOH can travel 100 kms on a full charge, the same car with battery SOH 80% will travel only 80kms on a full charge.
+
+          </p>
+        </div>
+      )
+    },
+    {
+      id: 4,
+      question: "How much drop in SOH will be there year on year ?",
+      answer: (
+        <div className="space-y-4">
+          <p>SOH depends on the usage and charging pattern. On average,  in 8 years, it is expected to drop maximum of 30% SOH as it depends on the usage of individual. It is advised to follow battery charging do’s and don’t’s to maintain health of the battery.
+
+          </p>
+
+        </div>
+      )
+    },
+    {
+      id: 5,
+      question: "What if the car is not in much use? Will battery degrade or SOH will go down ?",
+      answer: (
+        <div className="space-y-4">
+          <p>It is always advised to frequently use the Electric vehicle as the car mechanism get more efficient over usage.
+
+          </p>
+
+        </div>
+      )
+    }
+  ]);
+
+
+
+  const toggleFaq = (id) => setOpenFaqId(openFaqId === id ? null : id);
+
+  const handleArticleClick = (path) => { if (path && path !== "#") navigate(path); };
+
+  const getVisibleArticles = () => {
+    const visible = [];
+    for (let i = 0; i < 3; i++) {
+      visible.push(articles[(articleIndex + i) % articles.length]);
+    }
+    return visible;
+  };
 
 
   return (
@@ -350,44 +397,44 @@ function Batterylife() {
           </div>
         </div>
       </section>
-      
+
       <section className="py-24 relative overflow-hidden">
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
 
         <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div className="space-y-8">
-                    <div>
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase text-white mb-6">
-                            BMS: The brain behind <span className="text-cyan-400"> the operations</span>
-                        </h2>
-                    </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase text-white mb-6">
+                  BMS: The brain behind <span className="text-cyan-400"> the operations</span>
+                </h2>
+              </div>
 
-                    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <h3 className="text-xl font-bold text-lime-400 mb-3 uppercase tracking-wider">What is BMS:</h3>
-                        <p className="text-slate-300 leading-relaxed">
-                            A Battery Management System, commonly referred to as BMS, is an intelligent electronic system designed to oversee and manage EV batteries. It monitors and manages the battery's performance and charging while ensuring optimal conditions for the cells inside the battery modules
-                        </p>
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                <h3 className="text-xl font-bold text-lime-400 mb-3 uppercase tracking-wider">What is BMS:</h3>
+                <p className="text-slate-300 leading-relaxed">
+                  A Battery Management System, commonly referred to as BMS, is an intelligent electronic system designed to oversee and manage EV batteries. It monitors and manages the battery's performance and charging while ensuring optimal conditions for the cells inside the battery modules
+                </p>
 
-                        <h3 className="text-xl font-bold text-lime-400 mt-6 mb-6 uppercase tracking-wider">What does it do:</h3>
-                        <p className="text-slate-300 leading-relaxed">
-                              It meticulously oversees battery parameters like charge, voltage, and temperature while ensuring all individual cells in the battery pack charge and discharge evenly, thus maximizing efficiency and lifespan. It also safeguards the battery from potential harm due to overcharging, overheating, or deep discharging.
-                        </p>
+                <h3 className="text-xl font-bold text-lime-400 mt-6 mb-6 uppercase tracking-wider">What does it do:</h3>
+                <p className="text-slate-300 leading-relaxed">
+                  It meticulously oversees battery parameters like charge, voltage, and temperature while ensuring all individual cells in the battery pack charge and discharge evenly, thus maximizing efficiency and lifespan. It also safeguards the battery from potential harm due to overcharging, overheating, or deep discharging.
+                </p>
 
-                          <h3 className="text-xl font-bold text-lime-400 mt-6 mb-6 uppercase tracking-wider">Why is it important: </h3>
-                        <p className="text-slate-300 leading-relaxed">
-                              BMS acts like the central nervous system for an EV's battery. By constantly optimizing performance and ensuring safe operation, an efficient BMS significantly slows down battery degradation, ensuring your EV battery remains healthy and lasts longer.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                    <div className="relative bg-[#0a0f25] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                        <img src="/src/assets/bms.png" alt="EV Anatomy Architecture" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
-                    </div>
-                </div>
+                <h3 className="text-xl font-bold text-lime-400 mt-6 mb-6 uppercase tracking-wider">Why is it important: </h3>
+                <p className="text-slate-300 leading-relaxed">
+                  BMS acts like the central nervous system for an EV's battery. By constantly optimizing performance and ensuring safe operation, an efficient BMS significantly slows down battery degradation, ensuring your EV battery remains healthy and lasts longer.
+                </p>
+              </div>
             </div>
+
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+              <div className="relative bg-[#0a0f25] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                <img src="/src/assets/bms.png" alt="EV Anatomy Architecture" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -395,39 +442,39 @@ function Batterylife() {
         <div className="absolute top-1/4 left-0 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
 
         <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-              <div className="relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                    <div className="relative bg-[#0a0f25] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                        <img src="/src/assets/bms.png" alt="EV Anatomy Architecture" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
-                        
-                    </div>
-                </div>
-                <div className="space-y-8">
-                    <div>
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase text-white mb-6">
-                            Innovations Lighting the  <span className="text-cyan-400"> Path Forward</span>
-                        </h2>
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+              <div className="relative bg-[#0a0f25] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                <img src="/src/assets/bms.png" alt="EV Anatomy Architecture" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
 
-                        <p className="text-slate-300 leading-relaxed">
-                              Our electric future is powered by innovation. Every day, advancements in battery technology push the boundaries of what's possible, ensuring that the electric journey is both impressive in range and lasting in longevity. Two such innovations in the space are: 
-                        </p>
-                    </div>
-
-                    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <h3 className="text-xl font-bold text-lime-400 mb-3 uppercase tracking-wider">The rise in energy density:</h3>
-                        <p className="text-slate-300 leading-relaxed">
-                              Ongoing research is enabling batteries to pack more energy in the same footprint. This not only promises extended EV ranges but also contributes to the battery's overall longevity!
-                        </p>
-
-                        <h3 className="text-xl font-bold text-lime-400 mt-6 mb-6 uppercase tracking-wider">Building India’s EV ecosystem: </h3>
-                        <p className="text-slate-300 leading-relaxed">
-                              India is also set on expanding the EV ecosystem through innovative partnerships with leaders in Battery Technology, Charging Infrastructure, Product Development, Technology Innovation, AI implementation & Electronics.
-                        </p>
-                    </div>
-                </div>
+              </div>
             </div>
+            <div className="space-y-8">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase text-white mb-6">
+                  Innovations Lighting the  <span className="text-cyan-400"> Path Forward</span>
+                </h2>
+
+                <p className="text-slate-300 leading-relaxed">
+                  Our electric future is powered by innovation. Every day, advancements in battery technology push the boundaries of what's possible, ensuring that the electric journey is both impressive in range and lasting in longevity. Two such innovations in the space are:
+                </p>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                <h3 className="text-xl font-bold text-lime-400 mb-3 uppercase tracking-wider">The rise in energy density:</h3>
+                <p className="text-slate-300 leading-relaxed">
+                  Ongoing research is enabling batteries to pack more energy in the same footprint. This not only promises extended EV ranges but also contributes to the battery's overall longevity!
+                </p>
+
+                <h3 className="text-xl font-bold text-lime-400 mt-6 mb-6 uppercase tracking-wider">Building India’s EV ecosystem: </h3>
+                <p className="text-slate-300 leading-relaxed">
+                  India is also set on expanding the EV ecosystem through innovative partnerships with leaders in Battery Technology, Charging Infrastructure, Product Development, Technology Innovation, AI implementation & Electronics.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -464,29 +511,27 @@ function Batterylife() {
 
         {/* Pagination Controls */}
         <div className="flex justify-center items-center space-x-3 mt-8">
-          <button 
+          <button
             onClick={() => setPage(Math.max(0, page - 1))}
             disabled={page === 0}
-            className={`w-9 h-9 flex items-center justify-center rounded transition-colors ${
-              page === 0 
-                ? 'bg-gray-800 text-gray-500 cursor-not-allowed' 
-                : 'bg-[#2b70a0] text-white hover:bg-blue-800'
-            }`}
+            className={`w-9 h-9 flex items-center justify-center rounded transition-colors ${page === 0
+              ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
+              : 'bg-[#2b70a0] text-white hover:bg-blue-800'
+              }`}
           >
             {/* Left Arrow SVG */}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          
-          <button 
+
+          <button
             onClick={() => setPage(page + 1)}
             disabled={page >= totalPages - 1 || videos.length === 0}
-            className={`w-9 h-9 flex items-center justify-center rounded transition-colors ${
-              page >= totalPages - 1 || videos.length === 0
-                ? 'bg-gray-800 text-gray-500 cursor-not-allowed' 
-                : 'bg-[#2b70a0] text-white hover:bg-blue-800'
-            }`}
+            className={`w-9 h-9 flex items-center justify-center rounded transition-colors ${page >= totalPages - 1 || videos.length === 0
+              ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
+              : 'bg-[#2b70a0] text-white hover:bg-blue-800'
+              }`}
           >
             {/* Right Arrow SVG */}
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -497,47 +542,47 @@ function Batterylife() {
       </section>
 
       {/* KNOWLEDGE BASE (FAQ & Articles) */}
-            <section className="py-20 relative border-t border-white/5 bg-[#050816]/50">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section className="py-20 relative border-t border-white/5 bg-[#050816]/50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
-                    {/* FAQ Area */}
-                    <div className="max-w-3xl mx-auto mb-32">
-                        <h2 className="text-center text-3xl md:text-4xl font-black text-white mb-12 tracking-wide uppercase">
-                            Frequently Asked <span className="text-cyan-400">Questions</span>
-                        </h2>
+          {/* FAQ Area */}
+          <div className="max-w-3xl mx-auto mb-32">
+            <h2 className="text-center text-3xl md:text-4xl font-black text-white mb-12 tracking-wide uppercase">
+              Frequently Asked <span className="text-cyan-400">Questions</span>
+            </h2>
 
-                        <div className="space-y-4">
-                            {faqs.map((faq) => (
-                                <div
-                                    key={faq.id}
-                                    className={`rounded-xl border transition-all duration-300 ${openFaqId === faq.id ? 'bg-[#0e172a] border-cyan-500/50 shadow-lg' : 'bg-white/5 border-white/10 hover:border-white/20'}`}
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(faq.id)}
-                                        className="w-full flex justify-between items-center p-6 text-left focus:outline-none"
-                                        aria-expanded={openFaqId === faq.id}
-                                    >
-                                        <span className="font-semibold text-white text-lg pr-4">
-                                            {faq.question}
-                                        </span>
-                                        <ChevronDown
-                                            className={`text-cyan-400 flex-shrink-0 transform transition-transform duration-300 ${openFaqId === faq.id ? 'rotate-180' : ''}`}
-                                            size={20}
-                                        />
-                                    </button>
-                                    <div
-                                        className={`overflow-hidden transition-all duration-300 ease-in-out ${openFaqId === faq.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
-                                    >
-                                        <div className="p-6 pt-0 text-slate-400 leading-relaxed border-t border-white/5 mt-2">
-                                            {faq.answer}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+            <div className="space-y-4">
+              {faqs.map((faq) => (
+                <div
+                  key={faq.id}
+                  className={`rounded-xl border transition-all duration-300 ${openFaqId === faq.id ? 'bg-[#0e172a] border-cyan-500/50 shadow-lg' : 'bg-white/5 border-white/10 hover:border-white/20'}`}
+                >
+                  <button
+                    onClick={() => toggleFaq(faq.id)}
+                    className="w-full flex justify-between items-center p-6 text-left focus:outline-none"
+                    aria-expanded={openFaqId === faq.id}
+                  >
+                    <span className="font-semibold text-white text-lg pr-4">
+                      {faq.question}
+                    </span>
+                    <ChevronDown
+                      className={`text-cyan-400 flex-shrink-0 transform transition-transform duration-300 ${openFaqId === faq.id ? 'rotate-180' : ''}`}
+                      size={20}
+                    />
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${openFaqId === faq.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
+                  >
+                    <div className="p-6 pt-0 text-slate-400 leading-relaxed border-t border-white/5 mt-2">
+                      {faq.answer}
                     </div>
+                  </div>
                 </div>
-            </section>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
 
       <Footer />
