@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Zap, ShieldCheck, Banknote, LayoutGrid } from "lucide-react";
+import { Heart, Zap, ShieldCheck, Banknote, LayoutGrid,ChevronLeft, ChevronRight, ChevronDown, ArrowRight, BatteryCharging } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import EVCalculator from '../components/EVCalculator';
@@ -32,11 +32,26 @@ const Home_Charging_Benefits = [
     }
 ];
 
+const VIDEO_DATA = [
+    { id: 1, title: "Strengthening the EV ecosystem", youtube_id: "T2Ewt-SbCkU" },
+    { id: 2, title: " Strengthening the EV ecosystem", youtube_id: "fisLKXDrYv0" },
+    { id: 3, title: " Strengthening the EV ecosystem", youtube_id: "mTm7Kz8bzC0" }
+
+];
+
 function Homecharging() {
     const [savedGuides, setSavedGuides] = useState([]);
-
+    const [page, setPage] = useState(0);
+    
+    // Pagination Logic
+    const videosPerPage = 2;
+    const totalPages = Math.ceil(VIDEO_DATA.length / videosPerPage);
+    const displayedVideos = VIDEO_DATA.slice(
+        page * videosPerPage,
+        (page + 1) * videosPerPage
+    );
     const toggleSave = (id) => {
-        setSavedGuides(prev => 
+        setSavedGuides(prev =>
             prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
         );
     };
@@ -61,15 +76,15 @@ function Homecharging() {
                         <Zap size={14} />
                         Next-Gen Home Infrastructure
                     </div>
-                    
-                     <div className="relative z-10 text-center px-6 max-w-4xl mt-20">
-                    <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
-                        POWER YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">JOURNEY</span> FROM HOME
-                    </h1>
-                    <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto">
-                        Turn your garage into a personal refueling station. Smart, efficient, and always ready for the road.
-                    </p>
-                </div>
+
+                    <div className="relative z-10 text-center px-6 max-w-4xl mt-20">
+                        <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
+                            POWER YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">JOURNEY</span> FROM HOME
+                        </h1>
+                        <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto">
+                            Turn your garage into a personal refueling station. Smart, efficient, and always ready for the road.
+                        </p>
+                    </div>
                 </div>
             </section>
 
@@ -83,11 +98,11 @@ function Homecharging() {
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
                         <div className="max-w-2xl">
                             <h2 className="text-4xl md:text-5xl font-black uppercase mb-4 tracking-tight">
-                                Charge while <br /> 
+                                Charge while <br />
                                 <span className="text-cyan-400">you recharge</span>
                             </h2>
                             <p className="text-slate-400 text-lg">
-                                Experience the freedom of a full tank every morning. Our home solutions 
+                                Experience the freedom of a full tank every morning. Our home solutions
                                 are designed to integrate seamlessly with your lifestyle.
                             </p>
                         </div>
@@ -110,7 +125,7 @@ function Homecharging() {
                                         alt={benefit.title}
                                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
-                                    
+
                                 </div>
 
                                 {/* Content */}
@@ -135,6 +150,77 @@ function Homecharging() {
             <div className="relative py-20 bg-gradient-to-b from-transparent to-black/40">
                 <EVCalculator />
             </div>
+
+            {/* Video Testing Section */}
+            <section className="py-24 px-6 relative">
+                <div className="max-w-6xl mx-auto">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-5xl font-black text-white tracking-wide uppercase mb-4">
+                            Want to see how  <span className="text-cyan-400">is it done ?</span>
+
+                        </h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {displayedVideos.map((video) => (
+                            <div key={video.id} className="flex flex-col group">
+                                <div className="w-full aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] group-hover:border-cyan-500/50 transition-colors relative">
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        src={`https://www.youtube.com/embed/${video.youtube_id}?rel=0`}
+                                        title={video.title}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        className="absolute top-0 left-0 w-full h-full object-cover"
+                                    ></iframe>
+                                </div>
+                                <div className="mt-6 flex items-center justify-between px-2">
+                                    <p className="text-white text-lg font-semibold tracking-wide">
+                                        {video.title}
+                                    </p>
+                                    <span className="text-cyan-400 text-sm font-mono bg-cyan-500/10 px-3 py-1 rounded-full">TEST 0{video.id}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Modern Pagination Controls */}
+                    <div className="flex justify-center items-center space-x-4 mt-16">
+                        <button
+                            onClick={() => setPage(Math.max(0, page - 1))}
+                            disabled={page === 0}
+                            className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 ${page === 0
+                                    ? 'bg-white/5 text-slate-600 cursor-not-allowed border border-white/5'
+                                    : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 hover:scale-110'
+                                }`}
+                        >
+                            <ChevronLeft size={24} />
+                        </button>
+
+                        <div className="flex space-x-2">
+                            {[...Array(totalPages)].map((_, i) => (
+                                <div
+                                    key={i}
+                                    className={`h-2 rounded-full transition-all duration-500 ${page === i ? 'w-8 bg-cyan-400' : 'w-2 bg-white/20'}`}
+                                />
+                            ))}
+                        </div>
+
+                        <button
+                            onClick={() => setPage(page + 1)}
+                            disabled={page >= totalPages - 1}
+                            className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 ${page >= totalPages - 1
+                                    ? 'bg-white/5 text-slate-600 cursor-not-allowed border border-white/5'
+                                    : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 hover:scale-110'
+                                }`}
+                        >
+                            <ChevronRight size={24} />
+                        </button>
+                    </div>
+                </div>
+            </section>
 
             <Footer />
 

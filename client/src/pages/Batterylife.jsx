@@ -34,10 +34,9 @@ const rightColumnTips = [
 ];
 
 const VIDEO_DATA = [
-  { id: 1, title: "Battery Crush Test", youtube_id: "1W0w2lEwOPY" },
-  { id: 2, title: "Thermal Runaway Prevention", youtube_id: "8svJ02q4Oeo" },
-  { id: 3, title: "Water Ingress Testing (IP67)", youtube_id: "8svJ02q4Oeo" },
-  { id: 4, title: "Nail Penetration Safety Test", youtube_id: "7_2ZTIQH1eQ" },
+  { id: 1, title: "Water Wading Test", youtube_id: "1W0w2lEwOPY" },
+  { id: 2, title: "Tortured Tracks Test", youtube_id: "8svJ02q4Oeo" },
+  { id: 3, title: " Battery Safety and Quality ", youtube_id: "7_2ZTIQH1eQ" },
 ];
 
 const TipCard = ({ tip }) => (
