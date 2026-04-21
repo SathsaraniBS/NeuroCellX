@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Zap,MapPin,BatteryCharging,BatteryMedium,BatteryWarning,ShieldCheck,Globe,ThermometerSnowflake} from "lucide-react";
+import {Zap,MapPin,BatteryCharging,BatteryMedium,BatteryWarning,ShieldCheck,Globe,ThermometerSnowflake,ChevronDown,ChevronLeft,ChevronRight} from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -133,7 +133,7 @@ function Batterylife() {
   // Initialize state with the actual video data
   const [videos, setVideos] = useState(VIDEO_DATA);
   const [page, setPage] = useState(0);
-
+  
   // Pagination Logic
   const videosPerPage = 2;
   const totalPages = Math.ceil(videos.length / videosPerPage);
@@ -151,6 +151,78 @@ function Batterylife() {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? TRENDS.length - 1 : prev - 1));
   };
+
+  // State Management
+      const [openFaqId, setOpenFaqId] = useState(null);
+      const [articleIndex, setArticleIndex] = useState(0);
+  
+      const [faqs] = useState([
+          { 
+              id: 1, 
+              question: "Can I change the battery in the EV post 8 years? What will be the cost of it?", 
+              answer: (
+              <div className="space-y-4">
+                  <p>A battery’s state of health (SOH) report is required to demonstrate its potential usefulness in an EV. It describes the overall condition of a battery and shows how much longer it can last before it needs replacement.</p>
+                  <p>After the battery SOH has dropped below 70-80% capacity, it can be refurbished into a battery with better health {'>'}80%. However, it is also possible that a battery can be repaired by replacing weak or defective cells or components hence, 100% SOH cannot be achieved. Improving the SOH from say 60% to 80% by replacing few modules will definitely help in increasing the range.</p>
+              </div>
+          )
+          },
+          { 
+              id: 2,
+              question: "How to get the battery repaired?", 
+              answer: (
+              <div className="space-y-4">
+                  <p>When there is a defect in a battery, meaning the battery is not functioning properly or discharging faster than usual, it is advisable to take it to a battery repair center.</p>
+                  <p>When a lithium-ion battery arrives at the battery repair center, it usually goes through three important phases:</p>
+                  <ul className="list-disc pl-5 space-y-2 text-slate-400">
+                      <li><strong className="text-white">Test and diagnosis:</strong> The battery is tested and checked for damages. The diagnosis will help the repair center understand what needs to be done to fix it.</li>
+                      <li><strong className="text-white">Repair:</strong> A team of high-voltage specialists will repair the battery, replace certain parts of the pack, and restore it to its original condition.</li>
+                      <li><strong className="text-white">Return:</strong> The repaired battery will find its way back to the customer, ready to be used in their electric car.</li>
+                  </ul>
+              </div>
+          )
+          },
+          { 
+              id: 3, 
+              question: "What will be estimated cost of repair if SOH % drop from 80% to 70%?", 
+              answer: (
+              <div className="space-y-4">
+                  <p>A battery consists of several modules. The cost for replacing an individual module can come up to approximately Rs. 1.2 Lacs. The total cost will depend on the number of modules to be replaced. For example, a ZS EV has a total of 120 cells in 6 modules present in a battery.</p>
+              </div>
+          )
+           },
+          { 
+              id: 4, 
+              question: "How can the battery life of a car be increased?", 
+              answer: (
+              <div className="space-y-4">
+                  <p>The battery can have a very long life if the following factors are kept under control:</p>
+                  <ol className="list-decimal pl-5 space-y-2 text-slate-400">
+                      <li><strong className="text-white">Keep the battery cool:</strong> Batteries that deal with extreme temperatures can be damaged. Park under a shade as and when possible.</li>
+                      <li><strong className="text-white">Avoid rapid charging frequently:</strong> While convenient, it puts a strain on the battery. Charge slowly and steadily when possible.</li>
+                      <li><strong className="text-white">Do not drain completely:</strong> Try to keep the battery above 20% to avoid putting strain on the chemistry.</li>
+                      <li><strong className="text-white">Keep an eye on the Battery:</strong> Be aware of any changes and visit an authorized workshop if anything is unusual.</li>
+                      <li><strong className="text-white">Avoid frequent 100% charging:</strong> If driving within city limits, keep the SOC between 30% to 80%. Save 100% charges for outstation trips.</li>
+                  </ol>
+              </div>
+          )
+          }
+      ]);
+  
+      
+
+      const toggleFaq = (id) => setOpenFaqId(openFaqId === id ? null : id);
+    
+    const handleArticleClick = (path) => { if (path && path !== "#") navigate(path); };
+
+    const getVisibleArticles = () => {
+        const visible = [];
+        for (let i = 0; i < 3; i++) {
+            visible.push(articles[(articleIndex + i) % articles.length]);
+        }
+        return visible;
+    };
+
 
   return (
     <div className="min-h-screen bg-[#050816] text-white font-sans selection:bg-cyan-500/30">
@@ -423,6 +495,50 @@ function Batterylife() {
           </button>
         </div>
       </section>
+
+      {/* KNOWLEDGE BASE (FAQ & Articles) */}
+            <section className="py-20 relative border-t border-white/5 bg-[#050816]/50">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+
+                    {/* FAQ Area */}
+                    <div className="max-w-3xl mx-auto mb-32">
+                        <h2 className="text-center text-3xl md:text-4xl font-black text-white mb-12 tracking-wide uppercase">
+                            Frequently Asked <span className="text-cyan-400">Questions</span>
+                        </h2>
+
+                        <div className="space-y-4">
+                            {faqs.map((faq) => (
+                                <div
+                                    key={faq.id}
+                                    className={`rounded-xl border transition-all duration-300 ${openFaqId === faq.id ? 'bg-[#0e172a] border-cyan-500/50 shadow-lg' : 'bg-white/5 border-white/10 hover:border-white/20'}`}
+                                >
+                                    <button
+                                        onClick={() => toggleFaq(faq.id)}
+                                        className="w-full flex justify-between items-center p-6 text-left focus:outline-none"
+                                        aria-expanded={openFaqId === faq.id}
+                                    >
+                                        <span className="font-semibold text-white text-lg pr-4">
+                                            {faq.question}
+                                        </span>
+                                        <ChevronDown
+                                            className={`text-cyan-400 flex-shrink-0 transform transition-transform duration-300 ${openFaqId === faq.id ? 'rotate-180' : ''}`}
+                                            size={20}
+                                        />
+                                    </button>
+                                    <div
+                                        className={`overflow-hidden transition-all duration-300 ease-in-out ${openFaqId === faq.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
+                                    >
+                                        <div className="p-6 pt-0 text-slate-400 leading-relaxed border-t border-white/5 mt-2">
+                                            {faq.answer}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
 
       <Footer />
 
