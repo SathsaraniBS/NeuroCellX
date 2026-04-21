@@ -315,48 +315,7 @@ function Batterylife() {
         </div>
       </section>
 
-      {/* Cells Section */}
-      <section className="py-24 max-w-7xl mx-auto px-6 relative">
-        <div className="grid md:grid-cols-2 gap-12 items-center bg-transparent p-10 overflow-hidden relative">
-          <div className="relative group">
-            <img
-              src="src/assets/evbattery-cells.png"
-              alt="EV Battery"
-              className="w-full h-full object-cover shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
-            />
-            <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
-          </div>
-          <div>
-            <h1 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
-              CELLS: HEARTBEAT OF THE <span className="text-cyan-400">ELECTRIC VEHICLE BATTERY</span>
-            </h1>
-
-            <p className="text-gray-400 text-lg mb-4">
-              Lithium-ion batteries (LiB) uses different types of cells according to different type of usages e.g. cylindrical, prismatic and pouch.
-            </p>
-
-            <p className="text-gray-400 text-lg mb-4">
-              A cylindrical cell is a cell enclosed in a rigid cylinder can. Cylindrical cells are small and round, making it possible to stack them in devices of all sizes. They are the most commonly used cell type due to their lower cost. These are often used in laptop batteries and even EVs.
-            </p>
-
-            <p className="text-gray-400 text-lg mb-4">
-              A prismatic cell is a cell whose chemistry is enclosed in a rigid casing. Its rectangular shape allows efficiently stacking multiple units in a battery module. Prismatic cells are designed are thin and light. They can use either steel or aluminium casing, which makes them more stable.
-            </p>
-
-            <p className="text-gray-400 text-lg mb-4">
-              For the same volume, stacked prismatic cells can release more energy at once, offering better performance. Theoretically, the energy density of prismatic cells is higher than cylindrical cells.
-            </p>
-
-            <p className="text-gray-400 text-lg mb-4">
-              A pouch cell is a type of lithium-ion battery used in electric vehicles (EVs). They are characterised by their lightweight design and flexibility, making them a popular choice for some EV manufacturers. The batteries are made up of multiple layers of electrode materials and separators enclosed in a flexible, heat-sealed pouch. They offer advantages such as design flexibility, reduced weight, and efficient space utilization within an EV's battery pack.
-            </p>
-
-            <p className="text-gray-400 text-lg mb-4">
-              Currently Prismatic cells are most widely used worldwide in EVs and Energy Storage solutions (ESS). Prismatic cells are also two types – the electrode sheet inside the casing (anode, separator, cathode) is either stacked or rolled and flattened.
-            </p>
-          </div>
-        </div>
-      </section>
+     
 
       {/* Tips Section */}
       <section className="py-20 px-6 lg:px-8">
@@ -364,7 +323,7 @@ function Batterylife() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-black text-white">
               CELLS: HEARTBEAT OF THE{" "}
-              <span className="transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+              <span className="text-cyan-400 ">
                 ELECTRIC VEHICLE BATTERY
               </span>
             </h2>
@@ -447,7 +406,7 @@ function Batterylife() {
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
               <div className="relative bg-[#0a0f25] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                <img src="/src/assets/bms.png" alt="EV Anatomy Architecture" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src="/src/assets/evbattery-life.png" alt="EAnatomy Architecture" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
 
               </div>
             </div>
