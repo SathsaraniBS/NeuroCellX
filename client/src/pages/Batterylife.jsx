@@ -122,96 +122,11 @@ function Batterylife() {
 
       <main className="max-w-7xl mx-auto px-6">
         
-        {/* Landscape Section */}
-        <section className="py-20 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-6">
-            <h2 className="text-4xl md:text-5xl font-black uppercase leading-none">
-              The Current <br />
-              <span className="text-cyan-400">Landscape</span>
-            </h2>
-            <div className="space-y-4 text-gray-400 text-lg leading-relaxed">
-              <p className='mb-4'>
-                The global public EV charging network is expanding rapidly, with strong adoption across major cities and growing availability in emerging markets and along key transportation corridors. Currently, there are hundreds of thousands of charging stations worldwide, and this number is expected to grow significantly in the coming years as electric vehicle adoption accelerates.
-              </p>
-              <p>
-                To support the transition to electric mobility and maintain an optimal ratio of approximately 1 charger for every 40 electric vehicles, millions of new charging stations will need to be installed annually. By 2030, the global charging infrastructure is projected to reach several million units, ensuring convenient, reliable, and widespread access for EV users everywhere.
-              </p>
-            </div>
-          </div>
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-            <div className="relative bg-black rounded-3xl overflow-hidden border border-white/10">
-              <img src="src/assets/ev11.png" alt="EV Landscape" className="w-full aspect-video object-cover" />
-            </div>
-          </div>
-        </section>
+        
 
-        {/* Trends Slider */}
-        <section className="py-24">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-            <h2 className="text-3xl md:text-5xl font-black uppercase max-w-xl">
-              Changing Trends in <span className="text-lime-400">Public Charging</span>
-            </h2>
-            <div className="flex gap-3">
-              <button onClick={prevSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
-                <ChevronLeft className="group-hover:scale-110" />
-              </button>
-              <button onClick={nextSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
-                <ChevronRight className="group-hover:scale-110" />
-              </button>
-            </div>
-          </div>
+        
 
-          <div className="relative grid md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-7 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl h-auto">
-              <img 
-                src={TRENDS[currentSlide].image} 
-                alt={TRENDS[currentSlide].title} 
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-            
-            <div className="md:col-span-5 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md p-10 rounded-[40px] border border-white/10 relative">
-               <span className="absolute -top-10 right-10 text-8xl font-black text-white/5">
-                0{TRENDS[currentSlide].id}
-               </span>
-               <Zap className="text-cyan-400 mb-6" size={40} />
-               <h3 className="text-3xl font-bold mb-4">{TRENDS[currentSlide].title}</h3>
-               <p className="text-gray-400 text-lg leading-relaxed">
-                 {TRENDS[currentSlide].description}
-               </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Ecosystem Grid */}
-        <section className="py-24 border-t border-white/5">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black uppercase mb-6">The Charging <span className="text-cyan-400">Ecosystem</span></h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">Collaboration between energy providers and tech startups is accelerating the infrastructure rollout.</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {NETWORKS.map((network) => (
-              <div 
-                key={network.id}
-                className="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-cyan-500/50 transition-all hover:-translate-y-2"
-              >
-                <div className="mb-6 p-3 bg-white/5 w-fit rounded-2xl group-hover:bg-cyan-500/20 transition-colors">
-                  {network.icon}
-                </div>
-                <h4 className="text-xl font-bold mb-4">{network.title}</h4>
-                <ul className="space-y-3">
-                  {network.bullets.map((b, i) => (
-                    <li key={i} className="text-sm text-gray-400 flex items-start gap-2">
-                      <span className="text-cyan-500 mt-1">•</span> {b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
+        
       </main>
 
       <Footer />
