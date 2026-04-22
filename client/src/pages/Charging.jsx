@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import EVCalculator from '../components/EVCalculator';
 
 const DUMMY_VEHICLES = [
     {
@@ -26,7 +27,7 @@ const DUMMY_VEHICLES = [
     {
         _id: "ev2",
         title: "EcoRunner SUV",
-        image:"src/assets/carousel-img2.jpg",
+        image: "src/assets/carousel-img2.jpg",
         range: "310 miles",
         topSpeed: "130 mph",
         acceleration: "5.4s",
@@ -36,7 +37,7 @@ const DUMMY_VEHICLES = [
     {
         _id: "ev3",
         title: "Volt City Compact",
-        image:"src/assets/carousel-img3.jpg",
+        image: "src/assets/carousel-img3.jpg",
         range: "250 miles",
         topSpeed: "95 mph",
         acceleration: "7.2s",
@@ -46,28 +47,28 @@ const DUMMY_VEHICLES = [
 ];
 
 const FALLBACK_CHARGING_DATA = [
-    {   
-        id: 1, 
-        level_name: "Level 1", 
-        voltage: "120V", 
+    {
+        id: 1,
+        level_name: "Level 1",
+        voltage: "120V",
         image: "src/assets/level1.png", // Updated fallback image
-        description: "Standard home outlet. Best for overnight charging at home.", 
+        description: "Standard home outlet. Best for overnight charging at home.",
         // iconType: "level1" 
     },
-    { 
-        id: 2, 
-        level_name: "Level 2", 
-        voltage: "240V", 
+    {
+        id: 2,
+        level_name: "Level 2",
+        voltage: "240V",
         image: "src/assets/level2.png", // Updated fallback image
-        description: "Fast home and public charging. Ideal for daily drivers.", 
+        description: "Fast home and public charging. Ideal for daily drivers.",
         // iconType: "level2" 
     },
-    { 
-        id: 3, 
-        level_name: "DC Fast", 
-        voltage: "480V+", 
+    {
+        id: 3,
+        level_name: "DC Fast",
+        voltage: "480V+",
         image: "src/assets/level3.png", // Updated fallback image
-        description: "Rapid commercial charging for long-distance travel.", 
+        description: "Rapid commercial charging for long-distance travel.",
         // iconType: "dcfast" 
     }
 ];
@@ -205,7 +206,7 @@ function Charging() {
                                 ) : (
                                     chargingData.map((level) => (
                                         <div key={level.id} className="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md hover:bg-white/10 transition-all group">
-                                        <img src={level.image} alt={level.level_name} className="w-25 h-25mb-6 object-contain" />
+                                            <img src={level.image} alt={level.level_name} className="w-25 h-25mb-6 object-contain" />
                                             <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition-colors">{level.level_name}</h3>
                                             <h4 className="text-3xl font-black text-white/90 mb-4">{level.voltage}</h4>
                                             <p className="text-gray-400 text-sm leading-relaxed">{level.description}</p>
@@ -230,7 +231,7 @@ function Charging() {
 
                 {/* COMPARISON SECTION */}
                 <section className="max-w-7xl mx-auto px-6 py-10">
-                    <div className="grid md:grid-cols-2 gap-12 items-center bg-white/5 border border-white/10 rounded-[40px] p-10 overflow-hidden relative">
+                    <div className="grid md:grid-cols-2 gap-12 items-center bg-transparent py-10 overflow-hidden relative">
                         <div>
                             <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
                                 It’s just like charging <span className="text-cyan-400">your phone</span>
@@ -319,9 +320,10 @@ function Charging() {
                     </div>
                 </section>
 
+
                 {/* VIDEO SECTION - Fully integrated into the dark EV theme */}
                 <section className="max-w-7xl mx-auto px-6 py-24 mb-10">
-                    <div className="flex flex-col md:flex-row items-center gap-12 bg-white/5 border border-white/10 rounded-[40px] p-8 md:p-12">
+                    <div className="flex flex-col md:flex-row items-center gap-12 bg-transparent ">
 
                         {/* Left: Interactive Video Player */}
                         <div className="w-full md:w-1/2 relative rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)] bg-black aspect-video group">
@@ -391,7 +393,7 @@ function Charging() {
                     </div>
                 </section>
 
-                <section className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12 bg-white">
+                <section className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12 bg-transparent">
 
                     {/* Left Content Column */}
                     <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
@@ -422,13 +424,53 @@ function Charging() {
 
                 </section>
 
-                 <section className="max-w-7xl mx-auto px-6 py-24 relative">
+                <section className="max-w-7xl mx-auto px-6 py-24 relative">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase tracking-wide">
                             Calculate the cost of charging your EV at home here
                         </h2>
                     </div>
-                    </section>
+                </section>
+                <EVCalculator />
+
+                <section className="max-w-7xl mx-auto px-6 py-10">
+                    <div className="grid md:grid-cols-2 gap-12 items-center bg-transparent py-10 overflow-hidden relative">
+                        <div>
+                            <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                                And, will charging be a hassle  <span className="text-cyan-400"> -free experience ?</span>
+                            </h2>
+
+                            <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                                It’s more convenient than you think.
+
+                            </h2>
+
+                            <p className="text-gray-400 text-lg mb-8">
+                                Charging up an EV from nearly empty to full might take a tad longer than a quick fuel station pit stop, but, things are changing fast. With lots of fast chargers available, EV drivers can "charge on the go" and hit the road without missing a beat.
+
+                            </p>
+
+                            <p className="text-gray-400 text-lg mb-8">
+                                With multiple charging options available ranging from portable charging cable compatible with 15 amperes sockets to 7.4 kW AC Fast chargers to DC Fast chargers, now you have multiple options to choose from at your convenience. There are also more than 29000+ public charging stations across India presently and they are evolving at a fast speed.
+
+
+                            </p>
+                            <button className="flex items-center gap-2 text-cyan-400 font-bold hover:gap-4 transition-all">
+                                Learn more about RUL Predictions <ChevronRight size={20} />
+                            </button>
+                        </div>
+                        <div className="relative group">
+                            {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
+                            <img
+                                src="src/assets/ev4.png"
+                                alt="EV Battery"
+                                className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
+                            />
+                            <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
+                        </div>
+                    </div>
+                </section>
+
 
             </main>
 
