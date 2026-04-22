@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    Zap,
-    ChevronRight,
-    ChevronLeft,
-    PlugZap,
-    BatteryCharging,
-    Timer,
-    PlayCircle
-} from "lucide-react";
+import { Zap, ChevronRight, ChevronLeft, PlugZap, BatteryCharging, Timer, PlayCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -96,52 +88,47 @@ const STATION_TYPES = [
 ];
 
 const leftColumnTips = [
-  {
-    id: 1,
-    description: "AC Fast chargers can be installed at your home or office free of cost.",
-  },
-  {
-    id: 2,
-    description: "Portable charging cable in your car that can be plugged into any 15-ampere socket.",
-
-  },
-  {
-    id: 3,
-    description: "DC fast chargers are available at your nearest MG dealership.",
-
-  },
-  {
-    id: 4,
-    description: "Community charger available across key residential complexes and public locations.",
-
-  }
+    {
+        id: 1,
+        description: "AC Fast chargers can be installed at your home or office free of cost.",
+    },
+    {
+        id: 2,
+        description: "Portable charging cable in your car that can be plugged into any 15-ampere socket.",
+    },
+    {
+        id: 3,
+        description: "DC fast chargers are available at your nearest MG dealership.",
+    },
+    {
+        id: 4,
+        description: "Community charger available across key residential complexes and public locations.",
+    }
 ];
 
 const rightColumnTips = [
-  {
-    id: 5,
-    description: "24/7 roadside assistance along with mobile vehicle charging in select cities.",
-  },
-  {
-    id: 6,
-    description: "Fast chargers are available across key routes in satellite cities as part of an extended charging network.",
-
-  }
+    {
+        id: 5,
+        description: "24/7 roadside assistance along with mobile vehicle charging in select cities.",
+    },
+    {
+        id: 6,
+        description: "Fast chargers are available across key routes in satellite cities as part of an extended charging network.",
+    }
 ];
 
-
 const TipCard = ({ tip }) => (
-  <div className="group relative bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-cyan-500/10 hover:border-cyan-500/40 transition-all duration-500 flex gap-5 mb-6 overflow-hidden hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] hover:-translate-y-1">
-    <div className="absolute top-0 left-0 w-1 h-full bg-cyan-500/20 group-hover:bg-cyan-400 transition-colors duration-500" />
-    <div className="relative">
-      <div className="flex items-center gap-3 mb-3">
-        <span className="font-mono text-sm font-bold bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full">
-          {tip.id}
-        </span>
-      </div>
-      <p className="text-slate-300 text-sm md:text-base leading-relaxed">{tip.description}</p>
+    <div className="group relative bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-cyan-500/10 hover:border-cyan-500/40 transition-all duration-500 flex gap-5 mb-6 overflow-hidden hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] hover:-translate-y-1">
+        <div className="absolute top-0 left-0 w-1 h-full bg-cyan-500/20 group-hover:bg-cyan-400 transition-colors duration-500" />
+        <div className="relative">
+            <div className="flex items-center gap-3 mb-3">
+                <span className="font-mono text-sm font-bold bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full">
+                    {tip.id}
+                </span>
+            </div>
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed">{tip.description}</p>
+        </div>
     </div>
-  </div>
 );
 
 function Charging() {
@@ -155,45 +142,6 @@ function Charging() {
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
     const activeEV = vehicles[currentHeroIndex];
-
-    const [batteries, setBatteries] = useState([
-            {
-                id: 1,
-                name: "Home / Office AC Fast Charger",
-                benefits: "An AC fast charger can be installed at your home or workplace at no cost",
-                drawbacks: "Convenient overnight or work-time charging"
-            },
-            {
-                id: 2,
-                name: "Portable Charging Cable",
-                benefits: "A cable provided with the car that plugs into any 15-amp socket",
-                drawbacks: "Allows emergency charging anywhere with a standard outlet"
-            },
-            {
-                id: 3,
-                name: "DC Fast Chargers (Dealership)",
-                benefits: "Fast charging stations available at nearby MG dealerships",
-                drawbacks: "Quickly recharge your battery in less time"
-            },
-            {
-                id: 4,
-                name: "Community Charging Network",
-                benefits: "Chargers available in residential complexes and public locations",
-                drawbacks: "Easy access to charging while you’re out"
-            },
-            {
-                id: 5,
-                name: "24/7 Roadside Assistance",
-                benefits: "Includes mobile vehicle charging support in select cities",
-                drawbacks: "Help is available even if your battery runs low unexpectedly"
-            },
-            {
-                id: 6,
-                name: "Extended Charging Network",
-                benefits: "Fast chargers installed along key routes and satellite cities",
-                drawbacks: "Stress-free long-distance travel without charging worries"
-            }
-        ]);
 
     // Hero Section Rotation
     useEffect(() => {
@@ -293,11 +241,39 @@ function Charging() {
                                     <div className="col-span-3 text-center py-20"><div className="animate-spin h-10 w-10 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto" /></div>
                                 ) : (
                                     chargingData.map((level) => (
-                                        <div key={level.id} className="bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-md hover:bg-white/10 transition-all group">
-                                            <img src={level.image} alt={level.level_name} className="w-25 h-25mb-6 object-contain" />
-                                            <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition-colors">{level.level_name}</h3>
-                                            <h4 className="text-3xl font-black text-white/90 mb-4">{level.voltage}</h4>
-                                            <p className="text-gray-400 text-sm leading-relaxed">{level.description}</p>
+                                        <div key={level.id} className="relative h-80 rounded-3xl overflow-hidden group border border-white/10 shadow-lg">
+                                            
+                                            {/* Card Background Image */}
+                                            <div 
+                                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 z-0"
+                                                style={{ backgroundImage: `url(${level.image})` }}
+                                            />
+                                            
+                                            {/* Dark Gradient Overlay for Readability */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20 z-10 transition-colors duration-500 group-hover:from-black/95 group-hover:via-black/80 group-hover:to-black/50" />
+
+                                            {/* Content Overlay */}
+                                            <div className="absolute inset-0 z-20 p-6 flex flex-col justify-end">
+                                                
+                                                {/* Title & Voltage (Moves up slightly on hover) */}
+                                                <div className="transform transition-transform duration-500 translate-y-6 group-hover:-translate-y-4">
+                                                    <h3 className="text-2xl font-bold mb-1 text-white group-hover:text-cyan-400 transition-colors drop-shadow-md">
+                                                        {level.level_name}
+                                                    </h3>
+                                                    <h4 className="text-3xl font-black text-white/90 drop-shadow-md">
+                                                        {level.voltage}
+                                                    </h4>
+                                                </div>
+
+                                                {/* Description (Fades in and slides up on hover) */}
+                                                <div className="absolute bottom-6 left-6 right-6 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                                                    <div className="h-[1px] w-full bg-gradient-to-r from-cyan-500/50 to-transparent mb-3" />
+                                                    <p className="text-gray-300 text-sm leading-relaxed">
+                                                        {level.description}
+                                                    </p>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     ))
                                 )}
@@ -332,11 +308,10 @@ function Charging() {
                             </button>
                         </div>
                         <div className="relative group">
-                            {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
                             <img
                                 src="src/assets/ev4.png"
                                 alt="EV Battery"
-                                className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
+                                className="w-full h-full object-cover shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
                             />
                             <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
                         </div>
@@ -455,7 +430,7 @@ function Charging() {
                             )}
                         </div>
 
-                        {/* Right: Text Content (Updated to match dark EV theme) */}
+                        {/* Right: Text Content */}
                         <div className="w-full md:w-1/2 space-y-6">
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lime-500/30 bg-lime-500/10 text-lime-400 font-bold tracking-widest uppercase text-xs">
                                 <span>Educational Guide</span>
@@ -491,7 +466,6 @@ function Charging() {
 
                         <h3 className="text-xl md:text-2xl font-bold text-[#4BA1CC]">
                             It’s cheaper than conventional fuel!
-
                         </h3>
 
                         <p className="text-gray-700 text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
@@ -520,118 +494,6 @@ function Charging() {
                     </div>
                 </section>
                 <EVCalculator />
-
-                <section className="max-w-7xl mx-auto px-6 py-10">
-                    <div className="grid md:grid-cols-2 gap-12 items-center bg-transparent py-10 overflow-hidden relative">
-                        <div>
-                            <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
-                                And, will charging be a hassle  <span className="text-cyan-400"> -free experience ?</span>
-                            </h2>
-
-                            <h3 className="text-4xl md:text-4xl font-black leading-tight mb-6 uppercase">
-                                It’s more convenient than you think.
-
-                            </h3>
-
-                            <p className="text-gray-400 text-lg mb-8">
-                                Charging up an EV from nearly empty to full might take a tad longer than a quick fuel station pit stop, but, things are changing fast. With lots of fast chargers available, EV drivers can "charge on the go" and hit the road without missing a beat.
-
-                            </p>
-
-                            <p className="text-gray-400 text-lg mb-8">
-                                With multiple charging options available ranging from portable charging cable compatible with 15 amperes sockets to 7.4 kW AC Fast chargers to DC Fast chargers, now you have multiple options to choose from at your convenience. There are also more than 29000+ public charging stations across India presently and they are evolving at a fast speed.
-
-
-                            </p>
-                            <button className="flex items-center gap-2 text-cyan-400 font-bold hover:gap-4 transition-all">
-                                Learn more about RUL Predictions <ChevronRight size={20} />
-                            </button>
-                        </div>
-                        <div className="relative group">
-                            {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
-                            <img
-                                src="src/assets/ev4.png"
-                                alt="EV Battery"
-                                className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
-                            />
-                            <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
-                        </div>
-                    </div>
-                </section>
-
-                <section className="py-24 px-6 lg:px-8 relative">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-600/10 blur-[120px] rounded-full pointer-events-none" />
-          
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-16 md:w-2/3">
-              <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
-                DID YOU  <br />
-                <span className="text-cyan-400">KNOW ? </span>
-              </h2>
-              <p className="text-slate-400 text-lg">
-                6 reasons to not worry about charging your EV
-
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-              <div className="flex flex-col">
-                {leftColumnTips.map(tip => <TipCard key={tip.id} tip={tip} />)}
-              </div>
-              <div className="flex flex-col">
-                <div className="relative overflow-hidden rounded-3xl mb-8 h-64 md:h-[340px] border border-cyan-500/20 shadow-[0_0_40px_rgba(6,182,212,0.1)] group">
-                  <img
-                    src="/src/assets/maintenance-img2.png"
-                    alt="EV Cell Architecture"
-                    className="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700"
-                    onError={(e) => { e.target.src = "https://via.placeholder.com/800x600/0a1122/06b6d4?text=Cell+Architecture"; }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/20 to-transparent" />
-                </div>
-                {rightColumnTips.map(tip => <TipCard key={tip.id} tip={tip} />)}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* --- COMPARISON TABLE SECTION --- */}
-            <section className="py-24 max-w-6xl mx-auto px-6">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-4"> <span className="text-lime-400"></span></h2>
-                    <p className="text-slate-400 text-lg max-w-2xl mx-auto"></p>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-[#0a0f25]/50 backdrop-blur-md overflow-hidden shadow-2xl">
-                    {/* Headers */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 bg-white/5 border-b border-white/10 text-sm uppercase tracking-wider font-bold text-cyan-400">
-                        <div className="p-6">Chemistry Type</div>
-                        <div className="p-6 md:border-l border-white/10">Key Benefits</div>
-                        <div className="p-6 md:border-l border-white/10 text-lime-400">Drawbacks</div>
-                    </div>
-
-                    {/* Rows */}
-                    <div className="divide-y divide-white/5">
-                        {batteries.map((battery) => (
-                            <div key={battery.id} className="grid grid-cols-1 md:grid-cols-3 transition-colors hover:bg-white/[0.02]">
-                                <div className="p-6 font-bold text-lg flex items-center">
-                                    {battery.name}
-                                </div>
-                                <div className="p-6 md:border-l border-white/5 text-slate-300 text-sm leading-relaxed">
-                                    {battery.benefits}
-                                </div>
-                                <div className="p-6 md:border-l border-white/5 text-slate-400 text-sm leading-relaxed">
-                                    {battery.drawbacks}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-
-
-                
-
 
             </main>
 
