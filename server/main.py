@@ -12,7 +12,7 @@ from routers import datasets
 from routers import contact     
 from routers import predict    
 from routers import calculator  
-
+from routers import stations
 
 app = FastAPI(
     title="VoltIQ - EV Battery Health Prediction System",
@@ -44,7 +44,7 @@ app.include_router(predict.router)
 app.include_router(contact.router)
 app.include_router(chatbot_router, prefix="/api")
 app.include_router(calculator.router)  
-
+app.include_router(stations.router)
 # Create all database tables on startup
 Base.metadata.create_all(bind=engine)  
 
