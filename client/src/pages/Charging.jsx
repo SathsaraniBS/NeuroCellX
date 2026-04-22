@@ -235,61 +235,56 @@ function Charging() {
                         </div>
 
                         <div className="flex flex-col lg:flex-row items-center gap-16">
-                            {/* Cards Grid */}
-                            <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-6">
-                                {loading ? (
-                                    <div className="col-span-3 text-center py-20"><div className="animate-spin h-10 w-10 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto" /></div>
-                                ) : (
-                                    chargingData.map((level) => (
-                                        <div key={level.id} className="relative h-80 rounded-3xl overflow-hidden group border border-white/10 shadow-lg">
-                                            
-                                            {/* Card Background Image */}
-                                            <div 
-                                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 z-0"
-                                                style={{ backgroundImage: `url(${level.image})` }}
-                                            />
-                                            
-                                            {/* Dark Gradient Overlay for Readability */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20 z-10 transition-colors duration-500 group-hover:from-black/95 group-hover:via-black/80 group-hover:to-black/50" />
+              <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-6">
+                {loading ? (
+                  <div className="col-span-3 text-center py-20"><div className="animate-spin h-10 w-10 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto" /></div>
+                ) : (
+                  chargingData.map((level) => (
+                    <div key={level.id} className="relative h-96 rounded-3xl overflow-hidden group border border-white/10 shadow-lg">
+                      {/* Background */}
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style={{ backgroundImage: `url(${level.image})` }}
+                      />
 
-                                            {/* Content Overlay */}
-                                            <div className="absolute inset-0 z-20 p-6 flex flex-col justify-end">
-                                                
-                                                {/* Title & Voltage (Moves up slightly on hover) */}
-                                                <div className="transform transition-transform duration-500 translate-y-6 group-hover:-translate-y-4">
-                                                    <h3 className="text-2xl font-bold mb-1 text-white group-hover:text-cyan-400 transition-colors drop-shadow-md">
-                                                        {level.level_name}
-                                                    </h3>
-                                                    <h4 className="text-3xl font-black text-white/90 drop-shadow-md">
-                                                        {level.voltage}
-                                                    </h4>
-                                                </div>
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
 
-                                                {/* Description (Fades in and slides up on hover) */}
-                                                <div className="absolute bottom-6 left-6 right-6 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                                                    <div className="h-[1px] w-full bg-gradient-to-r from-cyan-500/50 to-transparent mb-3" />
-                                                    <p className="text-gray-300 text-sm leading-relaxed">
-                                                        {level.description}
-                                                    </p>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    ))
-                                )}
-                            </div>
-
-                            {/* Text Area */}
-                            <div className="lg:w-1/3">
-                                <div className="bg-cyan-500/10 border border-cyan-500/20 p-8 rounded-3xl relative">
-                                    <h3 className="text-2xl font-black mb-4 uppercase text-white">What are charging levels?</h3>
-                                    <p className="text-gray-400 text-base leading-relaxed mb-6">
-                                        Charging speed is determined by the "Level" of the charger. From standard wall outlets to high-speed DC stations, we help you pick the right power for your journey.
-                                    </p>
-                                    <div className="h-1.5 w-16 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-full" />
-                                </div>
-                            </div>
+                      {/* Content */}
+                      <div className="absolute inset-0 z-20 p-8 flex flex-col justify-end">
+                        {/* Title Section */}
+                        <div className="transform transition-transform duration-500 translate-y-8 group-hover:translate-y-0">
+                          <h3 className="text-xl font-bold text-cyan-400 mb-1">
+                            {level.level_name}
+                          </h3>
+                          <h4 className="text-4xl font-black text-white mb-4">
+                            {level.voltage}
+                          </h4>
                         </div>
+
+                        {/* Description Section */}
+                        <div className="opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                          <div className="h-[2px] w-12 bg-cyan-500 mb-4" />
+                          <p className="text-gray-300 text-lg font-bold leading-relaxed">
+                            {level.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="lg:w-1/3">
+                <div className="bg-cyan-500/10 border border-cyan-500/20 p-8 rounded-3xl">
+                  <h3 className="text-2xl font-black mb-4 uppercase text-white">What are charging levels?</h3>
+                  <p className="text-gray-400 text-base leading-relaxed mb-6">
+                    Charging speed is determined by the "Level" of the charger. From standard wall outlets to high-speed DC stations, we help you pick the right power for your journey.
+                  </p>
+                  <div className="h-1.5 w-16 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-full" />
+                </div>
+              </div>
+            </div>
                     </div>
                 </section>
 
