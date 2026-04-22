@@ -20,13 +20,13 @@ const TRENDS = [
   {
     id: 3,
     title: "Usage of Renewable Energy",
-    image: "src/assets/evstation.png",
+    image: "src/assets/solarchargingstation.png",
     description: "Renewable energy sources, such as solar and wind power, are playing an increasingly important role in electric vehicle (EV) charging. Since renewable energy sources produce zero or low emissions, they help reduce air pollution and also decrease our reliance on fossil fuels. The Ministry of New and Renewable Energy has formulated draft guidelines to encourage the establishment of decentralised solar power plants. Therefore, many EV charging stations have adopted solar panels to generate power."
   },
   {
     id: 4,
     title: "Charging Hubs ",
-    image: "src/assets/evstation.png",
+    image: "src/assets/charging-hub.png",
     description: "Charging hubs provide multiple charging points in a centralized location, especially those designed for fleets or high-traffic areas. These hubs are equipped with fast charging options, making them ideal for busy urban areas or locations where various EVs converge. Charging hubs streamline journey planning by offering a reliable and efficient charging solution in one place."
   },
   {
