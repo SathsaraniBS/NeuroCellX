@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Layout from './components/Layout';
-import LearningHub from './pages/LearningHub';
+import LearningHub from './pages/EV';
 import LandingPage from './pages/LandingPage';
 import About from './pages/About';
 import ContactPage from './pages/ContactPage';
@@ -26,6 +26,7 @@ import EVArchitecture from './pages/EVArchitecture';
 import InsideBattery from './pages/InsideBattery';
 import Batterysafety from './pages/Batterysafety';
 import RepairandMaintenance from './pages/RepairandMaintenance';
+import EV from './pages/EV';
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard';
 
@@ -52,7 +53,7 @@ function App() {
                                 <Route index element={<Home />} />
                                 <Route path="login" element={<Login />} />
                                 <Route path="register" element={<Register />} />
-                                <Route path="learning" element={<LearningHub />} />
+                                <Route path="ev" element={<EV/>} />
                                 <Route path="landingpage" element={<LandingPage />} />
                                 <Route path="forgot-password" element={<ResetPassword />} />
                                 <Route path="about" element={<About />} />

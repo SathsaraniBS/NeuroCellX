@@ -5,9 +5,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false); // Kept for future mobile menu
   const [isScrolled, setIsScrolled] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isChargingOpen, setIsChargingOpen] = useState(false); 
-  const [isBatteryOpen, setIsBatteryOpen] = useState(false); 
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [isChargingOpen, setIsChargingOpen] = useState(false);
+  const [isBatteryOpen, setIsBatteryOpen] = useState(false);
+  const [isEVOpen, setIsEVOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -28,9 +29,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed w-full top-0 z-50 py-4 h-20 text-white flex justify-between items-center shadow-md transition duration-300 ${
-        isScrolled ? 'bg-[#0f172a]/80 backdrop-blur-md border-b border-white/10' : ' bg-transparent'
-      }`}
+      className={`fixed w-full top-0 z-50 py-4 h-20 text-white flex justify-between items-center shadow-md transition duration-300 ${isScrolled ? 'bg-[#0f172a]/80 backdrop-blur-md border-b border-white/10' : ' bg-transparent'
+        }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center w-full px-4 text-white">
 
@@ -38,7 +38,7 @@ const Navbar = () => {
         <div className="text-2xl font-semibold tracking-wide">
           <Link to="/">
             <span className="bg-gradient-to-r from-cyan-400 to-lime-400 bg-clip-text text-transparent">
-                VoltIQ
+              VoltIQ
             </span>
           </Link>
         </div>
@@ -48,9 +48,9 @@ const Navbar = () => {
           <Link to="/" className="hover:text-cyan-400 transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]">
             Home
           </Link>
-          
+
           {/* Battery Dropdown (Fixed State) */}
-          <div 
+          <div
             className="relative group"
             onMouseEnter={() => setIsBatteryOpen(true)}
             onMouseLeave={() => setIsBatteryOpen(false)}
@@ -63,26 +63,26 @@ const Navbar = () => {
 
             {isBatteryOpen && (
               <div className="absolute left-0 mt-0 w-48 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
-                <Link 
-                  to="/battery/batttery-types" 
+                <Link
+                  to="/battery/batttery-types"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   Types of EV Battery
                 </Link>
-                <Link 
-                  to="/battery-life" 
+                <Link
+                  to="/battery-life"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   Battery Life
                 </Link>
-                <Link 
-                  to="/battery-safety" 
+                <Link
+                  to="/battery-safety"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   Battery Safety
                 </Link>
-                <Link 
-                  to="/repair-and-maintenance" 
+                <Link
+                  to="/repair-and-maintenance"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   Repair & Maintenance
@@ -106,7 +106,7 @@ const Navbar = () => {
           </Link>
 
           {/* Charging Dropdown */}
-          <div 
+          <div
             className="relative group"
             onMouseEnter={() => setIsChargingOpen(true)}
             onMouseLeave={() => setIsChargingOpen(false)}
@@ -119,26 +119,26 @@ const Navbar = () => {
 
             {isChargingOpen && (
               <div className="absolute left-0 mt-0 w-48 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
-                <Link 
-                  to="/charging/stations" 
+                <Link
+                  to="/charging/stations"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   Find Stations
                 </Link>
-                <Link 
-                  to="/homecharging" 
+                <Link
+                  to="/homecharging"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   HOME CHARGING
                 </Link>
-                <Link 
-                  to="/publiccharging" 
+                <Link
+                  to="/publiccharging"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   PUBLIC CHARGING
                 </Link>
-                <Link 
-                  to="/charging/compare" 
+                <Link
+                  to="/charging/compare"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   TRIP PLANNER
@@ -154,9 +154,48 @@ const Navbar = () => {
           </Link>
         </div>
 
+        {/* EV Dropdown (Fixed State) */}
+        <div
+          className="relative group"
+          onMouseEnter={() => setIsEVOpen(true)}
+          onMouseLeave={() => setIsEVOpen(false)}
+        >
+          <Link to="/ev"
+            className="flex items-center gap-1 hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
+
+          >
+            EV  <span className={`transition-transform duration-200 ${isEVOpen ? 'rotate-180' : ''}`}>▾</span>
+          </Link>
+
+          {isEVOpen && (
+            <div className="absolute left-0 mt-0 w-48 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
+              <Link
+                to="/ev-types"
+                className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+              >
+                Types of EV
+              </Link>
+              <Link
+                to="#"
+                className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+              >
+                EV
+              </Link>
+              <Link
+                to="#"
+                className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+              >
+                EV
+              </Link>
+
+            </div>
+          )}
+        </div>
+
+
         {/* Right Side Items */}
         <div className="flex items-center gap-4 mr-4">
-          
+
           {!isLoggedIn ? (
             <>
               {/* Sign Up Button */}
@@ -179,14 +218,14 @@ const Navbar = () => {
           ) : (
             /* User Profile Dropdown */
             <div className="relative">
-              <button 
+              <button
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                 className="flex items-center focus:outline-none"
               >
                 <div className="w-10 h-10 rounded-full border-2 border-cyan-400 p-0.5 overflow-hidden hover:shadow-[0_0_15px_rgba(0,255,255,0.5)] transition-all">
-                  <img 
-                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" 
-                    alt="User" 
+                  <img
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                    alt="User"
                     className="w-full h-full rounded-full bg-gray-800"
                   />
                 </div>
@@ -195,22 +234,22 @@ const Navbar = () => {
               {/* Dropdown Menu */}
               {isProfileOpen && (
                 <div className="absolute right-0 mt-3 w-48 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
-                  <Link 
-                    to="/profile" 
+                  <Link
+                    to="/profile"
                     className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                     onClick={() => setIsProfileOpen(false)}
                   >
                     My Profile
                   </Link>
-                  <Link 
-                    to="/settings" 
+                  <Link
+                    to="/settings"
                     className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                     onClick={() => setIsProfileOpen(false)}
                   >
                     Settings
                   </Link>
                   <hr className="my-1 border-white/5" />
-                  <button 
+                  <button
                     onClick={() => setIsLoggedIn(false)}
                     className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition"
                   >

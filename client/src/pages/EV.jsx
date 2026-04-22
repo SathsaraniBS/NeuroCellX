@@ -138,7 +138,7 @@ const evbatteyries = [
   },
 ];
 
-const LearningHub = () => {
+const EV = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredEvTypes = evTypes.filter((item) =>
@@ -374,4 +374,4 @@ const LearningHub = () => {
   );
 }
 
-export default LearningHub;
+export default EV;
