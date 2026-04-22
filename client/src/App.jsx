@@ -18,6 +18,7 @@ import Dashboard from './pages/Dashboard';
 import Predictions from './pages/Predictions';
 import Profile from './pages/ProfilePage';
 import Reports from './pages/Reports';
+import FindStations from './pages/FindStations';
 import PublicCharging from './pages/PublicCharging';
 import Homecharging from './pages/Homecharging';
 import Battery from './pages/Battery';
@@ -115,6 +116,14 @@ function App() {
                                     <PublicCharging />
                                 </ProtectedRoute>
                             } />
+
+                            <Route path="/find-station" element={
+                                <ProtectedRoute>
+                                    <FindStations/>
+                                </ProtectedRoute>
+                            } />
+
+                        
                             <Route path="/dashboard" element={
                                 <ProtectedRoute>
                                     <Dashboard />

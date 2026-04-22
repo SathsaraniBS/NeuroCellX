@@ -120,7 +120,7 @@ const Navbar = () => {
             {isChargingOpen && (
               <div className="absolute left-0 mt-0 w-48 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
                 <Link
-                  to="/charging/stations"
+                  to="/find-station"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   Find Stations
