@@ -35,10 +35,10 @@ const EVCalculator = () => {
 
             <div className="relative z-10 w-full max-w-5xl">
                 <div className="text-center mb-10">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-bold tracking-widest uppercase text-xs shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+                    {/* <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-bold tracking-widest uppercase text-xs shadow-[0_0_20px_rgba(6,182,212,0.2)]">
                         <Zap size={14} className="fill-cyan-400" />
                         <span>Cost Estimator</span>
-                    </div>
+                    </div> */}
                     <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight">
                         Calculate Your <span className="text-cyan-400">Home Charging</span> Costs
                     </h1>

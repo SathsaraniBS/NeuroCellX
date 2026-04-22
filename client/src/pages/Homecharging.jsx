@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Zap, ShieldCheck, Banknote, LayoutGrid,ChevronLeft, ChevronRight, ChevronDown, ArrowRight, BatteryCharging } from "lucide-react";
+import { Heart, Zap, ShieldCheck, Banknote, LayoutGrid, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, BatteryCharging } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import EVCalculator from '../components/EVCalculator';
@@ -12,15 +12,15 @@ const Home_Charging_Benefits = [
         image: "/src/assets/ev8.png",
         description: "Just like your phones and computers, you can charge your EVs at home with an AC Fast Charger. These smart chargers are easy to operate through mobile apps.",
         icon: <Zap className="text-cyan-400" size={20} />,
-        glowColor: "group-hover:shadow-cyan-500/20"
+        glowColor: "group-hover:shadow-cyan-500/40"
     },
     {
         id: 2,
         title: "Cost Efficient",
         image: "/src/assets/ev9.png",
-        description: "With global energy prices fluctuating, switching to electric mobility is a smart financial move. Reduce your daily commute costs by up to 70%.",
+        description: "With global energy prices slashing, switching to electric mobility is a smart financial move. Reduce your daily commute costs by up to 70%.",
         icon: <Banknote className="text-lime-400" size={20} />,
-        glowColor: "group-hover:shadow-lime-500/20"
+        glowColor: "group-hover:shadow-lime-500/40"
     },
     {
         id: 3,
@@ -28,7 +28,7 @@ const Home_Charging_Benefits = [
         image: "/src/assets/ev10.png",
         description: "Charge in a familiar, secure environment with built-in surge protection and battery health monitoring tailored for your home infrastructure.",
         icon: <ShieldCheck className="text-blue-400" size={20} />,
-        glowColor: "group-hover:shadow-blue-500/20"
+        glowColor: "group-hover:shadow-blue-500/40"
     }
 ];
 
@@ -36,11 +36,9 @@ const VIDEO_DATA = [
     { id: 1, title: "Strengthening the EV ecosystem", youtube_id: "T2Ewt-SbCkU" },
     { id: 2, title: " Strengthening the EV ecosystem", youtube_id: "fisLKXDrYv0" },
     { id: 3, title: " Strengthening the EV ecosystem", youtube_id: "mTm7Kz8bzC0" }
-
 ];
 
 function Homecharging() {
-    const [savedGuides, setSavedGuides] = useState([]);
     const [page, setPage] = useState(0);
     
     // Pagination Logic
@@ -50,11 +48,6 @@ function Homecharging() {
         page * videosPerPage,
         (page + 1) * videosPerPage
     );
-    const toggleSave = (id) => {
-        setSavedGuides(prev =>
-            prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-        );
-    };
 
     return (
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
@@ -90,7 +83,6 @@ function Homecharging() {
 
             {/* --- BENEFITS SECTION --- */}
             <section className="py-32 relative">
-                {/* Visual accents */}
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
                 <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-lime-600/10 blur-[150px] -z-10" />
 
@@ -106,39 +98,41 @@ function Homecharging() {
                                 are designed to integrate seamlessly with your lifestyle.
                             </p>
                         </div>
-                        <div className="hidden md:block text-right">
-                            <LayoutGrid className="text-white/20 ml-auto mb-2" size={40} />
-                            <span className="text-xs uppercase tracking-[0.2em] text-slate-500 font-bold">Smart Ecosystem</span>
-                        </div>
+                       
                     </div>
 
+                    {/* UPDATED CARDS GRID */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {Home_Charging_Benefits.map((benefit) => (
                             <div
                                 key={benefit.id}
-                                className={`group relative rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-md p-2 transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:bg-white/[0.05] ${benefit.glowColor} hover:shadow-2xl`}
+                                className={`group relative h-[400px] rounded-3xl overflow-hidden border border-white/10 transition-all duration-500 hover:-translate-y-2 ${benefit.glowColor} hover:shadow-2xl`}
                             >
-                                {/* Card Header Image */}
-                                <div className="relative h-64 w-full overflow-hidden rounded-2xl mb-6">
-                                    <img
-                                        src={benefit.image}
-                                        alt={benefit.title}
-                                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                    />
+                                {/* Background Image */}
+                                <img
+                                    src={benefit.image}
+                                    alt={benefit.title}
+                                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                
+                                {/* Gradient Overlay for text readability */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent transition-opacity duration-500 group-hover:bg-black/70" />
 
-                                </div>
-
-                                {/* Content */}
-                                <div className="px-6 pb-8">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="p-2 rounded-lg bg-white/5 border border-white/10">
+                                {/* Card Content */}
+                                <div className="relative h-full flex flex-col justify-end p-8 z-10">
+                                    <div className="flex items-center gap-3 mb-4 transition-transform duration-500 group-hover:-translate-y-2">
+                                        <div className="p-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20">
                                             {benefit.icon}
                                         </div>
-                                        <h3 className="text-2xl font-bold tracking-tight">{benefit.title}</h3>
+                                        <h3 className="text-2xl font-bold tracking-tight text-white">{benefit.title}</h3>
                                     </div>
-                                    <p className="text-slate-400 leading-relaxed text-[15px]">
-                                        {benefit.description}
-                                    </p>
+
+                                    {/* Description - Hidden by default, fades in on hover */}
+                                    <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 group-hover:max-h-40 group-hover:opacity-100">
+                                        <p className="text-slate-200 leading-relaxed text-[15px] border-t border-white/10 pt-4">
+                                            {benefit.description}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -151,13 +145,12 @@ function Homecharging() {
                 <EVCalculator />
             </div>
 
-            {/* Video Testing Section */}
+            {/* Video Section */}
             <section className="py-24 px-6 relative">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-black text-white tracking-wide uppercase mb-4">
-                            Want to see how  <span className="text-cyan-400">is it done ?</span>
-
+                            Want to see how <span className="text-cyan-400">is it done?</span>
                         </h2>
                     </div>
 
@@ -186,14 +179,14 @@ function Homecharging() {
                         ))}
                     </div>
 
-                    {/* Modern Pagination Controls */}
+                    {/* Pagination Controls */}
                     <div className="flex justify-center items-center space-x-4 mt-16">
                         <button
                             onClick={() => setPage(Math.max(0, page - 1))}
                             disabled={page === 0}
                             className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 ${page === 0
-                                    ? 'bg-white/5 text-slate-600 cursor-not-allowed border border-white/5'
-                                    : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 hover:scale-110'
+                                ? 'bg-white/5 text-slate-600 cursor-not-allowed border border-white/5'
+                                : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 hover:scale-110'
                                 }`}
                         >
                             <ChevronLeft size={24} />
@@ -212,8 +205,8 @@ function Homecharging() {
                             onClick={() => setPage(page + 1)}
                             disabled={page >= totalPages - 1}
                             className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 ${page >= totalPages - 1
-                                    ? 'bg-white/5 text-slate-600 cursor-not-allowed border border-white/5'
-                                    : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 hover:scale-110'
+                                ? 'bg-white/5 text-slate-600 cursor-not-allowed border border-white/5'
+                                : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 hover:scale-110'
                                 }`}
                         >
                             <ChevronRight size={24} />
