@@ -156,6 +156,45 @@ function Charging() {
 
     const activeEV = vehicles[currentHeroIndex];
 
+    const [batteries, setBatteries] = useState([
+            {
+                id: 1,
+                name: "Home / Office AC Fast Charger",
+                benefits: "An AC fast charger can be installed at your home or workplace at no cost",
+                drawbacks: "Convenient overnight or work-time charging"
+            },
+            {
+                id: 2,
+                name: "Portable Charging Cable",
+                benefits: "A cable provided with the car that plugs into any 15-amp socket",
+                drawbacks: "Allows emergency charging anywhere with a standard outlet"
+            },
+            {
+                id: 3,
+                name: "DC Fast Chargers (Dealership)",
+                benefits: "Fast charging stations available at nearby MG dealerships",
+                drawbacks: "Quickly recharge your battery in less time"
+            },
+            {
+                id: 4,
+                name: "Community Charging Network",
+                benefits: "Chargers available in residential complexes and public locations",
+                drawbacks: "Easy access to charging while you’re out"
+            },
+            {
+                id: 5,
+                name: "24/7 Roadside Assistance",
+                benefits: "Includes mobile vehicle charging support in select cities",
+                drawbacks: "Help is available even if your battery runs low unexpectedly"
+            },
+            {
+                id: 6,
+                name: "Extended Charging Network",
+                benefits: "Fast chargers installed along key routes and satellite cities",
+                drawbacks: "Stress-free long-distance travel without charging worries"
+            }
+        ]);
+
     // Hero Section Rotation
     useEffect(() => {
         const interval = setInterval(() => {
@@ -489,10 +528,10 @@ function Charging() {
                                 And, will charging be a hassle  <span className="text-cyan-400"> -free experience ?</span>
                             </h2>
 
-                            <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                            <h3 className="text-4xl md:text-4xl font-black leading-tight mb-6 uppercase">
                                 It’s more convenient than you think.
 
-                            </h2>
+                            </h3>
 
                             <p className="text-gray-400 text-lg mb-8">
                                 Charging up an EV from nearly empty to full might take a tad longer than a quick fuel station pit stop, but, things are changing fast. With lots of fast chargers available, EV drivers can "charge on the go" and hit the road without missing a beat.
@@ -554,6 +593,41 @@ function Charging() {
             </div>
           </div>
         </section>
+
+        {/* --- COMPARISON TABLE SECTION --- */}
+            <section className="py-24 max-w-6xl mx-auto px-6">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-4"> <span className="text-lime-400"></span></h2>
+                    <p className="text-slate-400 text-lg max-w-2xl mx-auto"></p>
+                </div>
+
+                <div className="rounded-2xl border border-white/10 bg-[#0a0f25]/50 backdrop-blur-md overflow-hidden shadow-2xl">
+                    {/* Headers */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 bg-white/5 border-b border-white/10 text-sm uppercase tracking-wider font-bold text-cyan-400">
+                        <div className="p-6">Chemistry Type</div>
+                        <div className="p-6 md:border-l border-white/10">Key Benefits</div>
+                        <div className="p-6 md:border-l border-white/10 text-lime-400">Drawbacks</div>
+                    </div>
+
+                    {/* Rows */}
+                    <div className="divide-y divide-white/5">
+                        {batteries.map((battery) => (
+                            <div key={battery.id} className="grid grid-cols-1 md:grid-cols-3 transition-colors hover:bg-white/[0.02]">
+                                <div className="p-6 font-bold text-lg flex items-center">
+                                    {battery.name}
+                                </div>
+                                <div className="p-6 md:border-l border-white/5 text-slate-300 text-sm leading-relaxed">
+                                    {battery.benefits}
+                                </div>
+                                <div className="p-6 md:border-l border-white/5 text-slate-400 text-sm leading-relaxed">
+                                    {battery.drawbacks}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
 
 
                 
