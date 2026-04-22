@@ -98,30 +98,34 @@ const STATION_TYPES = [
 const leftColumnTips = [
   {
     id: 1,
-    description: "Lithium-ion batteries (LiB) use different types of cells according to different types of usage (e.g., cylindrical, prismatic, and pouch).",
+    description: "AC Fast chargers can be installed at your home or office free of cost.",
   },
   {
     id: 2,
-    description: "A cylindrical cell is enclosed in a rigid cylinder can. They are small and round, making it possible to stack them in devices of all sizes. Often used in EVs due to their lower manufacturing cost.",
+    description: "Portable charging cable in your car that can be plugged into any 15-ampere socket.",
+
   },
   {
     id: 3,
-    description: "A prismatic cell is enclosed in a rigid, rectangular casing, allowing for efficient stacking within a battery module. They use steel or aluminum casings, making them highly stable.",
+    description: "DC fast chargers are available at your nearest MG dealership.",
+
   },
   {
     id: 4,
-    description: "For the same volume, stacked prismatic cells can release more energy at once, offering better performance and theoretically higher energy density than cylindrical cells.",
+    description: "Community charger available across key residential complexes and public locations.",
+
   }
 ];
 
 const rightColumnTips = [
   {
     id: 5,
-    description: "A pouch cell is characterized by its lightweight design and flexibility. Made of multiple layers of electrode materials enclosed in a flexible, heat-sealed pouch, they offer efficient space utilization within an EV's battery pack.",
+    description: "24/7 roadside assistance along with mobile vehicle charging in select cities.",
   },
   {
     id: 6,
-    description: "Currently, Prismatic cells are the most widely used worldwide in EVs and Energy Storage Solutions (ESS). The internal electrode sheet is either stacked or rolled and flattened.",
+    description: "Fast chargers are available across key routes in satellite cities as part of an extended charging network.",
+
   }
 ];
 
@@ -132,7 +136,7 @@ const TipCard = ({ tip }) => (
     <div className="relative">
       <div className="flex items-center gap-3 mb-3">
         <span className="font-mono text-sm font-bold bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full">
-          Cell Fact 0{tip.id}
+          {tip.id}
         </span>
       </div>
       <p className="text-slate-300 text-sm md:text-base leading-relaxed">{tip.description}</p>
@@ -522,11 +526,12 @@ function Charging() {
           <div className="max-w-7xl mx-auto">
             <div className="mb-16 md:w-2/3">
               <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
-                CELLS: THE HEARTBEAT OF <br />
-                <span className="text-cyan-400">ENERGY STORAGE</span>
+                DID YOU  <br />
+                <span className="text-cyan-400">KNOW ? </span>
               </h2>
               <p className="text-slate-400 text-lg">
-                The foundation of EV longevity lies in the physical cells. Understanding the geometry and chemistry of these units reveals how power is effectively stored and deployed.
+                6 reasons to not worry about charging your EV
+
               </p>
             </div>
 
