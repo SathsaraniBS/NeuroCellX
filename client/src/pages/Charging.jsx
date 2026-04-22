@@ -95,6 +95,51 @@ const STATION_TYPES = [
     }
 ];
 
+const leftColumnTips = [
+  {
+    id: 1,
+    description: "Lithium-ion batteries (LiB) use different types of cells according to different types of usage (e.g., cylindrical, prismatic, and pouch).",
+  },
+  {
+    id: 2,
+    description: "A cylindrical cell is enclosed in a rigid cylinder can. They are small and round, making it possible to stack them in devices of all sizes. Often used in EVs due to their lower manufacturing cost.",
+  },
+  {
+    id: 3,
+    description: "A prismatic cell is enclosed in a rigid, rectangular casing, allowing for efficient stacking within a battery module. They use steel or aluminum casings, making them highly stable.",
+  },
+  {
+    id: 4,
+    description: "For the same volume, stacked prismatic cells can release more energy at once, offering better performance and theoretically higher energy density than cylindrical cells.",
+  }
+];
+
+const rightColumnTips = [
+  {
+    id: 5,
+    description: "A pouch cell is characterized by its lightweight design and flexibility. Made of multiple layers of electrode materials enclosed in a flexible, heat-sealed pouch, they offer efficient space utilization within an EV's battery pack.",
+  },
+  {
+    id: 6,
+    description: "Currently, Prismatic cells are the most widely used worldwide in EVs and Energy Storage Solutions (ESS). The internal electrode sheet is either stacked or rolled and flattened.",
+  }
+];
+
+
+const TipCard = ({ tip }) => (
+  <div className="group relative bg-white/5 backdrop-blur-xl p-6 rounded-2xl border border-cyan-500/10 hover:border-cyan-500/40 transition-all duration-500 flex gap-5 mb-6 overflow-hidden hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] hover:-translate-y-1">
+    <div className="absolute top-0 left-0 w-1 h-full bg-cyan-500/20 group-hover:bg-cyan-400 transition-colors duration-500" />
+    <div className="relative">
+      <div className="flex items-center gap-3 mb-3">
+        <span className="font-mono text-sm font-bold bg-cyan-500/10 text-cyan-400 px-3 py-1 rounded-full">
+          Cell Fact 0{tip.id}
+        </span>
+      </div>
+      <p className="text-slate-300 text-sm md:text-base leading-relaxed">{tip.description}</p>
+    </div>
+  </div>
+);
+
 function Charging() {
     const [vehicles] = useState(DUMMY_VEHICLES);
     const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
@@ -470,6 +515,43 @@ function Charging() {
                         </div>
                     </div>
                 </section>
+
+                <section className="py-24 px-6 lg:px-8 relative">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-600/10 blur-[120px] rounded-full pointer-events-none" />
+          
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-16 md:w-2/3">
+              <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
+                CELLS: THE HEARTBEAT OF <br />
+                <span className="text-cyan-400">ENERGY STORAGE</span>
+              </h2>
+              <p className="text-slate-400 text-lg">
+                The foundation of EV longevity lies in the physical cells. Understanding the geometry and chemistry of these units reveals how power is effectively stored and deployed.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+              <div className="flex flex-col">
+                {leftColumnTips.map(tip => <TipCard key={tip.id} tip={tip} />)}
+              </div>
+              <div className="flex flex-col">
+                <div className="relative overflow-hidden rounded-3xl mb-8 h-64 md:h-[340px] border border-cyan-500/20 shadow-[0_0_40px_rgba(6,182,212,0.1)] group">
+                  <img
+                    src="/src/assets/maintenance-img2.png"
+                    alt="EV Cell Architecture"
+                    className="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700"
+                    onError={(e) => { e.target.src = "https://via.placeholder.com/800x600/0a1122/06b6d4?text=Cell+Architecture"; }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/20 to-transparent" />
+                </div>
+                {rightColumnTips.map(tip => <TipCard key={tip.id} tip={tip} />)}
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+                
 
 
             </main>
