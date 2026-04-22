@@ -1,97 +1,193 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { Battery, Zap, Clock, Coins, ChevronDown } from 'lucide-react';
 
 const EVCalculator = () => {
-    const [battery, setBattery] = useState(30); // kWh
-    const [tariff, setTariff] = useState(4);    // Per unit price
-    const [charger, setCharger] = useState(3.3); // kW
-    const [results, setResults] = useState({ cost: 120, time: 9.09 });
-    const [currency, setCurrency] = useState("INR");
+  const [rates, setRates] = useState({});
+  const [capacity, setCapacity] = useState(40);
+  const [tariff, setTariff] = useState(50);
+  const [charger, setCharger] = useState(7.2);
+  const [selectedCurrency, setSelectedCurrency] = useState('LKR');
 
-    // Backend එකට කතා කර දත්ත ලබා ගැනීම
-    const calculateData = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8000/api/calculator/calculate`, {
-                params: {
-                    battery_kwh: battery,
-                    charger_kw: charger,
-                    country_code: "ANY"
-                }
-            });
-            setResults({
-                cost: response.data.total_cost,
-                time: response.data.charging_time_hours
-            });
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/calculator/get-rates")
+      .then(res => res.json())
+      .then(data => setRates(data))
+      .catch(err => console.error("Error fetching rates. Falling back to default:", err));
+  }, []);
 
-    // Slider එකක් වෙනස් කරන සෑම විටම ගණනය කිරීම සිදු කරයි
-    useEffect(() => {
-        calculateData();
-    }, [battery, tariff, charger]);
+  const calculateCost = () => {
+    // Capacity (kWh) * Tariff (Price per kWh)
+    const costInCurrentCurrency = capacity * tariff;
+    return costInCurrentCurrency.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  };
 
-    return (
-        <div className="flex flex-col items-center p-10 bg-gray-50 min-h-screen">
-            <h1 className="text-2xl font-bold text-blue-900 mb-8 uppercase tracking-wide">
-                Wondering how much will you be spending on charging your EV at home?
-            </h1>
+  const chargingTime = (capacity / charger).toFixed(2);
 
-            <div className="bg-white shadow-2xl rounded-xl flex flex-col md:flex-row w-full max-w-5xl overflow-hidden border border-gray-100">
-                {/* Inputs Section */}
-                <div className="flex-1 p-8 grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div className="flex items-center space-x-4 col-span-2 border-b pb-4">
-                         <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl">₹</div>
-                         <h2 className="text-gray-500 font-medium">Home Charging Calculator</h2>
-                    </div>
+  return (
+    <div className="flex flex-col items-center justify-center p-6 bg-[#050816] min-h-[80vh] font-sans selection:bg-cyan-500/30 text-white relative overflow-hidden">
+      
+      {/* Background Glow Effects */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-cyan-600/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-emerald-600/10 blur-[120px] rounded-full pointer-events-none" />
 
-                    {/* Battery Slider */}
-                    <div>
-                        <label className="block text-blue-900 font-bold mb-2 text-sm">Vehicle battery capacity</label>
-                        <div className="text-2xl font-black text-blue-800 mb-2">{battery}KWh</div>
-                        <input type="range" min="10" max="100" value={battery} onChange={(e) => setBattery(e.target.value)}
-                            className="w-full h-1.5 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600" />
-                        <div className="flex justify-between text-xs text-gray-400 mt-2"><span>from 10KWh</span><span>to 100KWh</span></div>
-                    </div>
+      <div className="relative z-10 w-full max-w-5xl">
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-bold tracking-widest uppercase text-xs shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+            <Zap size={14} className="fill-cyan-400" />
+            <span>Cost Estimator</span>
+          </div>
+          <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight">
+            Calculate Your <span className="text-cyan-400">Home Charging</span> Costs
+          </h1>
+        </div>
 
-                    {/* Tariff Slider */}
-                    <div>
-                        <label className="block text-blue-900 font-bold mb-2 text-sm">Electricity tariff in your state</label>
-                        <div className="text-2xl font-black text-blue-800 mb-2">₹{tariff}</div>
-                        <input type="range" min="1" max="50" value={tariff} onChange={(e) => setTariff(e.target.value)}
-                            className="w-full h-1.5 bg-blue-200 rounded-lg appearance-none cursor-pointer accent-blue-600" />
-                        <div className="flex justify-between text-xs text-gray-400 mt-2"><span>from ₹1</span><span>to ₹50</span></div>
-                    </div>
+        <div className="bg-[#0a1122]/80 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden border border-white/10 flex flex-col lg:flex-row">
+          
+          {/* Inputs Section */}
+          <div className="p-8 lg:p-10 flex-1 grid grid-cols-1 gap-10">
+            
+            {/* Battery Capacity Slider */}
+            <div className="group">
+              <div className="flex justify-between items-end mb-4">
+                <label className="text-cyan-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                  <Battery size={16} /> Vehicle Battery Capacity
+                </label>
+                <div className="text-2xl font-black text-white">{capacity} <span className="text-sm text-slate-400 font-bold">kWh</span></div>
+              </div>
+              <input 
+                type="range" min="10" max="100" 
+                value={capacity} 
+                onChange={(e) => setCapacity(Number(e.target.value))} 
+                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500 hover:accent-cyan-400 transition-all" 
+              />
+              <div className="flex justify-between text-xs text-slate-500 mt-2 font-bold uppercase">
+                <span>10 kWh</span>
+                <span>100 kWh</span>
+              </div>
+            </div>
 
-                    {/* Charger Selection */}
-                    <div className="col-span-1">
-                        <label className="block text-blue-900 font-bold mb-2 text-sm">Charger Capacity</label>
-                        <select className="w-full border-b-2 border-blue-200 py-2 outline-none focus:border-blue-600 font-semibold" 
-                                value={charger} onChange={(e) => setCharger(e.target.value)}>
-                            <option value="3.3">3.3KWh</option>
-                            <option value="7.2">7.2KWh</option>
-                            <option value="11">11KWh</option>
-                        </select>
-                    </div>
-
-                    {/* Time Display (Green Box) */}
-                    <div className="col-span-2 bg-green-700 text-white p-6 rounded-lg mt-4">
-                        <p className="text-sm font-bold opacity-80 uppercase">Charging time</p>
-                        <h3 className="text-4xl font-black">{results.time}h</h3>
-                    </div>
+            {/* Electricity Tariff Slider */}
+            <div className="group">
+              <div className="flex justify-between items-end mb-4">
+                <label className="text-cyan-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                  <Coins size={16} /> Electricity Tariff
+                </label>
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <select 
+                      className="appearance-none bg-slate-800 border border-slate-700 text-white text-sm font-bold py-1 pl-3 pr-8 rounded-lg focus:outline-none focus:border-cyan-500 cursor-pointer"
+                      value={selectedCurrency} 
+                      onChange={(e) => setSelectedCurrency(e.target.value)}
+                    >
+                      {Object.keys(rates).length > 0 ? (
+                        Object.keys(rates).map(currency => (
+                          <option key={currency} value={currency}>{currency}</option>
+                        ))
+                      ) : (
+                        <option value="LKR">LKR</option>
+                      )}
+                    </select>
+                    <ChevronDown size={14} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                  </div>
+                  <div className="text-2xl font-black text-white">{tariff} <span className="text-sm text-slate-400 font-bold">/ kWh</span></div>
                 </div>
+              </div>
+              <input 
+                type="range" min="1" max="200" 
+                value={tariff} 
+                onChange={(e) => setTariff(Number(e.target.value))} 
+                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-500 hover:accent-cyan-400 transition-all" 
+              />
+              <div className="flex justify-between text-xs text-slate-500 mt-2 font-bold uppercase">
+                <span>1 Unit</span>
+                <span>200 Units</span>
+              </div>
+            </div>
 
-                {/* Right Result Section */}
-                <div className="w-full md:w-64 bg-blue-600 text-white p-10 flex flex-col justify-center items-center text-center">
-                    <p className="text-lg font-bold opacity-90 mb-4">Charging cost</p>
-                    <h1 className="text-5xl font-black">₹{results.cost}</h1>
-                </div>
+            {/* Charger Capacity Dropdown */}
+            <div>
+              <label className="text-cyan-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2 mb-4">
+                <Zap size={16} /> Charger Capacity
+              </label>
+              <div className="relative">
+                <select 
+                  className="w-full appearance-none bg-slate-800 border border-slate-700 py-4 pl-4 pr-10 rounded-xl font-bold text-white focus:outline-none focus:border-cyan-500 transition-colors cursor-pointer shadow-inner" 
+                  value={charger} 
+                  onChange={(e) => setCharger(parseFloat(e.target.value))}
+                >
+                  <option value="3.3">3.3 kWh (Standard / Slow)</option>
+                  <option value="7.2">7.2 kWh (Wallbox / Fast)</option>
+                  <option value="11.0">11.0 kWh (3-Phase / Very Fast)</option>
+                  <option value="22.0">22.0 kWh (Commercial AC)</option>
+                </select>
+                <ChevronDown size={20} className="absolute right-4 top-1/2 -translate-y-1/2 text-cyan-500 pointer-events-none" />
+              </div>
+            </div>
+          </div>
+
+          {/* Results Display Section */}
+          <div className="lg:w-[400px] flex flex-col border-t lg:border-t-0 lg:border-l border-white/10">
+            
+            {/* Cost Result */}
+            <div className="flex-1 bg-gradient-to-br from-cyan-900/40 to-[#0a1122] p-8 flex flex-col justify-center items-center relative overflow-hidden group hover:from-cyan-900/60 transition-colors duration-500">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all" />
+              <p className="text-cyan-400 text-xs font-bold mb-4 uppercase tracking-widest">Total Charging Cost</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-slate-400">{selectedCurrency}</span>
+                <span className="text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-cyan-100 tracking-tight">
+                  {calculateCost()}
+                </span>
+              </div>
+            </div>
+
+            {/* Time Result */}
+            <div className="bg-gradient-to-br from-emerald-900/40 to-[#0a1122] border-t border-white/5 p-8 flex flex-col justify-center items-center relative overflow-hidden group hover:from-emerald-900/60 transition-colors duration-500">
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all" />
+              <p className="text-emerald-400 text-xs font-bold mb-4 uppercase tracking-widest flex items-center gap-2">
+                <Clock size={14} /> Estimated Time
+              </p>
+              <div className="flex items-baseline gap-1">
+                <span className="text-4xl lg:text-5xl font-black text-white tracking-tight">
+                  {chargingTime}
+                </span>
+                <span className="text-xl font-bold text-emerald-400">Hours</span>
+              </div>
             </div>
             
-            <p className="mt-6 text-sm text-gray-500 italic">*Disclaimer: This calculator provides approximate time and cost estimates.</p>
+          </div>
         </div>
-    );
+      </div>
+
+      <style>{`
+        /* Customizing range slider thumbs for Webkit (Chrome, Safari, Edge) */
+        input[type=range]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #06b6d4; /* Tailwind cyan-500 */
+          cursor: pointer;
+          box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
+          border: 2px solid #fff;
+        }
+        
+        /* Customizing range slider thumbs for Firefox */
+        input[type=range]::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #06b6d4;
+          cursor: pointer;
+          box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
+          border: 2px solid #fff;
+        }
+      `}</style>
+    </div>
+  );
 };
 
 export default EVCalculator;

@@ -1,4 +1,5 @@
 # server/main.py
+import httpx
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers.chatbot import router as chatbot_router  

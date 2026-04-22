@@ -1,32 +1,20 @@
-# routers/calculator.py
-
 from fastapi import APIRouter
-import requests
+import httpx
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/api/calculator",
+    tags=["calculator"]
+)
 
-# EXCHANGE_RATE_API_URL = "https://v6.exchangerate-api.com/v6/f60a6456694f6d2072a33adb/latest/USD"
-EXCHANGE_RATE_API_URL = "https://v6.exchangerate-api.com"
-@router.get("/calculate")
-def get_ev_data(battery_kwh: float, charger_kw: float, country_code: str):
-    local_rate = 4.0 
-    currency = "INR"
+API_KEY = "f60a6456694f6d2072a33adb"
+EXTERNAL_URL = f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/USD"
 
-    charging_time = battery_kwh / charger_kw
-
-    total_cost_local = battery_kwh * local_rate
-
-    return {
-        "charging_time_hours": round(charging_time, 2),
-        "total_cost": round(total_cost_local, 2),
-        "currency": currency
-    }
-
-@router.get("/exchange-rates")
-def get_rates():
-    try:
-        response = requests.get(EXCHANGE_RATE_API_URL)
-        response.raise_for_status() 
-        return response.json()["conversion_rates"]
-    except Exception as e:
-        return {"error": f"API Error: {str(e)}"}
+@router.get("/get-rates")
+async def get_rates():
+    async with httpx.AsyncClient() as client:
+        try:
+            response = await client.get(EXTERNAL_URL)
+            data = response.json()
+            return data.get("conversion_rates", {})
+        except Exception as e:
+            return {"error": str(e)}
