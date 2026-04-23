@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { 
-    ChevronDown, 
-    BatteryCharging, 
-    Wrench, 
-    CloudDownload, 
-    ThermometerSnowflake, 
-    ShieldCheck, 
-    AlertTriangle, 
-    FileText, 
-    Download, 
-    CalendarCheck, 
-    Zap 
+import {
+    ChevronDown,
+    BatteryCharging,
+    Wrench,
+    CloudDownload,
+    ThermometerSnowflake,
+    ShieldCheck,
+    AlertTriangle,
+    FileText,
+    Download,
+    CalendarCheck,
+    Zap
 } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -180,7 +180,7 @@ function EVCare() {
             {/* --- WHY IT MATTERS (INTRO) --- */}
             <section className="py-20 relative">
                 <div className="absolute top-10 left-0 w-[500px] h-[500px] bg-cyan-600/10 blur-[150px] pointer-events-none -z-10" />
-                
+
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-8 md:p-12 rounded-[2rem] shadow-2xl flex flex-col md:flex-row gap-10 items-center justify-between">
                         <div className="max-w-2xl">
@@ -210,11 +210,10 @@ function EVCare() {
                     {MAINTENANCE_TOPICS.map((topic) => (
                         <div
                             key={topic.id}
-                            className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                                openTopicId === topic.id 
-                                    ? 'bg-gradient-to-r from-cyan-950/40 to-[#050816] border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.1)]' 
+                            className={`rounded-2xl border transition-all duration-300 overflow-hidden ${openTopicId === topic.id
+                                    ? 'bg-gradient-to-r from-cyan-950/40 to-[#050816] border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.1)]'
                                     : 'bg-white/5 border-white/10 hover:border-cyan-500/30 hover:bg-white/[0.07]'
-                            }`}
+                                }`}
                         >
                             <button
                                 onClick={() => toggleTopic(topic.id)}
@@ -224,14 +223,17 @@ function EVCare() {
                                     <div className="hidden md:flex w-12 h-12 rounded-full bg-white/5 border border-white/10 items-center justify-center font-mono text-slate-400 font-bold">
                                         {topic.id}
                                     </div>
-                                    <div className="p-3 bg-[#0a0f25] rounded-xl border border-white/5 shadow-inner">
-                                        {topic.icon}
-                                    </div>
+                                    <img
+                                        src={topic.image}
+                                        alt={topic.title}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+
                                     <span className={`font-bold text-lg md:text-xl transition-colors tracking-wide ${openTopicId === topic.id ? 'text-cyan-400' : 'text-white'}`}>
                                         {topic.title}
                                     </span>
                                 </div>
-                                
+
                                 <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${openTopicId === topic.id ? 'bg-cyan-500/20 text-cyan-400' : 'bg-white/10 text-white'}`}>
                                     <ChevronDown
                                         className={`transform transition-transform duration-500 ${openTopicId === topic.id ? 'rotate-180' : ''}`}
@@ -239,7 +241,7 @@ function EVCare() {
                                     />
                                 </div>
                             </button>
-                            
+
                             <div className={`grid transition-all duration-500 ease-in-out ${openTopicId === topic.id ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
                                 <div className="overflow-hidden">
                                     <div className="p-6 md:p-8 md:pl-[120px] pt-0 border-t border-white/5 mt-2">

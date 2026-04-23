@@ -22,15 +22,7 @@ function TripPlanner() {
                                   
                                   
                               </div>
-                              <div className="relative group">
-                                  {/* Replaced broken local image path with a high-quality EV battery/tech stock image */}
-                                  <img
-                                      src="src/assets/ev3.png"
-                                      alt="EV Battery"
-                                      className="w-full h-full object-cover  shadow-[0_0_40px_rgba(34,211,238,0.15)] border border-white/10"
-                                  />
-                                  <div className="absolute -inset-4 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors" />
-                              </div>
+                              
                           </div>
                       </section>
       
