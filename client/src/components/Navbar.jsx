@@ -176,10 +176,10 @@ const Navbar = () => {
                 Types of EV
               </Link>
               <Link
-                to="#"
+                to="/ev-maintenance-guide"
                 className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
               >
-                EV
+                EV Maintenance Guide
               </Link>
               <Link
                 to="#"
