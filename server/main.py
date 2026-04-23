@@ -44,7 +44,9 @@ app.include_router(predict.router)
 app.include_router(contact.router)
 app.include_router(chatbot_router, prefix="/api")
 app.include_router(calculator.router)  
-app.include_router(stations.router)
+# app.include_router(stations.router)
+app.include_router(stations.router, prefix="/api")
+
 # Create all database tables on startup
 Base.metadata.create_all(bind=engine)  
 
