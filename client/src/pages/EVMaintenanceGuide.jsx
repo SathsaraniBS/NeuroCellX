@@ -1,21 +1,3 @@
-/**
- * EV Maintenance Guide Page
- * Frontend: React.js + Tailwind CSS (inline classes)
- * Backend: FastAPI (REST endpoints documented inline)
- * Database: PostgreSQL (schema documented inline)
- *
- * FastAPI Endpoints:
- *   GET  /api/maintenance/sections         → All accordion sections
- *   GET  /api/maintenance/faq              → FAQ questions
- *   GET  /api/maintenance/checklist/pdf    → Download maintenance checklist PDF
- *   POST /api/appointments                 → Book service appointment
- *   GET  /api/maintenance/why-matters      → Why EV maintenance matters content
- *
- * PostgreSQL Schema:
- *   maintenance_sections(id, order_num, icon, title, content_json, created_at)
- *   faq_items(id, question, answer, order_num)
- *   appointments(id, user_id, date, time, service_type, notes, status, created_at)
- */
 
 import { useState, useEffect, useRef } from "react";
 
@@ -152,42 +134,6 @@ const FAQ_DATA = [
 ];
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
-
-function NavBar() {
-  const navItems = ["Dashboard", "Charging", "Battery", "Trips", "Learn"];
-  return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-slate-100 shadow-sm">
-      <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-        <span className="text-xl font-extrabold tracking-tight text-emerald-600">
-          Volt<span className="text-slate-800">IQ</span>
-        </span>
-        <div className="hidden md:flex items-center gap-7">
-          {navItems.map((item) => (
-            <a
-              key={item}
-              href="#"
-              className={`text-sm font-medium transition-colors ${
-                item === "Learn"
-                  ? "text-emerald-600 border-b-2 border-emerald-500 pb-0.5"
-                  : "text-slate-500 hover:text-slate-800"
-              }`}
-            >
-              {item}
-            </a>
-          ))}
-        </div>
-        <div className="flex items-center gap-3">
-          <button className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 transition-colors text-sm">
-            🔔
-          </button>
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white text-xs font-bold">
-            U
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
-}
 
 function HeroBanner() {
   return (
