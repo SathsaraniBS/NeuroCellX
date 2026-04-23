@@ -4,12 +4,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 
-  
-
 function TripPlanner() {
   
-
-
   return (
     <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans">
       <Navbar />
@@ -26,11 +22,7 @@ function TripPlanner() {
                           </div>
                       </section>
       
-      
-            
-            
-        
-            
+         
        <Footer />
 
       {/* Added some custom keyframes for the zoom effect */}
