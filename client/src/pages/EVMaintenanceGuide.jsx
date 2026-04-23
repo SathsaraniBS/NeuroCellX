@@ -20,7 +20,7 @@ const MAINTENANCE_TOPICS = [
     {
         id: "01",
         title: "Battery care & charging habits",
-        icon: <BatteryCharging className="text-cyan-400" size={24} />,
+        image: "src/assets/evmaintenance.png",
         content: (
             <ul className="list-disc pl-5 space-y-2 text-slate-300">
                 <li>Keep daily charge between 20% – 80% for optimal battery health.</li>
@@ -33,7 +33,7 @@ const MAINTENANCE_TOPICS = [
     {
         id: "02",
         title: "Routine maintenance checklist",
-        icon: <Wrench className="text-slate-400" size={24} />,
+        image: "src/assets/evmaintenance.png",
         content: (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-300 text-sm">
                 <div className="flex justify-between border-b border-white/5 pb-2"><span>Tyre pressure & tread</span> <span className="text-cyan-400">Every 10,000 km</span></div>
@@ -48,7 +48,7 @@ const MAINTENANCE_TOPICS = [
     {
         id: "03",
         title: "Software updates & features",
-        icon: <CloudDownload className="text-emerald-400" size={24} />,
+        image: "src/assets/evmaintenance.png",
         content: (
             <ul className="list-disc pl-5 space-y-2 text-slate-300">
                 <li>OTA (Over-the-Air) updates bring bug fixes, performance improvements, and safety enhancements.</li>
@@ -60,7 +60,7 @@ const MAINTENANCE_TOPICS = [
     {
         id: "04",
         title: "Winter / weather-related range tips",
-        icon: <ThermometerSnowflake className="text-blue-400" size={24} />,
+        image: "src/assets/evmaintenance.png",
         content: (
             <ul className="list-disc pl-5 space-y-2 text-slate-300">
                 <li>Cold weather can drastically reduce range. Precondition the cabin while charging.</li>
@@ -72,7 +72,7 @@ const MAINTENANCE_TOPICS = [
     {
         id: "05",
         title: "Service schedule & warranty info",
-        icon: <ShieldCheck className="text-lime-400" size={24} />,
+        image: "src/assets/evmaintenance.png",
         content: (
             <div className="space-y-4 text-slate-300">
                 <p>Most EVs come with comprehensive warranty coverage:</p>
@@ -89,7 +89,7 @@ const MAINTENANCE_TOPICS = [
     {
         id: "06",
         title: "Roadside assistance & emergencies",
-        icon: <AlertTriangle className="text-yellow-400" size={24} />,
+        image: "src/assets/evmaintenance.png",
         content: (
             <div className="flex flex-col md:flex-row gap-6 items-center bg-white/5 p-4 rounded-lg border border-white/10">
                 <div className="flex-1 space-y-2 text-slate-300">
@@ -108,7 +108,7 @@ const MAINTENANCE_TOPICS = [
     {
         id: "07",
         title: "Insurance & ownership costs",
-        icon: <FileText className="text-purple-400" size={24} />,
+        image: "src/assets/evmaintenance.png",
         content: (
             <ul className="list-disc pl-5 space-y-2 text-slate-300">
                 <li>Insure your EV with a comprehensive policy that covers battery and high-voltage components.</li>

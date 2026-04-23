@@ -1,16 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Zap, 
-  Battery, 
-  Gauge, 
-  ChevronRight, 
-  ShieldCheck, 
-  Globe, 
-  Leaf, 
-  Wind,
-  Navigation,
-  Info
-} from "lucide-react";
 import { useLocation, Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
