@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     ChevronDown,
     Wrench,
     ShieldCheck,
-    Download,
     CalendarCheck,
     Zap,
     AlertTriangle,
     PhoneCall,
-    CheckCircle2
+    CheckCircle2,
+    Download ,
+    ChevronRight, // Added missing import
+    Info          // Added missing import
 } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const SectionBlock = ({ title, imageSrc, reverse, children }) => (
-    <div className={`flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-16 items-center bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl p-8 lg:p-12 rounded-3xl relative transition-all duration-500 hover:border-cyan-500/30 hover:bg-white/[0.07] overflow-hidden`}>
-        
+    <div className={`flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-16 items-center bg-transparent p-8 lg:p-12 rounded-3xl relative transition-all duration-500 hover:border-cyan-500/30 hover:bg-white/[0.07] overflow-hidden`}>
+
         {/* Ambient Glow behind the card */}
         <div className="absolute -inset-4 bg-cyan-500/5 blur-[100px] -z-10" />
 
@@ -52,24 +55,19 @@ const ListItem = ({ children }) => (
 );
 
 const FAQS = [
-    { id: 1, question: "How long does an EV battery last?", answer: "Most modern EV batteries are designed to last 10-20 years. Warranties typically cover 8 years or 100,000 miles, guaranteeing at least 70% retention." },
-    { id: 2, question: "How often should I service my EV?", answer: "A general inspection is recommended every 15,000 km or 12 months, focusing on tires, brakes, and cabin filters." },
-    { id: 3, question: "Can I charge my EV in the rain?", answer: "Yes. EV chargers and ports are weather-proofed and safe for rain or snow usage." },
-    { id: 4, question: "Are EVs more expensive to insure?", answer: "Often slightly higher due to battery costs, but gaps are closing as parts become more available." },
-    { id: 5, question: "Will fast charging damage my battery?", answer: "Occasional use is fine. Relying exclusively on DC fast charging daily can accelerate degradation over several years." }
+    { id: 1, question: "How long does an EV battery last ?", answer: "Most EV batteries are designed to last 8–15 years or 160,000–300,000 km. Battery degradation is gradual, typically losing 1–2% capacity per year under normal use. Manufacturers usually provide an 8-year / 160,000 km warranty on battery packs." },
+    { id: 2, question: "How often should I service my EV ?", answer: "Most EVs require a service check every 15,000 km or 12 months, whichever comes first. Unlike ICE vehicles, EVs skip oil changes. Key service items include tyre rotation, brake inspection, cabin filter replacement, and software updates." },
+    { id: 3, question: "Can I charge my EV in the rain ?", answer: "Yes — EV charging systems are designed to be weatherproof. Both the charging port and plug meet IP ratings for water resistance. However, always inspect cables for damage before charging and avoid submerged charging equipment." },
+    { id: 4, question: "What happens if my battery degrades ?", answer: "Battery degradation reduces your maximum range over time but rarely causes sudden failure. If capacity drops below the warranty threshold (usually 70%), the manufacturer may replace or refurbish the pack under warranty." },
+    { id: 5, question: "Are EVs more expensive to insure ?", answer: "EV insurance can be 5–15% higher than comparable ICE vehicles, mainly because of higher repair and replacement costs for batteries and high-voltage components. However, lower maintenance costs often offset the difference." },
+    { id: 6, question: "Will fast charging damage my battery ?", answer: "Occasional DC fast charging is fine, but regular daily use of fast chargers can accelerate battery degradation over time. For everyday charging, prefer AC home charging at a moderate rate (7–11 kW) and keep charge between 20–80%." },
+    { id: 7, question: "How can I maximise my EV's driving range ?", answer: "Drive smoothly, use regenerative braking, precondition the cabin while plugged in, keep tyres properly inflated, reduce highway speeds, limit use of heating/AC when possible, and maintain a 20–80% charge level." },
+    { id: 8, question: "What should I do if my EV won't start ?", answer: "Check the 12V auxiliary battery (a common culprit), ensure the high-voltage battery has sufficient charge, check for any dashboard warnings, try locking/unlocking the vehicle to reset the system. If the issue persists, contact roadside assistance." }
 ];
 
 function EVCare() {
-    const [openTopicId, setOpenTopicId] = useState(null);
     const [openFaqId, setOpenFaqId] = useState(null);
 
-    // FIX: Define activeEV so the Hero section doesn't throw a ReferenceError
-    // const activeEV = {
-    //     title: "VoltIQ Care",
-    //     tagline: "Empowering Your Electric Journey"
-    // };
-
-    const toggleTopic = (id) => setOpenTopicId(openTopicId === id ? null : id);
     const toggleFaq = (id) => setOpenFaqId(openFaqId === id ? null : id);
 
     return (
@@ -90,18 +88,60 @@ function EVCare() {
 
                 <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
                     <div className="max-w-3xl space-y-6 pt-20">
-                        
+
                         <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">EV Care:<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">Maintenance & Ownership Guide</span></h1>
-                        <p className="text-xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Learn</p>
-                    </div>  
+                        <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Learn how to keep your electric vehicle healthy,<br />
+                            save money, and extend its life.</p>
+                    </div>
+                </div>
+                <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10"> 
+                    {/* Fixed: removed undefined activeEV variable from the link path */}
+                    <Link
+                        to="/inventory"
+                        className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                    >
+                        Download Manual
+                        <Download  className="w-5 h-5" />
+                    </Link>
+                    
+                </div>
+            </section>
+
+            {/* --- WHY IT MATTERS (INTRO) --- */}
+            <section className="py-20 relative">
+                <div className="absolute top-10 left-0 w-[500px] h-[500px] bg-cyan-600/10 blur-[150px] pointer-events-none -z-10" />
+
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="bg-transparent p-8 md:p-12 rounded-[2rem]  flex flex-col md:flex-row gap-10 items-center justify-between">
+                        <div className="max-w-2xl">
+                            <h2 className="text-3xl  font-black uppercase tracking-tight mb-4">
+                                Why EV <br /> <span className="text-cyan-400">
+                                    Maintenance <span className="inline-block ml-1">Matters</span>
+                                </span>
+                            </h2>
+                            <p className="text-slate-400 leading-relaxed text-lg mb-4">
+                                Electric vehicles have significantly fewer moving parts than traditional combustion cars, meaning no oil changes or spark plug replacements. However, key areas like the battery thermal systems, tyres, brakes, and software still require attention.
+                            </p>
+                            <p className="text-slate-400 leading-relaxed text-lg">
+                                Good care ensures better performance, longer battery life, safety on the road, and lower overall ownership costs.
+                            </p>
+                        </div>
+                        <div className="bg-[url('src/assets/ev12.png')] bg-cover bg-no-repeat bg-center rounded-2xl border border-emerald-500/30 text-center max-w-sm px-55 py-35 relative overflow-hidden">
+                            {/* Adding an overlay to make text more readable against the image */}
+                            <div className="absolute inset-0 bg-black/40 z-0"></div>
+
+                            <div className="relative z-10">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             {/* Main Content Sections */}
-            <div className="py-5 max-w-1xl mx-auto px-12 space-y-10 bg-white/5 border border-white/10 rounded-3xl pb-24">
+            <div className="py-5 max-w-1xl mx-auto px-12 space-y-10 bg-transparent pb-24">
 
-                <SectionBlock 
-                    title="Battery care & charging habits" 
+                <SectionBlock
+                    title="Battery care & charging habits"
                     imageSrc="src/assets/battery-care.png"
                     reverse={false}
                 >
@@ -113,15 +153,15 @@ function EVCare() {
                     </ul>
                 </SectionBlock>
 
-                <SectionBlock 
-                    title="Routine maintenance checklist" 
+                <SectionBlock
+                    title="Routine maintenance checklist"
                     imageSrc="src/assets/ev-checklist.png"
                     reverse={true}
                 >
                     <div className="bg-black/20 rounded-2xl border border-white/5 p-2">
                         <div className="grid grid-cols-1 gap-1 text-base">
                             <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
-                                <span className="font-medium text-white">Tyre pressure & tread</span> 
+                                <span className="font-medium text-white">Tyre pressure & tread</span>
                                 <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">10k km</span>
                             </div>
                             <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
@@ -148,8 +188,8 @@ function EVCare() {
                     </div>
                 </SectionBlock>
 
-                <SectionBlock 
-                    title="Software updates & features" 
+                <SectionBlock
+                    title="Software updates & features"
                     imageSrc="src/assets/ev4.png"
                     reverse={false}
                 >
@@ -160,9 +200,9 @@ function EVCare() {
                     </ul>
                 </SectionBlock>
 
-                <SectionBlock 
-                    title="Winter / weather range tips" 
-                    imageSrc="src/assets/ev4.png" 
+                <SectionBlock
+                    title="Winter / weather range tips"
+                    imageSrc="src/assets/ev4.png"
                     reverse={true}
                 >
                     <ul className="space-y-4">
@@ -172,33 +212,33 @@ function EVCare() {
                     </ul>
                 </SectionBlock>
 
-                <SectionBlock 
-                    title="Service schedule & warranty" 
+                <SectionBlock
+                    title="Service schedule & warranty"
                     imageSrc="src/assets/ev4.png"
                     reverse={false}
                 >
                     <p className="text-slate-400 mb-4">Most modern EVs come with highly competitive and comprehensive warranty coverage to give you peace of mind.</p>
-                    
+
                     <div className="bg-cyan-950/30 p-5 rounded-xl border border-cyan-500/20 mb-6">
                         <ul className="space-y-3">
                             <li className="flex justify-between items-center border-b border-cyan-500/10 pb-2">
-                                <strong className="text-white flex items-center gap-2"><ShieldCheck size={18} className="text-emerald-400"/> Battery & Drive-unit:</strong> 
+                                <strong className="text-white flex items-center gap-2"><ShieldCheck size={18} className="text-emerald-400" /> Battery & Drive-unit:</strong>
                                 <span className="text-cyan-300">8 years / 160,000 km</span>
                             </li>
                             <li className="flex justify-between items-center border-b border-cyan-500/10 pb-2">
-                                <strong className="text-white flex items-center gap-2"><ShieldCheck size={18} className="text-emerald-400"/> Vehicle warranty:</strong> 
+                                <strong className="text-white flex items-center gap-2"><ShieldCheck size={18} className="text-emerald-400" /> Vehicle warranty:</strong>
                                 <span className="text-cyan-300">3 years / 100,000 km</span>
                             </li>
                             <li className="flex flex-col gap-1 pt-1">
-                                <strong className="text-white flex items-center gap-2"><AlertTriangle size={18} className="text-yellow-400"/> Not covered:</strong> 
+                                <strong className="text-white flex items-center gap-2"><AlertTriangle size={18} className="text-yellow-400" /> Not covered:</strong>
                                 <span className="text-slate-400 text-sm">Accidents, misuse, unauthorized modifications, or physical tampering.</span>
                             </li>
                         </ul>
                     </div>
                 </SectionBlock>
 
-                <SectionBlock 
-                    title="Roadside assistance" 
+                <SectionBlock
+                    title="Roadside assistance"
                     imageSrc="src/assets/battery-care.png"
                     reverse={true}
                 >
@@ -207,7 +247,7 @@ function EVCare() {
                         <ListItem>In case of a critically low battery, use the app to locate the nearest emergency charger or request a flatbed tow.</ListItem>
                         <ListItem><strong>WARNING:</strong> High-voltage components (orange cables) are highly dangerous. Leave all electrical repairs to certified technicians.</ListItem>
                     </ul>
-                    
+
                     <div className="bg-gradient-to-r from-cyan-600 to-blue-700 p-[1px] rounded-2xl">
                         <div className="bg-[#050816] rounded-2xl p-6 flex items-center gap-6">
                             <div className="bg-cyan-500/20 p-4 rounded-full">
@@ -222,8 +262,8 @@ function EVCare() {
                     </div>
                 </SectionBlock>
 
-                <SectionBlock 
-                    title="Insurance & ownership costs" 
+                <SectionBlock
+                    title="Insurance & ownership costs"
                     imageSrc="src/assets/battery-care.png"
                     reverse={false}
                 >
@@ -241,7 +281,7 @@ function EVCare() {
                 </SectionBlock>
 
             </div>
-    
+
             {/* --- FAQ --- */}
             <section className="py-24 bg-[#070b1e]">
                 <div className="max-w-4xl mx-auto px-6">
@@ -264,7 +304,8 @@ function EVCare() {
 
             <Footer />
 
-            <style dangerouslySetInnerHTML={{ __html: `
+            <style dangerouslySetInnerHTML={{
+                __html: `
                 @keyframes slow-zoom {
                     0% { transform: scale(1); }
                     100% { transform: scale(1.1); }
