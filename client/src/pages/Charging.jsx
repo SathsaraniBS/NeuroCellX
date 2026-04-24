@@ -227,9 +227,9 @@ function Charging() {
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="max-w-7xl mx-auto px-6">
                             <div className="text-center mb-20 space-y-4">
-                                <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
+                                <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
                                     Getting You Started
-                                </h2>
+                                </h1>
                                 <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
                                     Whether you're new to EVs or a veteran, our guide helps you navigate the fundamentals of charging speeds and battery health.
                                 </p>
@@ -240,7 +240,7 @@ function Charging() {
 
                             <div className="max-w-2xl">
 
-                                <h2 className="text-3xl  font-black uppercase tracking-tight mb-4">
+                                <h2 className="text-5xl  font-black uppercase tracking-tight mb-4">
                                     What is  <br /> <span className="text-cyan-400">
                                         EV <span className="inline-block ml-1">Charging ?</span>
                                     </span>
@@ -260,9 +260,9 @@ function Charging() {
                                     efficiently your EV charges.
                                 </p>
                             </div>
-                            <div className="bg-[url('src/assets/ev12.png')] bg-cover bg-no-repeat bg-center rounded-2xl border border-emerald-500/30 text-center max-w-sm px-55 py-35 relative overflow-hidden">
+                            <div className="bg-[url('src/assets/ev-charging.png')] bg-cover bg-no-repeat bg-center rounded-2xl border border-emerald-500/30 text-center max-w-sm px-55 py-35 relative overflow-hidden">
                                 {/* Adding an overlay to make text more readable against the image */}
-                                <div className="absolute inset-0 bg-black/40 z-0"></div>
+                                <div className="absolute inset-0  z-0"></div>
 
                                 <div className="relative z-10">
                                 </div>
@@ -276,13 +276,14 @@ function Charging() {
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
 
                     <div className="max-w-7xl mx-auto px-6">
-                        <div className="text-center mb-20 space-y-4">
-                            <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
-                                Charging Levels
+                        <div className="text-left mb-20 space-y-4">
+                            <h2 className="text-5xl md:text-6xl font-black  uppercase">
+                                Charging 
+                                <span className="text-cyan-400">Levels 
+
+                                </span>
                             </h2>
-                            <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
-                                Whether you're new to EVs or a veteran, our guide helps you navigate the fundamentals of charging speeds and battery health.
-                            </p>
+                            
                         </div>
 
                         <div className="flex flex-col lg:flex-row items-center gap-16">
@@ -327,9 +328,12 @@ function Charging() {
                             </div>
 
                             <div className="lg:w-1/3">
-                                <div className="bg-cyan-500/10 border border-cyan-500/20 p-8 rounded-3xl">
-                                    <h3 className="text-2xl font-black mb-4 uppercase text-white">What are charging levels?</h3>
-                                    <p className="text-gray-400 text-base leading-relaxed mb-6">
+                                <div className="bg-transparent p-10 rounded-3xl">
+                                    <h3 className="text-4xl font-black mb-4 uppercase text-white">What are 
+                                        <span className="text-cyan-400">
+                                            charging levels ?
+                                        </span></h3>
+                                    <p className="text-slate-400 leading-relaxed text-xl mb-4">
                                         Charging speed is determined by the "Level" of the charger. From standard wall outlets to high-speed DC stations, we help you pick the right power for your journey.
                                     </p>
                                     <div className="h-1.5 w-16 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-full" />
