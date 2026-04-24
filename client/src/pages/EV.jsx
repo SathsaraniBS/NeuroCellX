@@ -6,6 +6,7 @@ import {
   PhoneCall,
   CheckCircle2,
   Download,
+  Leaf ,Wallet, Gauge, Wifi, Settings, ShoppingCart, Map, ArrowRight,  ChevronRight, Zap, Compass, Fuel, MapPin, PlayCircle, Activity
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -183,7 +184,7 @@ const evbatteyries = [
 ];
 
 const FAQS = [
-  { id: 1, question: "How long does an EV battery last ?", answer: "Most EV batteries are designed to last 8–15 years or 160,000–300,000 km. Battery degradation is gradual, typically losing 1–2% capacity per year under normal use. Manufacturers usually provide an 8-year / 160,000 km warranty on battery packs." },
+  { id: 1, question: "How far can an EV go on a single charge ?", answer: "On average, a modern electric vehicle (EV) can go about 250 to 300 miles (400 to 480 km) on a single charge." },
   { id: 2, question: "How often should I service my EV ?", answer: "Most EVs require a service check every 15,000 km or 12 months, whichever comes first. Unlike ICE vehicles, EVs skip oil changes. Key service items include tyre rotation, brake inspection, cabin filter replacement, and software updates." },
   { id: 3, question: "Can I charge my EV in the rain ?", answer: "Yes — EV charging systems are designed to be weatherproof. Both the charging port and plug meet IP ratings for water resistance. However, always inspect cables for damage before charging and avoid submerged charging equipment." },
   { id: 4, question: "What happens if my battery degrades ?", answer: "Battery degradation reduces your maximum range over time but rarely causes sudden failure. If capacity drops below the warranty threshold (usually 70%), the manufacturer may replace or refurbish the pack under warranty." },
@@ -292,175 +293,145 @@ function EV() {
         </div>
       </section>
 
-      {/* Main Content Sections */}
-      <div className="py-5 max-w-1xl mx-auto px-12 space-y-10 bg-transparent pb-24">
+      <main className="max-w-7xl mx-auto px-6 py-24 space-y-32 flex-grow z-10">
 
-        <SectionBlock
-          title="Battery care & charging habits"
-          imageSrc="src/assets/battery-care.png"
-          reverse={false}
-        >
-          <ul className="space-y-4">
-            <ListItem>Keep daily charge between <strong>20% – 80%</strong> for optimal battery health.</ListItem>
-            <ListItem>Avoid deep-discharge (0%) and frequent 100% DC fast charging.</ListItem>
-            <ListItem>Don't park at 0% or 100% for long periods.</ListItem>
-            <ListItem>Use preconditioning (heating/cooling) while plugged in for better range and battery efficiency.</ListItem>
-          </ul>
-        </SectionBlock>
-
-        <SectionBlock
-          title="Routine maintenance checklist"
-          imageSrc="src/assets/ev-checklist.png"
-          reverse={true}
-        >
-          <div className="bg-black/20 rounded-2xl border border-white/5 p-2">
-            <div className="grid grid-cols-1 gap-1 text-base">
-              <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
-                <span className="font-medium text-white">Tyre pressure & tread</span>
-                <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">10k km</span>
-              </div>
-              <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
-                <span className="font-medium text-white">Brake pads & rotors</span>
-                <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">15k km</span>
-              </div>
-              <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
-                <span className="font-medium text-white">Air & cabin filters</span>
-                <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">15k km / 12 mo</span>
-              </div>
-              <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
-                <span className="font-medium text-white">Lights, horn, seat belts</span>
-                <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">15k km / 12 mo</span>
-              </div>
-              <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
-                <span className="font-medium text-white">Coolant & brake fluid</span>
-                <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">15k km / 12 mo</span>
-              </div>
-              <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
-                <span className="font-medium text-white">High-voltage inspection</span>
-                <span className="text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">Yearly</span>
-              </div>
+        {/* --- WHY CHOOSE EV --- */}
+        <section>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white mb-2">
+                Why Choose <span className="text-cyan-400">Electric?</span>
+              </h2>
+              <p className="text-slate-400">The systemic advantages of transitioning to battery-electric power.</p>
             </div>
           </div>
-        </SectionBlock>
 
-        <SectionBlock
-          title="Software updates & features"
-          imageSrc="src/assets/ev4.png"
-          reverse={false}
-        >
-          <ul className="space-y-4">
-            <ListItem>OTA (Over-the-Air) updates bring bug fixes and performance improvements directly to your vehicle.</ListItem>
-            <ListItem>Check for updates regularly on your car's main display screen or via the companion mobile app.</ListItem>
-            <ListItem>Ensure your vehicle is connected to a stable Wi-Fi connection for faster downloads of large updates.</ListItem>
-          </ul>
-        </SectionBlock>
-
-        <SectionBlock
-          title="Winter / weather range tips"
-          imageSrc="src/assets/ev4.png"
-          reverse={true}
-        >
-          <ul className="space-y-4">
-            <ListItem>Cold weather increases battery resistance and reduces range. Always precondition the cabin while still connected to the charger.</ListItem>
-            <ListItem>Avoid aggressive acceleration in extreme cold conditions to protect battery chemistry.</ListItem>
-            <ListItem>In extreme heat, try to park in the shade and pre-cool the cabin to reduce the load on the A/C system while driving.</ListItem>
-          </ul>
-        </SectionBlock>
-
-        <SectionBlock
-          title="Service schedule & warranty"
-          imageSrc="src/assets/ev4.png"
-          reverse={false}
-        >
-          <p className="text-slate-400 mb-4">Most modern EVs come with highly competitive and comprehensive warranty coverage to give you peace of mind.</p>
-
-          <div className="bg-cyan-950/30 p-5 rounded-xl border border-cyan-500/20 mb-6">
-            <ul className="space-y-3">
-              <li className="flex justify-between items-center border-b border-cyan-500/10 pb-2">
-                <strong className="text-white flex items-center gap-2"><ShieldCheck size={18} className="text-emerald-400" /> Battery & Drive-unit:</strong>
-                <span className="text-cyan-300">8 years / 160,000 km</span>
-              </li>
-              <li className="flex justify-between items-center border-b border-cyan-500/10 pb-2">
-                <strong className="text-white flex items-center gap-2"><ShieldCheck size={18} className="text-emerald-400" /> Vehicle warranty:</strong>
-                <span className="text-cyan-300">3 years / 100,000 km</span>
-              </li>
-              <li className="flex flex-col gap-1 pt-1">
-                <strong className="text-white flex items-center gap-2"><AlertTriangle size={18} className="text-yellow-400" /> Not covered:</strong>
-                <span className="text-slate-400 text-sm">Accidents, misuse, unauthorized modifications, or physical tampering.</span>
-              </li>
-            </ul>
-          </div>
-        </SectionBlock>
-
-        <SectionBlock
-          title="Roadside assistance"
-          imageSrc="src/assets/battery-care.png"
-          reverse={true}
-        >
-          <ul className="space-y-4 mb-6">
-            <ListItem>Call our 24/7 roadside assistance or request emergency help directly through the VoltIQ app.</ListItem>
-            <ListItem>In case of a critically low battery, use the app to locate the nearest emergency charger or request a flatbed tow.</ListItem>
-            <ListItem><strong>WARNING:</strong> High-voltage components (orange cables) are highly dangerous. Leave all electrical repairs to certified technicians.</ListItem>
-          </ul>
-
-          <div className="bg-gradient-to-r from-cyan-600 to-blue-700 p-[1px] rounded-2xl">
-            <div className="bg-[#050816] rounded-2xl p-6 flex items-center gap-6">
-              <div className="bg-cyan-500/20 p-4 rounded-full">
-                <PhoneCall className="text-cyan-400" size={32} />
-              </div>
-              <div>
-                <p className="text-sm text-cyan-400 font-bold uppercase tracking-widest mb-1">Emergency Hotline</p>
-                <p className="text-2xl font-black text-white tracking-wider">1800-123-4567</p>
-                <p className="text-sm text-slate-400 mt-1">Available 24/7 • Nationwide Support</p>
-              </div>
-            </div>
-          </div>
-        </SectionBlock>
-
-        <SectionBlock
-          title="Insurance & ownership costs"
-          imageSrc="src/assets/battery-care.png"
-          reverse={false}
-        >
-          <ul className="space-y-4 mb-8">
-            <ListItem>Insure your EV with a comprehensive policy specifically designed to cover high-voltage battery packs and electrical components.</ListItem>
-            <ListItem>Ensure your policy includes protection against the theft of mobile chargers and external charging cables.</ListItem>
-            <ListItem>Enjoy the financial benefits: EVs generally have significantly lower running costs compared to ICE vehicles due to cheaper electricity vs fuel, and drastically fewer moving parts.</ListItem>
-          </ul>
-
-          <div className="inline-block bg-emerald-500/10 border border-emerald-500/30 px-6 py-3 rounded-full">
-            <p className="text-sm text-emerald-400 font-bold uppercase tracking-widest">
-              Lower running costs • Higher savings • Better for the planet
-            </p>
-          </div>
-        </SectionBlock>
-
-      </div>
-
-      {/* --- FAQ --- */}
-      <section className="py-24 bg-[#070b1e]">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-center text-3xl font-black mb-12 uppercase">Ownership <span className="text-cyan-400">FAQ</span></h2>
-          <div className="space-y-4">
-            {FAQS.map((faq) => (
-              <div key={faq.id} className="border-b border-white/10">
-                <button onClick={() => toggleFaq(faq.id)} className="w-full py-6 flex justify-between items-center text-left">
-                  <span className="font-semibold text-lg">{faq.question}</span>
-                  <ChevronDown className={`text-cyan-400 transition-transform ${openFaqId === faq.id ? 'rotate-180' : ''}`} />
-                </button>
-                <div className={`overflow-hidden transition-all duration-300 ${openFaqId === faq.id ? 'max-h-40 pb-6 opacity-100' : 'max-h-0 opacity-0'}`}>
-                  <p className="text-slate-400">{faq.answer}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: <Leaf className="text-lime-400" size={32} />, title: "Zero Emissions", desc: "Eliminate tailpipe pollutants and reduce your carbon footprint drastically.", glow: "group-hover:border-lime-500/50 group-hover:shadow-[0_0_30px_rgba(163,230,53,0.1)]" },
+              { icon: <Wallet className="text-cyan-400" size={32} />, title: "Cost Efficiency", desc: "Lower operational costs with cheaper electricity vs. volatile fuel prices.", glow: "group-hover:border-cyan-500/50 group-hover:shadow-[0_0_30px_rgba(34,211,238,0.1)]" },
+              { icon: <Gauge className="text-blue-400" size={32} />, title: "Instant Torque", desc: "Experience immediate power delivery and a whisper-quiet, smooth ride.", glow: "group-hover:border-blue-500/50 group-hover:shadow-[0_0_30px_rgba(96,165,250,0.1)]" },
+              { icon: <Wifi className="text-purple-400" size={32} />, title: "Smart Platform", desc: "Over-the-air (OTA) updates ensure your vehicle improves over time.", glow: "group-hover:border-purple-500/50 group-hover:shadow-[0_0_30px_rgba(192,132,252,0.1)]" }
+            ].map((feature, idx) => (
+              <div key={idx} className={`group bg-white/[0.02] p-8 rounded-3xl border border-white/5 flex flex-col items-start backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 ${feature.glow}`}>
+                <div className="mb-6 p-4 rounded-2xl bg-white/5 border border-white/10 group-hover:scale-110 transition-transform duration-500">
+                  {feature.icon}
                 </div>
+                <h4 className="font-bold text-xl text-white mb-3">{feature.title}</h4>
+                <p className="text-slate-400 leading-relaxed text-sm">{feature.desc}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      <Footer />
+        {/* --- EXPLORE CORE TOPICS --- */}
+        <section className="relative">
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10 pointer-events-none" />
 
-      <style dangerouslySetInnerHTML={{
-        __html: `
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white mb-2">
+              Knowledge <span className="text-emerald-400">Hub</span>
+            </h2>
+            <p className="text-slate-400">Master every aspect of the electric vehicle ecosystem.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { title: "EV Architectures", desc: "Analyze BEV, PHEV, and HEV systemic differences.", icon: <Fuel size={24} />, color: "text-blue-400", bg: "bg-blue-400/10 border-blue-400/20" },
+              { title: "Battery Tech", desc: "Deep dive into cell chemistry and BMS intelligence.", icon: <Zap size={24} />, color: "text-cyan-400", bg: "bg-cyan-400/10 border-cyan-400/20" },
+              { title: "Charging Networks", desc: "Understand AC vs DC charging protocols.", icon: <Settings size={24} />, color: "text-emerald-400", bg: "bg-emerald-400/10 border-emerald-400/20" },
+              { title: "Maintenance", desc: "Protocols to maximize vehicle lifespan.", icon: <Compass size={24} />, color: "text-lime-400", bg: "bg-lime-400/10 border-lime-400/20" },
+              { title: "Purchasing Metrics", desc: "Data-driven approach to selecting your EV.", icon: <ShoppingCart size={24} />, color: "text-purple-400", bg: "bg-purple-400/10 border-purple-400/20" },
+              { title: "Range Simulation", desc: "Calculate trip feasibility and routing.", icon: <Map size={24} />, color: "text-orange-400", bg: "bg-orange-400/10 border-orange-400/20" }
+            ].map((topic, idx) => (
+              <div key={idx} className="group bg-[#0a0f25] p-6 rounded-2xl border border-white/10 hover:border-cyan-500/30 transition-all duration-300 cursor-pointer flex items-center gap-6 hover:shadow-[0_0_20px_rgba(34,211,238,0.05)]">
+                <div className={`h-14 w-14 rounded-xl flex items-center justify-center border ${topic.bg} ${topic.color} group-hover:scale-110 transition-transform duration-300`}>
+                  {topic.icon}
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-bold text-white text-lg group-hover:text-cyan-400 transition-colors">{topic.title}</h4>
+                  <p className="text-sm text-slate-400 mt-1">{topic.desc}</p>
+                </div>
+                <ChevronRight size={20} className="text-slate-600 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* --- SYSTEM ARCHITECTURE --- */}
+        <section>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white mb-4">
+              System <span className="text-cyan-400">Architecture</span>
+            </h2>
+            <p className="text-slate-400 max-w-2xl mx-auto">The streamlined mechanical flow of an electric vehicle converts chemical energy to kinetic motion with minimal efficiency loss.</p>
+          </div>
+
+          <div className="bg-[#0a0f25]/80 p-8 md:p-12 rounded-[2.5rem] border border-white/10 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+            <div className="absolute inset-0 bg-white/5 opacity-10" />
+
+            <div className="flex flex-col lg:flex-row items-center justify-between relative z-10 gap-8">
+
+              <div className="flex flex-col items-center group">
+                <div className="h-24 w-24 bg-gradient-to-br from-cyan-900/50 to-transparent border border-cyan-500/30 rounded-2xl flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(34,211,238,0.2)] group-hover:border-cyan-400 transition-colors">
+                  <Zap className="text-cyan-400" size={40} />
+                </div>
+                <span className="font-bold tracking-wider uppercase text-white">Battery Pack</span>
+                <span className="text-xs text-cyan-400 font-mono mt-1">DC Energy Storage</span>
+              </div>
+
+              <div className="hidden lg:block h-px w-16 bg-gradient-to-r from-cyan-500/50 to-emerald-500/50 relative">
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399]" />
+              </div>
+
+              <div className="flex flex-col items-center group">
+                <div className="h-24 w-24 bg-gradient-to-br from-emerald-900/50 to-transparent border border-emerald-500/30 rounded-2xl flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(52,211,153,0.2)] group-hover:border-emerald-400 transition-colors">
+                  <Settings className="text-emerald-400" size={40} />
+                </div>
+                <span className="font-bold tracking-wider uppercase text-white">Inverter</span>
+                <span className="text-xs text-emerald-400 font-mono mt-1">DC to AC Conversion</span>
+              </div>
+
+              <div className="hidden lg:block h-px w-16 bg-gradient-to-r from-emerald-500/50 to-blue-500/50 relative">
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_10px_#60a5fa]" />
+              </div>
+
+              <div className="flex flex-col items-center group">
+                <div className="h-24 w-24 bg-gradient-to-br from-blue-900/50 to-transparent border border-blue-500/30 rounded-2xl flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(96,165,250,0.2)] group-hover:border-blue-400 transition-colors">
+                  <Gauge className="text-blue-400" size={40} />
+                </div>
+                <span className="font-bold tracking-wider uppercase text-white">Drive Motor</span>
+                <span className="text-xs text-blue-400 font-mono mt-1">Kinetic Generation</span>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* --- FAQ --- */}
+        <section className="py-24 bg-[#070b1e]">
+          <div className="max-w-4xl mx-auto px-6">
+            <h2 className="text-center text-3xl font-black mb-12 uppercase">EV <span className="text-cyan-400">FAQ</span></h2>
+            <div className="space-y-4">
+              {FAQS.map((faq) => (
+                <div key={faq.id} className="border-b border-white/10">
+                  <button onClick={() => toggleFaq(faq.id)} className="w-full py-6 flex justify-between items-center text-left">
+                    <span className="font-semibold text-lg">{faq.question}</span>
+                    <ChevronDown className={`text-cyan-400 transition-transform ${openFaqId === faq.id ? 'rotate-180' : ''}`} />
+                  </button>
+                  <div className={`overflow-hidden transition-all duration-300 ${openFaqId === faq.id ? 'max-h-40 pb-6 opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <p className="text-slate-400">{faq.answer}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        </main>
+        <Footer />
+
+        <style dangerouslySetInnerHTML={{
+          __html: `
                 @keyframes slow-zoom {
                     0% { transform: scale(1); }
                     100% { transform: scale(1.1); }

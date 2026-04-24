@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import HeroSection from "../components/Hero";
 // ─── CONFIG ────────────────────────────────────────────────────────────────────
 const API_BASE = import.meta.env?.VITE_API_URL ?? "http://localhost:8000";
 
@@ -116,6 +115,129 @@ function NavBar() {
         fontFamily: "'Space Mono', monospace",
       }}>Book Service</div>
     </nav>
+  );
+}
+
+function HeroSection() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const heroRef = useRef(null);
+
+  useEffect(() => {
+    const h = (e) => {
+      if (!heroRef.current) return;
+      const { left, top, width, height } = heroRef.current.getBoundingClientRect();
+      setMousePos({
+        x: (e.clientX - left) / width,
+        y: (e.clientY - top) / height,
+      });
+    };
+    window.addEventListener("mousemove", h);
+    return () => window.removeEventListener("mousemove", h);
+  }, []);
+
+  return (
+    <section ref={heroRef} id="dashboard" style={{
+      minHeight: "100vh",
+      background: `radial-gradient(ellipse at ${mousePos.x * 100}% ${mousePos.y * 100}%, rgba(0,212,255,0.12) 0%, transparent 60%), 
+                   radial-gradient(ellipse at 80% 20%, rgba(57,255,20,0.06) 0%, transparent 50%),
+                   linear-gradient(180deg, ${C.midnight} 0%, ${C.navy} 100%)`,
+      display: "flex", flexDirection: "column", alignItems: "center",
+      justifyContent: "center", textAlign: "center",
+      padding: "8rem 2rem 4rem",
+      position: "relative", overflow: "hidden",
+    }}>
+      {/* Grid overlay */}
+      <div style={{
+        position: "absolute", inset: 0, opacity: 0.04,
+        backgroundImage: `linear-gradient(${C.electric} 1px, transparent 1px), linear-gradient(90deg, ${C.electric} 1px, transparent 1px)`,
+        backgroundSize: "60px 60px",
+      }} />
+
+      {/* Badge */}
+      <div style={{
+        display: "inline-flex", alignItems: "center", gap: "0.5rem",
+        background: `rgba(0,212,255,0.1)`, border: `1px solid rgba(0,212,255,0.3)`,
+        borderRadius: "999px", padding: "0.35rem 1rem", marginBottom: "2rem",
+        fontFamily: "'Space Mono', monospace", fontSize: "0.75rem", color: C.electric,
+        letterSpacing: "0.15em",
+      }}>
+        <span style={{ width: 8, height: 8, borderRadius: "50%", background: C.neon, display: "inline-block", animation: "pulse 2s infinite" }} />
+        EV MAINTENANCE GUIDE 2026
+      </div>
+
+      <h1 style={{
+        fontFamily: "'Bebas Neue', 'Impact', sans-serif",
+        fontSize: "clamp(3rem, 8vw, 7rem)",
+        lineHeight: 0.95, letterSpacing: "0.02em",
+        color: C.textPrimary, marginBottom: "0.5rem",
+        maxWidth: "900px",
+      }}>
+        KEEP YOUR EV
+        <br />
+        <span style={{
+          background: `linear-gradient(90deg, ${C.electric}, ${C.neon})`,
+          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+        }}>PEAK PERFECT</span>
+      </h1>
+
+      <p style={{
+        color: C.textMuted, fontSize: "1.1rem", maxWidth: "560px",
+        lineHeight: 1.7, marginTop: "1.5rem", marginBottom: "2.5rem",
+        fontFamily: "'DM Sans', sans-serif",
+      }}>
+        From battery health to software updates — your comprehensive guide to
+        maximizing performance, range, and lifespan of your electric vehicle.
+      </p>
+
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
+        <button style={{
+          background: `linear-gradient(135deg, ${C.electric}, #0099cc)`,
+          color: C.midnight, fontWeight: 800, fontSize: "0.9rem",
+          padding: "0.9rem 2rem", borderRadius: "999px", border: "none",
+          cursor: "pointer", fontFamily: "'Space Mono', monospace",
+          letterSpacing: "0.05em",
+          boxShadow: `0 0 30px rgba(0,212,255,0.4)`,
+        }}>
+          VIEW SCHEDULE →
+        </button>
+        <button style={{
+          background: "transparent", color: C.textPrimary, fontWeight: 600,
+          fontSize: "0.9rem", padding: "0.9rem 2rem", borderRadius: "999px",
+          border: `1px solid ${C.slateLight}`, cursor: "pointer",
+          fontFamily: "'Space Mono', monospace",
+          transition: "border-color 0.2s",
+        }}
+          onMouseEnter={(e) => e.currentTarget.style.borderColor = C.electric}
+          onMouseLeave={(e) => e.currentTarget.style.borderColor = C.slateLight}
+        >
+          LOG SERVICE
+        </button>
+      </div>
+
+      {/* Floating stat cards */}
+      <div style={{ display: "flex", gap: "1.5rem", marginTop: "5rem", flexWrap: "wrap", justifyContent: "center" }}>
+        {[
+          { label: "Battery Health", value: "94%", color: C.neon, icon: "🔋" },
+          { label: "Next Service", value: "2,100 km", color: C.electric, icon: "🔧" },
+          { label: "Software", value: "Up to date", color: C.amber, icon: "📡" },
+        ].map((stat) => (
+          <div key={stat.label} style={{
+            background: `rgba(26,37,68,0.8)`,
+            border: `1px solid ${C.slateLight}`,
+            backdropFilter: "blur(12px)",
+            borderRadius: "16px", padding: "1.2rem 1.8rem",
+            textAlign: "left", minWidth: "180px",
+            boxShadow: `0 4px 30px rgba(0,0,0,0.3)`,
+          }}>
+            <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>{stat.icon}</div>
+            <div style={{ color: stat.color, fontFamily: "'Space Mono', monospace", fontSize: "1.4rem", fontWeight: 700 }}>
+              {stat.value}
+            </div>
+            <div style={{ color: C.textMuted, fontSize: "0.78rem", marginTop: "0.2rem" }}>{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -585,14 +707,17 @@ function EVMaintenanceGuide() {
       <div style={{ fontFamily: "'DM Sans', sans-serif", background: C.midnight, color: C.textPrimary, minHeight: "100vh" }}>
         <NavBar />
         <HeroSection />
+
         {batteryLoading
           ? <section style={{ padding: "6rem 2rem", background: C.navy }}><div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}><SkeletonCard /><SkeletonCard /></div></section>
           : <BatterySection battery={battery} />
         }
+
         {tasksLoading
           ? <section style={{ padding: "6rem 2rem", background: C.midnight }}><div style={{ maxWidth: "1100px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.2rem" }}>{[1,2,3].map(i=><SkeletonCard key={i}/>)}</div></section>
           : <MaintenanceTasksSection tasks={tasks} />
         }
+
         <ScheduleSection schedule={schedule} />
         <ChargingTipsSection tips={tips} />
         <Footer />
@@ -600,4 +725,5 @@ function EVMaintenanceGuide() {
     </>
   );
 }
+
 export default EVMaintenanceGuide;
