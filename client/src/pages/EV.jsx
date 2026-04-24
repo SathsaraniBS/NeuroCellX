@@ -184,14 +184,12 @@ const evbatteyries = [
 ];
 
 const FAQS = [
-  { id: 1, question: "How far can an EV go on a single charge ?", answer: "On average, a modern electric vehicle (EV) can go about 250 to 300 miles (400 to 480 km) on a single charge." },
-  { id: 2, question: "How often should I service my EV ?", answer: "Most EVs require a service check every 15,000 km or 12 months, whichever comes first. Unlike ICE vehicles, EVs skip oil changes. Key service items include tyre rotation, brake inspection, cabin filter replacement, and software updates." },
-  { id: 3, question: "Can I charge my EV in the rain ?", answer: "Yes — EV charging systems are designed to be weatherproof. Both the charging port and plug meet IP ratings for water resistance. However, always inspect cables for damage before charging and avoid submerged charging equipment." },
-  { id: 4, question: "What happens if my battery degrades ?", answer: "Battery degradation reduces your maximum range over time but rarely causes sudden failure. If capacity drops below the warranty threshold (usually 70%), the manufacturer may replace or refurbish the pack under warranty." },
-  { id: 5, question: "Are EVs more expensive to insure ?", answer: "EV insurance can be 5–15% higher than comparable ICE vehicles, mainly because of higher repair and replacement costs for batteries and high-voltage components. However, lower maintenance costs often offset the difference." },
-  { id: 6, question: "Will fast charging damage my battery ?", answer: "Occasional DC fast charging is fine, but regular daily use of fast chargers can accelerate battery degradation over time. For everyday charging, prefer AC home charging at a moderate rate (7–11 kW) and keep charge between 20–80%." },
-  { id: 7, question: "How can I maximise my EV's driving range ?", answer: "Drive smoothly, use regenerative braking, precondition the cabin while plugged in, keep tyres properly inflated, reduce highway speeds, limit use of heating/AC when possible, and maintain a 20–80% charge level." },
-  { id: 8, question: "What should I do if my EV won't start ?", answer: "Check the 12V auxiliary battery (a common culprit), ensure the high-voltage battery has sufficient charge, check for any dashboard warnings, try locking/unlocking the vehicle to reset the system. If the issue persists, contact roadside assistance." }
+  { id: 1, question: "How far can an EV go on a single charge ?", answer: "Modern EVs typically range from 200 to 400+ miles on a single charge, depending on the model, battery chemistry, and driving conditions." },
+  { id: 2, question: "How long does it take to charge an EV ?", answer: "Charging times vary. AC Level 2 takes 4-10 hours (ideal for overnight), while DC Fast Charging can push a battery from 10% to 80% in 20-40 minutes." },
+  { id: 3, question: "Are EVs more expensive to maintain ?", answer: "Generally, no. EVs have significantly fewer moving parts, zero oil changes, and drastically less brake wear due to regenerative braking systems." },
+  { id: 4, question: "Can I install a home charger ?", answer: "Yes, installing a Level 2 AC charger at home is highly recommended for convenient overnight charging. It requires a dedicated 240V electrical circuit." },
+  { id: 5, question: "What happens to the battery after years of use ?", answer: "EV batteries degrade slowly. Once they drop below automotive grade (usually 70%), they are highly valuable for repurposing in grid storage systems or full raw material recycling." },
+  { id: 6, question: "Are EVs safe in extreme weather ?", answer: "Absolutely. EV battery packs and high-voltage systems are rigorously sealed, waterproofed, and tested for safety in deep water, heavy rain, and extreme temperatures." },
 ];
 function EV() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -262,37 +260,6 @@ function EV() {
         </div>
       </section>
 
-      {/* --- WHY IT MATTERS (INTRO) --- */}
-      <section className="py-20 relative">
-        <div className="absolute top-10 left-0 w-[500px] h-[500px] bg-cyan-600/10 blur-[150px] pointer-events-none -z-10" />
-
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="bg-transparent p-8 md:p-12 rounded-[2rem]  flex flex-col md:flex-row gap-10 items-center justify-between">
-            <div className="max-w-2xl">
-              <h2 className="text-3xl  font-black uppercase tracking-tight mb-4">
-                Why EV <br /> <span className="text-cyan-400">
-                  Maintenance <span className="inline-block ml-1">Matters</span>
-                </span>
-              </h2>
-              <p className="text-slate-400 leading-relaxed text-lg mb-4">
-                Cleaner, quieter, and cheaper to run - EVs are
-                driving us toward a smarter and sustainable tomorrow.
-              </p>
-              <p className="text-slate-400 leading-relaxed text-lg">
-                Good care ensures better performance, longer battery life, safety on the road, and lower overall ownership costs.
-              </p>
-            </div>
-            <div className="bg-[url('src/assets/ev12.png')] bg-cover bg-no-repeat bg-center rounded-2xl border border-emerald-500/30 text-center max-w-sm px-55 py-35 relative overflow-hidden">
-              {/* Adding an overlay to make text more readable against the image */}
-              <div className="absolute inset-0 bg-black/40 z-0"></div>
-
-              <div className="relative z-10">
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <main className="max-w-7xl mx-auto px-6 py-24 space-y-32 flex-grow z-10">
 
         {/* --- WHY CHOOSE EV --- */}
@@ -300,7 +267,7 @@ function EV() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
             <div>
               <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white mb-2">
-                Why Choose <span className="text-cyan-400">Electric?</span>
+                Why Choose <span className="text-cyan-400">EV</span>
               </h2>
               <p className="text-slate-400">The systemic advantages of transitioning to battery-electric power.</p>
             </div>
