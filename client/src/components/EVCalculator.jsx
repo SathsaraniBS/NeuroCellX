@@ -40,7 +40,7 @@ const EVCalculator = () => {
                         <span>Cost Estimator</span>
                     </div> */}
                     <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight">
-                        Calculate Your <span className="text-cyan-400">Home Charging</span> Costs
+                        Calculate Your <span className="text-cyan-400"> Charging Cost</span> 
                     </h1>
                 </div>
 

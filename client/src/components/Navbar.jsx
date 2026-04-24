@@ -137,12 +137,7 @@ const Navbar = () => {
                 >
                   PUBLIC CHARGING
                 </Link>
-                <Link
-                  to="/charging/compare"
-                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
-                >
-                  TRIP PLANNER
-                </Link>
+                
               </div>
             )}
           </div>

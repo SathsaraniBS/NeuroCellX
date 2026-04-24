@@ -131,12 +131,45 @@ const TipCard = ({ tip }) => (
     </div>
 );
 
+const CHARGING_STEPS = [
+    {
+        id: 1,
+        step_name: "Plug In",
+        image: "src/assets/level1.png", // Updated fallback image
+        description: "Standard home outlet. Best for overnight charging at home.",
+        // iconType: "level1" 
+    },
+    {
+        id: 2,
+        step_name: "Communication",
+        image: "src/assets/level2.png", // Updated fallback image
+        description: "Fast home and public charging. Ideal for daily drivers.",
+        // iconType: "level2" 
+    },
+    {
+        id: 3,
+        step_name: "Convert & Deliver",
+        image: "src/assets/level3.png", // Updated fallback image
+        description: "Rapid commercial charging for long-distance travel.",
+        // iconType: "dcfast" 
+    },
+    {
+        id: 4,
+        step_name: "Stop When Full",
+        image: "src/assets/level3.png", // Updated fallback image
+        description: "Rapid commercial charging for long-distance travel.",
+        // iconType: "dcfast" 
+
+    }
+];
+
 function Charging() {
     const [vehicles] = useState(DUMMY_VEHICLES);
     const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
     const [chargingData, setChargingData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [chargingsteps,setSteps] = useState([]);
 
     // New state to control video playback
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -166,6 +199,23 @@ function Charging() {
             }
         };
         fetchChargingLevels();
+    }, []);
+
+    // Fetch FastAPI Data
+    useEffect(() => {
+        const fetchChargingSteps = async () => {
+            try {
+                const response = await fetch('http://localhost:8000/api/charging-steps');
+                if (!response.ok) throw new Error("API Offline");
+                const data = await response.json();
+                setSteps(data);
+            } catch (error) {
+                setSteps(CHARGING_STEPS);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchChargingSteps();
     }, []);
 
     // Carousel Handlers
@@ -544,6 +594,64 @@ function Charging() {
                     </div>
                 </section>
                 <EVCalculator />
+
+                <section className="py-24 relative overflow-hidden">
+                    <div className="absolute top-0 left-1/2 transform --translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
+
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="text-left mb-20 space-y-4">
+                            <h2 className="text-5xl md:text-6xl font-black  uppercase">
+                                How EV charging works -  
+                                <span className="text-cyan-400">
+                                    Step by step
+
+                                </span>
+                            </h2>
+                            
+                        </div>
+
+                        <div className="flex flex-col lg:flex-row items-center gap-16">
+                            <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-4 gap-6">
+                                {loading ? (
+                                    <div className="col-span-3 text-center py-20 "><div className="animate-spin h-10 w-10 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto" /></div>
+                                ) : (
+                                    chargingsteps.map((step) => (
+                                        <div key={step.id} className="relative h-96 rounded-3xl overflow-hidden group border border-white/10 shadow-lg">
+                                            {/* Background */}
+                                            <div
+                                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                                style={{ backgroundImage: `url(${step.image})` }}
+                                            />
+
+                                            {/* Overlay */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
+
+                                            {/* Content */}
+                                            <div className="absolute inset-0 z-20 p-8 flex flex-col justify-end">
+                                                {/* Title Section */}
+                                                <div className="transform transition-transform duration-500 translate-y-8 group-hover:translate-y-0">
+                                                    <h3 className="text-xl font-bold text-cyan-400 mb-1">
+                                                        {step.step_name}
+                                                    </h3>
+                                                    
+                                                </div>
+
+                                                {/* Description Section */}
+                                                <div className="opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                                                    <div className="h-[2px] w-12 bg-cyan-500 mb-4" />
+                                                    <p className="text-gray-300 text-lg font-bold leading-relaxed">
+                                                        {step.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
 
             </main>
 
