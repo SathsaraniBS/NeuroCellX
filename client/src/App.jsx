@@ -11,7 +11,6 @@ import LearningHub from './pages/EV';
 import LandingPage from './pages/LandingPage';
 import About from './pages/About';
 import ContactPage from './pages/ContactPage';
-import BatteryTypes from './pages/BatteryTypes';
 import Charging from './pages/Charging';  // ← NEW: Import Charging page
 // ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
@@ -22,6 +21,7 @@ import FindStations from './pages/FindStations';
 import PublicCharging from './pages/PublicCharging';
 import Homecharging from './pages/Homecharging';
 import Battery from './pages/Battery';
+import BatteryTypes from './pages/BatteryTypes';
 import Batterylife from './pages/Batterylife';
 import EVArchitecture from './pages/EVArchitecture';
 import InsideBattery from './pages/InsideBattery';
@@ -69,6 +69,12 @@ function App() {
                             <Route path="/battery" element={
                                 <ProtectedRoute>
                                     <Battery />
+                                </ProtectedRoute>
+                            } />
+
+                            <Route path="/battery-types" element={
+                                <ProtectedRoute>
+                                    <BatteryTypes />
                                 </ProtectedRoute>
                             } />
 
