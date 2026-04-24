@@ -225,8 +225,21 @@ function Charging() {
                     <div className="absolute top-10 left-0 w-[500px] h-[500px] bg-cyan-600/10 blur-[150px] pointer-events-none -z-10" />
 
                     <div className="max-w-7xl mx-auto px-6">
+                        <div className="max-w-7xl mx-auto px-6">
+                            <div className="text-center mb-20 space-y-4">
+                                <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
+                                    Getting You Started
+                                </h2>
+                                <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
+                                    Whether you're new to EVs or a veteran, our guide helps you navigate the fundamentals of charging speeds and battery health.
+                                </p>
+                            </div>
+                        </div>
                         <div className="bg-transparent p-8 md:p-12 rounded-[2rem]  flex flex-col md:flex-row gap-10 items-center justify-between">
+
+
                             <div className="max-w-2xl">
+
                                 <h2 className="text-3xl  font-black uppercase tracking-tight mb-4">
                                     What is  <br /> <span className="text-cyan-400">
                                         EV <span className="inline-block ml-1">Charging ?</span>
@@ -265,7 +278,7 @@ function Charging() {
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="text-center mb-20 space-y-4">
                             <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
-                                Getting You Started
+                                Charging Levels
                             </h2>
                             <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
                                 Whether you're new to EVs or a veteran, our guide helps you navigate the fundamentals of charging speeds and battery health.
