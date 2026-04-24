@@ -104,8 +104,10 @@ function Batterysafety() {
                     <p className="text-gray-400 text-lg md:text-xl text-sm md:text-base max-w-5xl mx-auto mb-8">
                         Learn about the robust safety measures in place to ensure your electric vehicle's battery is not just a power source but a secure one. We've got your back on the road to a safer, cleaner tomorrow.
                     </p>
-                    <h2 className="text-2xl md:text-4xl font-bold text-[#3B82F6] uppercase tracking-wide mb-6">
-                        DISCOVER WHAT MAKES YOUR EV BATTERIES SAFE
+                    <h2 className="text-3xl md:text-4xl lg:text-6xl font-black leading-tight uppercase tracking-tight">
+                    {/* <h2 className="text-2xl md:text-4xl font-bold text-[#3B82F6] uppercase tracking-wide mb-6"> */}
+                        DISCOVER WHAT MAKES 
+                         <span className="text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.3)]"> YOUR EV BATTERIES SAFE </span>
                     </h2>
                     <p className="text-gray-400 text-lg  text-base md:text-lg">
                         Learn all about the robust safety measures that ensure EV's battery is not just powerful, but also secure.
@@ -244,7 +246,8 @@ function Batterysafety() {
 
                     <div>
                         <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
-                            Thermal runaway
+                            Thermal
+                             <span className="text-cyan-400"> runaway </span>
                         </h2>
                         <p className="text-gray-400 text-lg mb-8">
                             A rapid increase in temperature and pressure within the battery cell leading to destabilising and degradation of battery content. Though lithium-ion batteries are a part of the BMS (battery management system) which regulates the current flow and battery temperature while charging the batteries, one can still follow the simplest ways to ensure extra safety,
@@ -311,7 +314,7 @@ function Batterysafety() {
 
                     <div>
                         <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
-                            Mechanical damage
+                            Mechanical    <span className="text-cyan-400"> Damage </span>
 
                         </h2>
                         <p className="text-gray-400 text-lg mb-8">

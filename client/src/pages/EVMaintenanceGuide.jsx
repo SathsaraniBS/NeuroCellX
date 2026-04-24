@@ -5,110 +5,51 @@ import {
     ShieldCheck,
     Download,
     CalendarCheck,
-    Zap
+    Zap,
+    AlertTriangle,
+    PhoneCall,
+    CheckCircle2
 } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-// NOTE: In a real project, import images at the top:
-// import MaintenanceImg from '../assets/evmaintenance.png';
+const SectionBlock = ({ title, imageSrc, reverse, children }) => (
+    <div className={`flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-16 items-center bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl p-8 lg:p-12 rounded-3xl relative transition-all duration-500 hover:border-cyan-500/30 hover:bg-white/[0.07] overflow-hidden`}>
+        
+        {/* Ambient Glow behind the card */}
+        <div className="absolute -inset-4 bg-cyan-500/5 blur-[100px] -z-10" />
 
-const MAINTENANCE_TOPICS = [
-    {
-        id: "01",
-        title: "Battery care & charging habits",
-        // Using placeholders for reliability in this demo
-        image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=200",
-        content: (
-            <ul className="list-disc pl-5 space-y-2 text-slate-300">
-                <li>Keep daily charge between 20% – 80% for optimal battery health.</li>
-                <li>Avoid deep-discharge (0%) and frequent 100% DC fast charging.</li>
-                <li>Don't park at 0% or 100% for long periods.</li>
-                <li>Use preconditioning (heating/cooling) while plugged in for better range.</li>
-            </ul>
-        )
-    },
-    {
-        id: "02",
-        title: "Routine maintenance checklist",
-        image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=80&w=200",
-        content: (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-300 text-sm">
-                <div className="flex justify-between border-b border-white/5 pb-2"><span>Tyre pressure & tread</span> <span className="text-cyan-400">Every 10,000 km</span></div>
-                <div className="flex justify-between border-b border-white/5 pb-2"><span>Brake pads & rotors</span> <span className="text-cyan-400">Every 15,000 km</span></div>
-                <div className="flex justify-between border-b border-white/5 pb-2"><span>Air & cabin filters</span> <span className="text-cyan-400">Every 15,000 km</span></div>
-                <div className="flex justify-between border-b border-white/5 pb-2"><span>High-voltage inspection</span> <span className="text-cyan-400">Yearly</span></div>
+        {/* Image Container */}
+        <div className="w-full lg:w-1/2 relative group rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(34,211,238,0.1)]">
+            <img
+                src={imageSrc}
+                alt={title}
+                className="w-full h-[300px] lg:h-[400px] object-cover transition-transform duration-700 group-hover:scale-110"
+                onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1593941707882-a5bba14938cb?q=80&w=2072&auto=format&fit=crop"; }}
+            />
+            {/* Interactive Image Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent opacity-80" />
+            <div className="absolute inset-0 bg-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-overlay" />
+        </div>
+
+        {/* Content Container */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center z-10">
+            <h2 className="text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 leading-tight mb-6 uppercase tracking-tight">
+                {title}
+            </h2>
+            <div className="text-lg text-slate-300 space-y-4">
+                {children}
             </div>
-        )
-    },
-    {
-        id: "03",
-        title: "Software updates & features",
-        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=200",
-        content: (
-            <ul className="list-disc pl-5 space-y-2 text-slate-300">
-                <li>OTA (Over-the-Air) updates bring bug fixes and performance improvements.</li>
-                <li>Check for updates on your car's screen or companion app.</li>
-                <li>Ensure a stable Wi-Fi connection for large updates.</li>
-            </ul>
-        )
-    },
-    {
-        id: "04",
-        title: "Winter / weather range tips",
-        image: "https://images.unsplash.com/photo-1547038577-da80abbc4f19?auto=format&fit=crop&q=80&w=200",
-        content: (
-            <ul className="list-disc pl-5 space-y-2 text-slate-300">
-                <li>Precondition the cabin while charging in cold weather.</li>
-                <li>Avoid aggressive acceleration in extreme cold conditions.</li>
-                <li>Park in the shade and pre-cool the cabin in hot weather.</li>
-            </ul>
-        )
-    },
-    {
-        id: "05",
-        title: "Service schedule & warranty info",
-        image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=200",
-        content: (
-            <div className="bg-white/5 p-4 rounded-lg border border-white/10 text-slate-300">
-                <ul className="list-disc pl-5 space-y-1">
-                    <li><strong>Battery:</strong> 8 years / 160,000 km</li>
-                    <li><strong>Vehicle:</strong> 3 years / 100,000 km</li>
-                    <li><strong>Not covered:</strong> Misuse or unauthorized mods.</li>
-                </ul>
-            </div>
-        )
-    },
-    {
-        id: "06",
-        title: "Roadside assistance",
-        image: "https://images.unsplash.com/photo-1449960232330-3029a9757736?auto=format&fit=crop&q=80&w=200",
-        content: (
-            <div className="flex flex-col md:flex-row gap-6 items-center bg-white/5 p-4 rounded-lg border border-white/10">
-                <div className="flex-1 space-y-2 text-slate-300">
-                    <p>• Call 24/7 roadside assistance via the app.</p>
-                    <p>• Leave HV repairs to authorized technicians.</p>
-                </div>
-                <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-xl text-center min-w-[200px]">
-                    <p className="text-xs text-cyan-400 uppercase mb-1">VoltIQ Assistance</p>
-                    <p className="text-xl font-bold text-white">1800-123-4567</p>
-                </div>
-            </div>
-        )
-    },
-    {
-        id: "07",
-        title: "Insurance & ownership costs",
-        image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=200",
-        content: (
-            <ul className="list-disc pl-5 space-y-2 text-slate-300">
-                <li>Insure with policies covering high-voltage components.</li>
-                <li>Protect against theft of mobile chargers and cables.</li>
-                <li>Enjoy ~40% lower maintenance costs vs ICE vehicles.</li>
-            </ul>
-        )
-    }
-];
+        </div>
+    </div>
+);
+
+const ListItem = ({ children }) => (
+    <li className="flex items-start gap-3">
+        <CheckCircle2 className="text-cyan-400 mt-1 flex-shrink-0" size={20} />
+        <span className="leading-relaxed">{children}</span>
+    </li>
+);
 
 const FAQS = [
     { id: 1, question: "How long does an EV battery last?", answer: "Most modern EV batteries are designed to last 10-20 years. Warranties typically cover 8 years or 100,000 miles, guaranteeing at least 70% retention." },
@@ -122,6 +63,12 @@ function EVCare() {
     const [openTopicId, setOpenTopicId] = useState(null);
     const [openFaqId, setOpenFaqId] = useState(null);
 
+    // FIX: Define activeEV so the Hero section doesn't throw a ReferenceError
+    // const activeEV = {
+    //     title: "VoltIQ Care",
+    //     tagline: "Empowering Your Electric Journey"
+    // };
+
     const toggleTopic = (id) => setOpenTopicId(openTopicId === id ? null : id);
     const toggleFaq = (id) => setOpenFaqId(openFaqId === id ? null : id);
 
@@ -129,99 +76,172 @@ function EVCare() {
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
             <Navbar />
 
-            {/* --- HERO SECTION --- */}
-            <section className="relative h-[60vh] flex items-center justify-center overflow-hidden border-b border-white/10">
-                <div className="absolute inset-0 z-0">
+            {/* HERO SECTION */}
+            <section className="relative h-screen w-full overflow-hidden">
+                <div className="absolute inset-0">
                     <img
-                        src="https://images.unsplash.com/photo-1664360645604-03d3bc01b1df?q=80&w=2070&auto=format&fit=crop"
-                        alt="EV Maintenance"
-                        className="w-full h-full object-cover opacity-30 animate-slow-zoom"
+                        src="/src/assets/ev3.png"
+                        alt="EV Background"
+                        className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#050816]/50 via-[#050816]/80 to-[#050816]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
                 </div>
 
-                <div className="relative z-10 text-center px-6 max-w-4xl mt-16">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lime-500/30 bg-lime-500/10 text-lime-400 text-sm font-bold mb-6 uppercase">
-                        <Wrench size={14} /> Ownership Guide
-                    </div>
-                    <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase leading-tight">
-                        EV CARE & <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">MAINTENANCE</span>
-                    </h1>
-                    <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto">
-                        Keep your electric car healthy and extend its life through intelligent care.
-                    </p>
+                <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+                    <div className="max-w-3xl space-y-6 pt-20">
+                        
+                        <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">EV Care:<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">Maintenance & Ownership Guide</span></h1>
+                        <p className="text-xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Learn</p>
+                    </div>  
                 </div>
             </section>
 
-            {/* --- WHY IT MATTERS --- */}
-            <section className="py-20 max-w-7xl mx-auto px-6">
-                <div className="bg-white/5 border border-white/10 backdrop-blur-xl p-8 md:p-12 rounded-[2rem] flex flex-col md:flex-row gap-10 items-center">
-                    <div className="flex-1">
-                        <h2 className="text-3xl font-black uppercase mb-4">Why EV Maintenance <span className="text-cyan-400">Matters</span></h2>
-                        <p className="text-slate-400 text-lg mb-4">Electric vehicles have fewer moving parts, but thermal systems, tires, and software still require expert attention.</p>
-                    </div>
-                    <div className="bg-gradient-to-br from-emerald-500/20 to-transparent p-6 rounded-2xl border border-emerald-500/30 text-center shrink-0">
-                        <ShieldCheck className="text-emerald-400 mx-auto mb-3" size={40} />
-                        <p className="text-emerald-100 font-medium">Safe. Efficient. Reliable.</p>
-                    </div>
-                </div>
-            </section>
+            {/* Main Content Sections */}
+            <div className="py-5 max-w-1xl mx-auto px-12 space-y-10 bg-white/5 border border-white/10 rounded-3xl pb-24">
 
-            {/* --- TOPICS ACCORDION --- */}
-            <section className="py-12 max-w-5xl mx-auto px-6 w-full">
-                <div className="space-y-4">
-                    {MAINTENANCE_TOPICS.map((topic) => (
-                        <div
-                            key={topic.id}
-                            className={`group rounded-2xl border transition-all duration-300 overflow-hidden ${
-                                openTopicId === topic.id ? 'bg-white/10 border-cyan-500/50' : 'bg-white/5 border-white/10'
-                            }`}
-                        >
-                            <button
-                                onClick={() => toggleTopic(topic.id)}
-                                className="w-full flex items-center justify-between p-4 md:p-6 text-left"
-                            >
-                                <div className="flex items-center gap-4">
-                                    <div className="w-16 h-12 rounded-lg overflow-hidden border border-white/10 shrink-0">
-                                        <img src={topic.image} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                    </div>
-                                    <span className={`font-bold md:text-xl ${openTopicId === topic.id ? 'text-cyan-400' : 'text-white'}`}>
-                                        {topic.title}
-                                    </span>
-                                </div>
-                                <ChevronDown className={`transition-transform duration-300 ${openTopicId === topic.id ? 'rotate-180 text-cyan-400' : ''}`} />
-                            </button>
-                            <div className={`transition-all duration-300 ease-in-out overflow-hidden ${openTopicId === topic.id ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <div className="p-6 pt-0 md:ml-20 border-t border-white/5 mt-2">
-                                    {topic.content}
-                                </div>
+                <SectionBlock 
+                    title="Battery care & charging habits" 
+                    imageSrc="src/assets/battery-care.png"
+                    reverse={false}
+                >
+                    <ul className="space-y-4">
+                        <ListItem>Keep daily charge between <strong>20% – 80%</strong> for optimal battery health.</ListItem>
+                        <ListItem>Avoid deep-discharge (0%) and frequent 100% DC fast charging.</ListItem>
+                        <ListItem>Don't park at 0% or 100% for long periods.</ListItem>
+                        <ListItem>Use preconditioning (heating/cooling) while plugged in for better range and battery efficiency.</ListItem>
+                    </ul>
+                </SectionBlock>
+
+                <SectionBlock 
+                    title="Routine maintenance checklist" 
+                    imageSrc="src/assets/ev-checklist.png"
+                    reverse={true}
+                >
+                    <div className="bg-black/20 rounded-2xl border border-white/5 p-2">
+                        <div className="grid grid-cols-1 gap-1 text-base">
+                            <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
+                                <span className="font-medium text-white">Tyre pressure & tread</span> 
+                                <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">10k km</span>
+                            </div>
+                            <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
+                                <span className="font-medium text-white">Brake pads & rotors</span>
+                                <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">15k km</span>
+                            </div>
+                            <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
+                                <span className="font-medium text-white">Air & cabin filters</span>
+                                <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">15k km / 12 mo</span>
+                            </div>
+                            <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
+                                <span className="font-medium text-white">Lights, horn, seat belts</span>
+                                <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">15k km / 12 mo</span>
+                            </div>
+                            <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
+                                <span className="font-medium text-white">Coolant & brake fluid</span>
+                                <span className="text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">15k km / 12 mo</span>
+                            </div>
+                            <div className="flex justify-between items-center p-3 hover:bg-white/5 rounded-lg transition-colors">
+                                <span className="font-medium text-white">High-voltage inspection</span>
+                                <span className="text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded-full text-sm font-bold tracking-wide">Yearly</span>
                             </div>
                         </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* --- RESOURCES --- */}
-            <section className="py-16 max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                <button className="flex items-center gap-4 p-6 bg-white/5 border border-white/10 rounded-2xl hover:border-cyan-500/50 transition-all">
-                    <Download className="text-cyan-400" />
-                    <div className="text-left">
-                        <p className="text-xs text-slate-400 uppercase font-bold">PDF Guide</p>
-                        <p className="text-white font-medium">Checklist</p>
                     </div>
-                </button>
-                <button className="flex items-center justify-center gap-3 p-6 bg-cyan-600 rounded-2xl hover:bg-cyan-500 transition-all font-bold uppercase shadow-lg shadow-cyan-900/20">
-                    <CalendarCheck size={20} /> Book Service
-                </button>
-                <button className="flex items-center gap-4 p-6 bg-white/5 border border-white/10 rounded-2xl hover:border-lime-500/50 transition-all">
-                    <Zap className="text-lime-400" />
-                    <div className="text-left">
-                        <p className="text-xs text-slate-400 uppercase font-bold">Visit</p>
-                        <p className="text-white font-medium">Charging Hub</p>
-                    </div>
-                </button>
-            </section>
+                </SectionBlock>
 
+                <SectionBlock 
+                    title="Software updates & features" 
+                    imageSrc="src/assets/ev4.png"
+                    reverse={false}
+                >
+                    <ul className="space-y-4">
+                        <ListItem>OTA (Over-the-Air) updates bring bug fixes and performance improvements directly to your vehicle.</ListItem>
+                        <ListItem>Check for updates regularly on your car's main display screen or via the companion mobile app.</ListItem>
+                        <ListItem>Ensure your vehicle is connected to a stable Wi-Fi connection for faster downloads of large updates.</ListItem>
+                    </ul>
+                </SectionBlock>
+
+                <SectionBlock 
+                    title="Winter / weather range tips" 
+                    imageSrc="src/assets/ev4.png" 
+                    reverse={true}
+                >
+                    <ul className="space-y-4">
+                        <ListItem>Cold weather increases battery resistance and reduces range. Always precondition the cabin while still connected to the charger.</ListItem>
+                        <ListItem>Avoid aggressive acceleration in extreme cold conditions to protect battery chemistry.</ListItem>
+                        <ListItem>In extreme heat, try to park in the shade and pre-cool the cabin to reduce the load on the A/C system while driving.</ListItem>
+                    </ul>
+                </SectionBlock>
+
+                <SectionBlock 
+                    title="Service schedule & warranty" 
+                    imageSrc="src/assets/ev4.png"
+                    reverse={false}
+                >
+                    <p className="text-slate-400 mb-4">Most modern EVs come with highly competitive and comprehensive warranty coverage to give you peace of mind.</p>
+                    
+                    <div className="bg-cyan-950/30 p-5 rounded-xl border border-cyan-500/20 mb-6">
+                        <ul className="space-y-3">
+                            <li className="flex justify-between items-center border-b border-cyan-500/10 pb-2">
+                                <strong className="text-white flex items-center gap-2"><ShieldCheck size={18} className="text-emerald-400"/> Battery & Drive-unit:</strong> 
+                                <span className="text-cyan-300">8 years / 160,000 km</span>
+                            </li>
+                            <li className="flex justify-between items-center border-b border-cyan-500/10 pb-2">
+                                <strong className="text-white flex items-center gap-2"><ShieldCheck size={18} className="text-emerald-400"/> Vehicle warranty:</strong> 
+                                <span className="text-cyan-300">3 years / 100,000 km</span>
+                            </li>
+                            <li className="flex flex-col gap-1 pt-1">
+                                <strong className="text-white flex items-center gap-2"><AlertTriangle size={18} className="text-yellow-400"/> Not covered:</strong> 
+                                <span className="text-slate-400 text-sm">Accidents, misuse, unauthorized modifications, or physical tampering.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </SectionBlock>
+
+                <SectionBlock 
+                    title="Roadside assistance" 
+                    imageSrc="src/assets/battery-care.png"
+                    reverse={true}
+                >
+                    <ul className="space-y-4 mb-6">
+                        <ListItem>Call our 24/7 roadside assistance or request emergency help directly through the VoltIQ app.</ListItem>
+                        <ListItem>In case of a critically low battery, use the app to locate the nearest emergency charger or request a flatbed tow.</ListItem>
+                        <ListItem><strong>WARNING:</strong> High-voltage components (orange cables) are highly dangerous. Leave all electrical repairs to certified technicians.</ListItem>
+                    </ul>
+                    
+                    <div className="bg-gradient-to-r from-cyan-600 to-blue-700 p-[1px] rounded-2xl">
+                        <div className="bg-[#050816] rounded-2xl p-6 flex items-center gap-6">
+                            <div className="bg-cyan-500/20 p-4 rounded-full">
+                                <PhoneCall className="text-cyan-400" size={32} />
+                            </div>
+                            <div>
+                                <p className="text-sm text-cyan-400 font-bold uppercase tracking-widest mb-1">Emergency Hotline</p>
+                                <p className="text-2xl font-black text-white tracking-wider">1800-123-4567</p>
+                                <p className="text-sm text-slate-400 mt-1">Available 24/7 • Nationwide Support</p>
+                            </div>
+                        </div>
+                    </div>
+                </SectionBlock>
+
+                <SectionBlock 
+                    title="Insurance & ownership costs" 
+                    imageSrc="src/assets/battery-care.png"
+                    reverse={false}
+                >
+                    <ul className="space-y-4 mb-8">
+                        <ListItem>Insure your EV with a comprehensive policy specifically designed to cover high-voltage battery packs and electrical components.</ListItem>
+                        <ListItem>Ensure your policy includes protection against the theft of mobile chargers and external charging cables.</ListItem>
+                        <ListItem>Enjoy the financial benefits: EVs generally have significantly lower running costs compared to ICE vehicles due to cheaper electricity vs fuel, and drastically fewer moving parts.</ListItem>
+                    </ul>
+
+                    <div className="inline-block bg-emerald-500/10 border border-emerald-500/30 px-6 py-3 rounded-full">
+                        <p className="text-sm text-emerald-400 font-bold uppercase tracking-widest">
+                            Lower running costs • Higher savings • Better for the planet
+                        </p>
+                    </div>
+                </SectionBlock>
+
+            </div>
+    
             {/* --- FAQ --- */}
             <section className="py-24 bg-[#070b1e]">
                 <div className="max-w-4xl mx-auto px-6">

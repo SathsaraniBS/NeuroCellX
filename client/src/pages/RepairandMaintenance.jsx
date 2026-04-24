@@ -160,7 +160,7 @@ function RepairandMaintenance() {
             <section className="pt-32 pb-16 px-6 lg:px-8 max-w-7xl mx-auto w-full relative z-10">
                 <div className="text-center mb-16">
                     <h1 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
-                        Advanced <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">EV Care</span>
+                        Advanced <span className="text-cyan-400">EV Care</span>
                     </h1>
                     <p className="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
                         Unlock the secrets to maintaining your electric vehicle's performance and preserving your battery's longevity. From predictive analytics to routine check-ups, our maintenance tips keep your EV humming like a finely tuned machine.
@@ -235,12 +235,9 @@ function RepairandMaintenance() {
             <section className="py-20 px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-bold tracking-widest uppercase text-xs">
-                            <Settings size={14} className="animate-spin-slow" />
-                            <span>VoltIQ Technical Guide</span>
-                        </div>
+                        
                         <h2 className="text-3xl md:text-5xl font-black text-white">
-                            Maintenance <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Protocols</span>
+                            Maintenance <span className="text-cyan-400">Protocols</span>
                         </h2>
                     </div>
     
@@ -317,7 +314,7 @@ function RepairandMaintenance() {
                     <div>
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/10 pb-6 mb-10 gap-4">
                             <h2 className="text-3xl font-black uppercase tracking-tight text-white">
-                                Latest <span className="text-lime-400">Insights</span>
+                                Latest <span className="text-cyan-400">Insights</span>
                             </h2>
                             <div className="flex gap-3">
                                 <button onClick={prevArticle} className="bg-white/5 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-500/50 p-3 rounded-xl text-white transition-all">

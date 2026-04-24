@@ -28,6 +28,7 @@ import InsideBattery from './pages/InsideBattery';
 import Batterysafety from './pages/Batterysafety';
 import RepairandMaintenance from './pages/RepairandMaintenance';
 import EV from './pages/EV';
+import EVTypes from './pages/EVTypes ';
 import EVMaintenanceGuide from './pages/EVMaintenanceGuide';
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -121,6 +122,12 @@ function App() {
                             <Route path="/find-station" element={
                                 <ProtectedRoute>
                                     <FindStations/>
+                                </ProtectedRoute>
+                            } />
+
+                            <Route path="/ev-types" element={
+                                <ProtectedRoute>
+                                    <EVTypes />
                                 </ProtectedRoute>
                             } />
 

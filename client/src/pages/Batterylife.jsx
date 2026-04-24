@@ -165,8 +165,8 @@ function Batterylife() {
           <div className="max-w-7xl mx-auto">
             <div className="mb-16 md:w-2/3">
               <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
-                CELLS: THE HEARTBEAT OF <br />
-                <span className="text-cyan-400">ENERGY STORAGE</span>
+                CELLS: THE HEARTBEAT  <br />
+                <span className="text-cyan-400"> OF ENERGY STORAGE</span>
               </h2>
               <p className="text-slate-400 text-lg">
                 The foundation of EV longevity lies in the physical cells. Understanding the geometry and chemistry of these units reveals how power is effectively stored and deployed.
@@ -203,11 +203,11 @@ function Batterylife() {
                 <div>
                   <h2 className="text-3xl md:text-5xl font-black tracking-tight uppercase text-white mb-6">
                     BMS: The Brains <br />
-                    <span className="text-emerald-400">Behind The Power</span>
+                     <span className="text-cyan-400">Behind The Power</span>
                   </h2>
                 </div>
 
-                <div className="p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl shadow-2xl">
+                <div className="p-8 rounded-3xl ">
                   <div className="flex items-center gap-3 mb-4">
                     <ShieldCheck className="text-emerald-400" size={28} />
                     <h3 className="text-xl font-bold text-white uppercase tracking-wider">What is BMS?</h3>
