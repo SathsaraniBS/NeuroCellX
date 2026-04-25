@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Zap, ChevronRight, ChevronLeft, Download, BatteryCharging, ShieldCheck, Globe } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import EVCalculator from '../components/EVCalculator';
 
 // Data moved to constants for cleaner component logic
 const TRENDS = [
@@ -52,27 +53,31 @@ const TRENDS = [
 const NETWORKS = [
   {
     id: 1,
+    image: "src/assets/public-networks.png",
     title: "Public Networks",
     icon: <Globe className="text-cyan-400" />,
     bullets: ["Government/Oil company run", "Universal compatibility", "Highway & City focus"]
   },
   {
     id: 2,
+    image: "src/assets/oem-networks.png",
     title: "OEM Networks",
     icon: <BatteryCharging className="text-lime-400" />,
     bullets: ["Manufacturer specific", "Seamless integration", "Exclusive owner perks"]
   },
   {
     id: 3,
+    image: "src/assets/charge-point.png",
     title: "Independent CPOs",
     icon: <Zap className="text-yellow-400" />,
     bullets: ["Tech-driven startups", "Local market solutions", "High availability"]
   },
   {
     id: 4,
-    title: "Private Owners",
+    image: "src/assets/individual-owners.png",
+    title: "Individual Owners",
     icon: <ShieldCheck className="text-purple-400" />,
-    bullets: ["Small businesses", "Captive usage", "Extra income source"]
+    bullets: ["Small businesses", "Captive usage", "Incremental source of income"]
   }
 ];
 
@@ -117,7 +122,7 @@ const PublicCharging = () => {
       </section>
 
       <main className="max-w-7xl mx-auto px-6">
-        
+
         {/* Landscape Section */}
         <section className="py-20 grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-6">
@@ -125,7 +130,7 @@ const PublicCharging = () => {
               The Current <br />
               <span className="text-cyan-400">Landscape</span>
             </h2>
-            <div className="space-y-4 text-gray-400 text-lg leading-relaxed">
+            <div className="space-y-4 text-gray-400 text-xl leading-relaxed">
               <p className='mb-4'>
                 The global public EV charging network is expanding rapidly, with strong adoption across major cities and growing availability in emerging markets and along key transportation corridors. Currently, there are hundreds of thousands of charging stations worldwide, and this number is expected to grow significantly in the coming years as electric vehicle adoption accelerates.
               </p>
@@ -161,91 +166,124 @@ const PublicCharging = () => {
 
           <div className="relative grid md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-7 rounded-[40px] overflow-hidden border border-white/10 shadow-2xl h-auto">
-              <img 
-                src={TRENDS[currentSlide].image} 
-                alt={TRENDS[currentSlide].title} 
+              <img
+                src={TRENDS[currentSlide].image}
+                alt={TRENDS[currentSlide].title}
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
               />
             </div>
-            
+
             <div className="md:col-span-5 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md p-10 rounded-[40px] border border-white/10 relative">
-               <span className="absolute -top-10 right-10 text-8xl font-black text-white/5">
+              <span className="absolute -top-10 right-10 text-8xl font-black text-white/5">
                 0{TRENDS[currentSlide].id}
-               </span>
-               <Zap className="text-cyan-400 mb-6" size={40} />
-               <h3 className="text-3xl font-bold mb-4">{TRENDS[currentSlide].title}</h3>
-               <p className="text-gray-400 text-lg leading-relaxed">
-                 {TRENDS[currentSlide].description}
-               </p>
+              </span>
+              <Zap className="text-cyan-400 mb-6" size={40} />
+              <h3 className="text-3xl font-bold mb-4">{TRENDS[currentSlide].title}</h3>
+              <p className="text-gray-400 text-lg leading-relaxed">
+                {TRENDS[currentSlide].description}
+              </p>
             </div>
+          </div>
+        </section>
+
+        <section className="py-20 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-6">
+            <h2 className="text-4xl md:text-5xl font-black uppercase leading-none">
+              Developing the right ecosystem for building  <br />
+              <span className="text-cyan-400">EV charging network</span>
+            </h2>
+            <div className="space-y-4 text-gray-400 text-lg leading-relaxed">
+            
+            </div>
+          </div>
+          <div className="relative group">
+            
+            <div className="space-y-4 text-gray-400 text-xl leading-relaxed">
+              <p className='mb-4'>
+                Key collaborations between energy providers, automakers, and technology companies are playing a vital role in expanding public EV charging networks worldwide. To accelerate the adoption of electric vehicles, governments and regulatory bodies across many countries have introduced policies, standards, and incentives to ensure charging infrastructure is safe, reliable, and accessible. In addition, charging network operators around the world are partnering with businesses, utilities, and vehicle manufacturers to broaden coverage, enhance user experience, and offer integrated services to EV owners.
+              </p>
+             
+            </div>
+            
           </div>
         </section>
 
         {/* Ecosystem Grid */}
         <section className="py-24 border-t border-white/5">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black uppercase mb-6">The Charging <span className="text-cyan-400">Ecosystem</span></h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">Collaboration between energy providers and tech startups is accelerating the infrastructure rollout.</p>
+          <div className="text-left mb-16">
+            <h2 className="text-4xl  md:text-5xl font-black uppercase mb-6">The Charging <span className="text-cyan-400">Ecosystem</span></h2>
+            
           </div>
 
           {/* UPDATED CARDS GRID */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {NETWORKS.map((network) => (
-                            <div
-                                key={network.id}
-                                className={`group relative h-[400px] rounded-3xl overflow-hidden border border-white/10 transition-all duration-500 hover:-translate-y-2 ${network.glowColor} hover:shadow-2xl`}
-                            >
-                                {/* Background Image */}
-                                <img
-                                    src={network.image}
-                                    alt={network.title}
-                                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
-                                
-                                {/* Gradient Overlay for text readability */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent transition-opacity duration-500 group-hover:bg-black/70" />
-
-                                {/* Card Content */}
-                                <div className="relative h-full flex flex-col justify-end p-8 z-10">
-                                    <div className="flex items-center gap-3 mb-4 transition-transform duration-500 group-hover:-translate-y-2">
-                                        <div className="p-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20">
-                                            {network.icon}
-                                        </div>
-                                        <h3 className="text-2xl font-bold tracking-tight text-white">{network.title}</h3>
-                                    </div>
-
-                                    {/* Description - Hidden by default, fades in on hover */}
-                                    <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 group-hover:max-h-40 group-hover:opacity-100">
-                                        <p className="text-slate-200 leading-relaxed text-[15px] border-t border-white/10 pt-4">
-                                            {network.description}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {NETWORKS.map((network) => (
-              <div 
+              <div
                 key={network.id}
-                className="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-cyan-500/50 transition-all hover:-translate-y-2"
+                className={`group relative h-[400px] rounded-3xl overflow-hidden border border-white/10 transition-all duration-500 hover:-translate-y-2 ${network.glowColor} hover:shadow-2xl`}
               >
-                <div className="mb-6 p-3 bg-white/5 w-fit rounded-2xl group-hover:bg-cyan-500/20 transition-colors">
-                  {network.icon}
+                {/* Background Image */}
+                <img
+                  src={network.image}
+                  alt={network.title}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+
+                {/* Gradient Overlay for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent transition-opacity duration-500 group-hover:bg-black/70" />
+
+                {/* Card Content */}
+                <div className="relative h-full flex flex-col justify-end p-8 z-10">
+                  <div className="flex items-center gap-3 mb-4 transition-transform duration-500 group-hover:-translate-y-2">
+                    <div className="p-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20">
+                      {network.icon}
+                    </div>
+                    <h3 className="text-2xl font-bold tracking-tight text-white">{network.title}</h3>
+                  </div>
+
+                  {/* Description - Hidden by default, fades in on hover */}
+                  <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 group-hover:max-h-40 group-hover:opacity-100">
+                    <p className="text-slate-200 leading-relaxed text-[15px] border-t border-white/10 pt-4">
+                    </p>
+                    
+                    <ul className="space-y-3">
+                      {network.bullets.map((b, i) => (
+                        <li key={i} className="text-lg text-gray-400 flex items-start gap-2">
+                          <span className="text-cyan-500 mt-1">•</span> {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <h4 className="text-xl font-bold mb-4">{network.title}</h4>
-                <ul className="space-y-3">
-                  {network.bullets.map((b, i) => (
-                    <li key={i} className="text-sm text-gray-400 flex items-start gap-2">
-                      <span className="text-cyan-500 mt-1">•</span> {b}
-                    </li>
-                  ))}
-                </ul>
               </div>
             ))}
-          </div> */}
+          </div>
         </section>
+
+        <section className="py-20 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-6">
+            <h2 className="text-4xl md:text-5xl font-black uppercase leading-none">
+              Pricing strategies for   <br />
+              <span className="text-cyan-400">public chargers?</span>
+            </h2>
+            <div className="space-y-4 text-gray-400 text-lg leading-relaxed">
+            
+            </div>
+          </div>
+          <div className="relative group">
+            
+            <div className="space-y-4 text-gray-400 text-xl leading-relaxed">
+              <p className='mb-4'>
+                There are many popular pricing models for public EV charging such as time-based pricing or usage-based pricing, where users pay for the duration or usage during the charging session. This model is simple and straightforward, allowing users to conveniently charge their vehicles and pay based on usage of the charging station.
+
+
+              </p>
+             
+            </div>
+            
+          </div>
+        </section>
+        <EVCalculator />
       </main>
 
       <Footer />
