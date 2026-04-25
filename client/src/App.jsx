@@ -28,7 +28,9 @@ import InsideBattery from './pages/InsideBattery';
 import Batterysafety from './pages/Batterysafety';
 import RepairandMaintenance from './pages/RepairandMaintenance';
 import EV from './pages/EV';
+import EVHistory from './pages/EVHistory';
 import EVTypes from './pages/EVTypes ';
+
 import EVMaintenanceGuide from './pages/EVMaintenanceGuide';
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -136,6 +138,13 @@ function App() {
                                     <EVTypes />
                                 </ProtectedRoute>
                             } />
+
+                            <Route path="/ev-history" element={
+                                <ProtectedRoute>
+                                    <EVHistory />
+                                </ProtectedRoute>
+                            } />
+                            
 
                             <Route path="/ev-maintenance-guide" element={
                                 <ProtectedRoute>

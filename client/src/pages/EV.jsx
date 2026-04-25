@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, CheckCircle2, Download, Leaf, Wallet, Gauge, Wifi, Settings, ShoppingCart, Map, ChevronRight, Zap, Compass, Fuel } from "lucide-react";
+import { ChevronDown, CheckCircle2, Download, Leaf, Wallet, Gauge, Wifi, Settings, Battery, Map, ChevronRight, Zap, Compass, Fuel } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -206,10 +206,10 @@ function EV() {
             {[
               { title: "EV Types", image: "src/assets/phev.jpg", desc: "Analyze BEV, PHEV, and HEV systemic differences.", icon: <Fuel size={24} />, color: "text-blue-400", bg: "bg-blue-400/20 border-blue-400/30" },
               { title: "EV History", image: "src/assets/hev.jpg", desc: "Deep dive into cell chemistry and BMS intelligence.", icon: <Zap size={24} />, color: "text-cyan-400", bg: "bg-cyan-400/20 border-cyan-400/30" },
-              { title: "Charging Networks", image: "src/assets/ev-chager.png", desc: "Understand AC vs DC charging protocols.", icon: <Settings size={24} />, color: "text-emerald-400", bg: "bg-emerald-400/20 border-emerald-400/30" },
-              { title: "Maintenance", image: "src/assets/ev-chager.png", desc: "Protocols to maximize vehicle lifespan.", icon: <Compass size={24} />, color: "text-lime-400", bg: "bg-lime-400/20 border-lime-400/30" },
-              { title: "Purchasing Metrics", image: "src/assets/ev-chager.png", desc: "Data-driven approach to selecting your EV.", icon: <ShoppingCart size={24} />, color: "text-purple-400", bg: "bg-purple-400/20 border-purple-400/30" },
-              { title: "Range Simulation", image: "src/assets/ev-chager.png", desc: "Calculate trip feasibility and routing.", icon: <Map size={24} />, color: "text-orange-400", bg: "bg-orange-400/20 border-orange-400/30" }
+              { title: "Charging ", image: "src/assets/ev-chager.png", desc: "Understand AC vs DC charging protocols.", icon: <Settings size={24} />, color: "text-emerald-400", bg: "bg-emerald-400/20 border-emerald-400/30" },
+              { title: "EV Maintenance", image: "src/assets/ev-chager.png", desc: "Protocols to maximize vehicle lifespan.", icon: <Compass size={24} />, color: "text-lime-400", bg: "bg-lime-400/20 border-lime-400/30" },
+              { title: "EV Battery ", image: "src/assets/ev-chager.png", desc: "Understand battery chemistry and performance.", icon: <Battery size={24} />, color: "text-purple-400", bg: "bg-purple-400/20 border-purple-400/30" },
+              { title: "Find EV Stations", image: "src/assets/ev-chager.png", desc: "Calculate trip feasibility and routing.", icon: <Map size={24} />, color: "text-orange-400", bg: "bg-orange-400/20 border-orange-400/30" }
             ].map((topic, idx) => (
               <div 
                 key={idx} 
@@ -298,7 +298,7 @@ function EV() {
         </section>
 
         {/* --- FAQ --- */}
-        <section className="py-24 bg-[#070b1e]">
+        <section className="py-24 bg-transparent">
           <div className="max-w-4xl mx-auto px-6">
             <h2 className="text-center text-3xl font-black mb-12 uppercase">EV <span className="text-cyan-400">FAQ</span></h2>
             <div className="space-y-4">
