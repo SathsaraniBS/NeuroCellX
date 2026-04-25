@@ -188,7 +188,44 @@ const PublicCharging = () => {
             <p className="text-gray-400 max-w-2xl mx-auto">Collaboration between energy providers and tech startups is accelerating the infrastructure rollout.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* UPDATED CARDS GRID */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {NETWORKS.map((network) => (
+                            <div
+                                key={network.id}
+                                className={`group relative h-[400px] rounded-3xl overflow-hidden border border-white/10 transition-all duration-500 hover:-translate-y-2 ${network.glowColor} hover:shadow-2xl`}
+                            >
+                                {/* Background Image */}
+                                <img
+                                    src={network.image}
+                                    alt={network.title}
+                                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                
+                                {/* Gradient Overlay for text readability */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent transition-opacity duration-500 group-hover:bg-black/70" />
+
+                                {/* Card Content */}
+                                <div className="relative h-full flex flex-col justify-end p-8 z-10">
+                                    <div className="flex items-center gap-3 mb-4 transition-transform duration-500 group-hover:-translate-y-2">
+                                        <div className="p-2 rounded-lg bg-white/10 backdrop-blur-md border border-white/20">
+                                            {network.icon}
+                                        </div>
+                                        <h3 className="text-2xl font-bold tracking-tight text-white">{network.title}</h3>
+                                    </div>
+
+                                    {/* Description - Hidden by default, fades in on hover */}
+                                    <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 group-hover:max-h-40 group-hover:opacity-100">
+                                        <p className="text-slate-200 leading-relaxed text-[15px] border-t border-white/10 pt-4">
+                                            {network.description}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {NETWORKS.map((network) => (
               <div 
                 key={network.id}
@@ -207,7 +244,7 @@ const PublicCharging = () => {
                 </ul>
               </div>
             ))}
-          </div>
+          </div> */}
         </section>
       </main>
 
