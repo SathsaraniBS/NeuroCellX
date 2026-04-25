@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Zap, ChevronRight, ChevronLeft, MapPin, BatteryCharging, ShieldCheck, Globe } from "lucide-react";
+import { Zap, ChevronRight, ChevronLeft, Download, BatteryCharging, ShieldCheck, Globe } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -32,19 +32,19 @@ const TRENDS = [
   {
     id: 5,
     title: "Destination Charging Infrastructure",
-    image: "src/assets/evstation.png",
+    image: "src/assets/destination-charging.png",
     description: "These charging stations are installed at locations where people typically spend a significant amount of time, such as hotels, shopping centers, and workplaces. This allows EV drivers to charge while going about their day and it eliminates the need to make separate trips solely for charging. At MG Motor, we have partnered with IONAGE to strengthen the destination charging infrastructure, making intercity travel by electric vehicles a new reality."
   },
   {
     id: 6,
     title: "Smart Route Planning",
-    image: "src/assets/evstation.png",
+    image: "src/assets/route-planning.png",
     description: "Sophisticated apps and services now guide EV drivers to nearby charging stations, incorporate charging stops into travel routes, and predict charging times, taking into account traffic and charger availability. This helps making journey planning more efficient and stress-free. The My MG app, for example, provides a seamless navigation experience with comprehensive service features."
   },
   {
     id: 7,
     title: "Simplified Payments",
-    image: "src/assets/evstation.png",
+    image: "src/assets/simplified-payments.png",
     description: "The EV charging experience is smoother thanks to user-friendly payment and subscription services. Seamless payment methods, such as contactless payments, smartphone apps, or subscription services have simplified the process of accessing and paying for charging, further enhancing the convenience of public charging and the efficiency of journey planning."
   }
 ];
@@ -86,20 +86,35 @@ const PublicCharging = () => {
     <div className="min-h-screen bg-[#050816] text-white font-sans selection:bg-cyan-500/30">
       <Navbar />
 
-      {/* Hero Section */}
-      <header className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/src/assets/evstation.png')] bg-cover bg-center scale-105 animate-slow-zoom" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050816]/60 via-[#050816]/40 to-[#050816]" />
-        
-        <div className="relative z-10 text-center px-4">
-          <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4">
-            Charge Up <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">Anywhere</span>
-          </h1>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-xl font-light">
-            Empowering your journey with a seamless, global EV charging ecosystem.
-          </p>
+      {/* HERO SECTION */}
+      <section className="relative h-screen w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/src/assets/ev3.png"
+            alt="EV Background"
+            className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
         </div>
-      </header>
+
+        <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+          <div className="max-w-3xl space-y-6 pt-20">
+            <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">Charge Up <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent"> Anywhere </span></h1>
+            <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Empowering your journey with a seamless,  <br /> Global EV charging ecosystem.</p>
+          </div>
+        </div>
+        <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10">
+          <a
+            href="/ev-manual.pdf"
+            download="EV_Maintenance_Manual.pdf"
+            className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+          >
+            Download EV Manual
+            <Download className="w-5 h-5" />
+          </a>
+        </div>
+      </section>
 
       <main className="max-w-7xl mx-auto px-6">
         

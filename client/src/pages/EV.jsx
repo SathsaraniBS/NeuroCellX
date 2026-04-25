@@ -106,7 +106,7 @@ function EV() {
   return (
     <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
       <Navbar />
-
+      
       {/* HERO SECTION */}
       <section className="relative h-screen w-full overflow-hidden">
         <div className="absolute inset-0">
