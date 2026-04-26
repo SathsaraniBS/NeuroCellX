@@ -33,7 +33,7 @@ const EVHistoryPage = () => {
       icon: Wind,
       image:
         "https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&w=500&q=80",
-      color: "text-violet-500",
+      color: "text-cyan-400",
       border: "border-violet-300",
       bg: "bg-violet-50",
     },
@@ -375,7 +375,7 @@ const EVHistoryPage = () => {
         <section className="mx-auto mt-20 max-w-7xl pb-12">
           <SectionTitle title=
           {
-              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">Explore 
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">Explore <br />
               <span className="text-cyan-400">More About EVs</span>
               </h2>
             }
