@@ -1,5 +1,5 @@
 import React from "react";
-import {BatteryCharging,Download,Bolt,Car,Leaf,Lightbulb,PlugZap,Rocket,ShieldCheck,ShoppingCart,Sprout,Wind, Globe2, ArrowRight,} from "lucide-react";
+import { BatteryCharging, Download, Bolt, Car, Leaf, Lightbulb, PlugZap, Rocket, ShieldCheck, ShoppingCart, Sprout, Wind, Globe2, ArrowRight, } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 const EVHistoryPage = () => {
@@ -176,47 +176,55 @@ const EVHistoryPage = () => {
   ];
 
   return (
-     <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
-        <Navbar />
-        {/* HERO SECTION */}
-            <section className="relative h-screen w-full overflow-hidden">
-                <div className="absolute inset-0">
-                    <img
-                        src="/src/assets/ev3.png"
-                        alt="EV Background"
-                        className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
-                </div>
+    <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
+      <Navbar />
+      {/* HERO SECTION */}
+      <section className="relative h-screen w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/src/assets/ev3.png"
+            alt="EV Background"
+            className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
+        </div>
 
-                <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
-                    <div className="max-w-3xl space-y-6 pt-20">
+        <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+          <div className="max-w-3xl space-y-6 pt-20">
 
-                        <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">The EV Journey:<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">A Short History of Electric Vehicles</span></h1>
-                        <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4"> From early experiments to today’s intelligent electric mobility<br />
-                            a journey of innovation, persistence, and a cleaner future.</p>
-                    </div>
-                </div>
-                <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10"> 
-                    {/* Fixed: removed undefined activeEV variable from the link path */}
-                    <a
-                        href="/ev-manual.pdf" 
-                        download="EV_Maintenance_Manual.pdf"
-                        className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
-                    >
-                        Download Manual
-                        <Download  className="w-5 h-5" />
-                    </a>
-                    
-                </div>
-            </section>
+            <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">The EV Journey:<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">A Short History of Electric Vehicles</span></h1>
+            <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4"> From early experiments to today’s intelligent electric mobility<br />
+              a journey of innovation, persistence, and a cleaner future.</p>
+          </div>
+        </div>
+        <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10">
+          {/* Fixed: removed undefined activeEV variable from the link path */}
+          <a
+            href="/ev-manual.pdf"
+            download="EV_Maintenance_Manual.pdf"
+            className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+          >
+            Download Manual
+            <Download className="w-5 h-5" />
+          </a>
+
+        </div>
+      </section>
 
 
-      <main className="rounded-t-[2rem] bg-white px-6 py-14">
+      <main className="rounded-t-[2rem]  px-6 py-14">
         {/* MILESTONES */}
         <section className="mx-auto max-w-7xl">
-          <SectionTitle title="Milestones in the EV Journey" />
+          <SectionTitle
+            title={
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                Milestones in <br />
+                <span className="text-cyan-400">the EV Journey</span>
+              </h2>
+            }
+          />
+
 
           <div className="relative mt-14">
             <div className="absolute left-10 right-10 top-7 hidden h-1 bg-blue-400 md:block" />
@@ -256,8 +264,15 @@ const EVHistoryPage = () => {
         </section>
 
         {/* MODELS */}
-        <section className="mx-auto mt-20 max-w-7xl">
-          <SectionTitle title="Key EV Models That Changed the Game" />
+        <section className="mx-auto  bg-yellow-50 mt-20 max-w-7xl">
+          <SectionTitle title=
+          {
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+          Key EV Models <br />
+           <span className="text-cyan-400">That Changed the Game</span>
+          </h2>
+          } 
+          />
 
           <div className="grid gap-5 md:grid-cols-3 lg:grid-cols-6">
             {models.map((model) => (
@@ -285,7 +300,15 @@ const EVHistoryPage = () => {
 
         {/* BATTERY */}
         <section className="mx-auto mt-20 max-w-7xl">
-          <SectionTitle title="Evolution of Battery Technology" />
+          <SectionTitle title=
+           {
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                Evolution of <br />
+               <span className="text-cyan-400"> Battery Technology 
+               </span>
+              </h2>
+            }
+          />
 
           <div className="grid items-center gap-6 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
             {batteries.map((battery, index) => (
@@ -318,7 +341,13 @@ const EVHistoryPage = () => {
 
         {/* WHY MATTER */}
         <section className="mx-auto mt-20 max-w-7xl">
-          <SectionTitle title="Why EVs Matter Today" />
+          <SectionTitle title=
+          {
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">Why EVs 
+              <span className="text-cyan-400">Matter Today</span>
+              </h2>
+            }
+          />
 
           <div className="grid gap-10 md:grid-cols-3">
             {matters.map((item) => {
@@ -344,7 +373,13 @@ const EVHistoryPage = () => {
 
         {/* EXPLORE */}
         <section className="mx-auto mt-20 max-w-7xl pb-12">
-          <SectionTitle title="Explore More About EVs" />
+          <SectionTitle title=
+          {
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">Explore 
+              <span className="text-cyan-400">More About EVs</span>
+              </h2>
+            }
+          />
 
           <div className="grid gap-6 md:grid-cols-3">
             {explore.map((item) => {
