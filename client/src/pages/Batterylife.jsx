@@ -118,18 +118,7 @@ function Batterylife() {
                             save money, and extend its life.</p>
                     </div>
                 </div>
-                <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10"> 
-                    {/* Fixed: removed undefined activeEV variable from the link path */}
-                    <a
-                        href="/ev-manual.pdf" 
-                        download="EV_Maintenance_Manual.pdf"
-                        className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
-                    >
-                        Download Manual
-                        <Download  className="w-5 h-5" />
-                    </a>
-                    
-                </div>
+                 
             </section>
 
         {/* Hero Header Section */}
