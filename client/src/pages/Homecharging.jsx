@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Zap, ShieldCheck, Banknote, LayoutGrid, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, BatteryCharging } from "lucide-react";
+import { Heart, Zap, ShieldCheck, Banknote, Download, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, BatteryCharging } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import EVCalculator from '../components/EVCalculator';
@@ -110,33 +110,42 @@ function Homecharging() {
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
             <Navbar />
 
-            {/* --- HERO SECTION --- */}
-            <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 z-0">
+             {/* HERO SECTION */}
+            <section className="relative h-screen w-full overflow-hidden">
+                <div className="absolute inset-0">
                     <img
                         src="/src/assets/evhome.png"
                         alt="EV Home Charging"
-                        className="w-full h-full object-cover opacity-70 animate-slow-zoom"
+                        className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#050816]/80 via-transparent to-[#050816]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
                 </div>
 
-                <div className="relative z-10 text-center px-6 max-w-5xl mt-10">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm font-medium mb-6 animate-pulse">
-                        <Zap size={14} />
-                        Next-Gen Home Infrastructure
-                    </div>
+                <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+                    <div className="max-w-3xl space-y-6 pt-20">
 
-                    <div className="relative z-10 text-center px-6 max-w-4xl mt-20">
-                        <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase">
-                            POWER YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">JOURNEY</span> FROM HOME
-                        </h1>
-                        <p className="text-lg md:text-xl text-gray-300 font-medium max-w-2xl mx-auto">
-                            Turn your garage into a personal refueling station. Smart, efficient, and always ready for the road.
-                        </p>
+                        <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter uppercase">Power your<br />
+                        <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">Journey from home</span></h1>
+                        <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Turn your garage into a personal refueling station.<br />
+                            Smart, efficient, and always ready for the road.
+                            </p>
                     </div>
+                </div>
+                <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10"> 
+                    {/* Fixed: removed undefined activeEV variable from the link path */}
+                    <a
+                        href="/ev-manual.pdf" 
+                        download="EV_Maintenance_Manual.pdf"
+                        className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                    >
+                        Download EV Manual
+                        <Download  className="w-5 h-5" />
+                    </a>
+                    
                 </div>
             </section>
+
 
             {/* --- BENEFITS SECTION --- */}
             <section className="py-32 relative">
@@ -150,13 +159,22 @@ function Homecharging() {
                                 Charge while <br />
                                 <span className="text-cyan-400">you recharge</span>
                             </h2>
-                            <p className="text-slate-400 text-lg">
+                            <p className="text-slate-400 text-xl font-bold">
                                 Experience the freedom of a full tank every morning. Our home solutions
                                 are designed to integrate seamlessly with your lifestyle.
                             </p>
                         </div>
 
+                        
+
                     </div>
+
+                    <div className="max-w-2xl">
+                            <h2 className="text-4xl md:text-5xl font-black uppercase mb-4 tracking-tight">
+                                From the comfort  <br />
+                                <span className="text-cyan-400">of your home</span>
+                            </h2>
+                        </div>
 
                     {/* UPDATED CARDS GRID */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
