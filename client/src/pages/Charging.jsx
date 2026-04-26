@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Zap, ChevronRight, ChevronLeft, PlugZap, BatteryCharging, Timer, PlayCircle } from "lucide-react";
+import {Download, Zap, ChevronRight, ChevronLeft, PlugZap, BatteryCharging, Timer, PlayCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -240,35 +240,40 @@ function Charging() {
 
             <main className="-mt-20 flex-grow">
 
-                {/* HERO SECTION */}
-                <section className="relative h-screen w-full overflow-hidden">
-                    <div className="absolute inset-0">
-                        <img
-                            src={activeEV?.image}
-                            alt={activeEV?.title}
-                            className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
-                    </div>
+            {/* HERO SECTION */}
+            <section className="relative h-screen w-full overflow-hidden">
+                <div className="absolute inset-0">
+                    <img
+                        src="/src/assets/ev3.png"
+                        alt="EV Background"
+                        className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
+                </div>
 
-                    <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
-                        <div className="max-w-3xl space-y-6 pt-20">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-bold tracking-widest uppercase text-xs animate-fade-in">
-                                <Zap size={14} className="fill-cyan-400" />
-                                <span>Next-Gen Mobility</span>
-                            </div>
-                            <h1 className="text-6xl md:text-8xl font-black leading-tight tracking-tighter">{activeEV?.title}</h1>
-                            <p className="text-xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">"{activeEV?.tagline}"</p>
+                <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+                    <div className="max-w-3xl space-y-6 pt-20">
 
-                            <div className="flex flex-wrap gap-4">
-                                <Link to={`/inventory/${activeEV?._id}`} className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-black rounded-xl font-black uppercase tracking-wide flex items-center gap-2 transition-all hover:shadow-[0_0_25px_rgba(6,182,212,0.6)]">
-                                    Configure Now <ChevronRight size={20} />
-                                </Link>
-                            </div>
-                        </div>
+                        <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">EV Care:<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">Maintenance & Ownership Guide</span></h1>
+                        <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Learn how to keep your electric vehicle healthy,<br />
+                            save money, and extend its life.</p>
                     </div>
-                </section>
+                </div>
+                <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10"> 
+                    {/* Fixed: removed undefined activeEV variable from the link path */}
+                    <a
+                        href="/ev-manual.pdf" 
+                        download="EV_Maintenance_Manual.pdf"
+                        className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                    >
+                        Download EV Manual
+                        <Download  className="w-5 h-5" />
+                    </a>
+                    
+                </div>
+            </section>
+
 
                 {/* --- WHY IT MATTERS (INTRO) --- */}
                 <section className="py-20 relative">
