@@ -53,21 +53,21 @@ function Homecharging() {
             {
                 id: 1,
                 title: "Identify the right service partner",
-                image: "/src/assets/evanatomy.png",
+                image: "/src/assets/service-partner.png",
                 tag: "Design",
                 path: "/ev-architecture" // Added route path here
             },
             {
                 id: 2,
                 title: "Pick the right location in your home",
-                image: "/src/assets/libattery-img.png", 
+                image: "/src/assets/home-charger.png", 
                 tag: "Technology",
                 path: "/inside-battery"
             },
             {
                 id: 3,
                 title: "Assess the availability of electrical load",
-                image: "/src/assets/article3.png",
+                image: "/src/assets/electrical-load.png",
                 tag: "Sustainability",
                 path: "#"
     
@@ -75,7 +75,7 @@ function Homecharging() {
             {
                 id: 4,
                 title: "Get requisite approvals from respective stakeholders including Resident Welfare Associations, location owners or electricity companies",
-                image: "/src/assets/ev12.png",
+                image: "/src/assets/stakeholders.png",
                 tag: "History",
                 path: "#"
             }
@@ -231,9 +231,7 @@ function Homecharging() {
                                         className="group cursor-pointer flex flex-col bg-white/5 rounded-2xl border border-white/10 overflow-hidden hover:border-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/10"
                                     >
                                         <div className="w-full h-56 overflow-hidden relative">
-                                            <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-xs font-bold text-lime-400 uppercase tracking-wider">
-                                                {article.tag}
-                                            </div>
+                                            
                                             <img
                                                 src={article.image}
                                                 alt={article.title}
@@ -293,7 +291,6 @@ function Homecharging() {
                                     <p className="text-white text-lg font-semibold tracking-wide">
                                         {video.title}
                                     </p>
-                                    <span className="text-cyan-400 text-sm font-mono bg-cyan-500/10 px-3 py-1 rounded-full">TEST 0{video.id}</span>
                                 </div>
                             </div>
                         ))}
