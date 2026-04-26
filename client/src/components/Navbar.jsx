@@ -126,13 +126,13 @@ const Navbar = () => {
                   Find Stations
                 </Link>
                 <Link
-                  to="/homecharging"
+                  to="/home-charging"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   HOME CHARGING
                 </Link>
                 <Link
-                  to="/publiccharging"
+                  to="/public-charging"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
                   PUBLIC CHARGING

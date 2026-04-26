@@ -3,6 +3,7 @@ import { Zap, ChevronRight, ChevronLeft, Download, BatteryCharging, ShieldCheck,
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import EVCalculator from '../components/EVCalculator';
+import { Link } from 'react-router-dom';
 
 // Data moved to constants for cleaner component logic
 const TRENDS = [
@@ -81,6 +82,28 @@ const NETWORKS = [
   }
 ];
 
+
+const LOCATION_CHARGING_STATIONS = [
+  {
+    id: 1,
+    image: "src/assets/map-nav.png",
+    title: "Navigation systems",
+    des: "Use Maps or navigation application on your devices to locate electrical vehicle charging stations closest to you."
+  },
+  {
+    id: 2,
+    image: "src/assets/mobile.png",
+    title: "Mobile applications by CPOs",
+    des: "Download dedicated mobile application by CPOs and manufacturers to locate charging stations near you. E.g. You can use My MG appto find EV charging stations, service centres, and more near you."
+  },
+  {
+    id: 3,
+    image: "src/assets/online.png",
+    title: "Online Charging Locators",
+    des: "Select the state and city you're in and find the chargers on your route. You can find a list of EV charging stations right."
+  }
+  
+];
 const PublicCharging = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -95,7 +118,7 @@ const PublicCharging = () => {
       <section className="relative h-screen w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="/src/assets/ev3.png"
+            src="/src/assets/evstation.png"
             alt="EV Background"
             className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
           />
@@ -110,14 +133,12 @@ const PublicCharging = () => {
           </div>
         </div>
         <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10">
-          <a
-            href="/ev-manual.pdf"
-            download="EV_Maintenance_Manual.pdf"
+          <Link
+            to="/find-station"
             className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
           >
-            Download EV Manual
-            <Download className="w-5 h-5" />
-          </a>
+            Find Charging Station
+          </Link>
         </div>
       </section>
 
@@ -230,7 +251,7 @@ const PublicCharging = () => {
                 />
 
                 {/* Gradient Overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent transition-opacity duration-500 group-hover:bg-black/70" />
+                <div className="absolute inset-0 bg-transparent transition-opacity duration-500 group-hover:bg-black/70" />
 
                 {/* Card Content */}
                 <div className="relative h-full flex flex-col justify-end p-8 z-10">
@@ -284,6 +305,51 @@ const PublicCharging = () => {
           </div>
         </section>
         <EVCalculator />
+
+        <section className="py-24 border-t border-white/5">
+          <div className="text-left mb-16">
+            <h2 className="text-4xl  md:text-5xl font-black uppercase mb-6">The Charging <span className="text-cyan-400">Ecosystem</span></h2>
+            
+          </div>
+
+          {/* UPDATED CARDS GRID */}
+          <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 justify-center">
+            {LOCATION_CHARGING_STATIONS.map((location) => (
+              <div
+                key={location.id}
+                className={`group relative h-[400px] rounded-3xl overflow-hidden border border-white/10 transition-all duration-500 hover:-translate-y-2  hover:shadow-2xl`}
+              >
+                {/* Background Image */}
+                <img
+                  src={location.image}
+                  alt={location.title}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+
+                {/* Gradient Overlay for text readability */}
+                <div className="absolute inset-0 bg-transparent transition-opacity duration-500 group-hover:bg-black/70" />
+
+                {/* Card Content */}
+                <div className="relative h-full flex flex-col justify-center items-center text-center p-8 z-10">
+                <div className="flex flex-col items-center justify-center mb-4 transition-transform duration-500 group-hover:-translate-y-2">
+              
+                    <h3 className="text-2xl font-bold tracking-tight text-white">{location.title}</h3>
+                  </div>
+
+                 
+                     {/* Description Section */}
+                    <div className="text-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                  <div className="h-[2px] w-12 bg-cyan-500 mb-4" />
+                  <p className="text-gray-300 text-lg font-bold leading-relaxed">
+                      {location.des}
+                  </p>
+                 </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
       </main>
 
       <Footer />

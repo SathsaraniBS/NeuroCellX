@@ -116,12 +116,12 @@ function App() {
                                 </ProtectedRoute>
                             } /> 
 
-                            <Route path="/homecharging" element={
+                            <Route path="/home-charging" element={
                                 <ProtectedRoute>
                                     <Homecharging />
                                 </ProtectedRoute>
                             }/>
-                            <Route path="/publiccharging" element={
+                            <Route path="/public-charging" element={
                                 <ProtectedRoute>
                                     <PublicCharging />
                                 </ProtectedRoute>
