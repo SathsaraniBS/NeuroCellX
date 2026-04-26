@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronLeft, ChevronRight, BatteryCharging, Zap, ShieldCheck } from "lucide-react";
+import { Download, ChevronDown, ChevronLeft, ChevronRight, BatteryCharging, Zap, ShieldCheck } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -96,22 +96,41 @@ function Batterylife() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative h-screen w-full flex items-center justify-center overflow-hidden border-b border-cyan-500/20">
-          <div className="absolute inset-0 bg-[url('/src/assets/evstation.png')] bg-cover bg-center scale-105 animate-slow-zoom opacity-80" />
-          <div className="absolute inset-0 " />
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-900/30 to-emerald-900/30 mix-blend-overlay" />
-          
-          <div className="relative z-10 text-center px-6 max-w-4xl mx-auto mt-20">
-           
-            <h1 className="text-5xl md:text-7xl font-black leading-tight mb-6 tracking-tight">
-              THE SCIENCE OF <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
-                ENDURANCE
-              </span>
-            </h1>
-            
-          </div>
-        </section>
+
+        {/* HERO SECTION */}
+            <section className="relative h-screen w-full overflow-hidden">
+                <div className="absolute inset-0">
+                    <img
+                        src="/src/assets/evstation.png"
+                        alt="EV Background"
+                        className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
+                </div>
+
+                <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+                    <div className="max-w-3xl space-y-6 pt-20">
+
+                        <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">The<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent uppercase">science of endurance</span><br />
+                        </h1>
+                        <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Learn how to keep your electric vehicle battery healthy,<br />
+                            save money, and extend its life.</p>
+                    </div>
+                </div>
+                <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10"> 
+                    {/* Fixed: removed undefined activeEV variable from the link path */}
+                    <a
+                        href="/ev-manual.pdf" 
+                        download="EV_Maintenance_Manual.pdf"
+                        className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                    >
+                        Download Manual
+                        <Download  className="w-5 h-5" />
+                    </a>
+                    
+                </div>
+            </section>
 
         {/* Hero Header Section */}
       <section className="pt-32 pb-16 px-6 lg:px-8 max-w-7xl mx-auto relative">

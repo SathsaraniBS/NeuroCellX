@@ -148,10 +148,10 @@ const Navbar = () => {
             )}
           </div>
 
-          <Link to="/learning"
+          <Link to="/contact"
             className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
           >
-            Learning Hub ▾
+            Contact
           </Link>
         </div>
 
@@ -171,6 +171,12 @@ const Navbar = () => {
           {isEVOpen && (
             <div className="absolute left-0 mt-0 w-48 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
               <Link
+                to="/ev"
+                className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
+              >
+                EV
+              </Link>
+              <Link
                 to="/ev-types"
                 className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
               >
@@ -188,12 +194,7 @@ const Navbar = () => {
               >
                 EV Maintenance Guide
               </Link>
-              <Link
-                to="#"
-                className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
-              >
-                EV
-              </Link>
+              
 
             </div>
           )}
