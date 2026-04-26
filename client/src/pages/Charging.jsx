@@ -274,7 +274,6 @@ function Charging() {
                 </div>
             </section>
 
-
                 {/* --- WHY IT MATTERS (INTRO) --- */}
                 <section className="py-20 relative">
                     <div className="absolute top-10 left-0 w-[500px] h-[500px] bg-cyan-600/10 blur-[150px] pointer-events-none -z-10" />

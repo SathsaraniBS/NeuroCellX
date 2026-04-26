@@ -152,10 +152,10 @@ function EV() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: <Leaf className="text-lime-400" size={32} />, title: "Environment", image: "/src/assets/ev1.png", desc: "Zero tailpipe emissions help reduce ari pollution and combat climate change.", glow: "group-hover:border-lime-500/50 group-hover:shadow-[0_0_30px_rgba(163,230,53,0.1)]" },
-              { icon: <Wallet className="text-cyan-400" size={32} />, title: "Running Costs", image: "/src/assets/ev1.png", desc: "Lower maintenance and cheaper electricity make EVs more affordable to run.", glow: "group-hover:border-cyan-500/50 group-hover:shadow-[0_0_30px_rgba(34,211,238,0.1)]" },
-              { icon: <Gauge className="text-blue-400" size={32} />, title: "Performance & Comfort", image: "/src/assets/ev1.png", desc: "Instant torque, smooth acceleration, and a smooth quiet driving experience.", glow: "group-hover:border-blue-500/50 group-hover:shadow-[0_0_30px_rgba(96,165,250,0.1)]" },
-              { icon: <Wifi className="text-purple-400" size={32} />, title: "Smart & Connected", image: "/src/assets/ev1.png", desc: "Advanced tech,OTA updates, smart features, and seamiess connectivity .", glow: "group-hover:border-purple-500/50 group-hover:shadow-[0_0_30px_rgba(192,132,252,0.1)]" }
+              { icon: <Leaf className="text-lime-400" size={32} />, title: "Environment", image: "/src/assets/environment1.png", desc: "Zero tailpipe emissions help reduce ari pollution and combat climate change.", glow: "group-hover:border-lime-500/50 group-hover:shadow-[0_0_30px_rgba(163,230,53,0.1)]" },
+              { icon: <Wallet className="text-cyan-400" size={32} />, title: "Running Costs", image: "/src/assets/running-cost.png", desc: "Lower maintenance and cheaper electricity make EVs more affordable to run.", glow: "group-hover:border-cyan-500/50 group-hover:shadow-[0_0_30px_rgba(34,211,238,0.1)]" },
+              { icon: <Gauge className="text-blue-400" size={32} />, title: "Performance & Comfort", image: "/src/assets/performance.png", desc: "Instant torque, smooth acceleration, and a smooth quiet driving experience.", glow: "group-hover:border-blue-500/50 group-hover:shadow-[0_0_30px_rgba(96,165,250,0.1)]" },
+              { icon: <Wifi className="text-purple-400" size={32} />, title: "Smart & Connected", image: "/src/assets/ev3.png", desc: "Advanced tech,OTA updates, smart features, and seamiess connectivity .", glow: "group-hover:border-purple-500/50 group-hover:shadow-[0_0_30px_rgba(192,132,252,0.1)]" }
             ].map((feature, idx) => (
               <div 
                 key={idx} 
