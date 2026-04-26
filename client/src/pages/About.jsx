@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Download,
   ArrowRight,
   BatteryCharging,
   Bolt,
@@ -180,75 +181,39 @@ const EVHistoryPage = () => {
       <Navbar />
 
       <main className="overflow-hidden">
-        <section className="relative min-h-[92vh] pt-28">
-          <div className="absolute inset-0">
-            <img
-              src="/src/assets/ev3.png"
-              alt="EV history hero"
-              className="h-full w-full object-cover opacity-45"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/85 to-[#050816]/35" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-[#050816]/80" />
-            <div className="absolute left-0 top-20 h-[450px] w-[450px] rounded-full bg-cyan-500/20 blur-[150px]" />
-            <div className="absolute bottom-0 right-0 h-[450px] w-[450px] rounded-full bg-emerald-500/10 blur-[150px]" />
+         <section className="relative h-screen w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/src/assets/ev3.png"
+            alt="EV Background"
+            className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
+        </div>
+
+        <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+          <div className="max-w-3xl space-y-6 pt-20">
+
+            <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">The EV Journey:<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">A Short History of Electric Vehicles</span></h1>
+            <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4"> From early experiments to today’s intelligent electric mobility<br />
+              a journey of innovation, persistence, and a cleaner future.</p>
           </div>
+        </div>
+        <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10">
+          {/* Fixed: removed undefined activeEV variable from the link path */}
+          <a
+            href="/ev-manual.pdf"
+            download="EV_Maintenance_Manual.pdf"
+            className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+          >
+            Download Manual
+            <Download className="w-5 h-5" />
+          </a>
 
-          <div className="relative z-10 mx-auto grid min-h-[78vh] max-w-7xl items-center gap-12 px-6 lg:grid-cols-[1fr_0.95fr]">
-            <div>
-              <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-sm font-black uppercase tracking-[0.25em] text-cyan-300">
-                <Sparkles className="h-4 w-4" />
-                EV Learning Hub
-              </div>
+        </div>
+      </section>
 
-              <h1 className="text-5xl font-black uppercase leading-[0.95] tracking-tighter md:text-7xl">
-                The EV Journey:
-                <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">
-                  A Short History
-                </span>
-              </h1>
-
-              <p className="mt-8 max-w-2xl border-l-4 border-cyan-400 pl-5 text-lg leading-8 text-cyan-50/80 md:text-2xl">
-                From early electric experiments to today’s intelligent mobility,
-                explore the innovation, challenges, and breakthroughs that shaped
-                the future of EVs.
-              </p>
-
-              <div className="mt-10 flex flex-wrap gap-4">
-                <a
-                  href="#milestones"
-                  className="group inline-flex items-center gap-3 rounded-xl bg-cyan-500 px-8 py-4 font-black uppercase text-[#050816] transition hover:-translate-y-1 hover:bg-cyan-300 hover:shadow-[0_0_35px_rgba(34,211,238,0.45)]"
-                >
-                  View Timeline
-                  <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
-                </a>
-
-                <a
-                  href="#models"
-                  className="inline-flex items-center gap-3 rounded-xl border border-white/15 bg-white/10 px-8 py-4 font-bold uppercase text-white backdrop-blur-xl transition hover:-translate-y-1 hover:border-emerald-400/50 hover:text-emerald-300"
-                >
-                  Explore Models
-                </a>
-              </div>
-            </div>
-
-            <div className="relative hidden lg:block">
-              <div className="absolute -inset-8 rounded-full bg-cyan-400/20 blur-[90px]" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-cyan-400/20 bg-white/[0.06] p-4 shadow-[0_0_70px_rgba(34,211,238,0.16)] backdrop-blur-xl">
-                <img
-                  src="https://images.unsplash.com/photo-1593941707882-a5bba53b0998?auto=format&fit=crop&w=1200&q=80"
-                  alt="Electric vehicle charging"
-                  className="h-[430px] w-full rounded-[1.5rem] object-cover"
-                />
-                <div className="absolute bottom-8 left-8 rounded-2xl border border-white/10 bg-[#050816]/80 p-5 backdrop-blur-xl">
-                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-300">
-                    EV Evolution
-                  </p>
-                  <p className="mt-2 text-3xl font-black">1832 → Now</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         <section id="milestones" className="relative px-6 py-24">
           <SectionTitle
