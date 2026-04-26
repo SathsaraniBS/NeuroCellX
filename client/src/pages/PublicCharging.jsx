@@ -104,11 +104,29 @@ const LOCATION_CHARGING_STATIONS = [
   }
   
 ];
+
+const VIDEO_DATA = [
+    { id: 1, youtube_id: "v1cv-J3JVp4" },
+    { id: 2, youtube_id: "T0HanniQkSw" },
+    { id: 3, title: " Strengthening the EV ecosystem", youtube_id: "wMKjvjh5iZg" }
+];
 const PublicCharging = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = () => setCurrentSlide((prev) => (prev === TRENDS.length - 1 ? 0 : prev + 1));
   const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? TRENDS.length - 1 : prev - 1));
+
+  const [page, setPage] = useState(0);
+      
+      // Pagination Logic
+      const videosPerPage = 2;
+      const totalPages = Math.ceil(VIDEO_DATA.length / videosPerPage);
+      const displayedVideos = VIDEO_DATA.slice(
+          page * videosPerPage,
+          (page + 1) * videosPerPage
+      );
+
+  
 
   return (
     <div className="min-h-screen bg-[#050816] text-white font-sans selection:bg-cyan-500/30">
@@ -349,6 +367,73 @@ const PublicCharging = () => {
             ))}
           </div>
         </section>
+
+        {/* Video Section */}
+        <section className="py-24 px-6 relative">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-5xl font-black text-white tracking-wide uppercase mb-4">
+                    Explore   
+                    <span className="text-cyan-400">Public Charging</span>
+                </h2>
+            </div>
+        
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {displayedVideos.map((video) => (
+                                    <div key={video.id} className="flex flex-col group">
+                                        <div className="w-full aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)] group-hover:border-cyan-500/50 transition-colors relative">
+                                            <iframe
+                                                width="100%"
+                                                height="100%"
+                                                src={`https://www.youtube.com/embed/${video.youtube_id}?rel=0`}
+                                                title={video.title}
+                                                frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowFullScreen
+                                                className="absolute top-0 left-0 w-full h-full object-cover"
+                                            ></iframe>
+                                        </div>
+                                        
+                                    </div>
+                                ))}
+                            </div>
+        
+                            {/* Pagination Controls */}
+                            <div className="flex justify-center items-center space-x-4 mt-16">
+                                <button
+                                    onClick={() => setPage(Math.max(0, page - 1))}
+                                    disabled={page === 0}
+                                    className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 ${page === 0
+                                        ? 'bg-white/5 text-slate-600 cursor-not-allowed border border-white/5'
+                                        : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 hover:scale-110'
+                                        }`}
+                                >
+                                    <ChevronLeft size={24} />
+                                </button>
+        
+                                <div className="flex space-x-2">
+                                    {[...Array(totalPages)].map((_, i) => (
+                                        <div
+                                            key={i}
+                                            className={`h-2 rounded-full transition-all duration-500 ${page === i ? 'w-8 bg-cyan-400' : 'w-2 bg-white/20'}`}
+                                        />
+                                    ))}
+                                </div>
+        
+                                <button
+                                    onClick={() => setPage(page + 1)}
+                                    disabled={page >= totalPages - 1}
+                                    className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 ${page >= totalPages - 1
+                                        ? 'bg-white/5 text-slate-600 cursor-not-allowed border border-white/5'
+                                        : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 hover:scale-110'
+                                        }`}
+                                >
+                                    <ChevronRight size={24} />
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+        
 
       </main>
 

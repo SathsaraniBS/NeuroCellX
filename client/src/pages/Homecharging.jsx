@@ -40,7 +40,7 @@ const VIDEO_DATA = [
 
 function Homecharging() {
     const [page, setPage] = useState(0);
-    
+
     // Pagination Logic
     const videosPerPage = 2;
     const totalPages = Math.ceil(VIDEO_DATA.length / videosPerPage);
@@ -48,6 +48,63 @@ function Homecharging() {
         page * videosPerPage,
         (page + 1) * videosPerPage
     );
+
+    const [articles] = useState([
+            {
+                id: 1,
+                title: "Identify the right service partner",
+                image: "/src/assets/evanatomy.png",
+                tag: "Design",
+                path: "/ev-architecture" // Added route path here
+            },
+            {
+                id: 2,
+                title: "Pick the right location in your home",
+                image: "/src/assets/libattery-img.png", 
+                tag: "Technology",
+                path: "/inside-battery"
+            },
+            {
+                id: 3,
+                title: "Assess the availability of electrical load",
+                image: "/src/assets/article3.png",
+                tag: "Sustainability",
+                path: "#"
+    
+            },
+            {
+                id: 4,
+                title: "Get requisite approvals from respective stakeholders including Resident Welfare Associations, location owners or electricity companies",
+                image: "/src/assets/ev12.png",
+                tag: "History",
+                path: "#"
+            }
+        ]);
+
+    const [articleIndex, setArticleIndex] = useState(0);
+
+    const nextArticle = () => {
+        setArticleIndex((prev) => (prev + 1) % articles.length);
+    };
+
+    const prevArticle = () => {
+        setArticleIndex((prev) => (prev - 1 + articles.length) % articles.length);
+    };
+
+    const getVisibleArticles = () => {
+        const visible = [];
+        for (let i = 0; i < 3; i++) {
+            visible.push(articles[(articleIndex + i) % articles.length]);
+        }
+        return visible;
+    };
+
+    // Added function to handle article clicks
+    const handleArticleClick = (path) => {
+        if (path && path !== "#") {
+            navigate(path);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
@@ -98,7 +155,7 @@ function Homecharging() {
                                 are designed to integrate seamlessly with your lifestyle.
                             </p>
                         </div>
-                       
+
                     </div>
 
                     {/* UPDATED CARDS GRID */}
@@ -114,7 +171,7 @@ function Homecharging() {
                                     alt={benefit.title}
                                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
-                                
+
                                 {/* Gradient Overlay for text readability */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent transition-opacity duration-500 group-hover:bg-black/70" />
 
@@ -144,6 +201,69 @@ function Homecharging() {
             <div className="relative py-20 bg-gradient-to-b from-transparent to-black/40">
                 <EVCalculator />
             </div>
+
+            <section className="py-24 relative mt-12 border-t border-white/10 bg-[#070b1e]">
+                <div className="max-w-7xl mx-auto px-6">
+
+                    {/* Articles Area */}
+                    <div>
+                        <div className="flex justify-between items-end border-b border-white/10 pb-6 mb-10">
+                            <h2 className="text-3xl font-black uppercase tracking-tight">Things to consider while  
+                                <br />
+                                <span className="text-cyan-400">installing an ev charger at home</span></h2>
+                        </div>
+
+                        {/* Articles Carousel Section */}
+                        <div className="flex items-center justify-between gap-4">
+                            {/* Left Arrow */}
+                            <button onClick={prevArticle} className="bg-gray-200 hover:bg-gray-300 p-2 flex-shrink-0 transition-colors rounded-md">
+                                <svg className="w-6 h-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </button>
+
+                            {/* Cards Container - Using dynamically sliced array */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
+                                {getVisibleArticles().map((article, idx) => (
+                                    <div
+                                        key={`${article.id}-${idx}`}
+                                        onClick={() => handleArticleClick(article.path)} // Added click event here
+                                        className="group cursor-pointer flex flex-col bg-white/5 rounded-2xl border border-white/10 overflow-hidden hover:border-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/10"
+                                    >
+                                        <div className="w-full h-56 overflow-hidden relative">
+                                            <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-xs font-bold text-lime-400 uppercase tracking-wider">
+                                                {article.tag}
+                                            </div>
+                                            <img
+                                                src={article.image}
+                                                alt={article.title}
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+
+                                                }}
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f25] to-transparent opacity-80" />
+                                        </div>
+                                        <div className="p-6">
+                                            <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors leading-snug">
+                                                {article.title}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Right Arrow */}
+                            <button onClick={nextArticle} className="bg-[#2a7ba8] hover:bg-[#1f6288] p-2 flex-shrink-0 transition-colors rounded-md">
+                                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             {/* Video Section */}
             <section className="py-24 px-6 relative">
