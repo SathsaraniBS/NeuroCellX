@@ -85,10 +85,6 @@ function Batterysafety() {
 
                 <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
                     <div className="max-w-3xl space-y-6 pt-20">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-bold tracking-widest uppercase text-xs animate-fade-in">
-                            <Zap size={14} className="fill-cyan-400" />
-                            <span>Next-Gen Mobility</span>
-                        </div>
                         <h1 className="text-6xl md:text-8xl font-black leading-tight tracking-tighter">{activeEV?.title}</h1>
                         <p className="text-xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">"{activeEV?.tagline}"</p>
 
