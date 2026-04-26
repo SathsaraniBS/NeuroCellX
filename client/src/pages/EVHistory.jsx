@@ -1,21 +1,6 @@
 import React from "react";
-import {
-  Download,
-  ArrowRight,
-  BatteryCharging,
-  Bolt,
-  Car,
-  Globe2,
-  Leaf,
-  Lightbulb,
-  PlugZap,
-  Rocket,
-  ShieldCheck,
-  ShoppingCart,
-  Sparkles,
-  Sprout,
-  Wind,
-} from "lucide-react";
+import {Download,ArrowRight,BatteryCharging,Bolt,Car,Globe2,Leaf,Lightbulb,PlugZap,
+Rocket,ShieldCheck,ShoppingCart,Sprout,Wind,} from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -72,38 +57,32 @@ const EVHistoryPage = () => {
     {
       name: "GM EV1 (1996)",
       text: "One of the first modern EVs, ahead of its time in technology.",
-      image:
-        "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=700&q=80",
+      image:"src/assets/gmev1.png",
     },
     {
       name: "Toyota Prius (1997)",
       text: "The hybrid pioneer that introduced millions to efficient driving.",
-      image:
-        "https://images.unsplash.com/photo-1616788494672-ec7ca25fdda9?auto=format&fit=crop&w=700&q=80",
+      image:"src/assets/toyota-prius.png",
     },
     {
       name: "Nissan Leaf (2010)",
       text: "The EV that helped make electric driving mainstream.",
-      image:
-        "https://images.unsplash.com/photo-1593941707882-a5bba53b0998?auto=format&fit=crop&w=700&q=80",
+      image:"src/assets/nissan-leaf.png",
     },
     {
       name: "Tesla Model S (2012)",
       text: "Redefined performance and long-range electric mobility.",
-      image:
-        "https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=700&q=80",
+      image:"src/assets/tesla-model-s.png",
     },
     {
       name: "BMW i3 (2013)",
       text: "Pioneered futuristic EV design with sustainability at its core.",
-      image:
-        "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?auto=format&fit=crop&w=700&q=80",
+      image:"src/assets/bmw-i3.png",
     },
     {
       name: "Tata Nexon EV (2020)",
       text: "Made EVs more accessible in fast-growing markets.",
-      image:
-        "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=700&q=80",
+      image:"src/assets/tata-nexon-ev.png",
     },
   ];
 
@@ -184,7 +163,7 @@ const EVHistoryPage = () => {
          <section className="relative h-screen w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="/src/assets/ev3.png"
+            src="/src/assets/ev-history.png"
             alt="EV Background"
             className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
           />
