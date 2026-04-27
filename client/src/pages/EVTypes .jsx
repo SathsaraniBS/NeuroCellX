@@ -7,10 +7,16 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const evTypeSections = [
+
+  
   {
     id: "bev",
     short: "BEV",
-    title: "Battery Electric Vehicle",
+    title: 
+    (
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">"Battery Electric Vehicle",<span className="text-cyan-400">Vehicle</span> </h2>
+    )
+    },
     subtitle: "100% electric. No petrol engine.",
     icon: BatteryCharging,
     image: "/src/assets/evstation.png",
@@ -70,7 +76,10 @@ const evTypeSections = [
   {
     id: "hev",
     short: "HEV",
-    title: "Hybrid Electric Vehicle",
+    title: 
+    (
+    <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">"Hybrid Electric Vehicle",<span className="text-violet-400">Vehicle</span> </h2>
+    ) ,
     subtitle: "Self-charging hybrid system.",
     icon: Cpu,
     image: "/src/assets/evstation.png",
@@ -100,7 +109,9 @@ const evTypeSections = [
   {
     id: "fcev",
     short: "FCEV",
-    title: "Fuel-Cell Electric Vehicle",
+    title: 
+    (<h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">"Fuel-Cell Electric Vehicle",<span className="text-blue-400">Vehicle</span> </h2>) ,
+
     subtitle: "Hydrogen-powered electric drive.",
     icon: Droplet,
     image: "/src/assets/evstation.png",
@@ -130,7 +141,8 @@ const evTypeSections = [
   {
     id: "mhev",
     short: "MHEV",
-    title: "Mild Hybrid Electric Vehicle",
+    title: (
+    <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">"Mild Hybrid Electric Vehicle",<span className="text-lime-400">Vehicle</span> </h2> ),
     subtitle: "Small electric assist system.",
     icon: Zap,
     image: "/src/assets/evstation.png",
