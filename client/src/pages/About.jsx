@@ -1,511 +1,531 @@
 import React, { useState } from "react";
 import {
-  ArrowRight,
   BatteryCharging,
-  Bolt,
   Car,
+  CheckCircle2,
   ChevronDown,
+  Cpu,
+  Droplet,
   Gauge,
+  Home,
   Leaf,
   Map,
-  PlayCircle,
+  Plug,
   PlugZap,
-  Route,
+  ShoppingCart,
   ShieldCheck,
-  Sparkles,
-  Wallet,
-  Wifi,
-  Wrench,
   Zap,
+  XCircle,
+  ArrowRight,
 } from "lucide-react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
-const WHY_CARDS = [
-  {
-    title: "Cleaner Mobility",
-    text: "EVs reduce tailpipe emissions and help create cleaner, quieter cities.",
-    icon: Leaf,
-  },
-  {
-    title: "Lower Running Cost",
-    text: "Electric driving can reduce fuel and service expenses over time.",
-    icon: Wallet,
-  },
-  {
-    title: "Instant Performance",
-    text: "Electric motors deliver smooth acceleration, instant torque, and silent comfort.",
-    icon: Gauge,
-  },
-  {
-    title: "Smart Connected Tech",
-    text: "Modern EVs support OTA updates, mobile apps, charging data, and smart controls.",
-    icon: Wifi,
-  },
-];
-
-const TOPICS = [
-  {
-    title: "EV Types",
-    text: "Understand BEV, PHEV, HEV, and how each electric vehicle type works.",
-    icon: Car,
-  },
-  {
-    title: "EV Battery",
-    text: "Learn battery capacity, range, degradation, and charging best practices.",
-    icon: BatteryCharging,
-  },
-  {
-    title: "Charging Guide",
-    text: "Explore AC charging, DC fast charging, charging levels, and connector types.",
-    icon: PlugZap,
-  },
-  {
-    title: "Maintenance",
-    text: "Keep your EV safe and efficient with simple ownership care tips.",
-    icon: Wrench,
-  },
-  {
-    title: "Buying Guide",
-    text: "Know what to check before choosing your first electric vehicle.",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Trip Planning",
-    text: "Plan EV journeys using range, charger locations, stops, and driving style.",
-    icon: Route,
-  },
-];
-
-const FAQS = [
-  {
-    question: "How far can an EV go on a single charge?",
-    answer:
-      "EV range depends on battery size, vehicle efficiency, driving speed, road conditions, weather, and cabin climate usage. Most modern EVs are suitable for daily city driving and many support long-distance travel with planned charging stops.",
-  },
-  {
-    question: "How long does it take to charge an EV?",
-    answer:
-      "Charging time depends on charger type and battery size. Home AC charging is slower but convenient for overnight charging, while DC fast charging can add significant range in a much shorter time.",
-  },
-  {
-    question: "Are EVs expensive to maintain?",
-    answer:
-      "EVs usually have lower maintenance needs than petrol or diesel vehicles because they have fewer moving parts. There are no oil changes, but tyres, brakes, software, coolant systems, and battery health still need attention.",
-  },
-  {
-    question: "Can I install a home charger?",
-    answer:
-      "Yes. Many EV owners install a dedicated home wall charger for safe and efficient overnight charging. A qualified electrician should inspect the wiring and install the charger correctly.",
-  },
-  {
-    question: "Are EV batteries safe?",
-    answer:
-      "Modern EV batteries are protected by battery management systems, thermal controls, and safety structures. They are designed to operate safely in different weather and road conditions.",
-  },
-  {
-    question: "Can I charge an EV in the rain?",
-    answer:
-      "Yes. EV charging systems are designed with safety protections. However, always use certified charging equipment and avoid damaged cables or submerged charging points.",
-  },
-];
-
-const FLOW_ITEMS = [
-  {
-    label: "Battery Pack",
-    icon: BatteryCharging,
-  },
-  {
-    label: "Power Control",
-    icon: Zap,
-  },
-  {
-    label: "Electric Motor",
-    icon: Bolt,
-  },
-  {
-    label: "Wheels",
-    icon: Gauge,
-  },
-];
-
-const VoltIQLearnPage = () => {
+const EVTypesTechnologies = () => {
   const [openFaq, setOpenFaq] = useState(null);
 
+  const evTypes = [
+    {
+      title: "Battery Electric Vehicle",
+      short: "BEV",
+      icon: BatteryCharging,
+      color: "text-emerald-500",
+      bg: "bg-emerald-50",
+      border: "border-emerald-200",
+      desc: "Pure electric car; no internal-combustion engine, only battery and electric motor.",
+      pros: "No tailpipe emissions, smooth and quiet, lowest running cost.",
+      cons: "Requires charging infrastructure.",
+      examples: ["Tata Nexon EV", "MG ZS EV"],
+    },
+    {
+      title: "Plug-in Hybrid",
+      short: "PHEV",
+      icon: Plug,
+      color: "text-blue-500",
+      bg: "bg-blue-50",
+      border: "border-blue-200",
+      desc: "Small battery + plug-in charging + ICE engine.",
+      pros: "Electric-only range for short trips; engine for long drives.",
+      cons: "More complex; higher maintenance than BEV.",
+      examples: ["BYD Seal U DM-i", "Mitsubishi Outlander PHEV"],
+    },
+    {
+      title: "Hybrid Electric Vehicle",
+      short: "HEV",
+      icon: Cpu,
+      color: "text-violet-500",
+      bg: "bg-violet-50",
+      border: "border-violet-200",
+      desc: "Battery + electric motor + ICE, but no plug-in charging.",
+      pros: "Better fuel efficiency; no need to plug in.",
+      cons: "Lower EV range; still uses petrol.",
+      examples: ["Toyota Prius", "Honda Accord Hybrid"],
+    },
+    {
+      title: "Fuel-Cell Electric Vehicle",
+      short: "FCEV",
+      icon: Droplet,
+      color: "text-teal-500",
+      bg: "bg-teal-50",
+      border: "border-teal-200",
+      desc: "Uses hydrogen fuel cell that generates electricity.",
+      pros: "Very fast refuel and zero tailpipe emissions.",
+      cons: "Limited hydrogen stations; high infrastructure cost.",
+      examples: ["Toyota Mirai", "Hyundai NEXO"],
+    },
+    {
+      title: "Mild-Hybrid",
+      short: "MHEV",
+      icon: Zap,
+      color: "text-orange-500",
+      bg: "bg-orange-50",
+      border: "border-orange-200",
+      desc: "Small electric assist system to improve efficiency.",
+      pros: "Improves mileage and performance.",
+      cons: "Cannot drive on electric power alone.",
+      examples: ["Maruti Smart Hybrid", "Hyundai i20 Mild Hybrid"],
+    },
+  ];
+
+  const chargingCards = [
+    {
+      title: "AC Level 1",
+      power: "120V",
+      icon: Home,
+      color: "text-emerald-500",
+      bg: "bg-emerald-50",
+      range: "~4–6 km range / hour",
+      text: "Slow home outlet charging. Best for overnight top-ups.",
+    },
+    {
+      title: "AC Level 2",
+      power: "240V",
+      icon: Plug,
+      color: "text-blue-500",
+      bg: "bg-blue-50",
+      range: "~20–30 km range / hour",
+      text: "Home wall box or public AC charging. Most common.",
+    },
+    {
+      title: "DC Fast Charging",
+      power: "Level 3",
+      icon: PlugZap,
+      color: "text-violet-500",
+      bg: "bg-violet-50",
+      range: "~100–200 km range / 30 min",
+      text: "High-power charging at public stations.",
+    },
+  ];
+
+  const suitCards = [
+    {
+      title: "I mostly drive short trips in the city.",
+      text: "BEV or PHEV is ideal. Lower running cost, no daily fuel spend.",
+      icon: Home,
+      link: "See Buying Guide",
+    },
+    {
+      title: "I drive long distances often.",
+      text: "PHEV, long-range BEV, or FCEV can be better options.",
+      icon: Map,
+      link: "See Trip Planner",
+    },
+    {
+      title: "I can install a home charger.",
+      text: "BEV is the smartest choice for daily use and savings.",
+      icon: PlugZap,
+      link: "See Charging Guide",
+    },
+    {
+      title: "I don’t want to install a home charger.",
+      text: "Use public charging + PHEV or FCEV options.",
+      icon: BatteryCharging,
+      link: "See Charging Guide",
+    },
+  ];
+
+  const faqs = [
+    "What is the difference between BEV, PHEV, and HEV?",
+    "How long does it take to charge an EV?",
+    "Is a BEV better than a Hybrid?",
+    "Can I install a home charger myself?",
+    "How does fast charging affect battery life?",
+    "Are hydrogen fuel-cell cars better than battery EVs?",
+  ];
+
   return (
-    <div className="min-h-screen bg-[#050816] text-white font-sans selection:bg-cyan-500/30">
-      <Navbar />
-
-      <main className="overflow-hidden">
-        {/* HERO SECTION */}
-        <section className="relative min-h-screen w-full overflow-hidden">
-          <div className="absolute inset-0">
-            <img
-              src="/src/assets/evstation.png"
-              alt="Electric vehicle learning background"
-              className="h-full w-full object-cover scale-105 opacity-70"
-              onError={(event) => {
-                event.currentTarget.style.display = "none";
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/80 to-[#050816]/20" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-[#050816]/40" />
-            <div className="absolute left-0 top-0 h-[500px] w-[500px] rounded-full bg-cyan-500/20 blur-[160px]" />
-            <div className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-[160px]" />
+    <div className="min-h-screen bg-white text-[#071b3a] font-sans">
+      <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/95 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+          <div className="text-4xl font-semibold tracking-tight">
+            Volt<span className="text-teal-400">IQ</span>
           </div>
 
-          <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl items-center px-6 pt-24">
-            <div className="grid w-full items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-              <div className="max-w-3xl">
-                <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-sm font-bold uppercase tracking-[0.25em] text-cyan-300 shadow-[0_0_35px_rgba(34,211,238,0.15)]">
-                  <Sparkles className="h-4 w-4" />
-                  EV Learning Hub
-                </div>
-
-                <h1 className="text-5xl font-black uppercase leading-[0.95] tracking-tighter md:text-7xl lg:text-8xl">
-                  Learn The
-                  <span className="block bg-gradient-to-r from-cyan-400 via-emerald-400 to-lime-300 bg-clip-text text-transparent">
-                    Electric Future
-                  </span>
-                </h1>
-
-                <p className="mt-8 max-w-2xl border-l-4 border-cyan-400 pl-5 text-lg leading-8 text-cyan-50/80 md:text-2xl">
-                  Understand EV technology, charging, battery care, ownership,
-                  and smart mobility in one premium learning experience.
-                </p>
-
-                <div className="mt-10 flex flex-wrap gap-4">
-                  <a
-                    href="#topics"
-                    className="group inline-flex items-center gap-3 rounded-xl bg-cyan-500 px-8 py-4 text-base font-black uppercase tracking-wide text-[#050816] transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-300 hover:shadow-[0_0_35px_rgba(34,211,238,0.45)]"
-                  >
-                    Start Exploring
-                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </a>
-
-                  <a
-                    href="#how-it-works"
-                    className="inline-flex items-center gap-3 rounded-xl border border-white/15 bg-white/10 px-8 py-4 text-base font-bold text-white backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:bg-emerald-400/10 hover:text-emerald-300"
-                  >
-                    <PlayCircle className="h-5 w-5" />
-                    How EVs Work
-                  </a>
-                </div>
-              </div>
-
-              <div className="relative mx-auto w-full max-w-xl">
-                <div className="absolute -inset-8 rounded-full bg-cyan-500/20 blur-[80px]" />
-                <div className="relative rounded-[2rem] border border-cyan-400/20 bg-white/[0.06] p-6 shadow-[0_0_60px_rgba(34,211,238,0.16)] backdrop-blur-2xl">
-                  <div className="rounded-[1.5rem] border border-white/10 bg-[#07111f]/90 p-6">
-                    <div className="mb-6 flex items-center justify-between">
-                      <div>
-                        <p className="text-sm font-bold uppercase tracking-[0.2em] text-cyan-300">
-                          VoltIQ System
-                        </p>
-                        <h3 className="mt-2 text-2xl font-black">
-                          EV Knowledge Core
-                        </h3>
-                      </div>
-                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300 shadow-[0_0_25px_rgba(34,211,238,0.25)]">
-                        <Bolt className="h-8 w-8" />
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      {[
-                        ["Battery Health", "92%"],
-                        ["Charging Efficiency", "88%"],
-                        ["Range Confidence", "96%"],
-                      ].map(([label, value]) => (
-                        <div
-                          key={label}
-                          className="rounded-2xl border border-white/10 bg-white/[0.04] p-4"
-                        >
-                          <div className="mb-3 flex items-center justify-between text-sm font-bold">
-                            <span className="text-slate-300">{label}</span>
-                            <span className="text-cyan-300">{value}</span>
-                          </div>
-                          <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                            <div
-                              className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400"
-                              style={{ width: value }}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-6 grid grid-cols-2 gap-4">
-                      <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-5">
-                        <BatteryCharging className="mb-4 h-8 w-8 text-emerald-300" />
-                        <p className="text-3xl font-black">450+</p>
-                        <p className="mt-1 text-sm text-slate-400">
-                          KM Range Guide
-                        </p>
-                      </div>
-                      <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-5">
-                        <PlugZap className="mb-4 h-8 w-8 text-cyan-300" />
-                        <p className="text-3xl font-black">80%</p>
-                        <p className="mt-1 text-sm text-slate-400">
-                          Smart Charge Target
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* WHY EV SECTION */}
-        <section className="relative py-24">
-          <div className="absolute left-0 top-20 h-96 w-96 rounded-full bg-cyan-600/10 blur-[140px]" />
-          <div className="mx-auto max-w-7xl px-6">
-            <SectionHeader
-              eyebrow="Why Electric Vehicles"
-              title="Smarter Driving Starts Here"
-              text="EVs are not just vehicles. They are connected mobility systems built for efficiency, performance, and a cleaner future."
-            />
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {WHY_CARDS.map((card) => {
-                const Icon = card.icon;
-
-                return (
-                  <div
-                    key={card.title}
-                    className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] p-7 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/40 hover:bg-white/[0.08] hover:shadow-[0_0_40px_rgba(34,211,238,0.12)]"
-                  >
-                    <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-400/10 blur-3xl transition group-hover:bg-cyan-400/20" />
-                    <div className="mb-7 flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/10 text-cyan-300 shadow-[0_0_30px_rgba(34,211,238,0.12)]">
-                      <Icon className="h-8 w-8" />
-                    </div>
-                    <h3 className="mb-3 text-xl font-black uppercase tracking-tight text-white">
-                      {card.title}
-                    </h3>
-                    <p className="text-sm leading-7 text-slate-400">
-                      {card.text}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* TOPICS SECTION */}
-        <section id="topics" className="relative py-24">
-          <div className="absolute right-0 top-0 h-[450px] w-[450px] rounded-full bg-emerald-500/10 blur-[150px]" />
-
-          <div className="mx-auto max-w-7xl px-6">
-            <SectionHeader
-              eyebrow="Explore Topics"
-              title="Core EV Knowledge Areas"
-              text="Learn everything from EV basics to charging, maintenance, ownership, and route planning."
-            />
-
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {TOPICS.map((topic) => {
-                const Icon = topic.icon;
-
-                return (
-                  <div
-                    key={topic.title}
-                    className="group relative min-h-[230px] overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.03] p-7 transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-[0_0_45px_rgba(34,211,238,0.14)]"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/0 via-transparent to-emerald-400/0 opacity-0 transition group-hover:from-cyan-400/10 group-hover:to-emerald-400/10 group-hover:opacity-100" />
-
-                    <div className="relative z-10">
-                      <div className="mb-6 flex items-center justify-between">
-                        <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/10 text-cyan-300">
-                          <Icon className="h-8 w-8" />
-                        </div>
-                        <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-slate-400 transition group-hover:border-cyan-400/50 group-hover:bg-cyan-400 group-hover:text-[#050816]">
-                          <ArrowRight className="h-5 w-5" />
-                        </div>
-                      </div>
-
-                      <h3 className="mb-3 text-2xl font-black uppercase tracking-tight">
-                        {topic.title}
-                      </h3>
-                      <p className="text-sm leading-7 text-slate-400">
-                        {topic.text}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* HOW IT WORKS */}
-        <section id="how-it-works" className="relative py-24">
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-              <div>
-                <p className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">
-                  How EVs Work
-                </p>
-                <h2 className="text-4xl font-black uppercase leading-tight tracking-tight md:text-6xl">
-                  Energy Flow
-                  <span className="block bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-                    Made Simple
-                  </span>
-                </h2>
-                <p className="mt-6 text-lg leading-8 text-slate-400">
-                  Electric vehicles store energy inside a high-voltage battery.
-                  That energy is controlled electronically and sent to an
-                  electric motor, which drives the wheels with smooth and
-                  instant torque.
-                </p>
-
-                <div className="mt-8 rounded-3xl border border-emerald-400/20 bg-emerald-400/10 p-6">
-                  <div className="mb-3 flex items-center gap-3 text-emerald-300">
-                    <Zap className="h-6 w-6" />
-                    <h3 className="text-lg font-black uppercase">
-                      Regenerative Braking
-                    </h3>
-                  </div>
-                  <p className="text-sm leading-7 text-slate-300">
-                    When slowing down, the motor can recover energy and send it
-                    back to the battery, improving efficiency and range.
-                  </p>
-                </div>
-              </div>
-
-              <div className="rounded-[2rem] border border-white/10 bg-white/[0.05] p-6 backdrop-blur-xl">
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                  {FLOW_ITEMS.map((item, index) => {
-                    const Icon = item.icon;
-
-                    return (
-                      <div key={item.label} className="relative">
-                        <div className="flex min-h-[170px] flex-col items-center justify-center rounded-3xl border border-cyan-400/20 bg-[#07111f]/90 p-5 text-center">
-                          <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300">
-                            <Icon className="h-8 w-8" />
-                          </div>
-                          <p className="text-sm font-black uppercase text-slate-200">
-                            {item.label}
-                          </p>
-                        </div>
-
-                        {index !== FLOW_ITEMS.length - 1 && (
-                          <div className="absolute -right-5 top-1/2 z-20 hidden -translate-y-1/2 text-cyan-300 lg:block">
-                            <ArrowRight className="h-7 w-7" />
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="relative py-24">
-          <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[160px]" />
-
-          <div className="relative z-10 mx-auto max-w-5xl px-6">
-            <SectionHeader
-              eyebrow="Questions"
-              title="EV Frequently Asked Questions"
-              text="Quick answers for new EV owners and anyone learning about electric mobility."
-            />
-
-            <div className="space-y-4">
-              {FAQS.map((faq, index) => (
-                <div
-                  key={faq.question}
-                  className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/30"
+          <nav className="hidden items-center gap-12 text-base font-semibold md:flex">
+            {["Dashboard", "Charging", "Battery", "Trips", "Learn", "Support"].map(
+              (item) => (
+                <a
+                  key={item}
+                  href="#"
+                  className={`relative transition hover:text-blue-500 ${
+                    item === "Learn" ? "text-blue-500" : ""
+                  }`}
                 >
-                  <button
-                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                    className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left"
-                  >
-                    <span className="text-base font-bold text-white md:text-lg">
-                      {faq.question}
-                    </span>
-                    <ChevronDown
-                      className={`h-6 w-6 shrink-0 text-cyan-300 transition-transform duration-300 ${
-                        openFaq === index ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-
-                  {openFaq === index && (
-                    <div className="border-t border-white/10 px-6 pb-6 pt-5 text-sm leading-7 text-slate-400 md:text-base">
-                      {faq.answer}
-                    </div>
+                  {item}
+                  {item === "Learn" && (
+                    <span className="absolute -bottom-6 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-blue-500" />
                   )}
+                </a>
+              )
+            )}
+          </nav>
+
+          <div className="flex items-center gap-6">
+            <div className="relative">
+              <span className="absolute -right-1 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-xs font-bold text-white">
+                3
+              </span>
+              <svg className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 0 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0a3 3 0 0 1-6 0" />
+              </svg>
+            </div>
+            <div className="relative h-14 w-14 overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-teal-400 p-1">
+              <img
+                src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=200&q=80"
+                alt="User"
+                className="h-full w-full rounded-full object-cover"
+              />
+              <span className="absolute bottom-1 right-1 h-4 w-4 rounded-full border-2 border-white bg-teal-400" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#f3faff] via-[#eef8ff] to-white">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 md:grid-cols-2">
+          <div>
+            <h1 className="mb-5 text-5xl font-extrabold leading-tight tracking-tight md:text-6xl">
+              EV Types & Technologies
+            </h1>
+            <p className="max-w-2xl text-2xl font-semibold leading-9">
+              Understand <span className="text-blue-500">BEV, PHEV, Hybrid</span>,
+              and Fuel-Cell EVs, and how{" "}
+              <span className="text-violet-500">EV charging</span> and platforms work.
+            </p>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-[#314463]">
+              EVs aren’t all the same: some run purely on battery, others mix
+              battery and engine, and some use hydrogen. This page explains every
+              major EV type and the technology behind them.
+            </p>
+          </div>
+
+          <div className="relative min-h-[360px]">
+            <div className="absolute inset-x-0 bottom-0 h-32 rounded-full bg-blue-200/40 blur-3xl" />
+            <img
+              src="https://images.unsplash.com/photo-1593941707882-a5bba53b0998?auto=format&fit=crop&w=1200&q=80"
+              alt="Electric vehicle charging"
+              className="relative z-10 h-[360px] w-full rounded-[2rem] object-cover shadow-xl"
+            />
+          </div>
+        </div>
+      </section>
+
+      <main className="rounded-t-[2rem] bg-white px-6 py-12">
+        <section className="mx-auto max-w-7xl">
+          <SectionTitle title="1. EV Types Explained" />
+
+          <div className="grid gap-5 md:grid-cols-5">
+            {evTypes.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.short}
+                  className="rounded-xl border border-slate-200 bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                >
+                  <div className={`mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full border ${item.border} ${item.bg} ${item.color}`}>
+                    <Icon className="h-12 w-12" />
+                  </div>
+
+                  <h3 className="mb-4 text-base font-extrabold">
+                    {item.title}
+                    <span className="block">({item.short})</span>
+                  </h3>
+
+                  <p className="mb-5 text-sm leading-7 text-[#314463]">{item.desc}</p>
+
+                  <InfoLine type="good" text={item.pros} />
+                  <InfoLine type="bad" text={item.cons} />
+
+                  <div className="my-5 h-px bg-slate-200" />
+
+                  <p className="mb-4 text-left text-sm font-extrabold">Examples</p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {item.examples.map((example) => (
+                      <div key={example}>
+                        <div className="mb-2 flex h-14 items-center justify-center rounded-lg bg-slate-50">
+                          <Car className="h-9 w-9 text-slate-500" />
+                        </div>
+                        <p className="text-xs leading-5 text-[#314463]">{example}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="mx-auto mt-10 max-w-7xl">
+          <SectionTitle title="2. Charging Technology" />
+
+          <div className="grid gap-5 lg:grid-cols-[1fr_1.25fr]">
+            <div className="grid gap-5 md:grid-cols-3">
+              {chargingCards.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={item.title}
+                    className="rounded-xl border border-slate-200 bg-white p-6 text-center shadow-sm"
+                  >
+                    <div className={`mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-full ${item.bg} ${item.color}`}>
+                      <Icon className="h-12 w-12" />
+                    </div>
+                    <h3 className="text-lg font-extrabold">{item.title}</h3>
+                    <p className={`mb-4 text-base font-bold ${item.color}`}>({item.power})</p>
+                    <p className="mb-5 text-sm leading-7 text-[#314463]">{item.text}</p>
+                    <div className={`${item.bg} ${item.color} rounded-lg px-3 py-2 text-xs font-bold`}>
+                      {item.range}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <ComparisonTable
+              title="Charging Types Comparison"
+              headers={["Type", "Speed", "Typical Use", "Battery Impact", "Cost / kWh"]}
+              rows={[
+                ["AC Level 1", "Slow", "Home overnight charging", "Very gentle", "Lowest"],
+                ["AC Level 2", "Medium", "Home / public daily use", "Gentle", "Low–Medium"],
+                ["DC Fast", "Fast", "Highway trips, top-ups", "More heat, use in moderation", "Medium–High"],
+              ]}
+            />
+          </div>
+
+          <div className="mt-5 flex items-start gap-5 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-500">
+              <Zap className="h-8 w-8" />
+            </div>
+            <p className="text-sm leading-7 text-[#314463]">
+              Most EVs use an onboard charger to convert AC power from home or
+              public charging into DC power for the battery. DC fast chargers
+              convert AC to DC inside the station and deliver high power directly
+              to the battery.
+            </p>
+          </div>
+        </section>
+
+        <section className="mx-auto mt-12 max-w-7xl">
+          <SectionTitle title="3. EV Platform & Smart Tech" />
+
+          <div className="grid items-center gap-10 md:grid-cols-2">
+            <div className="text-sm leading-8 text-[#314463]">
+              <p className="mb-4">
+                Modern EVs are built on dedicated electric platforms designed
+                from the ground up for safety, range, comfort, and smart control.
+              </p>
+              {[
+                "Flat battery pack in the floor for better weight distribution, space, and safety.",
+                "Integrated power electronics, thermal management, and high-efficiency motors.",
+                "Advanced software enables range optimisation, ADAS, and OTA updates.",
+                "Scalable architecture for different vehicle sizes and driving ranges.",
+              ].map((item) => (
+                <InfoLine key={item} type="good" text={item} />
               ))}
             </div>
-          </div>
-        </section>
 
-        {/* CTA SECTION */}
-        <section className="relative px-6 py-24">
-          <div className="mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-cyan-400/20 bg-gradient-to-br from-cyan-500/10 via-white/[0.04] to-emerald-500/10 p-8 shadow-[0_0_70px_rgba(34,211,238,0.12)] backdrop-blur-xl md:p-12">
-            <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto]">
-              <div>
-                <p className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">
-                  Ready To Continue
-                </p>
-                <h2 className="text-4xl font-black uppercase tracking-tight md:text-6xl">
-                  Build Your EV Confidence
-                </h2>
-                <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-400">
-                  Continue exploring charging guides, trip planning, EV
-                  maintenance, and smart ownership tools inside VoltIQ.
-                </p>
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="grid grid-cols-4 gap-4 text-center">
+                {[
+                  ["Battery Pack", BatteryCharging],
+                  ["Inverter / Power Electronics", Cpu],
+                  ["Electric Motor", Gauge],
+                  ["Wheels", Car],
+                ].map(([label, Icon], index) => (
+                  <div key={label} className="relative">
+                    <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-xl bg-blue-50 text-blue-500">
+                      <Icon className="h-10 w-10" />
+                    </div>
+                    <p className="text-xs font-bold">{label}</p>
+                    {index !== 3 && (
+                      <ArrowRight className="absolute -right-4 top-8 h-5 w-5 text-teal-400" />
+                    )}
+                  </div>
+                ))}
               </div>
 
-              <div className="flex flex-col gap-4 sm:flex-row lg:flex-col">
-                <a
-                  href="/public-charging"
-                  className="inline-flex items-center justify-center gap-3 rounded-xl bg-cyan-500 px-8 py-4 font-black uppercase text-[#050816] transition hover:-translate-y-1 hover:bg-cyan-300 hover:shadow-[0_0_35px_rgba(34,211,238,0.4)]"
-                >
-                  Charging Guide
-                  <PlugZap className="h-5 w-5" />
-                </a>
-
-                <a
-                  href="/trip-planner"
-                  className="inline-flex items-center justify-center gap-3 rounded-xl border border-white/15 bg-white/10 px-8 py-4 font-black uppercase text-white transition hover:-translate-y-1 hover:border-emerald-400/50 hover:bg-emerald-400/10 hover:text-emerald-300"
-                >
-                  Plan EV Trip
-                  <Map className="h-5 w-5" />
-                </a>
+              <div className="mx-auto mt-8 max-w-xs rounded-xl bg-teal-50 px-6 py-4 text-center text-sm font-extrabold text-teal-600">
+                Vehicle Control Unit & Software
               </div>
             </div>
           </div>
         </section>
+
+        <section className="mx-auto mt-12 grid max-w-7xl gap-8 lg:grid-cols-2">
+          <ComparisonTable
+            title="4. EV Types Comparison"
+            headers={["Feature", "BEV", "PHEV", "HEV", "FCEV"]}
+            rows={[
+              ["Power Source", "Battery + Motor", "Battery + ICE", "ICE + Motor", "Hydrogen Fuel Cell"],
+              ["Emissions", "Zero tailpipe", "Very low", "Lower than ICE", "Zero tailpipe"],
+              ["Electric Range", "200–600+ km", "40–100 km", "1–5 km", "500–700 km"],
+              ["Fuel / Charging", "Electricity", "Electricity + Petrol", "Petrol", "Hydrogen"],
+              ["Best For", "Daily use, city, savings", "Mixed driving", "Better mileage", "Long range, fast refuel"],
+            ]}
+          />
+
+          <ComparisonTable
+            title="Charging Types Comparison"
+            headers={["Feature", "AC Level 1", "AC Level 2", "DC Fast"]}
+            rows={[
+              ["Power", "1.4–1.9 kW", "3.7–22 kW", "50–350+ kW"],
+              ["Voltage", "120V AC", "240V AC", "200–1000V DC"],
+              ["Time", "20–40 hrs", "4–8 hrs", "20–30 min"],
+              ["Best Use", "Overnight home", "Home / Work", "Highway trips"],
+              ["Battery Impact", "Very gentle", "Gentle", "Use moderately"],
+              ["Cost / kWh", "Lowest", "Low–Medium", "Medium–High"],
+            ]}
+          />
+        </section>
+
+        <section className="mx-auto mt-12 max-w-7xl">
+          <SectionTitle title="5. Which EV Suits You?" />
+
+          <div className="grid gap-5 md:grid-cols-4">
+            {suitCards.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                >
+                  <Icon className="mb-5 h-14 w-14 text-teal-500" />
+                  <h3 className="mb-3 text-base font-extrabold">{item.title}</h3>
+                  <p className="mb-5 text-sm leading-7 text-[#314463]">{item.text}</p>
+                  <a href="#" className="inline-flex items-center gap-2 text-sm font-bold text-blue-500">
+                    {item.link}
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="mx-auto mt-12 max-w-7xl">
+          <SectionTitle title="Frequently Asked Questions" />
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {faqs.map((faq, index) => (
+              <div key={faq} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="flex w-full items-center justify-between px-6 py-4 text-left text-sm font-semibold"
+                >
+                  {faq}
+                  <ChevronDown className={`h-5 w-5 transition ${openFaq === index ? "rotate-180" : ""}`} />
+                </button>
+                {openFaq === index && (
+                  <div className="border-t border-slate-100 px-6 py-4 text-sm leading-7 text-[#314463]">
+                    The answer depends on vehicle type, battery size, driving pattern,
+                    charging access, and long-term ownership needs.
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto mt-8 grid max-w-7xl gap-5 pb-10 md:grid-cols-3">
+          <NextCard icon={Leaf} title="Next: EV Buying Guide" text="Find the right EV for you." color="emerald" />
+          <NextCard icon={PlugZap} title="Next: Charging Guide" text="Learn about charging options and costs." color="blue" />
+          <NextCard icon={Map} title="Next: EV History & Journey" text="Explore the history and future of electric mobility." color="violet" />
+        </section>
+
+        <footer className="pb-8 text-center text-sm text-slate-500">
+          Drive electric. Save more. Live better.
+        </footer>
       </main>
-
-      <Footer />
     </div>
   );
 };
 
-const SectionHeader = ({ eyebrow, title, text }) => {
+const SectionTitle = ({ title }) => (
+  <div className="mb-8 text-center">
+    <h2 className="text-3xl font-extrabold tracking-tight">{title}</h2>
+    <div className="mx-auto mt-3 h-1 w-10 rounded-full bg-teal-400" />
+  </div>
+);
+
+const InfoLine = ({ type, text }) => (
+  <div className="mb-3 flex items-start gap-2 text-left text-sm leading-6 text-[#314463]">
+    {type === "good" ? (
+      <CheckCircle2 className="mt-1 h-4 w-4 shrink-0 text-teal-500" />
+    ) : (
+      <XCircle className="mt-1 h-4 w-4 shrink-0 text-red-400" />
+    )}
+    <span>{text}</span>
+  </div>
+);
+
+const ComparisonTable = ({ title, headers, rows }) => (
+  <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <h3 className="mb-4 text-center text-xl font-extrabold">{title}</h3>
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse text-sm">
+        <thead>
+          <tr>
+            {headers.map((head) => (
+              <th key={head} className="border border-slate-200 bg-slate-50 px-4 py-3 text-left font-extrabold">
+                {head}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <tr key={index}>
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex} className="border border-slate-200 px-4 py-4 align-top leading-6 text-[#314463]">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+);
+
+const NextCard = ({ icon: Icon, title, text, color }) => {
+  const colors = {
+    emerald: "bg-emerald-50 text-emerald-500",
+    blue: "bg-blue-50 text-blue-500",
+    violet: "bg-violet-50 text-violet-500",
+  };
+
   return (
-    <div className="mx-auto mb-14 max-w-3xl text-center">
-      <p className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">
-        {eyebrow}
-      </p>
-      <h2 className="text-4xl font-black uppercase leading-tight tracking-tight md:text-6xl">
-        {title}
-      </h2>
-      <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400" />
-      <p className="mt-6 text-base leading-8 text-slate-400 md:text-lg">
-        {text}
-      </p>
-    </div>
+    <a
+      href="#"
+      className={`group flex items-center gap-6 rounded-xl border border-slate-200 p-6 transition hover:-translate-y-1 hover:shadow-xl ${colors[color]}`}
+    >
+      <Icon className="h-14 w-14 shrink-0" />
+      <div className="flex-1">
+        <h3 className="mb-2 font-extrabold">{title}</h3>
+        <p className="text-sm leading-6 text-[#314463]">{text}</p>
+      </div>
+      <ArrowRight className="h-6 w-6 transition group-hover:translate-x-1" />
+    </a>
   );
 };
 
-export default VoltIQLearnPage;
+export default EVTypesTechnologies;
