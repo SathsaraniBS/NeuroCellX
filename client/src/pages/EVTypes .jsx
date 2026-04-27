@@ -7,16 +7,14 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const evTypeSections = [
-
-  
   {
     id: "bev",
     short: "BEV",
-    title: 
-    (
-              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">"Battery Electric Vehicle",<span className="text-cyan-400">Vehicle</span> </h2>
-    )
-    },
+    title: (
+      <>
+        Battery <br /> <span className="text-cyan-400">Electric Vehicle</span>
+      </>
+    ),
     subtitle: "100% electric. No petrol engine.",
     icon: BatteryCharging,
     image: "/src/assets/evstation.png",
@@ -46,7 +44,12 @@ const evTypeSections = [
   {
     id: "phev",
     short: "PHEV",
-    title: "Plug-in Hybrid Electric Vehicle",
+    title: (
+      <>
+        Plug-in Hybrid  <br />
+        <span className="text-emerald-400">Electric Vehicle</span>
+      </>
+    ),
     subtitle: "Electric drive plus petrol backup.",
     icon: Plug,
     image: "/src/assets/evstation.png",
@@ -76,10 +79,12 @@ const evTypeSections = [
   {
     id: "hev",
     short: "HEV",
-    title: 
-    (
-    <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">"Hybrid Electric Vehicle",<span className="text-violet-400">Vehicle</span> </h2>
-    ) ,
+    title: (
+      <>
+        Hybrid <br />
+         <span className="text-violet-400">Electric Vehicle</span>
+      </>
+    ),
     subtitle: "Self-charging hybrid system.",
     icon: Cpu,
     image: "/src/assets/evstation.png",
@@ -109,9 +114,12 @@ const evTypeSections = [
   {
     id: "fcev",
     short: "FCEV",
-    title: 
-    (<h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">"Fuel-Cell Electric Vehicle",<span className="text-blue-400">Vehicle</span> </h2>) ,
-
+    title: (
+      <>
+        Fuel-Cell <br />
+         <span className="text-blue-400">Electric Vehicle</span>
+      </>
+    ),
     subtitle: "Hydrogen-powered electric drive.",
     icon: Droplet,
     image: "/src/assets/evstation.png",
@@ -142,7 +150,11 @@ const evTypeSections = [
     id: "mhev",
     short: "MHEV",
     title: (
-    <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">"Mild Hybrid Electric Vehicle",<span className="text-lime-400">Vehicle</span> </h2> ),
+      <>
+        Mild Hybrid <br />
+         <span className="text-lime-400">Electric Vehicle</span>
+      </>
+    ),
     subtitle: "Small electric assist system.",
     icon: Zap,
     image: "/src/assets/evstation.png",
@@ -509,7 +521,7 @@ const EVTypeSection = ({ item, index }) => {
         <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
           <img
             src={item.image}
-            alt={item.title}
+            alt={`${item.short} electric vehicle`}
             className="h-[460px] w-full rounded-[2rem] object-cover opacity-80"
           />
 
@@ -615,7 +627,7 @@ const GlowBackground = () => (
 );
 
 const SectionHeader = ({ eyebrow, title, text, align = "center" }) => {
-  const words = title.split(" ");
+  const words = title.trim().split(" ");
   const lastWord = words.pop();
 
   return (
