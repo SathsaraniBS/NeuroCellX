@@ -63,10 +63,10 @@ const TipCard = ({ tip }) => (
         
         <div className="relative">
             <div className="flex items-center gap-3 mb-2">
-                <span className="font-mono text-sm font-bold text-cyan-500/50">0{tip.id}</span>
-                <h3 className="text-lg font-bold text-white tracking-tight">{tip.title}</h3>
+                <span className="font-mono text-lg font-bold text-cyan-500/50">0{tip.id}</span>
+                <h3 className="text-xl font-bold text-white tracking-tight">{tip.title}</h3>
             </div>
-            <p className="text-slate-400 text-sm leading-relaxed">{tip.description}</p>
+            <p className="text-slate-400 text-lg leading-relaxed">{tip.description}</p>
         </div>
     </div>
 );
@@ -153,6 +153,7 @@ function RepairandMaintenance() {
 
     return (
         <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
+            
         <Navbar />
 
         <div className="min-h-screen bg-cover bg-fixed bg-center text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30">
@@ -208,9 +209,10 @@ function RepairandMaintenance() {
 
                     <div className="w-full lg:w-1/2">
                        
-                        <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                            Keeping batteries healthy
-                        </h3>
+                 <h2 className="text-3xl font-black uppercase tracking-tight">  
+                    Keeping batteries 
+                    <span className='text-cyan-500'>healthy </span>
+                        </h2>
                         <p className="text-slate-400 text-lg leading-relaxed mb-8">
                             At the heart of every EV lies its battery—the definitive source of its power. Ensuring the battery pack is well-maintained and continuously monitored helps you extract maximum range and power over the vehicle's lifespan.
                         </p>
@@ -262,7 +264,7 @@ function RepairandMaintenance() {
             {/* TIPS SECTION */}
             <section className="py-20 px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+                    <div className="text-left mb-16">
                         
                         <h2 className="text-3xl md:text-5xl font-black text-white">
                             Maintenance <span className="text-cyan-400">Protocols</span>

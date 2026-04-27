@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-    ChevronDown,
-    Wrench,
-    ShieldCheck,
-    CalendarCheck,
-    Zap,
-    AlertTriangle,
-    PhoneCall,
-    CheckCircle2,
-    Download ,
-    ChevronRight, // Added missing import
-    Info          // Added missing import
+import {ChevronDown,ShieldCheck,AlertTriangle,PhoneCall,CheckCircle2,Download ,
 } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';

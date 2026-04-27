@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {ArrowRight,BatteryCharging,Car,CheckCircle2,ChevronDown,Cpu,
-Droplet,Gauge,Home,Leaf,Map,Plug,PlugZap,Sparkles,Zap,XCircle,
+import {
+  ArrowRight, BatteryCharging, Car, CheckCircle2, ChevronDown, Cpu,
+  Droplet, Gauge, Home, Leaf, Map, Plug, PlugZap, Sparkles, Zap, XCircle,
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -240,33 +241,55 @@ const EVTypes = () => {
     <div className="min-h-screen bg-[#050816] text-white font-sans selection:bg-cyan-500/30">
       <Navbar />
 
+      {/* HERO SECTION */}
+      <section className="relative h-screen w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="/src/assets/ev3.png"
+            alt="EV Background"
+            className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
+        </div>
+
+        <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+          <div className="max-w-3xl space-y-6 pt-20">
+
+            <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter"> EV Types &<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">Technologies</span></h1>
+            <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">
+              Learn BEV, PHEV, HEV, FCEV, and MHEV as separate electric vehicle
+              technologies with clear benefits, limitations, and real-world use cases.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+
+
       <section className="relative min-h-screen overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="/src/assets/evstation.png"
             alt="Futuristic EV charging technology"
-            className="h-full w-full object-cover opacity-70 scale-105"
+            className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-[#050816]/75 to-[#050816]/30" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
-          <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-cyan-500/20 blur-[140px]" />
-          <div className="absolute bottom-12 right-16 h-96 w-96 rounded-full bg-emerald-500/10 blur-[140px]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
         </div>
 
-        <div className="relative mx-auto flex min-h-screen max-w-7xl items-center px-6 pt-24">
-          <div className="max-w-4xl space-y-8">
-            <div className="inline-flex items-center gap-3 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-5 py-2 text-sm font-bold uppercase tracking-[0.35em] text-cyan-200 backdrop-blur-md">
-              <Sparkles className="h-4 w-4" /> EV Learning Hub
-            </div>
+        <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+          <div className="max-w-3xl space-y-6 pt-20">
 
-            <h1 className="text-5xl font-black uppercase leading-[0.95] tracking-tighter md:text-7xl lg:text-8xl">
+            <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">
               EV Types &<br />
-              <span className="bg-gradient-to-r from-cyan-400 via-emerald-300 to-lime-300 bg-clip-text text-transparent">
+              <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
                 Technologies
               </span>
             </h1>
 
-            <p className="max-w-2xl border-l-4 border-cyan-400 pl-5 text-xl font-medium leading-9 text-cyan-50/90 md:text-2xl">
+            <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">
               Learn BEV, PHEV, HEV, FCEV, and MHEV as separate electric vehicle
               technologies with clear benefits, limitations, and real-world use cases.
             </p>
@@ -495,9 +518,8 @@ const EVTypes = () => {
                 >
                   {faq.q}
                   <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-cyan-300 transition ${
-                      openFaq === index ? "rotate-180" : ""
-                    }`}
+                    className={`h-5 w-5 shrink-0 text-cyan-300 transition ${openFaq === index ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
 
@@ -550,9 +572,8 @@ const EVTypeSection = ({ item, index }) => {
       <div className={`absolute ${reverse ? "left-0" : "right-0"} top-20 h-96 w-96 rounded-full ${item.glow} blur-[150px]`} />
 
       <div
-        className={`relative mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 ${
-          reverse ? "lg:[&>*:first-child]:order-2" : ""
-        }`}
+        className={`relative mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 ${reverse ? "lg:[&>*:first-child]:order-2" : ""
+          }`}
       >
         <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
           <img
