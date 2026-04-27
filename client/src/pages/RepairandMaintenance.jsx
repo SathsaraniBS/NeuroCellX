@@ -152,9 +152,10 @@ function RepairandMaintenance() {
     };
 
     return (
-        // Added bg-cover bg-fixed bg-center to keep the background locked while scrolling
-        <div className="min-h-screen bg-[url('/src/assets/bg.png')] bg-cover bg-fixed bg-center text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30">
-            <Navbar />
+        <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
+        <Navbar />
+
+        <div className="min-h-screen bg-cover bg-fixed bg-center text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30">
 
             {/* HERO SECTION */}
             <section className="relative h-screen w-full overflow-hidden">
@@ -192,7 +193,7 @@ function RepairandMaintenance() {
             </section>
 
             {/* HERO / INTRO SECTION - Fixed top padding so it clears the Navbar */}
-            <section className="pt-32 pb-16 px-6 lg:px-8 max-w-7xl mx-auto w-full relative z-10">
+            <section className="pt-32 pb-16 px-6 lg:px-8 max-w-7xl bzmx-auto w-full relative z-10">
                 <div className="text-center mb-16">
                     <h1 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
                         Advanced <span className="text-cyan-400">EV Care</span>
@@ -401,6 +402,8 @@ function RepairandMaintenance() {
                 }
             `}</style>
         </div>
+    </div>
+
     );
 }
 
