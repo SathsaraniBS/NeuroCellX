@@ -269,51 +269,29 @@ const EVTypes = () => {
       <main className="relative overflow-hidden">
         <GlowBackground />
 
-        {/* <section className="relative mx-auto max-w-7xl px-6 py-24">
-          <SectionHeader
-            eyebrow="01 / Vehicle Categories"
-            title="Five EV Technologies"
-            text="Each electric vehicle type uses a different drivetrain, energy source, and ownership pattern. Explore them separately below."
-          />
-
-          <div className="grid gap-4 md:grid-cols-5">
-            {evTypeSections.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  className="group rounded-3xl border border-white/10 bg-white/[0.04] p-5 text-center backdrop-blur-xl transition hover:-translate-y-2 hover:border-cyan-400/40 hover:bg-white/[0.07]"
-                >
-                  <div
-                    className={`mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${item.gradient} text-[#031014] shadow-lg`}
-                  >
-                    <Icon className="h-8 w-8" />
-                  </div>
-                  <p className="text-xs font-black uppercase tracking-[0.35em] text-cyan-300">
-                    {item.short}
-                  </p>
-                  <h3 className="mt-2 text-sm font-black uppercase leading-6 text-white">
-                    {item.title}
-                  </h3>
-                </a>
-              );
-            })}
-          </div>
-        </section> */}
-
         {evTypeSections.map((item, index) => (
           <EVTypeSection key={item.id} item={item} index={index} />
         ))}
 
         <section id="charging" className="relative border-y border-white/5 bg-white/[0.02] py-28">
+
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeader
               eyebrow="02 / Charging"
               title="Charging Technology"
               text="AC charging is ideal for daily use. DC fast charging is built for long journeys, public hubs, and quick energy top-ups."
             />
+            <div className="mt-8 rounded-[2rem] border border-white/10 bg-black/30 p-6 backdrop-blur-xl">
+              <ComparisonTable
+                title="Charging Types Comparison"
+                headers={["Type", "Speed", "Typical Use", "Battery Impact", "Cost / kWh"]}
+                rows={[
+                  ["AC Level 1", "Slow", "Home overnight charging", "Very gentle", "Lowest"],
+                  ["AC Level 2", "Medium", "Home / public daily use", "Gentle", "Low–Medium"],
+                  ["DC Fast", "Fast", "Highway trips and top-ups", "More heat, use moderately", "Medium–High"],
+                ]}
+              />
+            </div>
 
             <div className="grid gap-6 lg:grid-cols-3">
               {chargingCards.map((item) => {
@@ -342,17 +320,6 @@ const EVTypes = () => {
               })}
             </div>
 
-            <div className="mt-8 rounded-[2rem] border border-white/10 bg-black/30 p-6 backdrop-blur-xl">
-              <ComparisonTable
-                title="Charging Types Comparison"
-                headers={["Type", "Speed", "Typical Use", "Battery Impact", "Cost / kWh"]}
-                rows={[
-                  ["AC Level 1", "Slow", "Home overnight charging", "Very gentle", "Lowest"],
-                  ["AC Level 2", "Medium", "Home / public daily use", "Gentle", "Low–Medium"],
-                  ["DC Fast", "Fast", "Highway trips and top-ups", "More heat, use moderately", "Medium–High"],
-                ]}
-              />
-            </div>
           </div>
         </section>
 
