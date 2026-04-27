@@ -194,15 +194,7 @@ function RepairandMaintenance() {
 
             {/* HERO / INTRO SECTION - Fixed top padding so it clears the Navbar */}
             <section className="pt-32 pb-16 px-6 lg:px-8 max-w-7xl bzmx-auto w-full relative z-10">
-                <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
-                        Advanced <span className="text-cyan-400">EV Care</span>
-                    </h1>
-                    <p className="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-                        Unlock the secrets to maintaining your electric vehicle's performance and preserving your battery's longevity. From predictive analytics to routine check-ups, our maintenance tips keep your EV humming like a finely tuned machine.
-                    </p>
-                </div>
-
+                
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16  p-8 md:p-10 ">
                     <div className="w-full lg:w-1/2 relative group">
                         <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/40 to-blue-600/40 rounded-2xl blur opacity-30 group-hover:opacity-70 transition duration-700"></div>
