@@ -331,7 +331,7 @@ function Charging() {
 
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="text-left mb-20 space-y-4">
-                            <h2 className="text-5xl md:text-6xl font-black  uppercase">
+                            <h2 className="text-4xl md:text-6xl font-black  uppercase">
                                 Charging 
                                 <span className="text-cyan-400">Levels 
 
@@ -493,6 +493,30 @@ function Charging() {
                     <div className="flex flex-col md:flex-row items-center gap-12 bg-transparent ">
 
                         {/* Left: Interactive Video Player */}
+
+                        <div className="w-full md:w-1/2 space-y-6">
+                            
+                            <h3 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 uppercase leading-snug">
+                                What Are The Different Types Of Chargers?
+                            </h3>
+                            <p className="text-gray-400 text-lg leading-relaxed">
+                                Understanding how your EV draws power is crucial for maximizing battery lifespan and planning long trips effectively.
+                            </p>
+                            <ul className="space-y-4 pt-4">
+                                <li className="flex items-start gap-3 text-gray-300">
+                                    <div className="mt-1.5 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)] shrink-0" />
+                                    <span>India supports 5 standard types of charging connectors.</span>
+                                </li>
+                                <li className="flex items-start gap-3 text-gray-300">
+                                    <div className="mt-1.5 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)] shrink-0" />
+                                    <span>They provide slow, moderate, and ultra-fast charging depending on infrastructure specifications.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        {/* Right: Text Content */}
+
                         <div className="w-full md:w-1/2 relative rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)] bg-black aspect-video group">
                             {!isVideoPlaying ? (
                                 /* Custom Thumbnail Overlay that disappears on click */
@@ -534,29 +558,7 @@ function Charging() {
                             )}
                         </div>
 
-                        {/* Right: Text Content */}
-                        <div className="w-full md:w-1/2 space-y-6">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-lime-500/30 bg-lime-500/10 text-lime-400 font-bold tracking-widest uppercase text-xs">
-                                <span>Educational Guide</span>
-                            </div>
-                            <h3 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 uppercase leading-snug">
-                                What Are The Different Types Of Chargers?
-                            </h3>
-                            <p className="text-gray-400 text-lg leading-relaxed">
-                                Understanding how your EV draws power is crucial for maximizing battery lifespan and planning long trips effectively.
-                            </p>
-                            <ul className="space-y-4 pt-4">
-                                <li className="flex items-start gap-3 text-gray-300">
-                                    <div className="mt-1.5 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)] shrink-0" />
-                                    <span>India supports 5 standard types of charging connectors.</span>
-                                </li>
-                                <li className="flex items-start gap-3 text-gray-300">
-                                    <div className="mt-1.5 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)] shrink-0" />
-                                    <span>They provide slow, moderate, and ultra-fast charging depending on infrastructure specifications.</span>
-                                </li>
-                            </ul>
-                        </div>
-
+                        
                     </div>
                 </section>
 
