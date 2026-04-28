@@ -568,10 +568,12 @@ function Charging() {
                 <section className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12 bg-transparent">
 
                     {/* Left Content Column */}
+                
+
                     <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
-                        <h2 className="text-3xl md:text-4xl font-extrabold text-[#2E77AE] tracking-tight leading-tight">
-                            But, how much does charging cost you?
-                        </h2>
+                        <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                                But, how much does <span className="text-cyan-400">charging cost you ?</span>
+                            </h2>
 
                         <h3 className="text-xl md:text-2xl font-bold text-[#4BA1CC]">
                             It’s cheaper than conventional fuel!
