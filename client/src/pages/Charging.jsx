@@ -495,10 +495,13 @@ function Charging() {
                         {/* Left: Interactive Video Player */}
 
                         <div className="w-full md:w-1/2 space-y-6">
+
+                            <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                                Charger
+                                <span className="text-cyan-400"> Types</span>
+                            </h2>
                             
-                            <h3 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 uppercase leading-snug">
-                                What Are The Different Types Of Chargers?
-                            </h3>
+                
                             <p className="text-gray-400 text-lg leading-relaxed">
                                 Understanding how your EV draws power is crucial for maximizing battery lifespan and planning long trips effectively.
                             </p>
