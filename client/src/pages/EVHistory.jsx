@@ -181,13 +181,15 @@ const EVHistoryPage = () => {
         </div>
         <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10">
           {/* Fixed: removed undefined activeEV variable from the link path */}
-          <Link
-            to="#"
+          <a
+            href="https://youtu.be/VOB0q-oi_bU?si=uowZgyAD7jYx2YDL" 
+            target="_blank" 
+            rel="noopener noreferrer"
             className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
           >
             Watch Video
             <Play className="w-5 h-5" />
-          </Link>
+          </a>
 
         </div>
       </section>

@@ -66,10 +66,8 @@ function Batterysafety() {
 
     return (
         // <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
-        <div
-            className="min-h-screen bg-[url('/src/assets/bg.png')] bg-cover bg-center bg-fixed text-slate-300 flex flex-col font-sans selection:bg-cyan-500/30"
+        <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
 
-        >
             <Navbar />
 
             {/* HERO SECTION */}

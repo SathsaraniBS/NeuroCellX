@@ -1,15 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { 
-  Zap, 
-  ShieldCheck, 
-  TrendingUp, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Cpu, 
-  Gauge, 
-  ThermometerSnowflake 
+import { Download, Zap, ShieldCheck, TrendingUp, AlertTriangle, CheckCircle2, Cpu, Gauge, ThermometerSnowflake 
 } from "lucide-react";
 
 const BatteryTypes = () => {
