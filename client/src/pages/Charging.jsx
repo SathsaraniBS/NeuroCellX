@@ -597,13 +597,13 @@ function Charging() {
 
                 </section>
 
-                <section className="max-w-7xl mx-auto px-6 py-24 relative">
+                {/* <section className="max-w-7xl mx-auto px-6 py-24 relative">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase tracking-wide">
                             Calculate the cost of charging your EV at home here
                         </h2>
                     </div>
-                </section>
+                </section> */}
                 <EVCalculator />
 
                 <section className="py-24 relative overflow-hidden">
@@ -612,9 +612,9 @@ function Charging() {
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="text-left mb-20 space-y-4">
                             <h2 className="text-5xl md:text-6xl font-black  uppercase">
-                                How EV charging works -  
+                                How EV charging <br /> 
                                 <span className="text-cyan-400">
-                                    Step by step
+                                    works - Step by step
 
                                 </span>
                             </h2>
