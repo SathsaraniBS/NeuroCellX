@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {Download, Zap, ChevronRight, ChevronLeft, PlugZap, BatteryCharging, Timer, PlayCircle } from "lucide-react";
+import { Zap, ChevronRight, ChevronLeft, PlugZap, BatteryCharging, Timer, PlayCircle } from "lucide-react";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -255,21 +256,20 @@ function Charging() {
                 <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
                     <div className="max-w-3xl space-y-6 pt-20">
 
-                        <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">EV Care:<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">Maintenance & Ownership Guide</span></h1>
-                        <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Learn how to keep your electric vehicle healthy,<br />
-                            save money, and extend its life.</p>
+                        <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter uppercase">EV charging basics :<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">How its works </span></h1>
+                        <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Learn about AC va DC, charging levels, and how  <br />
+                             electric reaches your EV Battery.</p>
                     </div>
                 </div>
                 <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10"> 
                     {/* Fixed: removed undefined activeEV variable from the link path */}
-                    <a
-                        href="/ev-manual.pdf" 
-                        download="EV_Maintenance_Manual.pdf"
+                    <Link
+                        to="/find-station"
                         className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
                     >
-                        Download EV Manual
-                        <Download  className="w-5 h-5" />
-                    </a>
+                        Find Charging Station
+                        <FaMapMarkerAlt  className="w-5 h-5" />
+                    </Link>
                     
                 </div>
             </section>
@@ -279,16 +279,7 @@ function Charging() {
                     <div className="absolute top-10 left-0 w-[500px] h-[500px] bg-cyan-600/10 blur-[150px] pointer-events-none -z-10" />
 
                     <div className="max-w-7xl mx-auto px-6">
-                        <div className="max-w-7xl mx-auto px-6">
-                            <div className="text-center mb-20 space-y-4">
-                                <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase">
-                                    Getting You Started
-                                </h1>
-                                <p className="text-gray-400 max-w-3xl mx-auto text-lg leading-relaxed">
-                                    Whether you're new to EVs or a veteran, our guide helps you navigate the fundamentals of charging speeds and battery health.
-                                </p>
-                            </div>
-                        </div>
+                        
                         <div className="bg-transparent p-8 md:p-12 rounded-[2rem]  flex flex-col md:flex-row gap-10 items-center justify-between">
 
 
@@ -327,7 +318,7 @@ function Charging() {
 
                 {/* CHARGING INFO SECTION */}
                 <section className="py-24 relative overflow-hidden">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-transparent pointer-events-none" />
 
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="text-left mb-20 space-y-4">

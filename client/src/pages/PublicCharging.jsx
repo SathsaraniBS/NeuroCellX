@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Zap, ChevronRight, ChevronLeft, Download, BatteryCharging, ShieldCheck, Globe } from "lucide-react";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { Zap, ChevronRight, ChevronLeft,  BatteryCharging, ShieldCheck, Globe } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import EVCalculator from '../components/EVCalculator';
@@ -156,6 +157,8 @@ const PublicCharging = () => {
             className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
           >
             Find Charging Station
+            <FaMapMarkerAlt  className="w-5 h-5" />
+            
           </Link>
         </div>
       </section>
@@ -191,7 +194,7 @@ const PublicCharging = () => {
         <section className="py-24">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
             <h2 className="text-3xl md:text-5xl font-black uppercase max-w-xl">
-              Changing Trends in <span className="text-lime-400">Public Charging</span>
+              Changing Trends in <span className="text-cyan-400">Public Charging</span>
             </h2>
             <div className="flex gap-3">
               <button onClick={prevSlide} className="p-4 bg-white/5 hover:bg-cyan-500 border border-white/10 rounded-full transition-all group">
