@@ -75,6 +75,7 @@ function Batterysafety() {
                 <div className="absolute inset-0">
                     <img
                         src="/src/assets/ev3.png"
+                        alt="EV Background"
                         className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
@@ -83,11 +84,23 @@ function Batterysafety() {
 
                 <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
                     <div className="max-w-3xl space-y-6 pt-20">
-                        <h1 className="text-6xl md:text-8xl font-black leading-tight tracking-tighter">{activeEV?.title}</h1>
-                        <p className="text-xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">"{activeEV?.tagline}"</p>
 
-
+                        <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">Battery Safety:<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">Maintenance & Ownership Guide</span></h1>
+                        <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Learn how to keep your electric vehicle battery healthy,<br />
+                            save money, and extend its life.</p>
                     </div>
+                </div>
+                <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10"> 
+                    {/* Fixed: removed undefined activeEV variable from the link path */}
+                    <a
+                        href="/ev-manual.pdf" 
+                        download="EV_Maintenance_Manual.pdf"
+                        className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                    >
+                        Download Manual
+                        <Download  className="w-5 h-5" />
+                    </a>
+                    
                 </div>
             </section>
 
