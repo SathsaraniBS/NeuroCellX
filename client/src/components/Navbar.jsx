@@ -135,34 +135,27 @@ const Navbar = () => {
                   to="/home-charging"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
-                  HOME CHARGING
+                  Home Charging
                 </Link>
                 <Link
                   to="/public-charging"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
-                  PUBLIC CHARGING
+                  Public Charging
                 </Link>
                 
               </div>
             )}
           </div>
 
-          <Link to="/contact"
-            className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
-          >
-            Contact
-          </Link>
-        </div>
-
-        {/* EV Dropdown (Fixed State) */}
+           {/* EV Dropdown (Fixed State) */}
         <div
           className="relative group"
           onMouseEnter={() => setIsEVOpen(true)}
           onMouseLeave={() => setIsEVOpen(false)}
         >
           <Link to="/ev"
-            className="flex items-center gap-1 hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
+            className="flex items-center  hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
 
           >
             EV  <span className={`transition-transform duration-200 ${isEVOpen ? 'rotate-180' : ''}`}>▾</span>
@@ -199,6 +192,15 @@ const Navbar = () => {
             </div>
           )}
         </div>
+
+          <Link to="/contact"
+            className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
+          >
+            Contact
+          </Link>
+        </div>
+
+       
 
 
         {/* Right Side Items */}
