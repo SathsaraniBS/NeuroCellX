@@ -161,6 +161,35 @@ const CHARGING_STEPS = [
     }
 ];
 
+const CHARGING_CONNECTORS = [
+    {
+        id: 1,
+        step_name: "Type 1 /CCS1",
+        image: "src/assets/plugin.png", // Updated fallback image
+        description: "  North America",
+        // iconType: "level1" 
+    },
+    {
+        id: 2,
+        step_name: "Type 2 /CCS2",
+        image: "src/assets/com-icon.png", // Updated fallback image
+        description: "Europe / Asia",
+    },
+    {
+        id: 3,
+        step_name: "CHAdeMO",
+        image: "src/assets/convert-icon.png", 
+        description: "Japan-based", 
+    },
+    {
+        id: 4,
+        step_name: "Tesla Supercharger",
+        image: "src/assets/battery-icon.png", // Updated fallback image
+        description: "Tesla specific,opening to the others",
+
+    }
+];
+
 function Charging() {
     const [vehicles] = useState(DUMMY_VEHICLES);
     const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
