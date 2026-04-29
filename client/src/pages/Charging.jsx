@@ -598,7 +598,7 @@ function Charging() {
                 <EVCalculator />
 
                 <section className="py-24 relative overflow-hidden">
-                    <div className="absolute top-0 left-1/2 transform --translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
+                    <div className="absolute top-0  transform --translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
 
                     <div className="max-w-7xl mx-auto px-6">
                         <div className="text-left mb-20 space-y-4">
@@ -612,8 +612,8 @@ function Charging() {
                             
                         </div>
 
-                        <div className="flex flex-col lg:flex-row items-center gap-16">
-                            <div className="lg:w-2/3 grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div className="w-full flex justify-center mt-8">
+                            <div className=" w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6  ">
                                 {loading ? (
                                     <div className="col-span-3 text-center py-20 "><div className="animate-spin h-10 w-10 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto" /></div>
                                 ) : (
@@ -626,7 +626,7 @@ function Charging() {
                                             />
 
                                             {/* Overlay */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-90 group-hover:opacity-95 transition-opacity duration-500" />
 
                                             {/* Content */}
                                             <div className="absolute inset-0 z-20 p-8 flex flex-col justify-end">
