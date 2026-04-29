@@ -398,9 +398,9 @@ function Charging() {
                             <p className="text-gray-400 text-lg mb-8">
                                 Plug it in when you get home, and wake up to a full battery. VoltIQ provides real-time health insights and AI-driven predictions to ensure your "phone on wheels" stays healthy for years.
                             </p>
-                            <button className="flex items-center gap-2 text-cyan-400 font-bold hover:gap-4 transition-all">
+                            <Link to="/login" className="flex items-center gap-2 text-cyan-400 font-bold hover:gap-4 transition-all">
                                 Learn more about RUL Predictions <ChevronRight size={20} />
-                            </button>
+                            </Link>
                         </div>
                         <div className="relative group">
                             <img
@@ -415,9 +415,9 @@ function Charging() {
 
                 {/* CLOSER LOOK CAROUSEL */}
                 <section className="max-w-7xl mx-auto px-6 py-24 relative">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase tracking-wide">
-                            A Closer Look At Stations
+                    <div className="text-left mb-16">
+                        <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text cyan-400 text-white uppercase tracking-wide">
+                            A Closer Look <span className="text-cyan-400"> At Stations </span>
                         </h2>
                     </div>
 
@@ -478,6 +478,47 @@ function Charging() {
                     </div>
                 </section>
 
+
+                <section className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12 bg-transparent">
+
+                    {/* Left Content Column */}
+                
+
+                    <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
+                        <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
+                                But, how much does <span className="text-cyan-400">charging cost you ?</span>
+                            </h2>
+
+                        <h3 className="text-xl md:text-2xl font-bold text-[#4BA1CC]">
+                            It’s cheaper than conventional fuel!
+                        </h3>
+
+                        <p className="text-gray-700 text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
+                            When it comes to EV charging, you're in for a money-saving ride, one doesn’t have to worry about increasing petrol/diesel prices everyday The EV and charging industries are working for faster and cheaper charging.
+                        </p>
+                    </div>
+
+                    {/* Right Image Column */}
+                    <div className="w-full md:w-1/2">
+                        <div className="relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                            <img
+                                src="src/assets/vs.png"
+                                alt="EV Cost Savings"
+                                className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-500"
+                            />
+                        </div>
+                    </div>
+
+                </section>
+
+                {/* <section className="max-w-7xl mx-auto px-6 py-24 relative">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase tracking-wide">
+                            Calculate the cost of charging your EV at home here
+                        </h2>
+                    </div>
+                </section> */}
+                <EVCalculator />
 
                 {/* VIDEO SECTION - Fully integrated into the dark EV theme */}
                 <section className="max-w-7xl mx-auto px-6 py-24 mb-10">
@@ -556,46 +597,6 @@ function Charging() {
                     </div>
                 </section>
 
-                <section className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-center gap-12 bg-transparent">
-
-                    {/* Left Content Column */}
-                
-
-                    <div className="w-full md:w-1/2 text-center md:text-left space-y-6">
-                        <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
-                                But, how much does <span className="text-cyan-400">charging cost you ?</span>
-                            </h2>
-
-                        <h3 className="text-xl md:text-2xl font-bold text-[#4BA1CC]">
-                            It’s cheaper than conventional fuel!
-                        </h3>
-
-                        <p className="text-gray-700 text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
-                            When it comes to EV charging, you're in for a money-saving ride, one doesn’t have to worry about increasing petrol/diesel prices everyday The EV and charging industries are working for faster and cheaper charging.
-                        </p>
-                    </div>
-
-                    {/* Right Image Column */}
-                    <div className="w-full md:w-1/2">
-                        <div className="relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                            <img
-                                src="src/assets/vs.png"
-                                alt="EV Cost Savings"
-                                className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-500"
-                            />
-                        </div>
-                    </div>
-
-                </section>
-
-                {/* <section className="max-w-7xl mx-auto px-6 py-24 relative">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase tracking-wide">
-                            Calculate the cost of charging your EV at home here
-                        </h2>
-                    </div>
-                </section> */}
-                <EVCalculator />
 
                 <section className="py-24 relative overflow-hidden">
                     <div className="absolute top-0  transform --translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
