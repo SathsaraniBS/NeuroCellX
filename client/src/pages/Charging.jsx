@@ -197,6 +197,7 @@ function Charging() {
     const [loading, setLoading] = useState(true);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [chargingsteps,setSteps] = useState([]);
+    const [chargingconnectors,setConnectors] = useState([]);
 
     // New state to control video playback
     const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -537,13 +538,6 @@ function Charging() {
 
                 </section>
 
-                {/* <section className="max-w-7xl mx-auto px-6 py-24 relative">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 uppercase tracking-wide">
-                            Calculate the cost of charging your EV at home here
-                        </h2>
-                    </div>
-                </section> */}
                 <EVCalculator />
 
                 <section className="py-24 relative overflow-hidden">
@@ -566,7 +560,7 @@ function Charging() {
                                 {loading ? (
                                     <div className="col-span-3 text-center py-20 "><div className="animate-spin h-10 w-10 border-4 border-cyan-500 border-t-transparent rounded-full mx-auto" /></div>
                                 ) : (
-                                    chargingsteps.map((step) => (
+                                    charging.map((step) => (
                                         <div key={step.id} className="relative h-96 rounded-3xl overflow-hidden group border border-white/10 shadow-lg">
                                             {/* Background */}
                                             <div
