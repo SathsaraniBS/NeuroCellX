@@ -136,30 +136,27 @@ const CHARGING_STEPS = [
     {
         id: 1,
         step_name: "Plug In",
-        image: "src/assets/level1.png", // Updated fallback image
-        description: "Standard home outlet. Best for overnight charging at home.",
+        image: "src/assets/plugin.png", // Updated fallback image
+        description: "Connect the charging plug to your EV and the power source. ",
         // iconType: "level1" 
     },
     {
         id: 2,
         step_name: "Communication",
-        image: "src/assets/level1.png", // Updated fallback image
-        description: "Fast home and public charging. Ideal for daily drivers.",
-        // iconType: "level2" 
+        image: "src/assets/com-icon.png", // Updated fallback image
+        description: "The car and charger communicate to verify compatibility and safety. ",
     },
     {
         id: 3,
         step_name: "Convert & Deliver",
-        image: "src/assets/level3.png", // Updated fallback image
-        description: "Rapid commercial charging for long-distance travel.",
-        // iconType: "dcfast" 
+        image: "src/assets/convert-icon.png", 
+        description: "Power is converted (if needed) and delivered to the battery through the on-board charger. ",
     },
     {
         id: 4,
         step_name: "Stop When Full",
-        image: "src/assets/level3.png", // Updated fallback image
-        description: "Rapid commercial charging for long-distance travel.",
-        // iconType: "dcfast" 
+        image: "src/assets/battery-icon.png", // Updated fallback image
+        description: "Charging slows down as the battery nears full and stops automatically.",
 
     }
 ];
