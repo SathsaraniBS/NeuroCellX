@@ -5,6 +5,7 @@ import {
   ChevronLeft,
   ShieldCheck,
   PlayCircle,
+  Info
 } from 'lucide-react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -139,28 +140,52 @@ const CHARGING_CONNECTORS = [
   {
     id: 1,
     step_name: 'Type 1 / CCS1',
-    image: 'src/assets/plugin.png',
+    image: 'src/assets/CCS1.png',
     description: 'Commonly used in North America.',
   },
   {
     id: 2,
     step_name: 'Type 2 / CCS2',
-    image: 'src/assets/com-icon.png',
+    image: 'src/assets/CCS2.png',
     description: 'Widely used in Europe and many Asian regions.',
   },
   {
     id: 3,
     step_name: 'CHAdeMO',
-    image: 'src/assets/convert-icon.png',
+    image: 'src/assets/CHAdeMO.png',
     description: 'Japan-based fast charging connector standard.',
   },
   {
     id: 4,
     step_name: 'Tesla Supercharger',
-    image: 'src/assets/battery-icon.png',
+    image: 'src/assets/tesla-charger.png',
     description: 'Tesla-specific charging system, now opening to more EVs.',
   },
 ];
+
+const ChargingTimeSection = () => {
+  const chargingRows = [
+    {
+      type: "Level 1 (AC 120V)",
+      power: "1.4 – 2.4 kW",
+      time: "~20 – 40 hours",
+      bar: "w-[24%] bg-emerald-400",
+    },
+    {
+      type: "Level 2 (AC 240V)",
+      power: "7 – 22 kW",
+      time: "~4 – 8 hours",
+      bar: "w-[42%] bg-blue-500",
+    },
+    {
+      type: "DC Fast Charging",
+      power: "50 – 350 kW",
+      time: "~20 – 30 minutes",
+      bar: "w-[24%] bg-purple-500",
+    },
+  ];
+
+      
 
 function Charging() {
   const [vehicles] = useState(DUMMY_VEHICLES);
@@ -657,6 +682,83 @@ function Charging() {
             </div>
           </div>
         </section>
+
+
+         <section className="w-full py-16">
+      <div className="mx-auto max-w-7xl px-6">
+        {/* Top Info */}
+        <div className="mb-8 flex items-center justify-center gap-3 text-center">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg shadow-blue-500/30">
+            <Info size={16} />
+          </div>
+          <p className="text-base font-semibold text-slate-700">
+            Make sure your car and charger use the same connector type.
+          </p>
+        </div>
+
+        {/* Title */}
+        <div className="mb-8 text-left">
+          <h2 className="text-3xl font-black text-slate-900 md:text-4xl">
+            How Long Does Charging Take?
+          </h2>
+          <div className="mt-4 h-1 w-14 rounded-full bg-teal-400"></div>
+        </div>
+
+        {/* Table */}
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/70">
+          {/* Header */}
+          <div className="grid grid-cols-1 bg-blue-50 md:grid-cols-4">
+            <div className="px-7 py-5 text-lg font-bold text-slate-800">
+              Charger Type
+            </div>
+            <div className="px-7 py-5 text-lg font-bold text-slate-800">
+              Typical kW
+            </div>
+            <div className="px-7 py-5 text-lg font-bold text-slate-800">
+              Example: 60 kWh battery <br />
+              20% → 80%
+            </div>
+            <div className="hidden px-7 py-5 md:block"></div>
+          </div>
+
+          {/* Rows */}
+          {chargingRows.map((row, index) => (
+            <div
+              key={index}
+              className="grid grid-cols-1 border-t border-slate-200 md:grid-cols-4"
+            >
+              <div className="px-7 py-5 text-lg font-bold text-slate-800">
+                {row.type}
+              </div>
+
+              <div className="px-7 py-5 text-lg font-medium text-slate-700">
+                {row.power}
+              </div>
+
+              <div className="px-7 py-5 text-lg font-medium text-slate-700">
+                {row.time}
+              </div>
+
+              <div className="flex items-center px-7 py-5">
+                <div className="h-2 w-full rounded-full bg-slate-200">
+                  <div
+                    className={`h-2 rounded-full shadow-md ${row.bar}`}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Formula Footer */}
+          <div className="flex items-center justify-center gap-4 border-t border-blue-100 bg-blue-50 px-6 py-5 text-center">
+            <Zap className="h-6 w-6 text-blue-500" />
+            <p className="text-base font-semibold text-slate-700 md:text-lg">
+              Charging time ≈ Battery capacity ÷ Charger power × efficiency factor
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
         {/* STEP BY STEP SECTION */}
         <section className="py-24 relative overflow-hidden">
