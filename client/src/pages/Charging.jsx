@@ -701,7 +701,7 @@ function Charging() {
               <div className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-300/50 bg-cyan-400/15 text-cyan-200 shadow-[0_0_25px_rgba(34,211,238,0.45)] backdrop-blur-md">
                 <Info size={17} />
               </div>
-              <p className="text-base font-semibold text-cyan-100/80">
+              <p className="text-2xl font-semibold text-cyan-100/80">
                 Make sure your car and charger use the same connector type.
               </p>
             </div>
@@ -827,64 +827,73 @@ function Charging() {
       </div>
     </section>
 
-    <section className="w-full py-10">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-50 via-white to-blue-50 p-6 shadow-lg shadow-slate-200/70">
-          <div className="grid items-center gap-8 md:grid-cols-[90px_1fr_280px]">
-            
-            {/* Left Icon */}
-            <div className="flex justify-center md:justify-start">
-              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-blue-500/10 shadow-lg shadow-blue-300/30">
-                <ShieldCheck className="h-12 w-12 text-blue-500" />
-              </div>
-            </div>
-
-            {/* Text Content */}
-            <div>
-              <h2 className="mb-4 text-xl font-black text-slate-900">
-                Safety and Best Practices
-              </h2>
-
-              <ul className="space-y-2">
-                {safetyTips.map((tip, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 text-sm font-medium text-slate-700"
-                  >
-                    <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-500" />
-                    <span>{tip}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Right Visual */}
-            <div className="hidden justify-end md:flex">
-              <div className="relative">
-                <div className="absolute -inset-6 rounded-full bg-blue-400/20 blur-2xl"></div>
-
-                <div className="relative flex h-44 w-64 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-100 via-cyan-50 to-white">
-                  <div className="absolute right-8 top-8 h-20 w-28 rounded-full bg-blue-500/20 blur-xl"></div>
-
-                  <div className="relative rotate-[-12deg] rounded-[2rem] bg-gradient-to-br from-slate-800 via-blue-900 to-slate-950 p-5 shadow-2xl shadow-blue-500/30">
-                    <div className="h-16 w-28 rounded-2xl border border-cyan-300/50 bg-gradient-to-br from-blue-700 to-slate-900">
-                      <div className="ml-4 mt-4 h-7 w-7 rounded-full border-4 border-slate-900 bg-cyan-300"></div>
+    <section className="relative w-full overflow-hidden py-16">
+              {/* EV theme background glows */}
+              <div className="pointer-events-none absolute left-10 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[110px]" />
+              <div className="pointer-events-none absolute right-10 top-0 h-72 w-72 rounded-full bg-emerald-400/10 blur-[120px]" />
+    
+              <div className="relative mx-auto max-w-7xl px-6">
+                <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/25 bg-[#071124]/80 p-6 shadow-[0_0_45px_rgba(34,211,238,0.16)] ring-1 ring-white/10 backdrop-blur-xl md:p-8">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,0.14),transparent_35%),radial-gradient(circle_at_85%_35%,rgba(132,204,22,0.10),transparent_32%)]" />
+                  <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
+                  <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/50 to-transparent" />
+    
+                  <div className="relative grid items-center gap-8 md:grid-cols-[105px_1fr_300px]">
+                    {/* Left Icon */}
+                    <div className="flex justify-center md:justify-start">
+                      <div className="relative flex h-24 w-24 items-center justify-center rounded-3xl border border-cyan-300/35 bg-cyan-400/10 shadow-[0_0_30px_rgba(34,211,238,0.22)]">
+                        <div className="absolute inset-2 rounded-2xl border border-cyan-200/10" />
+                        <ShieldCheck className="h-12 w-12 text-cyan-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.85)]" />
+                      </div>
+                    </div>
+    
+                    {/* Text Content */}
+                    <div>
+                      <p className="mb-2 text-xs font-bold uppercase tracking-[0.32em] text-cyan-300/80">
+                        Charging Protection
+                      </p>
+                      <h2 className="mb-5 text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
+                        Safety and <span className="text-cyan-300">Best Practices</span>
+                      </h2>
+    
+                      <ul className="grid gap-3 ">
+                        {safetyTips.map((tip, index) => (
+                          <li
+                            key={index}
+                            className="flex items-start gap-3 rounded-2xl border border-cyan-300/10 bg-white/[0.03] px-4 py-3 text-lg font-semibold text-slate-300 transition-all duration-300 hover:border-cyan-300/35 hover:bg-cyan-400/10 hover:text-cyan-50"
+                          >
+                            <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-300 drop-shadow-[0_0_10px_rgba(110,231,183,0.75)]" />
+                            <span>{tip}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+    
+                    {/* Right Visual */}
+                    <div className="hidden justify-end md:flex">
+                      <div className="relative">
+                        <div className="absolute -inset-8 rounded-full bg-cyan-400/20 blur-3xl" />
+                        <div className="relative flex h-48 w-72 items-center justify-center rounded-[2rem] border border-cyan-300/25 bg-gradient-to-br from-cyan-400/10 via-blue-500/10 to-emerald-400/10 shadow-[inset_0_0_35px_rgba(34,211,238,0.08)]">
+                          <div className="absolute right-8 top-7 h-24 w-32 rounded-full bg-cyan-400/20 blur-2xl" />
+    
+                          <div className="relative rotate-[-12deg] rounded-[2rem] border border-cyan-300/30 bg-gradient-to-br from-slate-900 via-blue-950 to-black p-5 shadow-[0_0_35px_rgba(37,99,235,0.35)]">
+                            <div className="h-16 w-28 rounded-2xl border border-cyan-300/50 bg-gradient-to-br from-blue-700/80 to-slate-950">
+                              <div className="ml-4 mt-4 h-7 w-7 rounded-full border-4 border-slate-950 bg-cyan-300 shadow-[0_0_16px_rgba(34,211,238,0.9)]" />
+                            </div>
+                          </div>
+    
+                          <div className="absolute bottom-5 left-16 flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300/60 bg-cyan-500/15 shadow-[0_0_24px_rgba(34,211,238,0.45)] backdrop-blur-md">
+                            <ShieldCheck className="h-8 w-8 text-cyan-200" />
+                          </div>
+    
+                          <div className="absolute right-7 top-7 h-24 w-6 rounded-full border-r-4 border-cyan-200/70" />
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="absolute bottom-5 left-16 flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300 bg-cyan-500/20 shadow-lg shadow-cyan-400/40">
-                    <ShieldCheck className="h-8 w-8 text-cyan-500" />
-                  </div>
-
-                  <div className="absolute right-6 top-6 h-24 w-6 rounded-full border-r-4 border-slate-800"></div>
                 </div>
               </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
+          </section>
       </main>
 
       <Footer />
