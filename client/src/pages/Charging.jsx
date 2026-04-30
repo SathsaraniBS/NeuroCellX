@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Zap,
-  ChevronRight,
-  ChevronLeft,
-  ShieldCheck,
-  PlayCircle,
-  Info,
-  CheckCircle
+import {Zap,ChevronRight,ChevronLeft,ShieldCheck,PlayCircle,Info,CheckCircle,Home, MapPin, Calculator, ArrowRight
 } from 'lucide-react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -894,6 +887,71 @@ function Charging() {
                 </div>
               </div>
           </section>
+
+          <section className="w-full py-10">
+      <div className="mx-auto max-w-7xl px-6">
+
+        {/* Title */}
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-slate-900">
+            Continue learning
+          </h2>
+          <div className="mt-2 h-1 w-10 rounded-full bg-teal-400"></div>
+        </div>
+
+        {/* Cards */}
+        <div className="grid gap-4 md:grid-cols-3">
+
+          {/* Card 1 */}
+          <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 shadow-sm hover:shadow-md transition">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
+                <Home className="h-6 w-6 text-slate-700" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-500">Next:</p>
+                <p className="text-sm font-semibold text-slate-900">
+                  Home Charging Guide
+                </p>
+              </div>
+            </div>
+            <ArrowRight className="text-slate-400" />
+          </div>
+
+          {/* Card 2 (Highlighted) */}
+          <div className="flex items-center justify-between rounded-xl bg-blue-600 p-4 text-white shadow-md hover:bg-blue-700 transition">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20">
+                <MapPin className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold">
+                  Find Nearest Charging Station
+                </p>
+              </div>
+            </div>
+            <ArrowRight className="text-white" />
+          </div>
+
+          {/* Card 3 */}
+          <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 shadow-sm hover:shadow-md transition">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
+                <Calculator className="h-6 w-6 text-slate-700" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-500">Visit:</p>
+                <p className="text-sm font-semibold text-slate-900">
+                  Charging Calculator
+                </p>
+              </div>
+            </div>
+            <ArrowRight className="text-slate-400" />
+          </div>
+
+        </div>
+      </div>
+    </section>
       </main>
 
       <Footer />
