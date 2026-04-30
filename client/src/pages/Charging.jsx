@@ -5,7 +5,8 @@ import {
   ChevronLeft,
   ShieldCheck,
   PlayCircle,
-  Info
+  Info,
+  CheckCircle
 } from 'lucide-react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -183,6 +184,14 @@ const CHARGING_ROWS = [
     bar: 'w-[78%] bg-purple-500',
   },
 ];
+
+const safetyTips = [
+    "Use only certified chargers and cables.",
+    "Avoid over-using DC fast-charging; balance with home/AC.",
+    "Keep charging port and cable dry.",
+    "Don’t pull the cable by the cord, use the plug handle.",
+    "Follow manufacturer guidelines and local safety rules.",
+  ];
 
 function Charging() {
   const [vehicles] = useState(DUMMY_VEHICLES);
@@ -813,6 +822,65 @@ function Charging() {
               <br />
               Avoid frequent full charges or deep discharges.
             </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section className="w-full py-10">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-r from-slate-50 via-white to-blue-50 p-6 shadow-lg shadow-slate-200/70">
+          <div className="grid items-center gap-8 md:grid-cols-[90px_1fr_280px]">
+            
+            {/* Left Icon */}
+            <div className="flex justify-center md:justify-start">
+              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-blue-500/10 shadow-lg shadow-blue-300/30">
+                <ShieldCheck className="h-12 w-12 text-blue-500" />
+              </div>
+            </div>
+
+            {/* Text Content */}
+            <div>
+              <h2 className="mb-4 text-xl font-black text-slate-900">
+                Safety and Best Practices
+              </h2>
+
+              <ul className="space-y-2">
+                {safetyTips.map((tip, index) => (
+                  <li
+                    key={index}
+                    className="flex items-start gap-3 text-sm font-medium text-slate-700"
+                  >
+                    <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-emerald-500" />
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right Visual */}
+            <div className="hidden justify-end md:flex">
+              <div className="relative">
+                <div className="absolute -inset-6 rounded-full bg-blue-400/20 blur-2xl"></div>
+
+                <div className="relative flex h-44 w-64 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-100 via-cyan-50 to-white">
+                  <div className="absolute right-8 top-8 h-20 w-28 rounded-full bg-blue-500/20 blur-xl"></div>
+
+                  <div className="relative rotate-[-12deg] rounded-[2rem] bg-gradient-to-br from-slate-800 via-blue-900 to-slate-950 p-5 shadow-2xl shadow-blue-500/30">
+                    <div className="h-16 w-28 rounded-2xl border border-cyan-300/50 bg-gradient-to-br from-blue-700 to-slate-900">
+                      <div className="ml-4 mt-4 h-7 w-7 rounded-full border-4 border-slate-900 bg-cyan-300"></div>
+                    </div>
+                  </div>
+
+                  <div className="absolute bottom-5 left-16 flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300 bg-cyan-500/20 shadow-lg shadow-cyan-400/40">
+                    <ShieldCheck className="h-8 w-8 text-cyan-500" />
+                  </div>
+
+                  <div className="absolute right-6 top-6 h-24 w-6 rounded-full border-r-4 border-slate-800"></div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
