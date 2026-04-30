@@ -163,29 +163,26 @@ const CHARGING_CONNECTORS = [
   },
 ];
 
-const ChargingTimeSection = () => {
-  const chargingRows = [
-    {
-      type: "Level 1 (AC 120V)",
-      power: "1.4 – 2.4 kW",
-      time: "~20 – 40 hours",
-      bar: "w-[24%] bg-emerald-400",
-    },
-    {
-      type: "Level 2 (AC 240V)",
-      power: "7 – 22 kW",
-      time: "~4 – 8 hours",
-      bar: "w-[42%] bg-blue-500",
-    },
-    {
-      type: "DC Fast Charging",
-      power: "50 – 350 kW",
-      time: "~20 – 30 minutes",
-      bar: "w-[24%] bg-purple-500",
-    },
-  ];
-
-      
+const CHARGING_ROWS = [
+  {
+    type: 'Level 1 (AC 120V)',
+    power: '1.4 - 2.4 kW',
+    time: '~20 - 40 hours',
+    bar: 'w-[24%] bg-emerald-400',
+  },
+  {
+    type: 'Level 2 (AC 240V)',
+    power: '7 - 22 kW',
+    time: '~4 - 8 hours',
+    bar: 'w-[42%] bg-blue-500',
+  },
+  {
+    type: 'DC Fast Charging',
+    power: '50 - 350 kW',
+    time: '~20 - 30 minutes',
+    bar: 'w-[78%] bg-purple-500',
+  },
+];
 
 function Charging() {
   const [vehicles] = useState(DUMMY_VEHICLES);
@@ -705,9 +702,9 @@ function Charging() {
         </div>
 
         {/* Table */}
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/70">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-transparent shadow-lg shadow-slate-200/70">
           {/* Header */}
-          <div className="grid grid-cols-1 bg-blue-50 md:grid-cols-4">
+          <div className="grid grid-cols-1 bg-transparent md:grid-cols-4">
             <div className="px-7 py-5 text-lg font-bold text-slate-800">
               Charger Type
             </div>
@@ -722,7 +719,7 @@ function Charging() {
           </div>
 
           {/* Rows */}
-          {chargingRows.map((row, index) => (
+          {CHARGING_ROWS.map((row, index) => (
             <div
               key={index}
               className="grid grid-cols-1 border-t border-slate-200 md:grid-cols-4"
@@ -750,7 +747,7 @@ function Charging() {
           ))}
 
           {/* Formula Footer */}
-          <div className="flex items-center justify-center gap-4 border-t border-blue-100 bg-blue-50 px-6 py-5 text-center">
+          <div className="flex items-center justify-center gap-4 border-t border-blue-100 bg-transparent px-6 py-5 text-center">
             <Zap className="h-6 w-6 text-blue-500" />
             <p className="text-base font-semibold text-slate-700 md:text-lg">
               Charging time ≈ Battery capacity ÷ Charger power × efficiency factor
