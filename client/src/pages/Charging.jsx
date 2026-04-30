@@ -615,24 +615,24 @@ function Charging() {
                 Charger <span className="text-cyan-400">Types</span>
               </h2>
 
-              <p className="text-gray-400 text-lg leading-relaxed">
+              <p className="text-gray-400 text-xl leading-relaxed">
                 Understanding how your EV draws power is crucial for maximizing battery lifespan
                 and planning long trips effectively.
               </p>
 
-              <ul className="space-y-4 pt-4">
-                <li className="flex items-start gap-3 text-gray-300">
-                  <div className="mt-1.5 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)] shrink-0" />
-                  <span>Different regions support different standard charging connectors.</span>
-                </li>
-                <li className="flex items-start gap-3 text-gray-300">
-                  <div className="mt-1.5 w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)] shrink-0" />
-                  <span>
+              <div className="space-y-4 pt-4">
+                <div className="flex items-start gap-3 text-gray-300">
+                  
+                  <p className="text-xl text-gray-300">Different regions support different standard charging connectors.</p>
+                </div>
+                <div className="flex items-start gap-3 text-gray-300">
+                  
+                  <p className="text-xl text-gray-300">
                     They provide slow, moderate, and ultra-fast charging depending on
                     infrastructure specifications.
-                  </span>
-                </li>
-              </ul>
+                  </p>
+                </div>
+              </div>
             </div>
 
             <div className="w-full md:w-1/2 relative rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.5)] bg-black aspect-video group">
@@ -707,7 +707,7 @@ function Charging() {
               <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
                 How Long Does <span className="text-cyan-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.75)]">Charging Take?</span>
               </h2>
-              <div className="mt-5 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-300 via-blue-400 to-emerald-300 shadow-[0_0_18px_rgba(34,211,238,0.75)]" />
+              
             </div>
 
             {/* Table */}
@@ -883,7 +883,7 @@ function Charging() {
                         <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
                           Explore More <span className="text-cyan-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.75)]">Charging Tools</span>
                         </h2>
-                        <div className="mt-5 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-300 via-blue-400 to-emerald-300 shadow-[0_0_18px_rgba(34,211,238,0.75)]" />
+                        
                       </div>
           
                       {/* Cards */}

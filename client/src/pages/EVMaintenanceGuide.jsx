@@ -299,11 +299,7 @@ function EVCare() {
                         <ListItem>Enjoy the financial benefits: EVs generally have significantly lower running costs compared to ICE vehicles due to cheaper electricity vs fuel, and drastically fewer moving parts.</ListItem>
                     </ul>
 
-                    {/* <div className="inline-block bg-emerald-500/10 border border-emerald-500/30 px-6 py-3 rounded-full">
-                        <p className="text-sm text-emerald-400 font-bold uppercase tracking-widest">
-                            Lower running costs • Higher savings • Better for the planet
-                        </p>
-                    </div> */}
+                    
                 </SectionBlock>
 
             </div>
