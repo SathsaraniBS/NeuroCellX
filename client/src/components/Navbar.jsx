@@ -201,8 +201,6 @@ const Navbar = () => {
         </div>
 
        
-
-
         {/* Right Side Items */}
         <div className="flex items-center gap-4 mr-4">
 
@@ -221,7 +219,15 @@ const Navbar = () => {
                 Sign Up
               </Link>
               {/* Login Button */}
-              <Link to="/login" className="px-5 py-2 border border-cyan-400 rounded-lg hover:bg-cyan-400 hover:text-black transition">
+              <Link to="/login" 
+                className="relative px-6 py-2 rounded-lg font-semibold text-white
+                bg-gradient-to-r from-cyan-500 to-lime-400
+                hover:from-cyan-400 hover:to-lime-300
+                transition-all duration-300
+                shadow-[0_0_20px_rgba(0,255,255,0.6)]
+                hover:shadow-[0_0_30px_rgba(0,255,255,0.9)]
+                border border-white/20"
+              >
                 Login
               </Link>
             </>
