@@ -678,53 +678,37 @@ function Charging() {
           </div>
         </section>
 
-        {/* Expert Insight Footer */}
-        <section className="flex flex-col md:flex-row items-center gap-8 p-10 rounded-3xl bg-transparent text-black shadow-2xl">
-            <div className='flex items-center justify-center'>
-            <div className="flex items-center justify-center">
-                <ShieldCheck className="text-blue-400" size={40} />,
 
-            </div>
-            <div>
-            <h3 className="text-2xl text-white font-bold mb-2 uppercase tracking-tight">Battery health best practices</h3>
-            <p className="font-medium text-gray-600 text-lg">
-                      For longer battery life, keep your charge between 20% and 80% for daily driving. <br />
-                      Avoid frequent full charges or deep discharges.
-            </p>
-            </div>
-
-            </div>
-        </section>
-
-         <div className="w-full flex justify-center mt-10">
+      <section className="w-full flex justify-center mb-10 mt-10">
       <div className="relative w-full max-w-5xl rounded-2xl border border-cyan-400/20 bg-gradient-to-r from-[#0a0f1f] via-[#0f172a] to-[#020617] p-5 md:p-6 shadow-lg shadow-cyan-500/10 overflow-hidden">
 
         {/* Glow Effect */}
         <div className="absolute inset-0 bg-cyan-400/5 blur-2xl opacity-30 pointer-events-none"></div>
 
-        <div className="relative flex items-start gap-4">
+        <div className="relative flex items-start gap-15">
 
           {/* Icon */}
-          <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-cyan-400/10 border border-cyan-400/30 shadow-md shadow-cyan-400/20">
-            <ShieldCheck className="text-cyan-400 w-6 h-6" />
+          <div className="flex items-center justify-center w-20 h-20 rounded-xl bg-transparent">
+            <ShieldCheck className="text-cyan-400 w-20 h-20"  size={40} />
           </div>
 
           {/* Text Content */}
-          <div className="text-left">
-            <h3 className="text-lg md:text-xl font-semibold text-white mb-1">
+          <div className="text-left ">
+            <h3 className="text-3xl  font-semibold text-white mb-1">
               Battery health best practice:
             </h3>
 
-            <p className="text-sm md:text-base text-gray-300 leading-relaxed">
+            <p className="text-xl text-gray-300 leading-relaxed">
               For longer battery life, keep your charge between{" "}
               <span className="text-cyan-400 font-medium">20%</span> and{" "}
               <span className="text-cyan-400 font-medium">80%</span> for daily driving.
+              <br />
               Avoid frequent full charges or deep discharges.
             </p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
       </main>
 
       <Footer />
