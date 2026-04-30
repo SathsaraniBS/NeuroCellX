@@ -681,81 +681,90 @@ function Charging() {
         </section>
 
 
-         <section className="w-full py-16">
-      <div className="mx-auto max-w-7xl px-6">
-        {/* Top Info */}
-        <div className="mb-8 flex items-center justify-center gap-3 text-center">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg shadow-blue-500/30">
-            <Info size={16} />
-          </div>
-          <p className="text-base font-semibold text-slate-700">
-            Make sure your car and charger use the same connector type.
-          </p>
-        </div>
+        <section className="relative w-full overflow-hidden py-20">
+          {/* Neon background glow */}
+          <div className="pointer-events-none absolute left-1/2 top-10 h-72 w-[700px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
+          <div className="pointer-events-none absolute right-0 bottom-8 h-64 w-64 rounded-full bg-blue-600/10 blur-[100px]" />
 
-        {/* Title */}
-        <div className="mb-8 text-left">
-          <h2 className="text-3xl font-black text-slate-900 md:text-4xl">
-            How Long Does Charging Take?
-          </h2>
-          <div className="mt-4 h-1 w-14 rounded-full bg-teal-400"></div>
-        </div>
-
-        {/* Table */}
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-transparent shadow-lg shadow-slate-200/70">
-          {/* Header */}
-          <div className="grid grid-cols-1 bg-transparent md:grid-cols-4">
-            <div className="px-7 py-5 text-lg font-bold text-slate-800">
-              Charger Type
-            </div>
-            <div className="px-7 py-5 text-lg font-bold text-slate-800">
-              Typical kW
-            </div>
-            <div className="px-7 py-5 text-lg font-bold text-slate-800">
-              Example: 60 kWh battery <br />
-              20% → 80%
-            </div>
-            <div className="hidden px-7 py-5 md:block"></div>
-          </div>
-
-          {/* Rows */}
-          {CHARGING_ROWS.map((row, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-1 border-t border-slate-200 md:grid-cols-4"
-            >
-              <div className="px-7 py-5 text-lg font-bold text-slate-800">
-                {row.type}
+          <div className="relative mx-auto max-w-7xl px-6">
+            {/* Top Info */}
+            <div className="mb-10 flex items-center justify-center gap-3 text-center">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-300/50 bg-cyan-400/15 text-cyan-200 shadow-[0_0_25px_rgba(34,211,238,0.45)] backdrop-blur-md">
+                <Info size={17} />
               </div>
+              <p className="text-base font-semibold text-cyan-100/80">
+                Make sure your car and charger use the same connector type.
+              </p>
+            </div>
 
-              <div className="px-7 py-5 text-lg font-medium text-slate-700">
-                {row.power}
-              </div>
+            {/* Title */}
+            <div className="mb-10 text-left">
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.35em] text-cyan-300/80">
+                Charging Speed Guide
+              </p>
+              <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+                How Long Does <span className="text-cyan-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.75)]">Charging Take?</span>
+              </h2>
+              <div className="mt-5 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-300 via-blue-400 to-emerald-300 shadow-[0_0_18px_rgba(34,211,238,0.75)]" />
+            </div>
 
-              <div className="px-7 py-5 text-lg font-medium text-slate-700">
-                {row.time}
-              </div>
-
-              <div className="flex items-center px-7 py-5">
-                <div className="h-2 w-full rounded-full bg-slate-200">
-                  <div
-                    className={`h-2 rounded-full shadow-md ${row.bar}`}
-                  ></div>
+            {/* Table */}
+            <div className="overflow-hidden rounded-[1.7rem] border border-cyan-300/25 bg-slate-950/70 shadow-[0_0_45px_rgba(34,211,238,0.18)] ring-1 ring-white/10 backdrop-blur-xl">
+              {/* Header */}
+              <div className="grid grid-cols-1 border-b border-cyan-300/20 bg-gradient-to-r from-cyan-400/10 via-blue-500/10 to-emerald-400/10 md:grid-cols-4">
+                <div className="px-7 py-5 text-lg font-extrabold text-cyan-100">
+                  Charger Type
+                </div>
+                <div className="px-7 py-5 text-lg font-extrabold text-cyan-100">
+                  Typical kW
+                </div>
+                <div className="px-7 py-5 text-lg font-extrabold text-cyan-100">
+                  Example: 60 kWh battery <br />
+                  <span className="text-cyan-300">20% → 80%</span>
+                </div>
+                <div className="hidden px-7 py-5 text-lg font-extrabold text-cyan-100 md:block">
+                  Speed Level
                 </div>
               </div>
-            </div>
-          ))}
 
-          {/* Formula Footer */}
-          <div className="flex items-center justify-center gap-4 border-t border-blue-100 bg-transparent px-6 py-5 text-center">
-            <Zap className="h-6 w-6 text-blue-500" />
-            <p className="text-base font-semibold text-slate-700 md:text-lg">
-              Charging time ≈ Battery capacity ÷ Charger power × efficiency factor
-            </p>
+              {/* Rows */}
+              {CHARGING_ROWS.map((row, index) => (
+                <div
+                  key={index}
+                  className="group grid grid-cols-1 border-b border-cyan-300/15 transition-all duration-300 last:border-b-0 hover:bg-cyan-400/5 md:grid-cols-4"
+                >
+                  <div className="px-7 py-6 text-lg font-extrabold text-white group-hover:text-cyan-200">
+                    {row.type}
+                  </div>
+
+                  <div className="px-7 py-6 text-lg font-semibold text-slate-300">
+                    {row.power}
+                  </div>
+
+                  <div className="px-7 py-6 text-lg font-semibold text-slate-300">
+                    {row.time}
+                  </div>
+
+                  <div className="flex items-center px-7 py-6">
+                    <div className="h-2.5 w-full rounded-full bg-slate-700/80 shadow-inner shadow-black/40">
+                      <div
+                        className={`h-2.5 rounded-full shadow-[0_0_18px_rgba(34,211,238,0.65)] ${row.bar}`}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {/* Formula Footer */}
+              <div className="flex flex-col items-center justify-center gap-3 border-t border-cyan-300/20 bg-gradient-to-r from-blue-500/10 via-cyan-400/10 to-emerald-400/10 px-6 py-6 text-center md:flex-row md:gap-4">
+                <Zap className="h-7 w-7 text-cyan-300 drop-shadow-[0_0_16px_rgba(34,211,238,0.9)]" />
+                <p className="text-base font-bold text-cyan-50/85 md:text-lg">
+                  Charging time ≈ Battery capacity ÷ Charger power × efficiency factor
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
         {/* STEP BY STEP SECTION */}
         <section className="py-24 relative overflow-hidden">
