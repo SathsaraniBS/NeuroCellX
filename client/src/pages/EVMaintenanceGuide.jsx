@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {ChevronDown,ShieldCheck,AlertTriangle,PhoneCall,CheckCircle2,Download ,
+import {
+    ChevronDown, ShieldCheck, AlertTriangle, PhoneCall, CheckCircle2, Download,
 } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -83,17 +84,17 @@ function EVCare() {
                             save money, and extend its life.</p>
                     </div>
                 </div>
-                <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10"> 
+                <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10">
                     {/* Fixed: removed undefined activeEV variable from the link path */}
                     <a
-                        href="/ev-manual.pdf" 
+                        href="/ev-manual.pdf"
                         download="EV_Maintenance_Manual.pdf"
                         className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
                     >
                         Download Manual
-                        <Download  className="w-5 h-5" />
+                        <Download className="w-5 h-5" />
                     </a>
-                    
+
                 </div>
             </section>
 
@@ -131,7 +132,13 @@ function EVCare() {
             <div className="py-5 max-w-1xl mx-auto px-12 space-y-10 bg-transparent pb-24">
 
                 <SectionBlock
-                    title="Battery care & charging habits"
+                    title={
+                        <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                            Battery care &
+                            <span className="text-cyan-400">charging habits</span>
+                        </h2>
+                    }
+
                     imageSrc="src/assets/battery-care.png"
                     reverse={false}
                 >
@@ -144,7 +151,13 @@ function EVCare() {
                 </SectionBlock>
 
                 <SectionBlock
-                    title="Routine maintenance checklist"
+                    title={
+                        <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                            Routine
+                            <span className="text-cyan-400"> maintenance checklist</span>
+                        </h2>
+                    }
+
                     imageSrc="src/assets/ev-checklist.png"
                     reverse={true}
                 >
@@ -179,7 +192,12 @@ function EVCare() {
                 </SectionBlock>
 
                 <SectionBlock
-                    title="Software updates & features"
+                    title={
+                        <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                            Software updates <br />
+                            <span className="text-cyan-400"> & features</span>
+                        </h2>
+                    }
                     imageSrc="src/assets/ev4.png"
                     reverse={false}
                 >
@@ -191,7 +209,12 @@ function EVCare() {
                 </SectionBlock>
 
                 <SectionBlock
-                    title="Winter / weather range tips"
+                    title={
+                        <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                            Winter / weather
+                            <span className="text-cyan-400"> range tips</span>
+                        </h2>
+                    }
                     imageSrc="src/assets/ev4.png"
                     reverse={true}
                 >
@@ -203,7 +226,12 @@ function EVCare() {
                 </SectionBlock>
 
                 <SectionBlock
-                    title="Service schedule & warranty"
+                    title={
+                        <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                            Service schedule
+                            <span className="text-cyan-400"> & warranty</span>
+                        </h2>
+                    }
                     imageSrc="src/assets/ev4.png"
                     reverse={false}
                 >
@@ -228,7 +256,11 @@ function EVCare() {
                 </SectionBlock>
 
                 <SectionBlock
-                    title="Roadside assistance"
+                    title={
+                        <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                            Roadside <span className="text-cyan-400"> assistance</span>
+                        </h2>
+                    }
                     imageSrc="src/assets/battery-care.png"
                     reverse={true}
                 >
@@ -253,7 +285,11 @@ function EVCare() {
                 </SectionBlock>
 
                 <SectionBlock
-                    title="Insurance & ownership costs"
+                    title={
+                        <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                            Insurance & <span className="text-cyan-400"> ownership costs</span>
+                        </h2>
+                    }
                     imageSrc="src/assets/battery-care.png"
                     reverse={false}
                 >
@@ -263,19 +299,19 @@ function EVCare() {
                         <ListItem>Enjoy the financial benefits: EVs generally have significantly lower running costs compared to ICE vehicles due to cheaper electricity vs fuel, and drastically fewer moving parts.</ListItem>
                     </ul>
 
-                    <div className="inline-block bg-emerald-500/10 border border-emerald-500/30 px-6 py-3 rounded-full">
+                    {/* <div className="inline-block bg-emerald-500/10 border border-emerald-500/30 px-6 py-3 rounded-full">
                         <p className="text-sm text-emerald-400 font-bold uppercase tracking-widest">
                             Lower running costs • Higher savings • Better for the planet
                         </p>
-                    </div>
+                    </div> */}
                 </SectionBlock>
 
             </div>
 
             {/* --- FAQ --- */}
-            <section className="py-24 bg-[#070b1e]">
+            <section className="py-24 bg-transparent">
                 <div className="max-w-4xl mx-auto px-6">
-                    <h2 className="text-center text-3xl font-black mb-12 uppercase">Ownership <span className="text-cyan-400">FAQ</span></h2>
+                    <h2 className="text-center text-5xl font-black mb-12 uppercase">Ownership <span className="text-cyan-400">FAQ</span></h2>
                     <div className="space-y-4">
                         {FAQS.map((faq) => (
                             <div key={faq.id} className="border-b border-white/10">
