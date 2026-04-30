@@ -585,11 +585,11 @@ function Charging() {
 
         {/* CONNECTORS SECTION */}
         <section className="py-24 relative overflow-hidden">
-          <div className="absolute top-0 transform -translate-x-1/2 w-full max-w-3xl h-64 bg-cyan-500/10 blur-[120px] pointer-events-none" />
+          <div className="absolute top-0 transform -translate-x-1/2 w-full max-w-3xl h-64  pointer-events-none" />
 
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-left mb-20 space-y-4">
-              <h2 className="text-5xl md:text-6xl font-black uppercase">
+              <h2 className="text-4xl md:text-5xl font-black uppercase">
                 Common EV <br />
                 <span className="text-cyan-400">charging connectors</span>
               </h2>
@@ -863,95 +863,101 @@ function Charging() {
                     </div>
     
                     {/* Right Visual */}
-                    <div className="hidden justify-end md:flex">
-                      <div className="relative">
-                        <div className="absolute -inset-8 rounded-full bg-cyan-400/20 blur-3xl" />
-                        <div className="relative flex h-48 w-72 items-center justify-center rounded-[2rem] border border-cyan-300/25 bg-gradient-to-br from-cyan-400/10 via-blue-500/10 to-emerald-400/10 shadow-[inset_0_0_35px_rgba(34,211,238,0.08)]">
-                          <div className="absolute right-8 top-7 h-24 w-32 rounded-full bg-cyan-400/20 blur-2xl" />
-    
-                          <div className="relative rotate-[-12deg] rounded-[2rem] border border-cyan-300/30 bg-gradient-to-br from-slate-900 via-blue-950 to-black p-5 shadow-[0_0_35px_rgba(37,99,235,0.35)]">
-                            <div className="h-16 w-28 rounded-2xl border border-cyan-300/50 bg-gradient-to-br from-blue-700/80 to-slate-950">
-                              <div className="ml-4 mt-4 h-7 w-7 rounded-full border-4 border-slate-950 bg-cyan-300 shadow-[0_0_16px_rgba(34,211,238,0.9)]" />
-                            </div>
-                          </div>
-    
-                          <div className="absolute bottom-5 left-16 flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300/60 bg-cyan-500/15 shadow-[0_0_24px_rgba(34,211,238,0.45)] backdrop-blur-md">
-                            <ShieldCheck className="h-8 w-8 text-cyan-200" />
-                          </div>
-    
-                          <div className="absolute right-7 top-7 h-24 w-6 rounded-full border-r-4 border-cyan-200/70" />
-                        </div>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
           </section>
 
-          <section className="w-full py-10">
-      <div className="mx-auto max-w-7xl px-6">
+          <section className="relative w-full overflow-hidden py-16">
+          {/* EV theme background glows */}
+              <div className="pointer-events-none absolute left-0 top-8 h-72 w-72 rounded-full bg-cyan-500/10 blur-[115px]" />
+                    <div className="pointer-events-none absolute right-0 bottom-0 h-72 w-72 rounded-full bg-emerald-400/10 blur-[120px]" />
+          
+                    <div className="relative mx-auto max-w-7xl px-6">
+                      {/* Title */}
+                      <div className="mb-8 text-left">
+                        <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-cyan-300/75">
+                          Continue Learning
+                        </p>
+                        <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+                          Explore More <span className="text-cyan-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.75)]">Charging Tools</span>
+                        </h2>
+                        <div className="mt-5 h-1 w-24 rounded-full bg-gradient-to-r from-cyan-300 via-blue-400 to-emerald-300 shadow-[0_0_18px_rgba(34,211,238,0.75)]" />
+                      </div>
+          
+                      {/* Cards */}
+                      <div className="grid gap-5 md:grid-cols-3">
+                        {/* Card 1 */}
+                        <Link to="/home-charging" className="group relative overflow-hidden rounded-2xl border border-cyan-300/20 bg-[#071124]/80 p-5 shadow-[0_0_35px_rgba(34,211,238,0.12)] ring-1 ring-white/10 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/45 hover:bg-cyan-400/10 hover:shadow-[0_0_45px_rgba(34,211,238,0.24)]">
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(34,211,238,0.14),transparent_34%)] opacity-80" />
+                          <div className="relative flex items-center justify-between gap-5">
+                            <div className="flex items-center gap-4">
+                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-400/10 shadow-[0_0_24px_rgba(34,211,238,0.18)]">
+                                <Home className="h-7 w-7 text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
+                              </div>
+                              <div>
+                                <p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300/70">
+                                  Next
+                                </p>
+                                <p className="mt-1 text-base font-extrabold text-white transition-colors group-hover:text-cyan-100">
+                                  Home Charging Guide
+                                </p>
+                              </div>
+                            </div>
+                            <ArrowRight className="h-6 w-6 text-cyan-300 transition-transform duration-300 group-hover:translate-x-1" />
+                          </div>
+                        </Link>
+          
+                        {/* Card 2 Highlighted */}
+                        <Link
+                          to="/find-station"
+                          className="group relative overflow-hidden rounded-2xl border border-cyan-300/20 bg-[#071124]/80 p-5 shadow-[0_0_35px_rgba(34,211,238,0.12)] ring-1 ring-white/10 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/45 hover:bg-cyan-400/10 hover:shadow-[0_0_45px_rgba(34,211,238,0.24)]"
+                        >
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(34,211,238,0.14),transparent_34%)] opacity-80" />
+                          <div className="relative flex items-center justify-between gap-5" />
+                          <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-4">
+                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-400/10 shadow-[0_0_24px_rgba(34,211,238,0.18)]">
+                                <MapPin className="h-7 w-7 text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
+                              </div>
+                              <div>
+                                <p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300/70">
+                                  Locate
+                                </p>
+                                <p className="mt-1 text-base font-extrabold text-white transition-colors group-hover:text-cyan-100">
+                                  Find Nearest Charging Station
+                                </p>
+                              </div>
+                            </div>
+                            <ArrowRight className="h-6 w-6 text-cyan-300 transition-transform duration-300 group-hover:translate-x-1" />
+                          </div>
+                        </Link>
+          
+                        {/* Card 3 */}
+                        <Link to="/public-charging" className="group relative overflow-hidden rounded-2xl border border-cyan-300/20 bg-[#071124]/80 p-5 shadow-[0_0_35px_rgba(34,211,238,0.12)] ring-1 ring-white/10 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300/45 hover:bg-emerald-400/10 hover:shadow-[0_0_45px_rgba(16,185,129,0.22)]">
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(16,185,129,0.14),transparent_34%)] opacity-80" />
+                          <div className="relative flex items-center justify-between gap-5">
+                            <div className="flex items-center gap-4">
+                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-300/25 bg-emerald-400/10 shadow-[0_0_24px_rgba(16,185,129,0.16)]">
+                                <Calculator className="h-7 w-7 text-emerald-300 drop-shadow-[0_0_12px_rgba(16,185,129,0.7)]" />
+                              </div>
+                              <div>
+                                <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-300/70">
+                                  Visit
+                                </p>
+                                <p className="mt-1 text-base font-extrabold text-white transition-colors group-hover:text-emerald-100">
+                                  Charging Calculator
+                                </p>
+                              </div>
+                            </div>
+                            <ArrowRight className="h-6 w-6 text-emerald-300 transition-transform duration-300 group-hover:translate-x-1" />
+                          </div>
+                        </Link>
+                      </div>
+                    </div>
+                  </section>
 
-        {/* Title */}
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-slate-900">
-            Continue learning
-          </h2>
-          <div className="mt-2 h-1 w-10 rounded-full bg-teal-400"></div>
-        </div>
-
-        {/* Cards */}
-        <div className="grid gap-4 md:grid-cols-3">
-
-          {/* Card 1 */}
-          <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 shadow-sm hover:shadow-md transition">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
-                <Home className="h-6 w-6 text-slate-700" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-500">Next:</p>
-                <p className="text-sm font-semibold text-slate-900">
-                  Home Charging Guide
-                </p>
-              </div>
-            </div>
-            <ArrowRight className="text-slate-400" />
-          </div>
-
-          {/* Card 2 (Highlighted) */}
-          <div className="flex items-center justify-between rounded-xl bg-blue-600 p-4 text-white shadow-md hover:bg-blue-700 transition">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20">
-                <MapPin className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold">
-                  Find Nearest Charging Station
-                </p>
-              </div>
-            </div>
-            <ArrowRight className="text-white" />
-          </div>
-
-          {/* Card 3 */}
-          <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white p-4 shadow-sm hover:shadow-md transition">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
-                <Calculator className="h-6 w-6 text-slate-700" />
-              </div>
-              <div>
-                <p className="text-xs text-slate-500">Visit:</p>
-                <p className="text-sm font-semibold text-slate-900">
-                  Charging Calculator
-                </p>
-              </div>
-            </div>
-            <ArrowRight className="text-slate-400" />
-          </div>
-
-        </div>
-      </div>
-    </section>
       </main>
 
       <Footer />
