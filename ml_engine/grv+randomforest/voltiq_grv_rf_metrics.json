@@ -1,0 +1,38 @@
+{
+    "model_name": "GRV + Random Forest",
+    "soh": {
+        "MAE": 1.9376482825643728,
+        "RMSE": 2.2877741815059696,
+        "R2": 0.9243511465513725,
+        "MAPE": 2.3486076308531274,
+        "Accuracy": 97.65139236914688
+    },
+    "rul": {
+        "MAE": 5.376472587015208,
+        "RMSE": 8.360323687661749,
+        "R2": 0.8839288245953314,
+        "MAPE": 11.297734713056418,
+        "Accuracy": 88.70226528694359
+    },
+    "features": [
+        "capacity",
+        "volt_mean",
+        "volt_min",
+        "volt_max",
+        "volt_std",
+        "volt_range",
+        "curr_mean",
+        "curr_std",
+        "temp_mean",
+        "temp_max",
+        "temp_std",
+        "duration",
+        "energy",
+        "cycle_norm",
+        "cap_roll5_mean",
+        "cap_roll5_std",
+        "cap_diff",
+        "cap_diff2",
+        "soh_roll5"
+    ]
+}
