@@ -395,7 +395,7 @@ function Charging() {
         <section className="py-24 relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-left mb-20 space-y-4">
-              <h2 className="text-4xl md:text-6xl font-black uppercase">
+              <h2 className="text-4xl md:text-5xl font-black uppercase">
                 Charging <span className="text-cyan-400">Levels</span>
               </h2>
             </div>
@@ -918,7 +918,7 @@ function Charging() {
                           <div className="relative flex items-center justify-between gap-5" />
                           <div className="flex items-center gap-4">
                             <div className="flex items-center gap-4">
-                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-400/10 shadow-[0_0_24px_rgba(34,211,238,0.18)]">
+                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-400/10 ">
                                 <MapPin className="h-7 w-7 text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
                               </div>
                               <div>
@@ -939,7 +939,7 @@ function Charging() {
                           <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(16,185,129,0.14),transparent_34%)] opacity-80" />
                           <div className="relative flex items-center justify-between gap-5">
                             <div className="flex items-center gap-4">
-                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-300/25 bg-emerald-400/10 shadow-[0_0_24px_rgba(16,185,129,0.16)]">
+                              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-300/25 bg-emerald-400/10 ">
                                 <Calculator className="h-7 w-7 text-emerald-300 drop-shadow-[0_0_12px_rgba(16,185,129,0.7)]" />
                               </div>
                               <div>
