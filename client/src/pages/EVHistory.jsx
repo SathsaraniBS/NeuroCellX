@@ -1,6 +1,20 @@
 import React from "react";
-import {Play,ArrowRight,BatteryCharging,Bolt,Car,Globe2,Leaf,Lightbulb,PlugZap,
-Rocket,ShieldCheck,ShoppingCart,Sprout,Wind,} from "lucide-react";
+import {
+  Play,
+  ArrowRight,
+  BatteryCharging,
+  Bolt,
+  Car,
+  Globe2,
+  Leaf,
+  Lightbulb,
+  PlugZap,
+  Rocket,
+  ShieldCheck,
+  ShoppingCart,
+  Sprout,
+  Wind,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -58,32 +72,32 @@ const EVHistoryPage = () => {
     {
       name: "GM EV1 (1996)",
       text: "One of the first modern EVs, ahead of its time in technology.",
-      image:"src/assets/gmev1.png",
+      image: "src/assets/gmev1.png",
     },
     {
       name: "Toyota Prius (1997)",
       text: "The hybrid pioneer that introduced millions to efficient driving.",
-      image:"src/assets/toyota-prius.png",
+      image: "src/assets/toyota-prius.png",
     },
     {
       name: "Nissan Leaf (2010)",
       text: "The EV that helped make electric driving mainstream.",
-      image:"src/assets/nissan-leaf.png",
+      image: "src/assets/nissan-leaf.png",
     },
     {
       name: "Tesla Model S (2012)",
       text: "Redefined performance and long-range electric mobility.",
-      image:"src/assets/tesla-model-s.png",
+      image: "src/assets/tesla-model-s.png",
     },
     {
       name: "BMW i3 (2013)",
       text: "Pioneered futuristic EV design with sustainability at its core.",
-      image:"src/assets/bmw-i3.png",
+      image: "src/assets/bmw-i3.png",
     },
     {
       name: "Tata Nexon EV (2020)",
       text: "Made EVs more accessible in fast-growing markets.",
-      image:"src/assets/tata-nexon-ev.png",
+      image: "src/assets/tata-nexon-ev.png",
     },
   ];
 
@@ -151,7 +165,7 @@ const EVHistoryPage = () => {
       title: "Charging Guide",
       text: "Learn everything about charging your EV.",
       icon: PlugZap,
-      href: "/charging",
+      to: "/charging",
       color: "text-violet-300",
     },
   ];
@@ -161,40 +175,47 @@ const EVHistoryPage = () => {
       <Navbar />
 
       <main className="overflow-hidden">
-         <section className="relative h-screen w-full overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/src/assets/ev-history.png"
-            alt="EV Background"
-            className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
-        </div>
-
-        <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
-          <div className="max-w-3xl space-y-6 pt-20">
-
-            <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">The EV Journey:<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">A Short History of Electric Vehicles</span></h1>
-            <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4"> From early experiments to today’s intelligent electric mobility<br />
-              a journey of innovation, persistence, and a cleaner future.</p>
+        <section className="relative h-screen w-full overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src="/src/assets/ev-history.png"
+              alt="EV Background"
+              className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
           </div>
-        </div>
-        <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10">
-          {/* Fixed: removed undefined activeEV variable from the link path */}
-          <a
-            href="https://youtu.be/VOB0q-oi_bU?si=uowZgyAD7jYx2YDL" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
-          >
-            Watch Video
-            <Play className="w-5 h-5" />
-          </a>
 
-        </div>
-      </section>
+          <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+            <div className="max-w-3xl space-y-6 pt-20">
+              <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">
+                The EV Journey:
+                <br />
+                <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
+                  A Short History of Electric Vehicles
+                </span>
+              </h1>
 
+              <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">
+                From early experiments to today’s intelligent electric mobility
+                <br />
+                a journey of innovation, persistence, and a cleaner future.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10">
+            <a
+              href="https://youtu.be/VOB0q-oi_bU?si=uowZgyAD7jYx2YDL"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+            >
+              Watch Video
+              <Play className="w-5 h-5" />
+            </a>
+          </div>
+        </section>
 
         <section id="milestones" className="relative px-6 py-24">
           <SectionTitle
@@ -234,7 +255,6 @@ const EVHistoryPage = () => {
                         <p className="mx-auto mb-8 max-w-[220px] text-lg leading-7 text-slate-300">
                           {item.text}
                         </p>
-                        
                       </div>
                     </div>
                   );
@@ -245,47 +265,57 @@ const EVHistoryPage = () => {
         </section>
 
         <section id="models" className="relative px-6 py-24">
-          <SectionTitle title=
-          {
+          <SectionTitle
+            title={
               <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
-          Key EV Models <br />
-           <span className="text-cyan-400">That Changed the Game</span>
-          </h2>
-          } 
+                Key EV Models <br />
+                <span className="text-cyan-400">That Changed the Game</span>
+              </h2>
+            }
           />
 
-          <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-3 lg:grid-cols-6">
-            {models.map((model) => (
-              <div
-                key={model.name}
-                className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-[0_0_45px_rgba(34,211,238,0.14)]"
-              >
-                <div className="h-36 overflow-hidden bg-cyan-400/10">
+          <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {models.map((model) => {
+              const Icon = model.icon;
+
+              return (
+                <div
+                  key={model.name}
+                  className="group relative min-h-[360px] overflow-hidden rounded-3xl border border-cyan-300/20 bg-[#071124] shadow-[0_0_35px_rgba(34,211,238,0.10)] transition-all duration-500 hover:-translate-y-2 hover:border-cyan-300/50 hover:shadow-[0_0_55px_rgba(34,211,238,0.25)]"
+                >
                   <img
                     src={model.image}
                     alt={model.name}
-                    className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                    className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
                   />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/45 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-950/45 via-transparent to-blue-950/35" />
+                  <div className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-gradient-to-t from-[#030712] via-[#030712]/80 to-black/25" />
+
+                  <div className="relative z-10 flex h-full min-h-[360px] flex-col justify-end p-7">
+                    
+
+                    <h3 className="max-w-[260px] text-2xl font-black leading-tight text-white drop-shadow-[0_0_18px_rgba(34,211,238,0.35)]">
+                      {model.name}
+                    </h3>
+
+                    <p className="mt-4 max-h-0 translate-y-5 overflow-hidden text-lg leading-7 text-slate-200 opacity-0 transition-all duration-500 group-hover:max-h-40 group-hover:translate-y-0 group-hover:opacity-100">
+                      {model.text}
+                    </p>
+                  </div>
                 </div>
-                <div className="p-5">
-                  <h2 className="mb-3 text-xl font-black text-white">
-                    {model.name}
-                  </h2>
-                  <p className="text-lg leading-6 text-slate-400">{model.text}</p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
-        {/* BATTERY */}
         <section className="mx-auto mt-20 max-w-7xl">
-          <SectionTitle title=
-           {
+          <SectionTitle
+            title={
               <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
                 Evolution of <br />
-               <span className="text-cyan-400"> Battery Technology 
-               </span>
+                <span className="text-cyan-400"> Battery Technology</span>
               </h2>
             }
           />
@@ -307,6 +337,7 @@ const EVHistoryPage = () => {
                     </div>
                     <BatteryCharging className={`h-20 w-20 ${battery.color}`} />
                   </div>
+
                   <p className="text-lg leading-7 text-slate-300">
                     {battery.text}
                   </p>
@@ -320,12 +351,12 @@ const EVHistoryPage = () => {
           </div>
         </section>
 
-        {/* WHY MATTER */}
         <section className="mx-auto mt-20 max-w-7xl">
-          <SectionTitle title=
-          {
-              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">Why EVs <br />
-              <span className="text-cyan-400">Matter Today</span>
+          <SectionTitle
+            title={
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                Why EVs <br />
+                <span className="text-cyan-400">Matter Today</span>
               </h2>
             }
           />
@@ -359,15 +390,14 @@ const EVHistoryPage = () => {
         </section>
 
         <section className="mx-auto mt-20 max-w-7xl pb-12">
-
-          <SectionTitle title=
-           {
-              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">Explore <br />
-              <span className="text-cyan-400">More About EVs</span>
+          <SectionTitle
+            title={
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                Explore <br />
+                <span className="text-cyan-400">More About EVs</span>
               </h2>
             }
           />
-            
 
           <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-3">
             {explore.map((item) => {
@@ -400,16 +430,20 @@ const EVHistoryPage = () => {
 
       <Footer />
 
-      <style dangerouslySetInnerHTML={{
-                __html: `
-                @keyframes slow-zoom {
-                    0% { transform: scale(1); }
-                    100% { transform: scale(1.1); }
-                }
-                .animate-slow-zoom {
-                    animation: slow-zoom 20s infinite alternate ease-in-out;
-                }
-            ` }} />
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes slow-zoom {
+              0% { transform: scale(1); }
+              100% { transform: scale(1.1); }
+            }
+
+            .animate-slow-zoom {
+              animation: slow-zoom 20s infinite alternate ease-in-out;
+            }
+          `,
+        }}
+      />
     </div>
   );
 };
