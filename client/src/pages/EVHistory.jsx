@@ -1,6 +1,7 @@
 import React from "react";
 import {Play,ArrowRight,BatteryCharging,Bolt,Car,Globe2,Leaf,Lightbulb,PlugZap,
 Rocket,ShieldCheck,ShoppingCart,Sprout,Wind,} from "lucide-react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -136,21 +137,21 @@ const EVHistoryPage = () => {
       title: "EV Types",
       text: "Explore different types of electric vehicles.",
       icon: Car,
-      href: "/ev-types",
+      to: "/ev-types",
       color: "text-emerald-300",
     },
     {
       title: "Buying Guide",
       text: "Find tips to choose the perfect EV for you.",
       icon: ShoppingCart,
-      href: "/ev-buying-guide",
+      to: "/ev-types",
       color: "text-cyan-300",
     },
     {
       title: "Charging Guide",
       text: "Learn everything about charging your EV.",
       icon: PlugZap,
-      href: "/public-charging",
+      href: "/charging",
       color: "text-violet-300",
     },
   ];
@@ -373,9 +374,9 @@ const EVHistoryPage = () => {
               const Icon = item.icon;
 
               return (
-                <a
+                <Link
                   key={item.title}
-                  href={item.href}
+                  to={item.to}
                   className="group flex items-center gap-7 rounded-3xl border border-white/10 bg-white/[0.05] p-8 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-[0_0_45px_rgba(34,211,238,0.14)]"
                 >
                   <Icon className={`h-14 w-14 shrink-0 ${item.color}`} />
@@ -390,7 +391,7 @@ const EVHistoryPage = () => {
                   <ArrowRight
                     className={`h-6 w-6 shrink-0 transition group-hover:translate-x-1 ${item.color}`}
                   />
-                </a>
+                </Link>
               );
             })}
           </div>
@@ -414,15 +415,20 @@ const EVHistoryPage = () => {
 };
 
 const SectionTitle = ({ eyebrow, title, text }) => (
-  <div className="mx-auto mb-14 max-w-3xl text-center">
-    <p className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">
-      {eyebrow}
-    </p>
-    <h2 className="text-4xl font-black uppercase leading-tight tracking-tight text-white md:text-6xl">
-      {title}
-    </h2>
-    <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400" />
-    <p className="mt-6 text-base leading-8 text-slate-400 md:text-lg">{text}</p>
+  <div className="mx-auto mb-14 max-w-7xl text-left">
+    {eyebrow && (
+      <p className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">
+        {eyebrow}
+      </p>
+    )}
+
+    {title}
+
+    {text && (
+      <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 md:text-lg">
+        {text}
+      </p>
+    )}
   </div>
 );
 
