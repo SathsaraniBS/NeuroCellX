@@ -1,0 +1,17 @@
+# Ignore the virtual environment
+server/venv/
+
+# Ignore Python cache files
+**/__pycache__/
+*.pyc
+
+# Ignore Node modules
+**/node_modules/
+
+# Ignore large ML model files
+ml_engine/*.keras
+ml_engine/*.joblib
+ml_engine/*.h5
+
+# Ignore environment variables
+.env
