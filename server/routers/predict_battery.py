@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from ml_engine.predictor import predict_battery
+from server.ml_engine.predictor import predict_battery
 
 router = APIRouter(
     prefix="/api/ml",

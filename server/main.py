@@ -10,7 +10,7 @@ from database import engine, Base
 from routers import admin 
 from routers import datasets 
 from routers import contact     
-from server.routers import predict_battery    
+from routers import predict_battery    
 from routers import calculator  
 from routers import stations
 
