@@ -503,7 +503,7 @@ const BatteryTypes = () => {
               </div>
             </div>
 
-            <div className="relative">
+            {/* <div className="relative">
               <div className="absolute -inset-8 rounded-full bg-cyan-400/20 blur-[90px]" />
 
               <div className="relative overflow-hidden rounded-[2.5rem] border border-cyan-400/20 bg-white/[0.06] p-6 shadow-[0_0_70px_rgba(34,211,238,0.16)] backdrop-blur-2xl">
@@ -530,7 +530,7 @@ const BatteryTypes = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
 
