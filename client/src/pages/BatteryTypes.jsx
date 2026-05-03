@@ -266,23 +266,8 @@
 // export default BatteryTypes;
 
 import React, { useState } from "react";
-import {
-  ArrowRight,
-  BatteryCharging,
-  BarChart3,
-  CheckCircle2,
-  ChevronDown,
-  CircleDot,
-  FlaskConical,
-  Rocket,
-  ShieldCheck,
-  Wrench,
-  XCircle,
-  Zap,
-  Snowflake,
-  Cpu,
-  Sparkles,
-} from "lucide-react";
+import {Download,ArrowRight,BatteryCharging,BarChart3,CheckCircle2,ChevronDown,CircleDot,FlaskConical,Rocket,
+ShieldCheck,Wrench,XCircle,Zap,Snowflake,TrendingUp,Cpu,Sparkles,} from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -458,6 +443,51 @@ const BatteryTypes = () => {
       <Navbar />
 
       <main className="overflow-hidden">
+        {/* Hero Section */}
+//         <section className="mb-20 text-center md:text-left">
+//           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-bold tracking-widest uppercase mb-6">
+//             <Zap size={14} /> Energy Intelligence
+//           </div>
+//           <h1 className="text-5xl md:text-7xl font-black leading-tight mb-8 bg-gradient-to-r from-white via-white to-gray-500 bg-clip-text text-transparent">
+//             EV Battery <br /> Technologies
+//           </h1>
+          
+//           <div className="max-w-3xl backdrop-blur-md bg-white/5 border border-white/10 rounded-3xl p-8 shadow-2xl relative overflow-hidden group">
+//             <div className="absolute top-0 left-0 w-1 h-full bg-cyan-500"></div>
+//             <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-cyan-400">
+//               <Cpu size={20} /> The Heart of the Machine
+//             </h2>
+//             <blockquote className="text-lg text-gray-300 italic leading-relaxed">
+//               “The battery remains the single most expensive component in an EV, and it’s the key determinant of both performance and price.”
+//             </blockquote>
+//             <p className="mt-4 text-sm text-gray-500 font-bold uppercase tracking-wider">— Sam Abuelsamid, Guidehouse Insights</p>
+//           </div>
+//         </section>
+
+//         {/* Market Overview */}
+//         <section className="mb-20 grid md:grid-cols-2 gap-12 items-center">
+//           <div>
+//             <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+//               <TrendingUp className="text-green-400" /> Market Landscape
+//             </h2>
+//             <p className="text-gray-400 text-xl leading-relaxed">
+//               The EV industry is currently dominated by three core chemistries: 
+//               <span className="text-white font-semibold"> LFP, NMC, and NCA</span>. 
+//               Together, these power over 90% of all electric vehicles on the road today, balancing the trade-offs between range, safety, and cost.
+//             </p>
+//           </div>
+//           <div className="grid grid-cols-2 gap-4">
+//             <div className="p-6 rounded-2xl bg-white/5 border border-white/10 text-center">
+//               <div className="text-3xl font-black text-cyan-400 mb-1">90%+</div>
+//               <div className="text-xs text-gray-500 uppercase tracking-widest">Market Share</div>
+//             </div>
+//             <div className="p-6 rounded-2xl bg-white/5 border border-white/10 text-center">
+//               <div className="text-3xl font-black text-green-400 mb-1">$53-85</div>
+//               <div className="text-xs text-gray-500 uppercase tracking-widest">Cost per kWh</div>
+//             </div>
+//           </div>
+//         </section>
+
         <section className="relative min-h-[92vh] pt-28">
           <div className="absolute inset-0">
             <img
@@ -467,6 +497,7 @@ const BatteryTypes = () => {
               onError={(event) => {
                 event.currentTarget.style.display = "none";
               }}
+              
             />
           </div>
 
