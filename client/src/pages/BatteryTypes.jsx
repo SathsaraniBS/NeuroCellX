@@ -468,18 +468,10 @@ const BatteryTypes = () => {
                 event.currentTarget.style.display = "none";
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-[#050816]/90 to-[#050816]/45" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-[#050816]/80" />
-            <div className="absolute left-0 top-20 h-[500px] w-[500px] rounded-full bg-cyan-500/20 blur-[160px]" />
-            <div className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-emerald-500/10 blur-[160px]" />
           </div>
 
           <div className="relative z-10 mx-auto grid min-h-[78vh] max-w-7xl items-center gap-12 px-6 lg:grid-cols-[1fr_0.95fr]">
             <div>
-              <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-5 py-2 text-sm font-black uppercase tracking-[0.25em] text-cyan-300 shadow-[0_0_35px_rgba(34,211,238,0.12)]">
-                <BatteryCharging className="h-4 w-4" />
-                EV Battery Learning
-              </div>
 
               <h1 className="text-5xl font-black uppercase leading-[0.95] tracking-tighter md:text-7xl">
                 EV Battery Types
