@@ -1,8 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {ArrowRight, BatteryCharging, Car, CheckCircle2, ChevronDown, Cpu,
-Droplet, Gauge, Home, Leaf, Map, Plug, PlugZap, Zap, XCircle,
+import {
+  ArrowRight,
+  BatteryCharging,
+  Car,
+  CheckCircle2,
+  ChevronDown,
+  Cpu,
+  Gauge,
+  Home,
+  Leaf,
+  Map,
+  Plug,
+  PlugZap,
+  XCircle,
 } from "lucide-react";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -13,13 +26,11 @@ const evTypeSections = [
     title: (
       <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
         Battery <br />
-        <span className="text-cyan-400">Electric  Vehicle</span>
+        <span className="text-cyan-400">Electric Vehicle</span>
       </h2>
     ),
     subtitle: "100% electric. No petrol engine.",
     image: "/src/assets/bev.jpg",
-    gradient: "from-cyan-400 to-blue-500",
-    glow: "bg-cyan-500/20",
     desc: "A BEV runs fully on electricity using a large battery pack and one or more electric motors. It does not use petrol, diesel, or an internal-combustion engine.",
     points: [
       "Powered only by a rechargeable battery pack.",
@@ -27,18 +38,6 @@ const evTypeSections = [
       "Best when home, workplace, or public charging is available.",
       "Offers instant torque, quiet driving, and low running cost.",
     ],
-    pros: [
-      "Lowest running cost compared with fuel vehicles.",
-      "Clean, quiet, and smooth driving experience.",
-      "Fewer moving parts and lower maintenance.",
-    ],
-    cons: [
-      "Needs charging access.",
-      "Long trips require charging planning.",
-      "Charging time is longer than fuel refilling.",
-    ],
-    examples: ["Tesla Model 3", "MG ZS EV", "Nissan Leaf"],
-    bestFor: "Daily city driving, home charging users, and drivers who want the cleanest EV option.",
   },
   {
     id: "phev",
@@ -47,14 +46,10 @@ const evTypeSections = [
       <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
         Plug
         <span className="text-cyan-400">-in Hybrid</span>
-
-
-      </h2>),
+      </h2>
+    ),
     subtitle: "Electric drive plus petrol backup.",
     image: "/src/assets/phev.jpg",
-    badge: "Plug-in Hybrid",
-    gradient: "from-emerald-400 to-cyan-500",
-    glow: "bg-emerald-500/20",
     desc: "A PHEV combines a rechargeable battery, electric motor, and petrol engine. It can drive short distances using electricity, then switch to hybrid mode for longer journeys.",
     points: [
       "Can be charged from an external charger.",
@@ -62,35 +57,18 @@ const evTypeSections = [
       "Petrol engine supports longer travel.",
       "Good bridge between fuel cars and full BEVs.",
     ],
-    pros: [
-      "Flexible for both city and long-distance driving.",
-      "Lower fuel usage when charged regularly.",
-      "No range anxiety because of petrol backup.",
-    ],
-    cons: [
-      "More complex than a BEV.",
-      "Needs both charging and fuel maintenance.",
-      "Benefits reduce if the battery is not charged often.",
-    ],
-    examples: ["Mitsubishi Outlander PHEV", "BYD Seal U DM-i", "Toyota Prius Prime"],
-    bestFor: "Drivers who want electric city driving but still need petrol backup for long trips.",
   },
   {
     id: "hev",
     short: "HEV",
     title: (
       <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
-
-        Hybrid
-        <span className="text-cyan-400">Electric Vehicle </span>
-
+        Hybrid <br />
+        <span className="text-cyan-400">Electric Vehicle</span>
       </h2>
-
     ),
     subtitle: "Self-charging hybrid system.",
     image: "/src/assets/hev.jpg",
-    gradient: "from-violet-400 to-fuchsia-500",
-    glow: "bg-violet-500/20",
     desc: "An HEV uses a petrol engine with electric motor assistance. It cannot be plugged in. The battery charges through regenerative braking and engine power.",
     points: [
       "Does not need external charging.",
@@ -98,32 +76,18 @@ const evTypeSections = [
       "Electric motor assists the petrol engine.",
       "Improves fuel economy compared with normal petrol cars.",
     ],
-    pros: [
-      "No charging station required.",
-      "Better mileage than petrol-only vehicles.",
-      "Reliable and practical for mixed driving.",
-    ],
-    cons: [
-      "Very limited electric-only driving.",
-      "Still depends on petrol.",
-      "Not zero-emission during normal use.",
-    ],
-    examples: ["Toyota Prius", "Honda Accord Hybrid", "Toyota Corolla Hybrid"],
-    bestFor: "Users who want better fuel efficiency without depending on charging infrastructure.",
   },
   {
     id: "fcev",
     short: "FCEV",
     title: (
-      <>
+      <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
         Fuel-Cell <br />
         <span className="text-cyan-400">Electric Vehicle</span>
-      </>
+      </h2>
     ),
     subtitle: "Hydrogen-powered electric drive.",
     image: "/src/assets/evstation.png",
-    gradient: "from-blue-400 to-cyan-400",
-    glow: "bg-blue-500/20",
     desc: "An FCEV uses hydrogen gas in a fuel cell to generate electricity. The electric motor drives the vehicle, and the main tailpipe emission is water vapour.",
     points: [
       "Uses hydrogen instead of battery-only charging.",
@@ -131,33 +95,18 @@ const evTypeSections = [
       "Fast refuelling compared with battery charging.",
       "Suitable for long range and heavy transport use cases.",
     ],
-    pros: [
-      "Quick refuelling time.",
-      "Long driving range.",
-      "Zero tailpipe carbon emissions.",
-    ],
-    cons: [
-      "Hydrogen stations are limited.",
-      "Infrastructure cost is high.",
-      "Vehicle availability is lower than BEVs.",
-    ],
-    examples: ["Toyota Mirai", "Hyundai NEXO", "Honda Clarity Fuel Cell"],
-    bestFor: "Long-range drivers and future clean transport systems where hydrogen refuelling exists.",
   },
   {
     id: "mhev",
     short: "MHEV",
     title: (
       <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
-
-        Fuel Cell
+        Mild Hybrid <br />
         <span className="text-cyan-400">Electric Vehicle</span>
-
-      </h2>),
+      </h2>
+    ),
     subtitle: "Small electric assist system.",
     image: "/src/assets/evstation.png",
-    gradient: "from-lime-400 to-emerald-500",
-    glow: "bg-lime-500/20",
     desc: "An MHEV uses a small battery and motor-generator to support the engine. It improves efficiency but cannot drive using electric power alone.",
     points: [
       "Small battery supports the engine.",
@@ -165,18 +114,6 @@ const evTypeSections = [
       "Helps during acceleration.",
       "Cannot operate as a full electric vehicle.",
     ],
-    pros: [
-      "Better mileage than normal petrol vehicles.",
-      "Lower cost than full hybrids or BEVs.",
-      "Simple and practical technology.",
-    ],
-    cons: [
-      "No electric-only driving.",
-      "Still mainly fuel-powered.",
-      "Lower EV benefits than BEV, PHEV, or HEV.",
-    ],
-    examples: ["Suzuki Smart Hybrid", "Audi MHEV", "Maruti Smart Hybrid"],
-    bestFor: "Drivers who want small efficiency improvements without changing driving habits.",
   },
 ];
 
@@ -261,13 +198,12 @@ const EVTypes = () => {
     <div className="min-h-screen bg-[#050816] text-white font-sans selection:bg-cyan-500/30">
       <Navbar />
 
-      {/* HERO SECTION */}
       <section className="relative h-screen w-full overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="/src/assets/ev3.png"
             alt="EV Background"
-            className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
+            className="w-full h-full object-cover scale-105 transition-opacity duration-1000"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
@@ -275,17 +211,20 @@ const EVTypes = () => {
 
         <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
           <div className="max-w-3xl space-y-6 pt-20">
+            <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">
+              EV Types &<br />
+              <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
+                Technologies
+              </span>
+            </h1>
 
-            <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter"> EV Types &<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">Technologies</span></h1>
             <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">
               Learn BEV, PHEV, HEV, FCEV, and MHEV as separate electric vehicle
               technologies with clear benefits, limitations, and real-world use cases.
             </p>
           </div>
         </div>
-
       </section>
-
 
       <main className="relative overflow-hidden">
         <GlowBackground />
@@ -295,14 +234,14 @@ const EVTypes = () => {
         ))}
 
         <section id="charging" className="relative border-y border-white/5 bg-white/[0.02] py-28">
-
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeader
               eyebrow="02 / Charging"
               title="Charging Technology"
               text="AC charging is ideal for daily use. DC fast charging is built for long journeys, public hubs, and quick energy top-ups."
             />
-            <div className="mt-8 rounded-[2rem] border border-white/10 bg-black/30 p-6 backdrop-blur-xl">
+
+            <div className="mt-8 mb-10 rounded-[2rem] border border-white/10 bg-black/30 p-6 backdrop-blur-xl">
               <ComparisonTable
                 title="Charging Types Comparison"
                 headers={["Type", "Speed", "Typical Use", "Battery Impact", "Cost / kWh"]}
@@ -340,7 +279,6 @@ const EVTypes = () => {
                 );
               })}
             </div>
-
           </div>
         </section>
 
@@ -377,6 +315,7 @@ const EVTypes = () => {
                   <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-3xl border border-cyan-400/20 bg-cyan-400/10 text-cyan-300 shadow-lg shadow-cyan-500/10">
                     <Icon className="h-11 w-11" />
                   </div>
+
                   <p className="text-sm font-black uppercase text-slate-300">{label}</p>
 
                   {index !== 3 && (
@@ -426,8 +365,13 @@ const EVTypes = () => {
                   className="group rounded-[2rem] border border-white/10 bg-white/[0.04] p-7 backdrop-blur-xl transition hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-white/[0.07] hover:shadow-2xl hover:shadow-cyan-500/10"
                 >
                   <Icon className="mb-6 h-12 w-12 text-cyan-300" />
-                  <h3 className="mb-4 text-xl font-black uppercase leading-tight">{item.title}</h3>
+
+                  <h3 className="mb-4 text-xl font-black uppercase leading-tight">
+                    {item.title}
+                  </h3>
+
                   <p className="mb-6 text-sm leading-7 text-slate-400">{item.text}</p>
+
                   <span className="inline-flex items-center gap-2 text-sm font-black uppercase text-emerald-300">
                     {item.link}
                     <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
@@ -457,9 +401,11 @@ const EVTypes = () => {
                   className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left font-black uppercase tracking-wide text-white"
                 >
                   {faq.q}
+
                   <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-cyan-300 transition ${openFaq === index ? "rotate-180" : ""
-                      }`}
+                    className={`h-5 w-5 shrink-0 text-cyan-300 transition ${
+                      openFaq === index ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
 
@@ -480,12 +426,14 @@ const EVTypes = () => {
             text="Find the right EV for your budget and driving pattern."
             path="/ev-buying-guide"
           />
+
           <NextCard
             icon={PlugZap}
             title="Charging Guide"
             text="Learn about home, public, AC, and DC fast charging."
             path="/home-charging"
           />
+
           <NextCard
             icon={Map}
             title="EV History"
@@ -501,10 +449,6 @@ const EVTypes = () => {
 };
 
 const EVTypeSection = ({ item, index }) => {
-  const reverse = index % 2 !== 0;
-
-  return (
-    const EVTypeSection = ({ item, index }) => {
   return (
     <section
       id={item.id}
@@ -512,31 +456,20 @@ const EVTypeSection = ({ item, index }) => {
     >
       <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-cyan-500/20 blur-[150px]" />
 
-      {/* GRID */}
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2">
-        
-        {/* LEFT SIDE (TEXT) */}
         <div>
           <p className="mb-4 text-sm font-black uppercase tracking-[0.4em] text-cyan-300">
             {String(index + 1).padStart(2, "0")} / {item.short}
           </p>
 
-          {/* TITLE */}
-          <div className="mb-4">
-            {item.title}
-          </div>
+          <div className="mb-4">{item.title}</div>
 
-          {/* SUBTITLE */}
           <p className="text-lg font-bold text-cyan-100 mb-6">
             {item.subtitle}
           </p>
 
-          {/* DESCRIPTION */}
-          <p className="text-lg leading-8 text-slate-400">
-            {item.desc}
-          </p>
+          <p className="text-lg leading-8 text-slate-400">{item.desc}</p>
 
-          {/* POINTS */}
           <div className="mt-8 space-y-3">
             {item.points.map((point) => (
               <InfoLine key={point} type="good" text={point} />
@@ -544,9 +477,7 @@ const EVTypeSection = ({ item, index }) => {
           </div>
         </div>
 
-        {/* RIGHT SIDE (IMAGE) */}
         <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
-          
           <img
             src={item.image}
             alt={`${item.short} electric vehicle`}
@@ -561,13 +492,10 @@ const EVTypeSection = ({ item, index }) => {
             </h2>
           </div>
         </div>
-
       </div>
     </section>
   );
 };
-
-
 
 const GlowBackground = () => (
   <>
@@ -582,7 +510,11 @@ const SectionHeader = ({ eyebrow, title, text, align = "center" }) => {
   const lastWord = words.pop();
 
   return (
-    <div className={`mb-14 ${align === "left" ? "text-left" : "mx-auto max-w-3xl text-center"}`}>
+    <div
+      className={`mb-14 ${
+        align === "left" ? "text-left" : "mx-auto max-w-3xl text-center"
+      }`}
+    >
       <p className="mb-4 text-sm font-black uppercase tracking-[0.4em] text-cyan-300">
         {eyebrow}
       </p>
@@ -606,6 +538,7 @@ const InfoLine = ({ type, text }) => (
     ) : (
       <XCircle className="mt-1 h-5 w-5 shrink-0 text-rose-300" />
     )}
+
     <span>{text}</span>
   </div>
 );
@@ -633,7 +566,10 @@ const ComparisonTable = ({ title, headers, rows }) => (
 
         <tbody>
           {rows.map((row, index) => (
-            <tr key={`${title}-${index}`} className="odd:bg-white/[0.03] even:bg-black/10">
+            <tr
+              key={`${title}-${index}`}
+              className="odd:bg-white/[0.03] even:bg-black/10"
+            >
               {row.map((cell, cellIndex) => (
                 <td
                   key={`${title}-${index}-${cellIndex}`}
