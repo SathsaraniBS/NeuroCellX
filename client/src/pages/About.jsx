@@ -397,18 +397,22 @@ const HeroMiniCard = ({ icon: Icon, title, text }) => (
 );
 
 const SectionTitle = ({ eyebrow, title, text }) => (
-  <div className="mx-auto mb-14 max-w-3xl text-center">
-    <p className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">
-      {eyebrow}
-    </p>
-    <h2 className="text-4xl font-black uppercase leading-tight tracking-tight text-white md:text-6xl">
-      {title}
-    </h2>
-    <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400" />
-    <p className="mt-6 text-base leading-8 text-slate-400 md:text-lg">{text}</p>
+  <div className="mx-auto mb-14 max-w-7xl text-left">
+    {eyebrow && (
+      <p className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">
+        {eyebrow}
+      </p>
+    )}
+
+    {title}
+
+    {text && (
+      <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 md:text-lg">
+        {text}
+      </p>
+    )}
   </div>
 );
-
 const InfoBox = ({ icon: Icon, title, text, color }) => (
   <div className="rounded-3xl border border-white/10 bg-white/[0.05] p-8 text-center backdrop-blur-xl">
     <div className={`mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-white/10 ${color}`}>
