@@ -17,7 +17,6 @@ const evTypeSections = [
       </h2>
     ),
     subtitle: "100% electric. No petrol engine.",
-    icon: BatteryCharging,
     image: "/src/assets/bev.jpg",
     gradient: "from-cyan-400 to-blue-500",
     glow: "bg-cyan-500/20",
@@ -52,7 +51,6 @@ const evTypeSections = [
 
       </h2>),
     subtitle: "Electric drive plus petrol backup.",
-    icon: Plug,
     image: "/src/assets/phev.jpg",
     badge: "Plug-in Hybrid",
     gradient: "from-emerald-400 to-cyan-500",
@@ -90,7 +88,6 @@ const evTypeSections = [
 
     ),
     subtitle: "Self-charging hybrid system.",
-    icon: Cpu,
     image: "/src/assets/hev.jpg",
     gradient: "from-violet-400 to-fuchsia-500",
     glow: "bg-violet-500/20",
@@ -124,7 +121,6 @@ const evTypeSections = [
       </>
     ),
     subtitle: "Hydrogen-powered electric drive.",
-    icon: Droplet,
     image: "/src/assets/evstation.png",
     gradient: "from-blue-400 to-cyan-400",
     glow: "bg-blue-500/20",
@@ -159,7 +155,6 @@ const evTypeSections = [
 
       </h2>),
     subtitle: "Small electric assist system.",
-    icon: Zap,
     image: "/src/assets/evstation.png",
     gradient: "from-lime-400 to-emerald-500",
     glow: "bg-lime-500/20",
@@ -506,7 +501,6 @@ const EVTypes = () => {
 };
 
 const EVTypeSection = ({ item, index }) => {
-  const Icon = item.icon;
   const reverse = index % 2 !== 0;
 
   return (
@@ -530,12 +524,7 @@ const EVTypeSection = ({ item, index }) => {
           <div className="absolute inset-5 rounded-[2rem] bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
 
           <div className="absolute bottom-10 left-10 right-10">
-            <div
-              className={`mb-4 inline-flex items-center gap-3 rounded-full bg-gradient-to-r ${item.gradient} px-5 py-2 text-sm font-black uppercase tracking-[0.25em] text-[#031014]`}
-            >
-              <Icon className="h-4 w-4" />
-              {item.badge}
-            </div>
+            
 
             <h2 className="text-4xl font-black uppercase leading-tight md:text-5xl">
               {item.short}
