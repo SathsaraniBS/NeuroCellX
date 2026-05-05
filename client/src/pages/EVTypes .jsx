@@ -430,6 +430,16 @@ const EVTypes = () => {
       </main>
 
       <Footer />
+      <style dangerouslySetInnerHTML={{
+                __html: `
+                @keyframes slow-zoom {
+                    0% { transform: scale(1); }
+                    100% { transform: scale(1.1); }
+                }
+                .animate-slow-zoom {
+                    animation: slow-zoom 20s infinite alternate ease-in-out;
+                }
+            ` }} />
     </div>
   );
 };
