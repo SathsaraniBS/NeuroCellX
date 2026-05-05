@@ -1,20 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  BatteryCharging,
-  Car,
-  CheckCircle2,
-  ChevronDown,
-  Cpu,
-  Gauge,
-  Home,
-  Leaf,
-  Map,
-  Plug,
-  PlugZap,
-  XCircle,
-} from "lucide-react";
+import {ArrowRight,BatteryCharging,Car,CheckCircle2,ChevronDown,Cpu,Gauge,Home,Leaf,Map,Plug,PlugZap,XCircle,Zap} from "lucide-react";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
