@@ -504,110 +504,70 @@ const EVTypeSection = ({ item, index }) => {
   const reverse = index % 2 !== 0;
 
   return (
+    const EVTypeSection = ({ item, index }) => {
+  return (
     <section
       id={item.id}
       className="relative border-t border-white/5 py-28 scroll-mt-24"
     >
-      <div className={`absolute ${reverse ? "left-0" : "right-0"} top-20 h-96 w-96 rounded-full ${item.glow} blur-[150px]`} />
+      <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-cyan-500/20 blur-[150px]" />
 
-      <div
-        className={`relative mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 ${reverse ? "lg:[&>*:first-child]:order-2" : ""
-          }`}
-      >
-        <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
-          <img
-            src={item.image}
-            alt={`${item.short} electric vehicle`}
-            className="h-[460px] w-full rounded-[2rem] object-cover opacity-80"
-          />
-
-          <div className="absolute inset-5 rounded-[2rem] bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-
-          <div className="absolute bottom-10 left-10 right-10">
-            
-
-            <h2 className="text-4xl font-black uppercase leading-tight md:text-5xl">
-              {item.short}
-            </h2>
-
-            <p className="mt-3 text-lg font-bold text-cyan-100">{item.subtitle}</p>
-          </div>
-        </div>
-
+      {/* GRID */}
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2">
+        
+        {/* LEFT SIDE (TEXT) */}
         <div>
           <p className="mb-4 text-sm font-black uppercase tracking-[0.4em] text-cyan-300">
             {String(index + 1).padStart(2, "0")} / {item.short}
           </p>
 
-          <h2 className="text-4xl font-black uppercase tracking-tight md:text-5xl">
+          {/* TITLE */}
+          <div className="mb-4">
             {item.title}
-          </h2>
+          </div>
 
-          <p className="mt-6 text-lg leading-8 text-slate-400">{item.desc}</p>
+          {/* SUBTITLE */}
+          <p className="text-lg font-bold text-cyan-100 mb-6">
+            {item.subtitle}
+          </p>
 
-          <div className="mt-8 grid gap-3">
+          {/* DESCRIPTION */}
+          <p className="text-lg leading-8 text-slate-400">
+            {item.desc}
+          </p>
+
+          {/* POINTS */}
+          <div className="mt-8 space-y-3">
             {item.points.map((point) => (
               <InfoLine key={point} type="good" text={point} />
             ))}
           </div>
+        </div>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
-            <div className="rounded-3xl border border-emerald-400/20 bg-emerald-400/10 p-5">
-              <h3 className="mb-4 flex items-center gap-2 font-black uppercase text-emerald-300">
-                <CheckCircle2 className="h-5 w-5" />
-                Advantages
-              </h3>
-              <div className="space-y-3">
-                {item.pros.map((point) => (
-                  <p key={point} className="text-sm leading-6 text-slate-300">
-                    {point}
-                  </p>
-                ))}
-              </div>
-            </div>
+        {/* RIGHT SIDE (IMAGE) */}
+        <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
+          
+          <img
+            src={item.image}
+            alt={`${item.short} electric vehicle`}
+            className="h-[460px] w-full rounded-[2rem] object-cover"
+          />
 
-            <div className="rounded-3xl border border-rose-400/20 bg-rose-400/10 p-5">
-              <h3 className="mb-4 flex items-center gap-2 font-black uppercase text-rose-300">
-                <XCircle className="h-5 w-5" />
-                Limitations
-              </h3>
-              <div className="space-y-3">
-                {item.cons.map((point) => (
-                  <p key={point} className="text-sm leading-6 text-slate-300">
-                    {point}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </div>
+          <div className="absolute inset-5 rounded-[2rem] bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-          <div className="mt-8 rounded-3xl border border-cyan-400/20 bg-cyan-400/10 p-5">
-            <h3 className="mb-3 font-black uppercase text-cyan-300">Best For</h3>
-            <p className="leading-7 text-slate-300">{item.bestFor}</p>
-          </div>
-
-          <div className="mt-8">
-            <p className="mb-3 text-xs font-black uppercase tracking-[0.3em] text-slate-500">
-              Vehicle Examples
-            </p>
-
-            <div className="flex flex-wrap gap-3">
-              {item.examples.map((example) => (
-                <div
-                  key={example}
-                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm font-bold text-slate-300"
-                >
-                  <Car className="h-4 w-4 text-cyan-300" />
-                  {example}
-                </div>
-              ))}
-            </div>
+          <div className="absolute bottom-10 left-10 right-10">
+            <h2 className="text-4xl font-black uppercase md:text-5xl">
+              {item.short}
+            </h2>
           </div>
         </div>
+
       </div>
     </section>
   );
 };
+
+
 
 const GlowBackground = () => (
   <>
