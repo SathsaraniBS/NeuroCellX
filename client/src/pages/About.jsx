@@ -1,28 +1,5 @@
 import React from "react";
-import {
-  ArrowRight,
-  Bell,
-  CheckCircle2,
-  Compass,
-  Eye,
-  Facebook,
-  Flag,
-  Instagram,
-  Leaf,
-  Linkedin,
-  Mail,
-  MapPin,
-  MessageCircle,
-  Phone,
-  ShieldCheck,
-  Target,
-  Users,
-  Wrench,
-  Youtube,
-  Lightbulb,
-  Sparkles,
-  Zap,
-} from "lucide-react";
+import {ArrowRight,Bell,CheckCircle2,Compass,Eye,Facebook,Flag,Instagram,Leaf,Linkedin,Mail,MapPin,MessageCircle,Phone,ShieldCheck,Target,Users,Wrench,Youtube,Lightbulb,Sparkles,Zap,} from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 

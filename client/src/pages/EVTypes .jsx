@@ -11,14 +11,14 @@ const evTypeSections = [
     id: "bev",
     short: "BEV",
     title: (
-      <>
-        Battery <br /> <span className="text-cyan-400">Electric Vehicle</span>
-      </>
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                Battery <br />
+                <span className="text-cyan-400">Electric About Vehicle</span>
+              </h2>
     ),
     subtitle: "100% electric. No petrol engine.",
     icon: BatteryCharging,
     image: "/src/assets/bev.jpg",
-    badge: "Pure Electric",
     gradient: "from-cyan-400 to-blue-500",
     glow: "bg-cyan-500/20",
     desc: "A BEV runs fully on electricity using a large battery pack and one or more electric motors. It does not use petrol, diesel, or an internal-combustion engine.",
@@ -88,7 +88,6 @@ const evTypeSections = [
     subtitle: "Self-charging hybrid system.",
     icon: Cpu,
     image: "/src/assets/hev.jpg",
-    badge: "Hybrid",
     gradient: "from-violet-400 to-fuchsia-500",
     glow: "bg-violet-500/20",
     desc: "An HEV uses a petrol engine with electric motor assistance. It cannot be plugged in. The battery charges through regenerative braking and engine power.",
@@ -123,7 +122,6 @@ const evTypeSections = [
     subtitle: "Hydrogen-powered electric drive.",
     icon: Droplet,
     image: "/src/assets/evstation.png",
-    badge: "Hydrogen EV",
     gradient: "from-blue-400 to-cyan-400",
     glow: "bg-blue-500/20",
     desc: "An FCEV uses hydrogen gas in a fuel cell to generate electricity. The electric motor drives the vehicle, and the main tailpipe emission is water vapour.",
@@ -158,7 +156,6 @@ const evTypeSections = [
     subtitle: "Small electric assist system.",
     icon: Zap,
     image: "/src/assets/evstation.png",
-    badge: "Mild Hybrid",
     gradient: "from-lime-400 to-emerald-500",
     glow: "bg-lime-500/20",
     desc: "An MHEV uses a small battery and motor-generator to support the engine. It improves efficiency but cannot drive using electric power alone.",
