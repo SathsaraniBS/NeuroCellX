@@ -11,10 +11,10 @@ const evTypeSections = [
     id: "bev",
     short: "BEV",
     title: (
-              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
-                Battery <br />
-                <span className="text-cyan-400">Electric About Vehicle</span>
-              </h2>
+      <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+        Battery <br />
+        <span className="text-cyan-400">Electric  Vehicle</span>
+      </h2>
     ),
     subtitle: "100% electric. No petrol engine.",
     icon: BatteryCharging,
@@ -45,11 +45,12 @@ const evTypeSections = [
     id: "phev",
     short: "PHEV",
     title: (
-      <>
-        Plug-in Hybrid  <br />
-        <span className="text-emerald-400">Electric Vehicle</span>
-      </>
-    ),
+      <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+        Plug
+        <span className="text-cyan-400">-in Hybrid</span>
+
+
+      </h2>),
     subtitle: "Electric drive plus petrol backup.",
     icon: Plug,
     image: "/src/assets/phev.jpg",
@@ -80,10 +81,13 @@ const evTypeSections = [
     id: "hev",
     short: "HEV",
     title: (
-      <>
-        Hybrid <br />
-         <span className="text-violet-400">Electric Vehicle</span>
-      </>
+      <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+
+        Hybrid
+        <span className="text-cyan-400">Electric Vehicle </span>
+
+      </h2>
+
     ),
     subtitle: "Self-charging hybrid system.",
     icon: Cpu,
@@ -116,7 +120,7 @@ const evTypeSections = [
     title: (
       <>
         Fuel-Cell <br />
-         <span className="text-blue-400">Electric Vehicle</span>
+        <span className="text-cyan-400">Electric Vehicle</span>
       </>
     ),
     subtitle: "Hydrogen-powered electric drive.",
@@ -148,11 +152,12 @@ const evTypeSections = [
     id: "mhev",
     short: "MHEV",
     title: (
-      <>
-        Mild Hybrid <br />
-         <span className="text-lime-400">Electric Vehicle</span>
-      </>
-    ),
+      <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+
+        Fuel Cell
+        <span className="text-cyan-400">Electric Vehicle</span>
+
+      </h2>),
     subtitle: "Small electric assist system.",
     icon: Zap,
     image: "/src/assets/evstation.png",
