@@ -270,7 +270,12 @@ const EVTypes = () => {
 
         <section className="relative mx-auto grid max-w-7xl gap-10 px-6 py-28 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
-            
+            <SectionHeader
+              align="left"
+              eyebrow="03 / Platform"
+              title="Smart EV Architecture"
+              text="Modern EVs are software-defined machines where the battery pack, motors, inverter, thermal system, and vehicle control unit work as one intelligent ecosystem."
+            />
 
             <div className="space-y-4">
               {[
