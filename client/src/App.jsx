@@ -14,7 +14,8 @@ import ContactPage from './pages/ContactPage';
 import Charging from './pages/Charging';  // ← NEW: Import Charging page
 // ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
-import Predictions from './pages/Predictions';
+import Predictions from './pages/Predictions';  // i removed this
+import Prediction from './pages/Prediction'; // this is ml models frontend file
 import Profile from './pages/ProfilePage';
 import Reports from './pages/Reports';
 import FindStations from './pages/FindStations';
@@ -158,6 +159,14 @@ function App() {
                                     <Dashboard />
                                 </ProtectedRoute>
                             } />
+                            
+                            {/* ML models Predictions page */}
+                            <Route path="/prediction" element={
+                                <ProtectedRoute>
+                                    <Prediction />
+                                </ProtectedRoute>
+                            } />
+
 
                             {/* Profile Route (profile only) */}
                             <Route path="/profile" element={

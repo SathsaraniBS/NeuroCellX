@@ -75,7 +75,7 @@ function Dashboard() {
             {/* TOP WELCOME */}
             <div className="mb-8">
               <h2 className="text-3xl font-semibold">
-                Good morning, {user?.name || user?.email?.split('@')[0] || "User"}!
+                Hello, {user?.name || user?.email?.split('@')[0] || "User"}!
                 <span className="text-cyan-400"> 👋</span>
               </h2>
               <p className="text-gray-400 text-sm mt-1">

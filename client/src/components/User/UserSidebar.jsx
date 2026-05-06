@@ -13,6 +13,7 @@ const Sidebar = () => {
   const menuItems = [
     { path: '/dashboard',name: "Dashboard", icon: <LayoutDashboard size={20} /> },
     { path: "/predictions",name: "Predictions", icon: <LineChart size={20} /> },
+    { path: "/prediction",name: "ModelsPredictions", icon: <LineChart size={20} /> },
     { path: "/dashboard/history",name: "History", icon: <History size={20} /> },
     { path: "/reports", name: "Reports", icon: <FileText size={20} /> },
     { path: "/dashboard/settings",name: "Settings", icon: <Settings size={20} /> },

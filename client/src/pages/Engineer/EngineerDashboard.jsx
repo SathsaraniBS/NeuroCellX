@@ -3,12 +3,7 @@ import { useNavigate }   from 'react-router-dom';
 import { useAuth }       from '../../contexts/AuthContext';
 import { useToast }      from '../../contexts/ToastContext';
 import api               from '../../services/api';
-import {
-  Upload, Database, Trash2, Eye,
-  CheckCircle, AlertTriangle, Clock,
-  FileText, LogOut, LayoutDashboard,
-  ChevronDown, X
-} from 'lucide-react';
+import {Upload, Database, Trash2, Eye,CheckCircle, AlertTriangle, Clock,FileText, LogOut, LayoutDashboard,ChevronDown, X} from 'lucide-react';
 
 const EngineerDashboard = () => {
   const { user, logout }  = useAuth();
@@ -396,6 +391,18 @@ const EngineerDashboard = () => {
                 <p className="text-red-300 text-sm mt-1">{uploadResult.error}</p>
               </div>
             )}
+          </div>
+        )}
+
+        {/* ══════ Models Prediction TAB ══════ */}
+        {activeTab === 'datasets' && (
+          <div>
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold">
+                Models Prediction
+              </h2>
+              
+            </div>
           </div>
         )}
 

@@ -12,6 +12,7 @@ const EngineerSidebar = () => {
 
   const menuItems = [
     { path: '/dashboard',name: "Dashboard", icon: <LayoutDashboard size={20} /> },
+    { path: "/prediction",name: "ModelsPrediction", icon: <LineChart size={20} /> },
     { path: "/predictions",name: "Predictions", icon: <LineChart size={20} /> },
     { path: "/dashboard/history",name: "History", icon: <History size={20} /> },
     { path: "/reports", name: "Reports", icon: <FileText size={20} /> },
