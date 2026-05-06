@@ -1,0 +1,22 @@
+{
+    "algorithm": "lstm_transformer_hybrid",
+    "window_size": 15,
+    "n_features": 54,
+    "train_batteries": [
+        "B0005",
+        "B0006",
+        "B0007"
+    ],
+    "test_batteries": [
+        "B0018"
+    ],
+    "soh_model_file": "soh_model.keras",
+    "rul_model_file": "rul_model.keras",
+    "scaler_file": "feature_scaler.joblib",
+    "features_file": "features.joblib",
+    "input_shape": [
+        15,
+        54
+    ],
+    "note": "FastAPI input must create a sequence with shape (1, window_size, n_features)."
+}
