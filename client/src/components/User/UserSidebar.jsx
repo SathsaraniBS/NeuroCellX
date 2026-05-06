@@ -21,9 +21,9 @@ const Sidebar = () => {
 
    const isActive = (path) => {
     if (path === '/dashboard') {
-      return location.pathname === '/dashboard';
+      return location.pathname === path;
     }
-    return location.pathname.startsWith(path);
+    // return location.pathname.startsWith(path);
   };
 
   
