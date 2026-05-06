@@ -10,7 +10,6 @@ from database import engine, Base
 from routers import admin 
 from routers import datasets 
 from routers import contact     
-from routers import predict_battery    
 from routers import calculator  
 from routers import stations
 
@@ -40,7 +39,6 @@ app.include_router(auth.router)
 app.include_router(dashboard.router)
 app.include_router(admin.router)  
 app.include_router(datasets.router) 
-app.include_router(predict_battery.router) 
 app.include_router(contact.router)
 app.include_router(chatbot_router, prefix="/api")
 app.include_router(calculator.router)  
