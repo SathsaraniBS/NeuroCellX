@@ -3,13 +3,12 @@ import { useNavigate }      from 'react-router-dom';
 import { useAuth }          from '../contexts/AuthContext';
 import { useToast }         from '../contexts/ToastContext';
 import Sidebar              from '../components/User/UserSidebar';
-import {Cpu, Zap, ThermometerSun, RotateCcw,BatteryCharging, ChevronDown, BarChart2,Save, RefreshCw, AlertTriangle, CheckCircle,
-TrendingUp, Activity, Download} from 'lucide-react';
+import {Cpu, Zap, ThermometerSun, RotateCcw,BatteryCharging, ChevronDown, BarChart2,Save, RefreshCw, AlertTriangle, CheckCircle, TrendingUp, Activity, Download} from 'lucide-react';
 
 // ─── Model list ────────────────────────────────────────────────
 const MODELS = [
   { key: 'random_forest',    label: 'Random Forest',              icon: '🌲' },
-  { key: 'svr',              label: 'SVR (Support Vector)',        icon: '📐' },
+  { key: 'svr',              label: 'SVR (Support Vector)',       icon: '📐' },
   { key: 'naive_bayes',      label: 'Naive Bayes',                icon: '📊' },
   { key: 'grv_randomforest', label: 'GRU + Random Forest Hybrid', icon: '🔀' },
   { key: 'lstm_transformer', label: 'LSTM + Transformer',         icon: '🤖' },
@@ -92,11 +91,12 @@ export default function Prediction() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model_key:   selectedModel,
-          voltage:     parseFloat(voltage),
-          current:     parseFloat(current),
-          temperature: parseFloat(temperature),
-          cycle_count: parseFloat(cycle_count),
-          capacity:    parseFloat(capacity),
+          // ✅ Backend එකට ගැලපෙන සේ Keys වල මුල් අකුරු Capital කරන ලදී
+          Voltage:     parseFloat(voltage),
+          Current:     parseFloat(current),
+          Temperature: parseFloat(temperature),
+          CycleCount:  parseFloat(cycle_count),
+          Capacity:    parseFloat(capacity),
         }),
       });
 
@@ -106,8 +106,19 @@ export default function Prediction() {
       }
 
       const data = await res.json();
-      setResult(data);
-      addToast('Prediction successful ✅', 'success');
+      
+      // ✅ Backend එකෙන් එන 'predictions.SOH' අගය React එකේ 'soh' වලට ගැලපෙන සේ සකස් කරන ලදී
+      if (data.status === "success") {
+        setResult({
+          soh: data.predictions.SOH,
+          rul: data.predictions.RUL,
+          metrics: data.metrics || null
+        });
+        addToast('Prediction successful ✅', 'success');
+      } else {
+        throw new Error(data.message || 'Error in prediction');
+      }
+
     } catch (err) {
       addToast(`Error: ${err.message}`, 'error');
     } finally {
