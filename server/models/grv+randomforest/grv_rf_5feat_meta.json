@@ -1,0 +1,40 @@
+{
+  "features": [
+    "capacity",
+    "volt_mean",
+    "curr_mean",
+    "temp_mean",
+    "cycle_idx"
+  ],
+  "feature_labels": {
+    "capacity": "Battery Capacity (Ah)",
+    "volt_mean": "Average Voltage (V)",
+    "curr_mean": "Average Current (A)",
+    "temp_mean": "Average Temperature (\u00b0C)",
+    "cycle_idx": "Cycle Number"
+  },
+  "architecture": {
+    "SOH_model": "RandomForestRegressor (n=500, max_depth=10)",
+    "RUL_model": "GradientBoostingRegressor (n=500, lr=0.05)",
+    "feat_scaler": "MinMaxScaler (X features)",
+    "rul_scaler": "MinMaxScaler (RUL target \u2014 inverse needed!)"
+  },
+  "scaler_type": "MinMaxScaler x2",
+  "b0018_maxrul": 74.0,
+  "metrics": {
+    "SOH": {
+      "R2": 0.8768,
+      "MAE": 2.5924,
+      "MAPE": 3.15,
+      "sMAPE": 3.22,
+      "Accuracy": 90.64
+    },
+    "RUL": {
+      "R2": 0.7396,
+      "MAE": 8.0569,
+      "MAPE": 1379535226.56,
+      "sMAPE": 93.65,
+      "Accuracy": 89.11
+    }
+  }
+}
