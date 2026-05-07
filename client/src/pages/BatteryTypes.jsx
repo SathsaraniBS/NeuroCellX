@@ -12,6 +12,7 @@ const BatteryTypes = () => {
       no: "1.",
       title: "Lead-acid",
       sub: "Older Battery Tech",
+      image: "/src/assets/Nimh.png",
       desc: "Heavy, low-energy-density technology, widely used in older cars and 12V systems.",
       icon: BatteryCharging,
       color: "text-slate-300",
@@ -179,7 +180,7 @@ const BatteryTypes = () => {
         <section className="relative min-h-[92vh] pt-28">
           <div className="absolute inset-0">
             <img
-              src="/src/assets/evstation.png"
+              src="/src/assets/battery.png"
               alt="EV battery chemistry hero"
               className="h-full w-full object-cover opacity-40"
               onError={(event) => {
@@ -276,8 +277,15 @@ const BatteryTypes = () => {
 
         <section id="chemistry" className="relative px-6 py-24">
           <SectionTitle
-            eyebrow="Battery Chemistry"
-            title="Battery Chemistry Explained"
+            title={
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                Battery <br />
+                <span className="text-cyan-400">Chemistry Explained</span>
+              </h2>
+
+            }
+          
+            
             text="Each chemistry has different strengths. Some are cheaper, some are safer, and some are better for long range."
           />
 
@@ -296,8 +304,13 @@ const BatteryTypes = () => {
 
         <section id="comparison" className="relative px-6 py-24">
           <SectionTitle
-            eyebrow="EV Use Focus"
-            title="Quick Battery Comparison"
+            title={
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                Quick <br />
+                <span className="text-cyan-400">Battery Comparison </span>
+              </h2>
+
+            }
             text="Use this table to compare battery chemistry by energy density, cost, safety, cycle life, and maturity."
           />
 
@@ -350,7 +363,12 @@ const BatteryTypes = () => {
         <section className="relative px-6 py-24">
           <SectionTitle
             eyebrow="Choose Smart"
-            title="Which Chemistry Fits Your EV?"
+            title={
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                Which Chemistry <br />
+                <span className="text-cyan-400">Fits Your EV?  </span>
+              </h2>
+            }
             text="The best battery depends on whether you need maximum range, lower cost, safety, or future-ready technology."
           />
 

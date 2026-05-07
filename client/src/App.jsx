@@ -14,7 +14,6 @@ import ContactPage from './pages/ContactPage';
 import Charging from './pages/Charging';  // ← NEW: Import Charging page
 // ─── Protected Pages ────────────────────
 import Dashboard from './pages/Dashboard';
-import Predictions from './pages/Predictions';  // i removed this
 import Prediction from './pages/Prediction'; // this is ml models frontend file
 import Profile from './pages/ProfilePage';
 import Reports from './pages/Reports';
@@ -175,13 +174,7 @@ function App() {
                                 </ProtectedRoute>
                             } />
 
-                            {/* Predictions page */}
-                            <Route path="/predictions" element={
-                                <ProtectedRoute>
-                                    <Predictions />
-                                </ProtectedRoute>
-                            } />
-
+                            
                             {/* Reports page */}
                             <Route path="/reports" element={
                                 <ProtectedRoute>

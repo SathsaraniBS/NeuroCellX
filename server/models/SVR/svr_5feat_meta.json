@@ -1,0 +1,49 @@
+{
+  "features": [
+    "capacity",
+    "volt_mean",
+    "curr_mean",
+    "temp_mean",
+    "cycle_idx"
+  ],
+  "feature_labels": {
+    "capacity": "Battery Capacity (Ah)",
+    "volt_mean": "Average Voltage (V)",
+    "curr_mean": "Average Current (A)",
+    "temp_mean": "Average Temperature (\u00b0C)",
+    "cycle_idx": "Cycle Number"
+  },
+  "algorithm": "SVR-RBF",
+  "scaler_type": "StandardScaler",
+  "b0018_maxrul": 74.0,
+  "best_params": {
+    "SOH": {
+      "C": 100,
+      "epsilon": 0.1,
+      "gamma": 0.01,
+      "kernel": "rbf"
+    },
+    "RUL": {
+      "C": 500,
+      "epsilon": 0.1,
+      "gamma": 0.1,
+      "kernel": "rbf"
+    }
+  },
+  "metrics": {
+    "SOH": {
+      "R2": 0.7684,
+      "MAE": 3.7626,
+      "MAPE": 4.62,
+      "sMAPE": 4.75,
+      "Accuracy": 86.42
+    },
+    "RUL": {
+      "R2": 0.9181,
+      "MAE": 7.2396,
+      "MAPE": 15419199664.99,
+      "sMAPE": 88.71,
+      "Accuracy": 92.76
+    }
+  }
+}
