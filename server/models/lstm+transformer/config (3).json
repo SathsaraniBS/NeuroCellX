@@ -1,0 +1,27 @@
+{
+  "algorithm": "lstm_transformer_hybrid_5feat",
+  "window_size": 15,
+  "features": [
+    "capacity",
+    "volt_mean",
+    "curr_mean",
+    "temp_mean",
+    "cycle_idx"
+  ],
+  "feature_labels": {
+    "capacity": "Battery Capacity (Ah)",
+    "volt_mean": "Average Voltage (V)",
+    "curr_mean": "Average Current (A)",
+    "temp_mean": "Average Temperature (\u00b0C)",
+    "cycle_idx": "Cycle Number"
+  },
+  "n_features": 5,
+  "input_shape": [
+    15,
+    5
+  ],
+  "test_max_rul": 59.0,
+  "scaler_type": "MinMaxScaler",
+  "model_format": ".keras (TensorFlow)",
+  "note": "Prediction needs last 15 cycles as sequence. See predict_from_single_input() in backend."
+}
