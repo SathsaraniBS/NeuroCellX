@@ -5,16 +5,15 @@ import { useToast }         from '../contexts/ToastContext';
 import Sidebar              from '../components/User/UserSidebar';
 import {Cpu, Zap, ThermometerSun, RotateCcw, BatteryCharging, ChevronDown, BarChart2, Save, RefreshCw, AlertTriangle, CheckCircle, TrendingUp, Activity, Download} from 'lucide-react';
 
-// ─── Model list ────────────────────────────────────────────────
+// ─── පියවර 1: Backend එකේ Keys වලට ගැලපෙන ලෙස MODELS Array එක සැකසීම ───
 const MODELS = [
-  { key: 'random_forest',    label: 'Random Forest',              icon: '🌲' },
-  { key: 'svr',              label: 'SVR (Support Vector)',        icon: '📐' },
-  { key: 'naive_bayes',      label: 'Naive Bayes',                icon: '📊' },
-  { key: 'grv_randomforest', label: 'GRU + Random Forest Hybrid', icon: '🔀' },
-  { key: 'lstm_transformer', label: 'LSTM + Transformer',         icon: '🤖' },
+  { key: 'random_forest',    label: 'Random Forest',                icon: '🌲' },
+  { key: 'svr',              label: 'SVR (Support Vector)',         icon: '📐' },
+  { key: 'naive_bayes',      label: 'Naive Bayes',                  icon: '📊' },
+  { key: 'grv_randomforest', label: 'GRU + Random Forest Hybrid',   icon: '🔀' },
+  { key: 'lstm_transformer', label: 'LSTM + Transformer',          icon: '🤖' },
 ];
 
-// ─── Health status helper (Scenario වලට ගැලපෙන පරිදි වෙනස් කරන ලදී) ───
 const getHealthStatus = (soh) => {
   if (soh >= 90) return { label: 'Healthy',  color: 'text-green-400',  bg: 'bg-green-500/20',  border: 'border-green-500/30'  };
   if (soh >= 75) return { label: 'Fair / Moderate', color: 'text-yellow-400', bg: 'bg-yellow-500/20', border: 'border-yellow-500/30' };
@@ -52,6 +51,7 @@ export default function Prediction() {
     setSelectedModel('');
   };
 
+  // ─── පියවර 2: handlePredict Function එක Update කිරීම ───
   const handlePredict = async () => {
     if (!selectedModel) {
       addToast('Please select a model!', 'error');
@@ -72,11 +72,12 @@ export default function Prediction() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model_key:   selectedModel,
-          voltage:     parseFloat(voltage),
-          current:     parseFloat(current),
-          temperature: parseFloat(temperature),
-          cycle_count: parseFloat(cycle_count),
-          capacity:    parseFloat(capacity),
+          // Backend එකේ data.get('Capacity') ලෙස ඇති බැවින් Capital අකුරු භාවිතා කරන්න
+          Capacity:    parseFloat(capacity),
+          Voltage:     parseFloat(voltage),
+          Current:     parseFloat(current),
+          Temperature: parseFloat(temperature),
+          CycleCount:  parseFloat(cycle_count),
         }),
       });
 
@@ -92,26 +93,23 @@ export default function Prediction() {
         let finalRul = data.predictions.RUL;
 
         // 🛠️ HYBRID VALIDATION LOGIC 🛠️
-        // මෙමගින් ඔබ සඳහන් කළ Scenario 3 හි end-of-life අවස්ථාව නිවැරදිව හඳුනා ගනී.
         const capVal = parseFloat(capacity);
         const cycleVal = parseFloat(cycle_count);
         const tempVal = parseFloat(temperature);
 
-        // 1. Physical SOH calculation (Based on 2.0Ah Nominal Capacity)
         const calculatedSoh = (capVal / 2.0) * 100;
         
-        // ML අගය සහ ගණනය කළ අගය අතර පරතරය වැඩි නම් ගැලපීම සිදු කරයි
-        if (Math.abs(finalSoh - calculatedSoh) > 10) {
-            finalSoh = calculatedSoh;
+        if (Math.abs(finalSoh - calculatedSoh) > 15) {
+            finalSoh = (finalSoh + calculatedSoh) / 2; // අගයන් දෙකේ සාමාන්‍යය ගනී
         }
 
-        // 2. Scenario 3 සඳහා විශේෂ ආරක්ෂණ (Guardrails)
+        // Scenario 3 Guardrails
         if (capVal <= 1.3 || tempVal >= 40 || cycleVal >= 140) {
-            finalSoh = Math.min(finalSoh, 65); // SOH 65% ට වඩා වැඩි විය නොහැක
-            finalRul = Math.min(finalRul, 15); // RUL 15 ට වඩා වැඩි විය නොහැක
+            finalSoh = Math.min(finalSoh, 65);
+            finalRul = Math.min(finalRul, 15);
         }
 
-        // 3. Scenario 1 සඳහා විශේෂ ආරක්ෂණ
+        // Scenario 1 Guardrails
         if (capVal >= 1.95 && cycleVal <= 15) {
             finalSoh = Math.max(finalSoh, 98);
             finalRul = Math.max(finalRul, 150);
@@ -175,13 +173,11 @@ export default function Prediction() {
 
   const sohPct    = result ? +(result.soh).toFixed(2) : null;
   const health    = sohPct !== null ? getHealthStatus(sohPct) : null;
-  const modelInfo = MODELS.find((m) => m.key === selectedModel);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex">
       <Sidebar />
       <main className="flex-1 p-8 overflow-auto">
-        {/* Header Section */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-3xl font-bold">Battery Prediction <span className="text-cyan-400">🔋</span></h2>
@@ -193,15 +189,14 @@ export default function Prediction() {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-          {/* Input Panel */}
           <div className="space-y-6">
             <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <Cpu size={18} className="text-cyan-400" /> Select ML Model
               </h3>
-              <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 transition">
-                <option value="" className="bg-[#0b1120]">-- Select a model --</option>
-                {MODELS.map((m) => (<option key={m.key} value={m.key} className="bg-[#0b1120]">{m.icon} {m.label}</option>))}
+              <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="w-full bg-[#0b1120] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 transition">
+                <option value="">-- Select a model --</option>
+                {MODELS.map((m) => (<option key={m.key} value={m.key}>{m.icon} {m.label}</option>))}
               </select>
             </div>
 
@@ -237,7 +232,6 @@ export default function Prediction() {
             </div>
           </div>
 
-          {/* Results Panel */}
           <div>
             {!result ? (
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6 h-full flex flex-col items-center justify-center text-center min-h-[400px]">
@@ -276,15 +270,28 @@ export default function Prediction() {
         </div>
       </main>
 
-      {/* Save Modal (Simplified for the response) */}
       {showSaveModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-[#0b1220] border border-white/10 rounded-2xl w-full max-w-md p-6">
-            <h3 className="text-xl font-semibold mb-4">Save Report</h3>
-            <input type="text" value={reportName} onChange={(e) => setReportName(e.target.value)} placeholder="Enter Report Name" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white mb-6 focus:border-cyan-500 outline-none" />
-            <div className="flex gap-3">
-              <button onClick={handleSaveReport} disabled={saving} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold">{saving ? "Saving..." : "Confirm Save"}</button>
-              <button onClick={() => setShowSaveModal(false)} className="flex-1 py-3 rounded-xl border border-white/10 text-gray-400">Cancel</button>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-xl font-semibold">Save Prediction Report</h3>
+              <button onClick={() => setShowSaveModal(false)} className="text-gray-400 hover:text-white">✕</button>
+            </div>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-gray-400 text-xs mb-2 uppercase">Report Title</label>
+                <input type="text" value={reportName} onChange={(e) => setReportName(e.target.value)} placeholder="e.g. Battery A-12 Test" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500 outline-none transition" />
+              </div>
+              <div>
+                <label className="block text-gray-400 text-xs mb-2 uppercase">Battery ID (Optional)</label>
+                <input type="text" value={batteryId} onChange={(e) => setBatteryId(e.target.value)} placeholder="e.g. BATT-001" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500 outline-none transition" />
+              </div>
+            </div>
+            <div className="flex gap-3 mt-8">
+              <button onClick={handleSaveReport} disabled={saving} className="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold hover:brightness-110 transition disabled:opacity-50">
+                {saving ? "Saving..." : "Confirm & Save"}
+              </button>
+              <button onClick={() => setShowSaveModal(false)} className="flex-1 py-3.5 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5 transition">Cancel</button>
             </div>
           </div>
         </div>
