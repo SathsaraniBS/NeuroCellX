@@ -419,37 +419,40 @@ const BatteryTypes = () => {
 
         <section className="relative px-6 py-24">
           <SectionTitle
-            eyebrow="Questions"
+            center
+            eyebrow="FAQ"
             title={
-              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
-                Frequently <br />
-                <span className="text-cyan-400">Asked Questions</span>
+              <h2 className="text-4xl md:text-6xl text-center text-white font-black uppercase tracking-tight leading-tight">
+                Frequently Asked{" "}
+                <span className="text-cyan-400">Questions</span>
               </h2>
             }
-            text="Quick answers for EV battery chemistry, safety, lifetime, replacement, and performance."
+            text="Quick answers for common questions about EV categories, charging, and battery health."
           />
 
-          <div className="grid gap-4">
+          <div className="mx-auto max-w-5xl grid gap-5">
             {faqs.map((faq, index) => (
               <div
                 key={faq.q}
-                className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl"
+                className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/30"
               >
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left font-black uppercase tracking-wide text-white"
+                  className="flex w-full items-center justify-between gap-6 px-7 py-6 text-left"
                 >
-                  {faq.q}
+                  <span className="text-lg md:text-xl font-black uppercase text-white">
+                    {faq.q}
+                  </span>
 
                   <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-cyan-300 transition ${openFaq === index ? "rotate-180" : ""
+                    className={`h-5 w-5 shrink-0 text-cyan-300 transition-transform duration-300 ${openFaq === index ? "rotate-180" : ""
                       }`}
                   />
                 </button>
 
                 {openFaq === index && (
-                  <div className="border-t border-white/10 px-6 py-5 leading-7 text-slate-400">
+                  <div className="border-t border-white/10 px-7 py-6 text-base leading-8 text-slate-400">
                     {faq.a}
                   </div>
                 )}
