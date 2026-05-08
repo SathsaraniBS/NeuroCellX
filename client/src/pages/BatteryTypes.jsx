@@ -1,6 +1,21 @@
 import React, { useState } from "react";
-import {ArrowRight,BatteryCharging,BarChart3,CheckCircle2,ChevronDown,CircleDot,
-FlaskConical,Rocket,ShieldCheck,Wrench,XCircle,Zap,Snowflake,Cpu,Sparkles,} from "lucide-react";
+import {
+  ArrowRight,
+  BatteryCharging,
+  BarChart3,
+  CheckCircle2,
+  ChevronDown,
+  CircleDot,
+  Rocket,
+  ShieldCheck,
+  Wrench,
+  XCircle,
+  Zap,
+  Snowflake,
+  Cpu,
+  Sparkles,
+} from "lucide-react";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -164,12 +179,30 @@ const BatteryTypes = () => {
   ];
 
   const faqs = [
-    "What is the best battery for an EV today?",
-    "How long do EV batteries last?",
-    "Is LFP better than NMC?",
-    "Are solid-state batteries available now?",
-    "Do cold temperatures affect EV batteries?",
-    "Can I replace my EV battery?",
+    {
+      q: "What is the best battery for an EV today?",
+      a: "Lithium-ion batteries are currently the best and most widely used EV batteries. NMC/NCA is good for long range, while LFP is good for safety and long life.",
+    },
+    {
+      q: "How long do EV batteries last?",
+      a: "Most EV batteries last around 8–15 years depending on usage, charging habits, climate, and maintenance.",
+    },
+    {
+      q: "Is LFP better than NMC?",
+      a: "LFP is safer, cheaper, and lasts longer. NMC gives higher energy density and better driving range.",
+    },
+    {
+      q: "Are solid-state batteries available now?",
+      a: "Not widely yet. Solid-state batteries are still developing and are expected to become more common in future EVs.",
+    },
+    {
+      q: "Do cold temperatures affect EV batteries?",
+      a: "Yes. Cold weather can temporarily reduce battery performance, charging speed, and driving range.",
+    },
+    {
+      q: "Can I replace my EV battery?",
+      a: "Yes. EV batteries can be replaced, but replacement cost can be high depending on the vehicle model and battery size.",
+    },
   ];
 
   return (
@@ -191,15 +224,14 @@ const BatteryTypes = () => {
 
           <div className="relative z-10 mx-auto grid min-h-[78vh] max-w-7xl items-center gap-12 px-6 lg:grid-cols-[1fr_0.95fr]">
             <div>
-
-               <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">
-                EV Battery Types
+              <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">
+                EV Battery Types{" "}
                 <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
                   & Chemistry
                 </span>
               </h1>
 
-              <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">
+              <p className="mt-6 text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">
                 Compare lead-acid, NiMH, lithium-ion, NMC, LFP, solid-state, and
                 sodium-ion batteries for EV range, cost, safety, and lifespan.
               </p>
@@ -221,35 +253,6 @@ const BatteryTypes = () => {
                 </a>
               </div>
             </div>
-
-            {/* <div className="relative">
-              <div className="absolute -inset-8 rounded-full bg-cyan-400/20 blur-[90px]" />
-
-              <div className="relative overflow-hidden rounded-[2.5rem] border border-cyan-400/20 bg-white/[0.06] p-6 shadow-[0_0_70px_rgba(34,211,238,0.16)] backdrop-blur-2xl">
-                <div className="rounded-[2rem] border border-white/10 bg-[#07111f]/90 p-6">
-                  <div className="mb-8 flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-black uppercase tracking-[0.2em] text-cyan-300">
-                        Chemistry Stack
-                      </p>
-                      <h3 className="mt-2 text-2xl font-black">
-                        Battery Evolution
-                      </h3>
-                    </div>
-                    <FlaskConical className="h-10 w-10 text-cyan-300" />
-                  </div>
-
-                  <div className="flex min-h-[280px] items-end justify-center gap-3 rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
-                    <BatteryPillar label="LEAD ACID" height="h-36" color="bg-slate-500" />
-                    <BatteryPillar label="NiMH" height="h-48" color="bg-emerald-500" />
-                    <BatteryPillar label="LFP" height="h-56" color="bg-blue-500" />
-                    <BatteryPillar label="NMC" height="h-60" color="bg-violet-500" />
-                    <BatteryPillar label="SOLID STATE" height="h-64" color="bg-cyan-500" />
-                    <BatteryPillar label="Na-ION" height="h-52" color="bg-orange-500" />
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </section>
 
@@ -261,11 +264,13 @@ const BatteryTypes = () => {
                 title="Why Chemistry Matters"
                 text="Battery chemistry directly affects range, weight, cost, safety, charging behavior, and long-term battery life."
               />
+
               <InfoPanel
                 icon={Cpu}
                 title="Modern EV Standard"
                 text="Most modern EVs use lithium-ion batteries such as NMC, NCA, and LFP because they balance power, range, and reliability."
               />
+
               <InfoPanel
                 icon={Sparkles}
                 title="Future Innovation"
@@ -282,10 +287,7 @@ const BatteryTypes = () => {
                 Battery <br />
                 <span className="text-cyan-400">Chemistry Explained</span>
               </h2>
-
             }
-          
-            
             text="Each chemistry has different strengths. Some are cheaper, some are safer, and some are better for long range."
           />
 
@@ -307,9 +309,8 @@ const BatteryTypes = () => {
             title={
               <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
                 Quick <br />
-                <span className="text-cyan-400">Battery Comparison </span>
+                <span className="text-cyan-400">Battery Comparison</span>
               </h2>
-
             }
             text="Use this table to compare battery chemistry by energy density, cost, safety, cycle life, and maturity."
           />
@@ -319,7 +320,15 @@ const BatteryTypes = () => {
               <table className="w-full border-collapse text-sm">
                 <thead>
                   <tr>
-                    {["Chemistry", "Lead-acid", "NiMH", "LFP", "NMC / NCA", "Solid-State", "Sodium-ion"].map((head) => (
+                    {[
+                      "Chemistry",
+                      "Lead-acid",
+                      "NiMH",
+                      "LFP",
+                      "NMC / NCA",
+                      "Solid-State",
+                      "Sodium-ion",
+                    ].map((head) => (
                       <th
                         key={head}
                         className="border border-white/10 bg-cyan-400/10 px-5 py-4 text-left font-black uppercase tracking-wide text-cyan-200"
@@ -366,7 +375,7 @@ const BatteryTypes = () => {
             title={
               <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
                 Which Chemistry <br />
-                <span className="text-cyan-400">Fits Your EV?  </span>
+                <span className="text-cyan-400">Fits Your EV?</span>
               </h2>
             }
             text="The best battery depends on whether you need maximum range, lower cost, safety, or future-ready technology."
@@ -381,7 +390,9 @@ const BatteryTypes = () => {
                   key={card.title}
                   className="group rounded-3xl border border-white/10 bg-white/[0.05] p-7 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-[0_0_45px_rgba(34,211,238,0.14)]"
                 >
-                  <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/10 ${card.color}`}>
+                  <div
+                    className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/10 ${card.color}`}
+                  >
                     <Icon className="h-9 w-9" />
                   </div>
 
@@ -409,22 +420,28 @@ const BatteryTypes = () => {
         <section className="relative px-6 py-24">
           <SectionTitle
             eyebrow="Questions"
-            title="Frequently Asked Questions"
+            title={
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                Frequently <br />
+                <span className="text-cyan-400">Asked Questions</span>
+              </h2>
+            }
             text="Quick answers for EV battery chemistry, safety, lifetime, replacement, and performance."
           />
 
           <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-2">
             {faqs.map((faq, index) => (
               <div
-                key={faq}
+                key={faq.q}
                 className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-xl transition hover:border-cyan-400/30"
               >
                 <button
+                  type="button"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left"
                 >
                   <span className="text-sm font-bold text-white md:text-base">
-                    {faq}
+                    {faq.q}
                   </span>
 
                   <ChevronDown
@@ -436,9 +453,7 @@ const BatteryTypes = () => {
 
                 {openFaq === index && (
                   <div className="border-t border-white/10 px-6 pb-6 pt-5 text-sm leading-7 text-slate-400">
-                    Battery performance depends on chemistry, thermal management,
-                    charging habits, climate, driving style, and battery management
-                    software.
+                    {faq.a}
                   </div>
                 )}
               </div>
@@ -477,14 +492,6 @@ const BatteryTypes = () => {
   );
 };
 
-const BatteryPillar = ({ label, height, color }) => (
-  <div
-    className={`flex w-16 items-start justify-center rounded-t-2xl rounded-b-lg px-2 pt-5 text-center text-xs font-black text-white shadow-xl ${height} ${color}`}
-  >
-    {label}
-  </div>
-);
-
 const InfoPanel = ({ icon: Icon, title, text }) => (
   <div className="flex gap-5">
     <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/10 text-cyan-300">
@@ -522,7 +529,7 @@ const ChemistryCard = ({ item }) => {
       <div className="mt-6 overflow-hidden rounded-2xl border border-white/10">
         {item.rows.map(([label, type, value]) => (
           <div
-            key={label}
+            key={`${item.title}-${label}`}
             className="grid grid-cols-[1fr_1fr] border-b border-white/10 last:border-b-0"
           >
             <div className="bg-white/[0.04] px-4 py-3 text-xs font-black uppercase text-slate-300">
@@ -530,9 +537,15 @@ const ChemistryCard = ({ item }) => {
             </div>
 
             <div className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-slate-300">
-              {type === "good" && <CheckCircle2 className="h-4 w-4 text-emerald-300" />}
-              {type === "bad" && <XCircle className="h-4 w-4 text-red-300" />}
-              {type === "warn" && <CircleDot className="h-4 w-4 text-orange-300" />}
+              {type === "good" && (
+                <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+              )}
+              {type === "bad" && (
+                <XCircle className="h-4 w-4 text-red-300" />
+              )}
+              {type === "warn" && (
+                <CircleDot className="h-4 w-4 text-orange-300" />
+              )}
               {value}
             </div>
           </div>
@@ -546,11 +559,23 @@ const StatusDot = ({ value }) => {
   const lower = String(value).toLowerCase();
 
   let color = "bg-slate-400";
-  if (lower.includes("excellent") || lower.includes("good") || lower.includes("very low") || lower === "low") {
+
+  if (
+    lower.includes("excellent") ||
+    lower.includes("good") ||
+    lower.includes("very low") ||
+    lower === "low"
+  ) {
     color = "bg-emerald-400";
   }
-  if (lower.includes("medium")) color = "bg-orange-400";
-  if (lower.includes("high") || lower.includes("very high")) color = "bg-red-400";
+
+  if (lower.includes("medium")) {
+    color = "bg-orange-400";
+  }
+
+  if (lower.includes("high") || lower.includes("very high")) {
+    color = "bg-red-400";
+  }
 
   if (lower.match(/\d/)) {
     return <span>{value}</span>;
@@ -569,7 +594,9 @@ const NextCard = ({ icon: Icon, title, text, color }) => (
     href="#"
     className="group flex items-center gap-6 rounded-3xl border border-white/10 bg-white/[0.05] p-7 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-[0_0_45px_rgba(34,211,238,0.14)]"
   >
-    <div className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/10 ${color}`}>
+    <div
+      className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/10 ${color}`}
+    >
       <Icon className="h-9 w-9" />
     </div>
 
@@ -578,23 +605,33 @@ const NextCard = ({ icon: Icon, title, text, color }) => (
       <p className="text-sm leading-6 text-slate-400">{text}</p>
     </div>
 
-    <ArrowRight className={`h-6 w-6 shrink-0 transition group-hover:translate-x-1 ${color}`} />
+    <ArrowRight
+      className={`h-6 w-6 shrink-0 transition group-hover:translate-x-1 ${color}`}
+    />
   </a>
 );
 
 const SectionTitle = ({ eyebrow, title, text }) => (
-  <div className="mx-auto mb-14 max-w-3xl text-center">
-    <p className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">
-      {eyebrow}
-    </p>
+  <div className="mx-auto mb-14 max-w-7xl text-left">
+    {eyebrow && (
+      <p className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">
+        {eyebrow}
+      </p>
+    )}
 
-    <h2 className="text-4xl font-black uppercase leading-tight tracking-tight text-white md:text-6xl">
-      {title}
-    </h2>
+    <div className="text-left">
+      {typeof title === "string" ? (
+        <h2 className="text-4xl font-black uppercase leading-tight tracking-tight text-white md:text-6xl">
+          {title}
+        </h2>
+      ) : (
+        title
+      )}
+    </div>
 
-    <div className="mx-auto mt-5 h-1 w-16 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400" />
+    <div className="mt-5 h-1 w-16 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400" />
 
-    <p className="mt-6 text-base leading-8 text-slate-400 md:text-lg">
+    <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 md:text-lg">
       {text}
     </p>
   </div>
