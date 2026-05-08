@@ -10,7 +10,7 @@ const MODELS = [
   { key: 'random_forest',    label: 'Random Forest',                icon: '🌲' },
   { key: 'svr',              label: 'SVR (Support Vector)',         icon: '📐' },
   { key: 'naive_bayes',      label: 'Naive Bayes',                  icon: '📊' },
-  { key: 'grv_randomforest', label: 'GRU + Random Forest Hybrid',   icon: '🔀' },
+  { key: 'gru_randomforest', label: 'GRU + Random Forest Hybrid',   icon: '🔀' },
   { key: 'lstm_transformer', label: 'LSTM + Transformer',          icon: '🤖' },
 ];
 
@@ -51,7 +51,7 @@ export default function Prediction() {
     setSelectedModel('');
   };
 
-  // ─── පියවර 2: handlePredict Function එක Update කිරීම ───
+  // handlePredict Function 
   const handlePredict = async () => {
     if (!selectedModel) {
       addToast('Please select a model!', 'error');
@@ -72,7 +72,6 @@ export default function Prediction() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model_key:   selectedModel,
-          // Backend එකේ data.get('Capacity') ලෙස ඇති බැවින් Capital අකුරු භාවිතා කරන්න
           Capacity:    parseFloat(capacity),
           Voltage:     parseFloat(voltage),
           Current:     parseFloat(current),
@@ -100,7 +99,7 @@ export default function Prediction() {
         const calculatedSoh = (capVal / 2.0) * 100;
         
         if (Math.abs(finalSoh - calculatedSoh) > 15) {
-            finalSoh = (finalSoh + calculatedSoh) / 2; // අගයන් දෙකේ සාමාන්‍යය ගනී
+            finalSoh = (finalSoh + calculatedSoh) / 2; 
         }
 
         // Scenario 3 Guardrails
