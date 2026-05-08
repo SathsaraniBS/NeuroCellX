@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Zap, ShieldCheck, Banknote, Download, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, BatteryCharging } from "lucide-react";
+import { Heart, Zap, ShieldCheck, Banknote, Download, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, BatteryCharging
+ } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import EVCalculator from '../components/EVCalculator';
@@ -226,7 +227,7 @@ function Homecharging() {
                     {/* Articles Area */}
                     <div>
                         <div className="flex justify-between items-end border-b border-white/10 pb-6 mb-10">
-                            <h2 className="text-3xl font-black uppercase tracking-tight">Things to consider while  
+                            <h2 className="text-3xl font-black uppercase tracking-tight">Things to consider while
                                 <br />
                                 <span className="text-cyan-400">installing an ev charger at home</span></h2>
                         </div>
@@ -249,7 +250,7 @@ function Homecharging() {
                                         className="group cursor-pointer flex flex-col bg-white/5 rounded-2xl border border-white/10 overflow-hidden hover:border-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/10"
                                     >
                                         <div className="w-full h-56 overflow-hidden relative">
-                                            
+
                                             <img
                                                 src={article.image}
                                                 alt={article.title}

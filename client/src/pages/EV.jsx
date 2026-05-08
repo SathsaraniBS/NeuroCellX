@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { ChevronDown, CheckCircle2, Download, Leaf, Wallet, Gauge, Wifi, Settings, Battery, Map, ChevronRight, Zap, Compass, Fuel } from "lucide-react";
+import { ChevronDown, CheckCircle2, Download, Leaf, Wallet, Gauge, Wifi, Settings, Battery, Map, ChevronRight, Zap, Compass, Fuel 
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";

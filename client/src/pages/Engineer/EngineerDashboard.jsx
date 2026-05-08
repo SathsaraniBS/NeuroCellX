@@ -202,7 +202,7 @@ const EngineerDashboard = () => {
             {/* Required columns info */}
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4 mb-6">
               <p className="text-blue-300 text-sm font-medium mb-2">
-                ✅ Required CSV Columns:
+                 Required CSV Columns:
               </p>
               <div className="flex flex-wrap gap-2">
                 {['voltage', 'current', 'temperature', 'cycle_count'].map((col) => (

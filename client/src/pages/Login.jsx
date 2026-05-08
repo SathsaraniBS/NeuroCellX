@@ -25,7 +25,7 @@ function Login() {
      try {
           
             const data = await loginUser({ email, password });
-            // ✅ Debug - check what backend returns
+            //  Debug - check what backend returns
             console.log('Login response:', data);
             console.log('User role:', data.user?.role);
 

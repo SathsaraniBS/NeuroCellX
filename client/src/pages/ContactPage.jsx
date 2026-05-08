@@ -191,32 +191,7 @@ const ContactPage = () => {
                         </div>
                     </form>
                 </div>
-
-               
-
-                {/* RIGHT SIDE - CONTACT INFO */}
-                {/* <div className="space-y-8">
-                    <div className="relative group">
-                        <img
-                            src="src/assets/img1.jpg"
-                            alt="Contact Support"
-                            className="w-full rounded-2xl shadow-2xl border border-white/10 drop-shadow-[0_0_20px_rgba(34,211,238,0.2)]"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent rounded-2xl"></div>
-                    </div> */}
-
-                    {/* Contact Cards Grid */}
-                    {/* <div className="grid sm:grid-cols-2 gap-4">
-                        {contactInfo.map((info, index) => (
-                            <div key={index} className="p-5 bg-white/5 border border-white/10 rounded-2xl hover:border-cyan-400/50 transition-colors">
-                                <info.icon className="text-cyan-400 mb-3" size={24} />
-                                <h4 className="font-bold text-lg">{info.title}</h4>
-                                <p className="text-sm text-gray-300 mt-1">{info.details}</p>
-                                <p className="text-xs text-gray-500 mt-2">{info.description}</p>
-                            </div>
-                        ))}
-                    </div> */}
-                {/* </div> */}
+        
             </div>
 
             <Footer />

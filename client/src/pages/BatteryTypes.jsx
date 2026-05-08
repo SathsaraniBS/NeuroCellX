@@ -1,19 +1,5 @@
 import React, { useState } from "react";
-import {
-  ArrowRight,
-  BatteryCharging,
-  BarChart3,
-  CheckCircle2,
-  ChevronDown,
-  CircleDot,
-  Rocket,
-  ShieldCheck,
-  Wrench,
-  XCircle,
-  Zap,
-  Snowflake,
-  Cpu,
-  Sparkles,
+import {ArrowRight,BatteryCharging,BarChart3,CheckCircle2,ChevronDown,CircleDot,Rocket,ShieldCheck,Wrench,XCircle,Zap,Snowflake,Cpu,Sparkles,
 } from "lucide-react";
 
 import Navbar from "../components/Navbar";

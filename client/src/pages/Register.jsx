@@ -13,12 +13,12 @@ const Register = () => {
     const [showPassword,    setShowPassword]    = useState(false);
     const [loading,         setLoading]         = useState(false);
 
-    // ✅ FIX 2: Removed unused { register } from useAuth
+    // FIX 2: Removed unused { register } from useAuth
     // We don't need it because we call axios directly
     const { addToast } = useToast();
     const navigate     = useNavigate();
 
-    // ✅ FIX 1: Use environment variable instead of hardcoded URL
+    //  FIX 1: Use environment variable instead of hardcoded URL
     const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
 
     const handleSubmit = async (e) => {
@@ -43,7 +43,7 @@ const Register = () => {
         // ── API Call ─────────────────────────────
         setLoading(true);
         try {
-            // ✅ FIX 1: Uses API_URL variable — not hardcoded
+            //  FIX 1: Uses API_URL variable — not hardcoded
             await axios.post(`${API_URL}/api/auth/register`, {
                 name,
                 email,

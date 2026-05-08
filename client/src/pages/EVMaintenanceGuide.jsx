@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-    ChevronDown, ShieldCheck, AlertTriangle, PhoneCall, CheckCircle2, Download,
-} from "lucide-react";
+import {ChevronDown, ShieldCheck, AlertTriangle, PhoneCall, CheckCircle2, Download, BatteryCharging} from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 

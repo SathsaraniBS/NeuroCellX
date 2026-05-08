@@ -1,19 +1,5 @@
 import React from "react";
-import {
-  Play,
-  ArrowRight,
-  BatteryCharging,
-  Bolt,
-  Car,
-  Globe2,
-  Leaf,
-  Lightbulb,
-  PlugZap,
-  Rocket,
-  ShieldCheck,
-  ShoppingCart,
-  Sprout,
-  Wind,
+import {Play,ArrowRight,BatteryCharging,Bolt,Car,Globe2,Leaf,Lightbulb,PlugZap,Rocket,ShieldCheck,ShoppingCart,Sprout,Wind,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";

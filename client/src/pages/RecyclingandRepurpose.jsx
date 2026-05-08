@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-    Zap, ShieldCheck, Banknote, Map, 
-    ChevronLeft, ChevronRight, ChevronDown, Settings, ThermometerSnowflake, 
-    BatteryCharging, BatteryMedium, BatteryWarning 
-} from "lucide-react";
+import { Zap, ShieldCheck, Banknote, Map, ChevronLeft, ChevronRight, ChevronDown, Settings, ThermometerSnowflake, 
+BatteryCharging, BatteryMedium, BatteryWarning } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -198,11 +195,6 @@ function RecyclingandRepurpose() {
                     </div>
                 </div>
             </section>
-
-           
-            
-            
-           
 
             <Footer />
 

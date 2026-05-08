@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-    Download, Zap, ShieldCheck, Banknote, Map, 
-    ChevronLeft, ChevronRight, ChevronDown, Settings, ThermometerSnowflake, 
-    BatteryCharging, BatteryMedium, BatteryWarning 
+import { Download, Zap, ShieldCheck, Banknote, Map, ChevronLeft, ChevronRight, ChevronDown, Settings, ThermometerSnowflake, 
+BatteryCharging, BatteryMedium, BatteryWarning 
 } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';

@@ -4,8 +4,6 @@ import { Download, } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-
-
 function Batterysafety() {
     const navigate = useNavigate(); // Added for navigation
     const [currentSlide, setCurrentSlide] = useState(0);

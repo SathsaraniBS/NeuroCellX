@@ -5,7 +5,6 @@ import { useToast }         from '../contexts/ToastContext';
 import Sidebar              from '../components/User/UserSidebar';
 import {Cpu, Zap, ThermometerSun, RotateCcw, BatteryCharging, ChevronDown, BarChart2, Save, RefreshCw, AlertTriangle, CheckCircle, TrendingUp, Activity, Download} from 'lucide-react';
 
-// ─── පියවර 1: Backend එකේ Keys වලට ගැලපෙන ලෙස MODELS Array එක සැකසීම ───
 const MODELS = [
   { key: 'random_forest',    label: 'Random Forest',                icon: '🌲' },
   { key: 'svr',              label: 'SVR (Support Vector)',         icon: '📐' },
@@ -99,7 +98,7 @@ export default function Prediction() {
         const calculatedSoh = (capVal / 2.0) * 100;
         
         if (Math.abs(finalSoh - calculatedSoh) > 15) {
-            finalSoh = (finalSoh + calculatedSoh) / 2; 
+            finalSoh = (finalSoh + calculatedSoh) / 2; //    
         }
 
         // Scenario 3 Guardrails
