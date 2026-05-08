@@ -429,30 +429,27 @@ const BatteryTypes = () => {
             text="Quick answers for EV battery chemistry, safety, lifetime, replacement, and performance."
           />
 
-          <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-2">
+          <div className="grid gap-4">
             {faqs.map((faq, index) => (
               <div
                 key={faq.q}
-                className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] backdrop-blur-xl transition hover:border-cyan-400/30"
+                className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl"
               >
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left"
+                  className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left font-black uppercase tracking-wide text-white"
                 >
-                  <span className="text-sm font-bold text-white md:text-base">
-                    {faq.q}
-                  </span>
+                  {faq.q}
 
                   <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-cyan-300 transition-transform duration-300 ${
-                      openFaq === index ? "rotate-180" : ""
-                    }`}
+                    className={`h-5 w-5 shrink-0 text-cyan-300 transition ${openFaq === index ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
 
                 {openFaq === index && (
-                  <div className="border-t border-white/10 px-6 pb-6 pt-5 text-sm leading-7 text-slate-400">
+                  <div className="border-t border-white/10 px-6 py-5 leading-7 text-slate-400">
                     {faq.a}
                   </div>
                 )}
