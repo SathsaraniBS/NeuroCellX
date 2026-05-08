@@ -613,11 +613,7 @@ const NextCard = ({ icon: Icon, title, text, color }) => (
 
 const SectionTitle = ({ eyebrow, title, text }) => (
   <div className="mx-auto mb-14 max-w-7xl text-left">
-    {eyebrow && (
-      <p className="mb-4 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">
-        {eyebrow}
-      </p>
-    )}
+    
 
     <div className="text-left">
       {typeof title === "string" ? (
@@ -628,8 +624,6 @@ const SectionTitle = ({ eyebrow, title, text }) => (
         title
       )}
     </div>
-
-    <div className="mt-5 h-1 w-16 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400" />
 
     <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 md:text-lg">
       {text}
