@@ -38,7 +38,7 @@ const AdminUsers = ({ showAddModal, setShowAddModal, onUserChange }) => {
       setShowAddModal(false);
       setNewUser({ name: '', email: '', password: '', role: 'user' });
       fetchUsers();
-      if (onUserChange) onUserChange(); // Highlight: ප්‍රධාන Dashboard එකේ Stats update කරයි
+      if (onUserChange) onUserChange(); 
     } catch (err) {
       addToast(err.response?.data?.detail || 'Failed to create user', 'error');
     }
@@ -54,7 +54,7 @@ const AdminUsers = ({ showAddModal, setShowAddModal, onUserChange }) => {
       addToast('User updated successfully!', 'success');
       setShowEditModal(false);
       fetchUsers();
-      if (onUserChange) onUserChange(); // Highlight: Role වෙනස් වූවොත් stats update වීමට
+      if (onUserChange) onUserChange(); 
     } catch (err) {
       addToast('Failed to update user', 'error');
     }

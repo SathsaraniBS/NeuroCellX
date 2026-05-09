@@ -34,6 +34,7 @@ import EVTypes from './pages/EVTypes ';
 import EVMaintenanceGuide from './pages/EVMaintenanceGuide';
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminPrediction from './pages/admin/AdminPrediction';
 
 // ─── Engineer Pages ─────────────────────
 import EngineerDashboard from './pages/Engineer/EngineerDashboard';
@@ -198,6 +199,13 @@ function App() {
                                     <AdminDashboard />
                                 </ProtectedRoute>
                             } />
+
+                            <Route path="/admin/prediction" element={
+                                <ProtectedRoute allowedRoles={['admin']}>
+                                    <AdminPrediction />
+                                </ProtectedRoute>
+                            } />
+
 
                             {/* CATCH ALL — redirect to login */}
                             <Route path="*" element={<Navigate to="/login" />} />   {/* ← NEW: Catch-all redirect */}

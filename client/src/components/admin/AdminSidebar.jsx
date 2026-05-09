@@ -12,6 +12,7 @@ const AdminSidebar = () => {
         { path: '/admin', icon: LayoutDashboard, label: 'Overview' },
         { path: '/admin/users', icon: Users, label: 'Users' },
         { path: '/admin/contacts', icon: MessageSquare, label: 'Queries' },
+        
         { path: '/admin/settings', icon: Settings, label: 'Settings' },
     ];
 
