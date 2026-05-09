@@ -50,7 +50,7 @@ export default function Prediction() {
     setSelectedModel('');
   };
 
-  // handlePredict Function 
+  // ✅ FIXED handlePredict - Guardrails ඉවත් කළා, Backend prediction directly use කරනවා
   const handlePredict = async () => {
     if (!selectedModel) {
       addToast('Please select a model!', 'error');
@@ -85,37 +85,12 @@ export default function Prediction() {
       }
 
       const data = await res.json();
-      
+
       if (data.status === "success") {
-        let finalSoh = data.predictions.SOH;
-        let finalRul = data.predictions.RUL;
-
-        // 🛠️ HYBRID VALIDATION LOGIC 🛠️
-        const capVal = parseFloat(capacity);
-        const cycleVal = parseFloat(cycle_count);
-        const tempVal = parseFloat(temperature);
-
-        const calculatedSoh = (capVal / 2.0) * 100;
-        
-        if (Math.abs(finalSoh - calculatedSoh) > 15) {
-            finalSoh = (finalSoh + calculatedSoh) / 2; //    
-        }
-
-        // Scenario 3 Guardrails
-        if (capVal <= 1.3 || tempVal >= 40 || cycleVal >= 140) {
-            finalSoh = Math.min(finalSoh, 65);
-            finalRul = Math.min(finalRul, 15);
-        }
-
-        // Scenario 1 Guardrails
-        if (capVal >= 1.95 && cycleVal <= 15) {
-            finalSoh = Math.max(finalSoh, 98);
-            finalRul = Math.max(finalRul, 150);
-        }
-
+        // ✅ Backend result directly use කරනවා - Override Guardrails නැහැ
         setResult({
-          soh: finalSoh,
-          rul: finalRul,
+          soh: data.predictions.SOH,
+          rul: data.predictions.RUL,
           metrics: data.metrics || null
         });
         addToast('Prediction successful ✅', 'success');
@@ -169,8 +144,8 @@ export default function Prediction() {
     }
   };
 
-  const sohPct    = result ? +(result.soh).toFixed(2) : null;
-  const health    = sohPct !== null ? getHealthStatus(sohPct) : null;
+  const sohPct = result ? +(result.soh).toFixed(2) : null;
+  const health = sohPct !== null ? getHealthStatus(sohPct) : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex">
@@ -192,9 +167,15 @@ export default function Prediction() {
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                 <Cpu size={18} className="text-cyan-400" /> Select ML Model
               </h3>
-              <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)} className="w-full bg-[#0b1120] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 transition">
+              <select
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                className="w-full bg-[#0b1120] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500/50 transition"
+              >
                 <option value="">-- Select a model --</option>
-                {MODELS.map((m) => (<option key={m.key} value={m.key}>{m.icon} {m.label}</option>))}
+                {MODELS.map((m) => (
+                  <option key={m.key} value={m.key}>{m.icon} {m.label}</option>
+                ))}
               </select>
             </div>
 
@@ -205,26 +186,50 @@ export default function Prediction() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-400 text-xs mb-2">Voltage (V)</label>
-                  <input type="number" name="voltage" value={inputs.voltage} onChange={handleChange} placeholder="e.g. 4.1" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none" />
+                  <input
+                    type="number" name="voltage" value={inputs.voltage}
+                    onChange={handleChange} placeholder="e.g. 4.1"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none"
+                  />
                 </div>
                 <div>
                   <label className="block text-gray-400 text-xs mb-2">Current (A)</label>
-                  <input type="number" name="current" value={inputs.current} onChange={handleChange} placeholder="e.g. 1.5" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none" />
+                  <input
+                    type="number" name="current" value={inputs.current}
+                    onChange={handleChange} placeholder="e.g. 1.5"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none"
+                  />
                 </div>
                 <div>
                   <label className="block text-gray-400 text-xs mb-2">Temperature (°C)</label>
-                  <input type="number" name="temperature" value={inputs.temperature} onChange={handleChange} placeholder="e.g. 24" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none" />
+                  <input
+                    type="number" name="temperature" value={inputs.temperature}
+                    onChange={handleChange} placeholder="e.g. 24"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none"
+                  />
                 </div>
                 <div>
                   <label className="block text-gray-400 text-xs mb-2">Cycle Count</label>
-                  <input type="number" name="cycle_count" value={inputs.cycle_count} onChange={handleChange} placeholder="e.g. 10" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none" />
+                  <input
+                    type="number" name="cycle_count" value={inputs.cycle_count}
+                    onChange={handleChange} placeholder="e.g. 10"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none"
+                  />
                 </div>
                 <div className="col-span-2">
                   <label className="block text-gray-400 text-xs mb-2">Capacity (Ah)</label>
-                  <input type="number" name="capacity" value={inputs.capacity} onChange={handleChange} placeholder="e.g. 2.0" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none" />
+                  <input
+                    type="number" name="capacity" value={inputs.capacity}
+                    onChange={handleChange} placeholder="e.g. 2.0"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-cyan-500/50 outline-none"
+                  />
                 </div>
               </div>
-              <button onClick={handlePredict} disabled={loading} className="w-full mt-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold text-sm hover:brightness-110 transition disabled:opacity-50">
+              <button
+                onClick={handlePredict}
+                disabled={loading}
+                className="w-full mt-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold text-sm hover:brightness-110 transition disabled:opacity-50"
+              >
                 {loading ? "Predicting..." : "Predict Health"}
               </button>
             </div>
@@ -246,7 +251,9 @@ export default function Prediction() {
                     <div className="bg-white/5 rounded-xl p-5 text-center border border-white/5">
                       <p className="text-gray-400 text-xs mb-1">State of Health</p>
                       <p className={`text-4xl font-bold ${health.color}`}>{sohPct}%</p>
-                      <span className={`inline-block mt-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${health.bg} ${health.color}`}>{health.label}</span>
+                      <span className={`inline-block mt-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${health.bg} ${health.color}`}>
+                        {health.label}
+                      </span>
                     </div>
                     <div className="bg-white/5 rounded-xl p-5 text-center border border-white/5">
                       <p className="text-gray-400 text-xs mb-1">Remaining Life</p>
@@ -255,13 +262,25 @@ export default function Prediction() {
                     </div>
                   </div>
                   <div className="bg-white/5 rounded-xl p-4">
-                    <div className="flex justify-between text-[10px] text-gray-500 font-bold uppercase mb-2"><span>Health Bar</span><span>{sohPct}%</span></div>
+                    <div className="flex justify-between text-[10px] text-gray-500 font-bold uppercase mb-2">
+                      <span>Health Bar</span><span>{sohPct}%</span>
+                    </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
-                      <div className={`h-2 rounded-full transition-all duration-1000 ${sohPct >= 75 ? (sohPct >= 90 ? 'bg-green-400' : 'bg-yellow-400') : 'bg-red-500'}`} style={{ width: `${Math.min(sohPct, 100)}%` }} />
+                      <div
+                        className={`h-2 rounded-full transition-all duration-1000 ${
+                          sohPct >= 75 ? (sohPct >= 90 ? 'bg-green-400' : 'bg-yellow-400') : 'bg-red-500'
+                        }`}
+                        style={{ width: `${Math.min(sohPct, 100)}%` }}
+                      />
                     </div>
                   </div>
                 </div>
-                <button onClick={() => setShowSaveModal(true)} className="w-full py-4 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 transition flex items-center justify-center gap-2"><Save size={16} /> Save Prediction Report</button>
+                <button
+                  onClick={() => setShowSaveModal(true)}
+                  className="w-full py-4 rounded-xl bg-white/5 border border-white/10 text-white font-bold text-sm hover:bg-white/10 transition flex items-center justify-center gap-2"
+                >
+                  <Save size={16} /> Save Prediction Report
+                </button>
               </div>
             )}
           </div>
@@ -278,18 +297,37 @@ export default function Prediction() {
             <div className="space-y-4">
               <div>
                 <label className="block text-gray-400 text-xs mb-2 uppercase">Report Title</label>
-                <input type="text" value={reportName} onChange={(e) => setReportName(e.target.value)} placeholder="e.g. Battery A-12 Test" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500 outline-none transition" />
+                <input
+                  type="text" value={reportName}
+                  onChange={(e) => setReportName(e.target.value)}
+                  placeholder="e.g. Battery A-12 Test"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500 outline-none transition"
+                />
               </div>
               <div>
                 <label className="block text-gray-400 text-xs mb-2 uppercase">Battery ID (Optional)</label>
-                <input type="text" value={batteryId} onChange={(e) => setBatteryId(e.target.value)} placeholder="e.g. BATT-001" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500 outline-none transition" />
+                <input
+                  type="text" value={batteryId}
+                  onChange={(e) => setBatteryId(e.target.value)}
+                  placeholder="e.g. BATT-001"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500 outline-none transition"
+                />
               </div>
             </div>
             <div className="flex gap-3 mt-8">
-              <button onClick={handleSaveReport} disabled={saving} className="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold hover:brightness-110 transition disabled:opacity-50">
+              <button
+                onClick={handleSaveReport}
+                disabled={saving}
+                className="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold hover:brightness-110 transition disabled:opacity-50"
+              >
                 {saving ? "Saving..." : "Confirm & Save"}
               </button>
-              <button onClick={() => setShowSaveModal(false)} className="flex-1 py-3.5 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5 transition">Cancel</button>
+              <button
+                onClick={() => setShowSaveModal(false)}
+                className="flex-1 py-3.5 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5 transition"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
