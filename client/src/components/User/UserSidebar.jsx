@@ -5,7 +5,6 @@ import { LayoutDashboard, LineChart, History, FileText, Settings, Moon, LogOut, 
 const Sidebar = () => {
   // const [active, setActive] = useState("Dashboard");
   const [darkMode, setDarkMode] = useState(true);
-  
   const { user, logout } = useAuth();  
   const navigate         = useNavigate(); 
   const location         = useLocation(); 

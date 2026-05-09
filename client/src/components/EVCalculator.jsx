@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Battery, Zap, Clock, Coins, ChevronDown, Info } from 'lucide-react';
+import { Battery, Zap, Clock, Coins, ChevronDown, Info
+ } from 'lucide-react';
 
 const EVCalculator = () => {
     const [rates, setRates] = useState({});
@@ -35,10 +36,7 @@ const EVCalculator = () => {
 
             <div className="relative z-10 w-full max-w-5xl">
                 <div className="text-left mb-10">
-                    {/* <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-bold tracking-widest uppercase text-xs shadow-[0_0_20px_rgba(6,182,212,0.2)]">
-                        <Zap size={14} className="fill-cyan-400" />
-                        <span>Cost Estimator</span>
-                    </div> */}
+                    
                     <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 uppercase">
                         Calculate Your  <span className="text-cyan-400">Charging Cost </span>
                     </h2>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import { useToast } from '../../contexts/ToastContext';
-// FIXED: Added User and Calendar imports
-import { Mail, Trash2, CheckCircle, Clock, User, Calendar } from 'lucide-react';
+import { Mail, Trash2, CheckCircle, Clock, User, Calendar, Eye, EyeOff
+ } from 'lucide-react';
 
 const AdminContacts = () => {
     const [messages, setMessages] = useState([]);

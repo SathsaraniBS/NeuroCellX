@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Settings, User, Globe, Save, Mail, Key, Camera, 
+import { Settings, User, Globe, Save, Mail, Key, Camera, 
   Facebook, Twitter, Instagram, Youtube, Map, 
   Clock, Trophy, Eye, EyeOff, ShieldCheck, 
   Smartphone, BellRing, Laptop

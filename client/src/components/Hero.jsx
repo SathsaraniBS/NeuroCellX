@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { 
-  Zap, 
-  Battery, 
-  Wind, 
-  Gauge, 
-  ChevronRight, 
-  Info, 
-  ShieldCheck, 
-  Leaf, 
-  Globe 
-} from "lucide-react";
+import { Zap, Battery, Wind, Gauge, ChevronRight, Info, ShieldCheck, 
+  Leaf, Globe } from "lucide-react";
 
 const DUMMY_VEHICLES = [
   {
