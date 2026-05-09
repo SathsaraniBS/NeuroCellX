@@ -34,7 +34,6 @@ import EVTypes from './pages/EVTypes ';
 import EVMaintenanceGuide from './pages/EVMaintenanceGuide';
 // ─── Admin Pages ────────────────────────
 import AdminDashboard from './pages/admin/AdminDashboard';
-import AdminPrediction from './pages/admin/AdminPrediction';
 
 // ─── Engineer Pages ─────────────────────
 import EngineerDashboard from './pages/Engineer/EngineerDashboard';
@@ -197,12 +196,6 @@ function App() {
                             <Route path="/admin/dashboard" element={
                                 <ProtectedRoute allowedRoles={['admin']}>
                                     <AdminDashboard />
-                                </ProtectedRoute>
-                            } />
-
-                            <Route path="/admin/prediction" element={
-                                <ProtectedRoute allowedRoles={['admin']}>
-                                    <AdminPrediction />
                                 </ProtectedRoute>
                             } />
 

@@ -8,6 +8,7 @@ import { TbLogs } from 'react-icons/tb';
 import AdminUsers from '../../components/admin/AdminUsers'; 
 import AdminContacts from '../../components/admin/AdminContacts';
 import AdminSettings from '../../components/admin/AdminSettings';
+import AdminPrediction from '../../components/admin/AdminPrediction';
 import AdminDatasetManagement from '../../components/admin/AdminDatasetManagement';
 
 const AdminDashboard = () => {
@@ -80,6 +81,7 @@ const AdminDashboard = () => {
           {[
             { id: 'overview', label: 'Overview',        icon: <Activity size={18} /> },
             { id: 'users',    label: 'User Management', icon: <Users size={18} /> },
+             { id: 'prediction', label: 'Prediction',icon: <BarChart3 size={18} /> },
             { id: 'dataset', label: 'Dataset Management',icon: <Database size={18} /> },
             { id: 'model', label: 'Model Management',icon: <BrainCircuit size={18} /> },
             { id: 'logs',label:'System Logs',          icon: <TbLogs size={18} /> },
@@ -200,6 +202,13 @@ const AdminDashboard = () => {
             setShowAddModal={setShowAddModal} 
             onUserChange={fetchStats} 
           />
+        )}
+
+        {activeTab === 'prediction' && (
+          <AdminPrediction
+            showAddModal={showAddModal}
+            setShowAddModal={setShowAddModal}
+            onMessageChange={fetchStats} />
         )}
 
         {activeTab === 'dataset' && (
