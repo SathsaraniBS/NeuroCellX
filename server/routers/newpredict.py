@@ -21,7 +21,6 @@ models      = {}
 #  Model Loading
 # ─────────────────────────────────────────────
 def load_all_models():
-    # 1. Random Forest
     try:
         models['random_forest'] = {
             'soh':    joblib.load(os.path.join(MODELS_ROOT, "RandomForest", "rf_5feat_soh_model.pkl")),
@@ -32,17 +31,19 @@ def load_all_models():
     except Exception as e:
         print(f"❌ Random Forest Load Failed: {e}")
 
-    # 2. Naive Bayes
     try:
         models['naive_bayes'] = {
             'soh': joblib.load(os.path.join(MODELS_ROOT, "naive_bayes", "nb_5feat_soh_model.pkl")),
             'rul': joblib.load(os.path.join(MODELS_ROOT, "naive_bayes", "nb_5feat_rul_model.pkl"))
         }
-        print("✅ Naive Bayes Loaded")
+        nb_soh = models['naive_bayes']['soh']
+        nb_rul = models['naive_bayes']['rul']
+        print(f"✅ Naive Bayes Loaded")
+        print(f"   NB SOH classes: {getattr(nb_soh, 'classes_', 'N/A')}")
+        print(f"   NB RUL classes: {getattr(nb_rul, 'classes_', 'N/A')}")
     except Exception as e:
         print(f"❌ Naive Bayes Load Failed: {e}")
 
-    # 3. SVR
     try:
         models['svr'] = {
             'soh':    joblib.load(os.path.join(MODELS_ROOT, "SVR", "svr_5feat_soh_model.pkl")),
@@ -53,18 +54,20 @@ def load_all_models():
     except Exception as e:
         print(f"❌ SVR Load Failed: {e}")
 
-    # 4. GRU + Random Forest
     try:
         models['gru_randomforest'] = {
             'soh':    joblib.load(os.path.join(MODELS_ROOT, "gru+randomforest", "gru_rf_5feat_soh_model.pkl")),
             'rul':    joblib.load(os.path.join(MODELS_ROOT, "gru+randomforest", "gru_rf_5feat_rul_model.pkl")),
             'scaler': joblib.load(os.path.join(MODELS_ROOT, "gru+randomforest", "gru_rf_5feat_feat_scaler.pkl"))
         }
-        print("✅ GRU+RF Loaded")
+        gru_soh = models['gru_randomforest']['soh']
+        gru_rul = models['gru_randomforest']['rul']
+        print(f"✅ GRU+RF Loaded")
+        print(f"   GRU SOH type: {type(gru_soh).__name__}")
+        print(f"   GRU RUL type: {type(gru_rul).__name__}")
     except Exception as e:
         print(f"❌ GRU+RF Load Failed: {e}")
 
-    # 5. LSTM + Transformer
     if tf:
         try:
             models['lstm_transformer'] = {
@@ -83,97 +86,80 @@ load_all_models()
 
 
 # ─────────────────────────────────────────────
-#  Helper Functions
+#  Helper
 # ─────────────────────────────────────────────
-def is_keras_model(model):
-    """Keras model ද sklearn model ද check කිරීම"""
-    return hasattr(model, 'layers')
-
-
-def clean_soh(value):
-    """
-    SOH prediction string → float.
-    Naive Bayes SOH label → numeric SOH % value
-    """
+def extract_str(value) -> str:
+    """numpy / python value → plain string"""
     val_str = str(value).strip()
+    m = re.search(r"np\.str_\('(.+?)'\)", val_str)
+    return m.group(1) if m else val_str
 
-    # np.str_('Healthy') format handle කිරීම
-    match = re.search(r"np\.str_\('(.+?)'\)", val_str)
-    if match:
-        val_str = match.group(1)
 
-    # SOH class labels → realistic SOH % values
+def is_keras_model(m):
+    return hasattr(m, 'layers')
+
+
+# ─────────────────────────────────────────────
+#  SOH resolver
+# ─────────────────────────────────────────────
+def resolve_soh(raw) -> float:
+    s = extract_str(raw)
+
     soh_label_map = {
         "Poor":     62.0,
         "Moderate": 78.0,
         "Good":     88.0,
         "Healthy":  93.0,
     }
-    if val_str in soh_label_map:
-        return soh_label_map[val_str]
+    if s in soh_label_map:
+        print(f"   [SOH] label '{s}' → {soh_label_map[s]}")
+        return soh_label_map[s]
 
     try:
-        return float(value)
+        v = float(raw)
+        print(f"   [SOH] numeric raw = {v}")
+        # Keras sigmoid/linear output: 0–1 range → ×100
+        if -1.0 <= v <= 1.0:
+            result = abs(v) * 100.0
+            print(f"   [SOH] 0-1 scale → {result:.2f}%")
+            return result
+        return abs(v)
     except Exception:
-        nums = re.findall(r"[-+]?\d*\.?\d+", val_str)
+        nums = re.findall(r"[-+]?\d*\.?\d+", s)
         return float(nums[0]) if nums else 0.0
 
 
-def clean_rul(value):
-    """
-    RUL prediction string → float.
-    Naive Bayes RUL label → numeric cycle count value.
-    GRU+RF RL negative → abs value.
-    """
-    val_str = str(value).strip()
+# ─────────────────────────────────────────────
+#  RUL resolver
+# ─────────────────────────────────────────────
+def resolve_rul(raw) -> float:
+    s = extract_str(raw)
 
-    # np.str_('Low') format handle කිරීම
-    match = re.search(r"np\.str_\('(.+?)'\)", val_str)
-    if match:
-        val_str = match.group(1)
-
-    # ✅ RUL class labels → realistic cycle count values
     rul_label_map = {
-        "Low":      20.0,   # Critical battery
-        "Medium":   80.0,   # Mid-life battery
-        "High":    145.0,   # Healthy battery
-        # SOH labels used as RUL labels by some models
-        "Poor":     15.0,
-        "Moderate": 60.0,
-        "Good":    110.0,
-        "Healthy": 145.0,
+        "Low":      20.0,
+        "Medium":   80.0,
+        "High":    145.0,
+        "Poor":     18.0,
+        "Moderate": 65.0,
+        "Good":    115.0,
+        "Healthy": 148.0,
     }
-    if val_str in rul_label_map:
-        return rul_label_map[val_str]
+    if s in rul_label_map:
+        print(f"   [RUL] label '{s}' → {rul_label_map[s]}")
+        return rul_label_map[s]
 
     try:
-        raw = float(value)
-        # ✅ GRU+RF negative RUL fix — abs value use කිරීම
-        return abs(raw)
+        v = float(raw)
+        print(f"   [RUL] numeric raw = {v}")
+        v = abs(v)                    # negative RUL fix
+        if v <= 1.0:                  # Keras 0-1 output → cycles
+            result = v * 200.0
+            print(f"   [RUL] 0-1 scale → {result:.2f} cycles")
+            return result
+        return v
     except Exception:
-        nums = re.findall(r"[-+]?\d*\.?\d+", val_str)
+        nums = re.findall(r"[-+]?\d*\.?\d+", s)
         return float(nums[0]) if nums else 0.0
-
-
-def normalize_soh(value: float) -> float:
-    """
-    ✅ LSTM fix: model output 0–1 range නම් → *100
-    ✅ Model output 0–100 range නම් → as-is
-    """
-    if value <= 1.0:
-        # 0-1 range (e.g. 0.9498) → percentage
-        return value * 100.0
-    return value  # already percentage
-
-
-def normalize_rul(value: float) -> float:
-    """
-    ✅ LSTM fix: RUL output අතිශය small නම් scale up කිරීම
-    """
-    if 0 < value <= 1.0:
-        # 0-1 range — scale to realistic cycle range
-        return value * 200.0
-    return abs(value)  # negative RUL fix
 
 
 # ─────────────────────────────────────────────
@@ -182,6 +168,8 @@ def normalize_rul(value: float) -> float:
 @router.post("/predict")
 async def predict(data: dict):
     model_key = data.get('model_key', 'random_forest')
+    print(f"\n{'='*55}")
+    print(f"🔮 model={model_key}")
 
     try:
         input_features = [
@@ -191,81 +179,94 @@ async def predict(data: dict):
             float(data.get('Temperature', 0.0)),
             float(data.get('CycleCount',  0.0))
         ]
+        print(f"   inputs = {input_features}")
 
         current_model = models.get(model_key)
         if not current_model:
-            return {"status": "error", "message": f"Model '{model_key}' not loaded on server."}
+            return {"status": "error", "message": f"Model '{model_key}' not loaded."}
 
         soh_model = current_model['soh']
         rul_model = current_model['rul']
 
-        # ── 1. LSTM + Transformer (Keras) ───────────────────────
+        # ══════════════════════════════
+        # LSTM + Transformer
+        # ══════════════════════════════
         if model_key == 'lstm_transformer':
             scaler   = current_model['scaler']
-            scaled   = scaler.transform([input_features])            # shape: (1, 5)
-            reshaped = np.tile(scaled, (15, 1)).reshape(1, 15, 5)   # shape: (1, 15, 5)
+            scaled   = scaler.transform([input_features])
+            reshaped = np.tile(scaled, (15, 1)).reshape(1, 15, 5)
 
-            raw_soh = float(np.squeeze(soh_model.predict(reshaped, verbose=0)))
-            raw_rul = float(np.squeeze(rul_model.predict(reshaped, verbose=0)))
+            raw_soh_arr = soh_model.predict(reshaped, verbose=0)
+            raw_rul_arr = rul_model.predict(reshaped, verbose=0)
 
-            # ✅ LSTM output normalize (0-1 → 0-100)
-            soh_final = normalize_soh(raw_soh)
-            rul_final = normalize_rul(raw_rul)
+            raw_soh = float(np.squeeze(raw_soh_arr))
+            raw_rul = float(np.squeeze(raw_rul_arr))
 
-            print(f"[LSTM] raw_soh={raw_soh:.4f} → soh={soh_final:.2f}%")
-            print(f"[LSTM] raw_rul={raw_rul:.4f} → rul={rul_final:.2f}")
+            print(f"[LSTM] soh_output={raw_soh_arr}  →  squeezed={raw_soh}")
+            print(f"[LSTM] rul_output={raw_rul_arr}  →  squeezed={raw_rul}")
 
-        # ── 2. GRU + Random Forest ──────────────────────────────
+            soh_final = resolve_soh(raw_soh)
+            rul_final = resolve_rul(raw_rul)
+
+        # ══════════════════════════════
+        # GRU + Random Forest
+        # ══════════════════════════════
         elif model_key == 'gru_randomforest':
             scaler = current_model['scaler']
             scaled = scaler.transform([input_features])
 
             if is_keras_model(soh_model):
-                # Keras GRU model
-                reshaped  = np.tile(scaled, (15, 1)).reshape(1, 15, 5)
-                raw_soh   = float(np.squeeze(soh_model.predict(reshaped, verbose=0)))
-                raw_rul   = float(np.squeeze(rul_model.predict(reshaped, verbose=0)))
-                soh_final = normalize_soh(raw_soh)
-                rul_final = normalize_rul(raw_rul)
+                reshaped = np.tile(scaled, (15, 1)).reshape(1, 15, 5)
+                raw_soh  = float(np.squeeze(soh_model.predict(reshaped, verbose=0)))
+                raw_rul  = float(np.squeeze(rul_model.predict(reshaped, verbose=0)))
+                print(f"[GRU Keras] raw soh={raw_soh}, rul={raw_rul}")
             else:
-                # sklearn RF — verbose argument නැහැ!
-                soh_raw = soh_model.predict(scaled)[0]
-                rul_raw = rul_model.predict(scaled)[0]
-                soh_final = clean_soh(soh_raw)
-                # ✅ GRU+RF RUL=0 fix — negative or zero RUL abs() use කිරීම
-                rul_final = clean_rul(rul_raw)
+                raw_soh = soh_model.predict(scaled)[0]
+                raw_rul = rul_model.predict(scaled)[0]
+                print(f"[GRU RF] raw soh={raw_soh!r}  rul={raw_rul!r}")
 
-            print(f"[GRU+RF] soh={soh_final:.2f}%, rul={rul_final:.2f}")
+            soh_final = resolve_soh(raw_soh)
+            rul_final = resolve_rul(raw_rul)
 
-        # ── 3. Naive Bayes (no scaler) ──────────────────────────
+        # ══════════════════════════════
+        # Naive Bayes
+        # ══════════════════════════════
         elif model_key == 'naive_bayes':
-            soh_raw = soh_model.predict([input_features])[0]
-            rul_raw = rul_model.predict([input_features])[0]
+            raw_soh = soh_model.predict([input_features])[0]
+            raw_rul = rul_model.predict([input_features])[0]
 
-            print(f"[NB] raw_soh={soh_raw!r}, raw_rul={rul_raw!r}")
+            print(f"[NB] raw_soh = {raw_soh!r}  type={type(raw_soh).__name__}")
+            print(f"[NB] raw_rul = {raw_rul!r}  type={type(raw_rul).__name__}")
 
-            soh_final = clean_soh(soh_raw)
-            # ✅ NB RUL=0 fix — label → realistic cycle count
-            rul_final = clean_rul(rul_raw)
+            # Debug: class probabilities
+            try:
+                soh_proba = soh_model.predict_proba([input_features])[0]
+                rul_proba = rul_model.predict_proba([input_features])[0]
+                print(f"[NB] SOH classes={soh_model.classes_}  proba={soh_proba}")
+                print(f"[NB] RUL classes={rul_model.classes_}  proba={rul_proba}")
+            except Exception:
+                pass
 
-            print(f"[NB] soh={soh_final:.2f}%, rul={rul_final:.2f}")
+            soh_final = resolve_soh(raw_soh)
+            rul_final = resolve_rul(raw_rul)
 
-        # ── 4. Random Forest / SVR (with scaler) ────────────────
+        # ══════════════════════════════
+        # Random Forest / SVR
+        # ══════════════════════════════
         else:
-            scaler    = current_model['scaler']
-            scaled    = scaler.transform([input_features])
-            soh_raw   = soh_model.predict(scaled)[0]
-            rul_raw   = rul_model.predict(scaled)[0]
-            soh_final = clean_soh(soh_raw)
-            rul_final = clean_rul(rul_raw)
+            scaler  = current_model['scaler']
+            scaled  = scaler.transform([input_features])
+            raw_soh = soh_model.predict(scaled)[0]
+            raw_rul = rul_model.predict(scaled)[0]
+            print(f"[{model_key}] raw soh={raw_soh!r}  rul={raw_rul!r}")
+            soh_final = resolve_soh(raw_soh)
+            rul_final = resolve_rul(raw_rul)
 
-            print(f"[{model_key}] soh={soh_final:.2f}%, rul={rul_final:.2f}")
-
-        # ── Final Safety Clamp ───────────────────────────────────
-        # SOH: 0% – 100%
+        # ── Safety Clamp ────────────────
         soh_final = max(0.0, min(100.0, float(soh_final)))
-        # RUL: 0 – 300 cycles (realistic Li-ion battery max)
         rul_final = max(0.0, min(300.0, float(rul_final)))
+
+        print(f"✅ Final → SOH={soh_final}%  RUL={rul_final} cycles")
 
         return {
             "status": "success",
@@ -276,5 +277,7 @@ async def predict(data: dict):
         }
 
     except Exception as e:
-        print(f"❌ Prediction Error [{model_key}]: {str(e)}")
+        import traceback
+        print(f"❌ Error [{model_key}]:")
+        traceback.print_exc()
         return {"status": "error", "message": str(e)}
