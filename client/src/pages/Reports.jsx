@@ -1,23 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate }                 from 'react-router-dom'; // ✅ FIXED: use navigate instead of <a>
+import { useNavigate }                 from 'react-router-dom';
 import { useAuth }                     from '../contexts/AuthContext';
 import { useToast }                    from '../contexts/ToastContext';
 import { getReports, deleteReport }    from '../services/reportService';
 import Sidebar from '../components/User/UserSidebar';
-import {FileText, Trash2, Download,Plus, Eye} from 'lucide-react';
+import { FileText, Trash2, Download, Plus, Eye, Edit2, Save, X } from 'lucide-react';
+
+// ── Matches ALL status labels from Prediction.jsx ─────────────────────────────
+const healthColor = (status) => {
+  if (!status) return 'bg-gray-500/20 text-gray-400';
+  const s = status.toLowerCase();
+  if (s.includes('healthy'))                        return 'bg-green-500/20  text-green-400';
+  if (s.includes('fair') || s.includes('moderate')) return 'bg-yellow-500/20 text-yellow-400';
+  if (s.includes('critical') || s.includes('replace')) return 'bg-red-500/20 text-red-400';
+  if (s.includes('good'))                           return 'bg-blue-500/20   text-blue-400';
+  if (s.includes('warning'))                        return 'bg-orange-500/20 text-orange-400';
+  return 'bg-gray-500/20 text-gray-400';
+};
+
+const sohColor = (soh) => {
+  if (soh >= 90) return 'text-green-400';
+  if (soh >= 75) return 'text-yellow-400';
+  return 'text-red-400';
+};
 
 const Reports = () => {
   const { user }     = useAuth();
   const { addToast } = useToast();
-  const navigate     = useNavigate(); 
+  const navigate     = useNavigate();
 
-  const [reports,   setReports]   = useState([]);
-  const [loading,   setLoading]   = useState(true);
-  const [selected,  setSelected]  = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [reports,    setReports]    = useState([]);
+  const [loading,    setLoading]    = useState(true);
+  const [selected,   setSelected]   = useState(null);
+  const [showView,   setShowView]   = useState(false);
+  const [showEdit,   setShowEdit]   = useState(false);
+  const [editData,   setEditData]   = useState({});
+  const [saving,     setSaving]     = useState(false);
 
-  // ── Fetch reports ──────────────────────
+  // ── Fetch reports ──────────────────────────────────────────────────────────
   const fetchReports = async () => {
+    setLoading(true);
     try {
       const data = await getReports();
       setReports(data.reports || []);
@@ -28,11 +50,9 @@ const Reports = () => {
     }
   };
 
-  useEffect(() => {
-    fetchReports();
-  }, []);
+  useEffect(() => { fetchReports(); }, []);
 
-  // ── Delete report ──────────────────────
+  // ── Delete report ──────────────────────────────────────────────────────────
   const handleDelete = async (id, name) => {
     if (!window.confirm(`Delete report "${name}"?`)) return;
     try {
@@ -44,21 +64,66 @@ const Reports = () => {
     }
   };
 
-  // ── View report ────────────────────────
+  // ── Open view modal ────────────────────────────────────────────────────────
   const handleView = (report) => {
     setSelected(report);
-    setShowModal(true);
+    setShowView(true);
   };
 
-  // ── Download report as text ────────────
+  // ── Open edit modal ────────────────────────────────────────────────────────
+  const handleEditOpen = (report) => {
+    setSelected(report);
+    setEditData({
+      report_name: report.report_name || '',
+      battery_id:  report.battery_id  || '',
+    });
+    setShowEdit(true);
+  };
+
+  // ── Save edited report ─────────────────────────────────────────────────────
+  const handleEditSave = async () => {
+    if (!editData.report_name.trim()) {
+      addToast('Report name cannot be empty!', 'error');
+      return;
+    }
+    setSaving(true);
+    try {
+      const res = await fetch(`http://localhost:8000/api/reports/${selected.id}`, {
+        method:  'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization:  `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          report_name: editData.report_name,
+          battery_id:  editData.battery_id || null,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || `Update failed (${res.status})`);
+      }
+
+      addToast('Report updated! ✅', 'success');
+      setShowEdit(false);
+      fetchReports();
+    } catch (err) {
+      addToast(`Failed to update: ${err.message}`, 'error');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // ── Download report as text ────────────────────────────────────────────────
   const handleDownload = (report) => {
     const content = `
 VOLTIQ - BATTERY HEALTH REPORT
 ================================
 Report Name:    ${report.report_name}
 Report Type:    ${report.report_type}
-Battery ID:     ${report.battery_id}
-Generated By:   ${report.generated_by_name}
+Battery ID:     ${report.battery_id || 'N/A'}
+Generated By:   ${report.generated_by_name || 'Unknown'}
 Date:           ${new Date(report.created_at).toLocaleString()}
 
 PREDICTION RESULTS
@@ -77,7 +142,7 @@ Capacity:       ${report.capacity} Ah
 
 ================================
 Generated by VoltIQ AI System
-    `;
+    `.trim();
 
     const blob = new Blob([content], { type: 'text/plain' });
     const url  = URL.createObjectURL(blob);
@@ -89,24 +154,14 @@ Generated by VoltIQ AI System
     addToast('Report downloaded!', 'success');
   };
 
-  // ── Health color ───────────────────────
-  const healthColor = (status) => {
-    const colors = {
-      'Healthy':  'bg-green-500/20  text-green-400',
-      'Good':     'bg-blue-500/20   text-blue-400',
-      'Warning':  'bg-yellow-500/20 text-yellow-400',
-      'Critical': 'bg-red-500/20    text-red-400',
-    };
-    return colors[status] || 'bg-gray-500/20 text-gray-400';
-  };
-
+  // ── Render ─────────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050816] via-[#0b1120] to-[#0f172a] text-white flex">
       <Sidebar />
 
       <main className="flex-1 p-8 overflow-auto">
 
-        {/* ── Header ── */}
+        {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-3xl font-bold">
@@ -116,8 +171,6 @@ Generated by VoltIQ AI System
               Battery health prediction reports — {reports.length} total
             </p>
           </div>
-
-          {/*  FIXED: use button + navigate instead of broken <a> tag */}
           <button
             onClick={() => navigate('/predictions')}
             className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-semibold rounded-xl hover:brightness-110 transition text-sm"
@@ -126,17 +179,15 @@ Generated by VoltIQ AI System
           </button>
         </div>
 
-        {/* ── Reports Table ── */}
+        {/* Table */}
         <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
 
-          {/* Loading */}
           {loading ? (
             <div className="flex items-center justify-center py-16">
               <div className="w-8 h-8 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
               <p className="ml-3 text-gray-400">Loading reports...</p>
             </div>
 
-          /* Empty */
           ) : reports.length === 0 ? (
             <div className="text-center py-16">
               <FileText size={64} className="text-gray-600 mx-auto mb-4" />
@@ -144,7 +195,6 @@ Generated by VoltIQ AI System
               <p className="text-gray-500 text-sm mt-2">
                 Go to Predictions page and save a prediction as a report.
               </p>
-              {/*  FIXED: use button + navigate */}
               <button
                 onClick={() => navigate('/predictions')}
                 className="inline-block mt-4 px-6 py-2 bg-cyan-500/20 text-cyan-400 rounded-xl text-sm hover:bg-cyan-500/30 transition"
@@ -153,12 +203,11 @@ Generated by VoltIQ AI System
               </button>
             </div>
 
-          /* Table */
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="bg-white/5 text-gray-400 text-sm">
+                  <tr className="bg-white/5 text-gray-400 text-xs uppercase tracking-wider">
                     <th className="p-4 text-left">Report Name</th>
                     <th className="p-4 text-left">Battery</th>
                     <th className="p-4 text-left">SOH</th>
@@ -177,38 +226,25 @@ Generated by VoltIQ AI System
                     >
                       <td className="p-4">
                         <div className="flex items-center gap-2">
-                          <FileText size={16} className="text-cyan-400" />
+                          <FileText size={15} className="text-cyan-400 shrink-0" />
                           <span className="font-medium">{report.report_name}</span>
                         </div>
                       </td>
-                      <td className="p-4 text-gray-400">
-                        {report.battery_id || 'N/A'}
-                      </td>
+                      <td className="p-4 text-gray-400">{report.battery_id || 'N/A'}</td>
                       <td className="p-4">
-                        <span className={`font-bold ${
-                          report.soh_predicted >= 90 ? 'text-green-400'  :
-                          report.soh_predicted >= 80 ? 'text-blue-400'   :
-                          report.soh_predicted >= 70 ? 'text-yellow-400' :
-                                                       'text-red-400'
-                        }`}>
+                        <span className={`font-bold ${sohColor(report.soh_predicted)}`}>
                           {report.soh_predicted}%
                         </span>
                       </td>
-                      <td className="p-4 text-gray-300">
-                        {report.rul_predicted} cycles
-                      </td>
+                      <td className="p-4 text-gray-300">{report.rul_predicted} cycles</td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded-full text-xs font-semibold ${healthColor(report.health_status)}`}>
                           {report.health_status}
                         </span>
                       </td>
+                      <td className="p-4 text-gray-400">{report.generated_by_name || 'Unknown'}</td>
                       <td className="p-4 text-gray-400">
-                        {report.generated_by_name || 'Unknown'}
-                      </td>
-                      <td className="p-4 text-gray-400">
-                        {report.created_at
-                          ? new Date(report.created_at).toLocaleDateString()
-                          : 'N/A'}
+                        {report.created_at ? new Date(report.created_at).toLocaleDateString() : 'N/A'}
                       </td>
                       <td className="p-4">
                         <div className="flex items-center gap-2">
@@ -219,6 +255,14 @@ Generated by VoltIQ AI System
                             title="View"
                           >
                             <Eye size={14} />
+                          </button>
+                          {/* Edit */}
+                          <button
+                            onClick={() => handleEditOpen(report)}
+                            className="p-2 bg-cyan-500/20 text-cyan-400 rounded-lg hover:bg-cyan-500/30 transition"
+                            title="Edit"
+                          >
+                            <Edit2 size={14} />
                           </button>
                           {/* Download */}
                           <button
@@ -245,48 +289,35 @@ Generated by VoltIQ AI System
             </div>
           )}
         </div>
-
       </main>
 
-      {/* ══════ VIEW REPORT MODAL ══════ */}
-      {showModal && selected && (
+      {/* ══ VIEW MODAL ══════════════════════════════════════════════════════════ */}
+      {showView && selected && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-[#0b1220] border border-white/10 rounded-2xl w-full max-w-lg">
 
-            {/* Modal Header */}
             <div className="flex justify-between items-center p-6 border-b border-white/10">
               <h3 className="text-xl font-semibold">{selected.report_name}</h3>
-              <button onClick={() => setShowModal(false)}>
-                <span className="text-gray-400 hover:text-white text-xl">✕</span>
+              <button onClick={() => setShowView(false)} className="text-gray-400 hover:text-white">
+                <X size={20} />
               </button>
             </div>
 
-            {/* Modal Body */}
             <div className="p-6 space-y-4">
-
-              {/* SOH + RUL */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white/5 rounded-xl p-4 text-center">
                   <p className="text-gray-400 text-xs mb-1">State of Health</p>
-                  <p className={`text-3xl font-bold ${
-                    selected.soh_predicted >= 90 ? 'text-green-400'  :
-                    selected.soh_predicted >= 80 ? 'text-blue-400'   :
-                    selected.soh_predicted >= 70 ? 'text-yellow-400' :
-                                                   'text-red-400'
-                  }`}>
+                  <p className={`text-3xl font-bold ${sohColor(selected.soh_predicted)}`}>
                     {selected.soh_predicted}%
                   </p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4 text-center">
                   <p className="text-gray-400 text-xs mb-1">Remaining Life</p>
-                  <p className="text-3xl font-bold text-cyan-400">
-                    {selected.rul_predicted}
-                  </p>
+                  <p className="text-3xl font-bold text-cyan-400">{selected.rul_predicted}</p>
                   <p className="text-gray-500 text-xs">cycles</p>
                 </div>
               </div>
 
-              {/* Health Status */}
               <div className="bg-white/5 rounded-xl p-4">
                 <p className="text-gray-400 text-xs mb-2">Health Status</p>
                 <span className={`px-3 py-1 rounded-full text-sm font-semibold ${healthColor(selected.health_status)}`}>
@@ -294,17 +325,16 @@ Generated by VoltIQ AI System
                 </span>
               </div>
 
-              {/* Sensor Data */}
               <div className="bg-white/5 rounded-xl p-4">
                 <p className="text-gray-400 text-xs mb-3">Sensor Data</p>
-                <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="grid grid-cols-2 gap-3 text-sm">
                   {[
                     { label: 'Voltage',     value: `${selected.voltage} V` },
                     { label: 'Current',     value: `${selected.current_a} A` },
                     { label: 'Temperature', value: `${selected.temperature} °C` },
                     { label: 'Cycle Count', value: selected.cycle_count },
                     { label: 'Capacity',    value: `${selected.capacity} Ah` },
-                    { label: 'Battery ID',  value: selected.battery_id },
+                    { label: 'Battery ID',  value: selected.battery_id || 'N/A' },
                   ].map((item) => (
                     <div key={item.label}>
                       <p className="text-gray-500 text-xs">{item.label}</p>
@@ -314,14 +344,12 @@ Generated by VoltIQ AI System
                 </div>
               </div>
 
-              {/* Footer info */}
               <div className="text-xs text-gray-500 flex justify-between">
                 <span>Generated by: {selected.generated_by_name}</span>
                 <span>{new Date(selected.created_at).toLocaleString()}</span>
               </div>
             </div>
 
-            {/* Modal Footer */}
             <div className="flex gap-3 p-6 border-t border-white/10">
               <button
                 onClick={() => handleDownload(selected)}
@@ -330,10 +358,80 @@ Generated by VoltIQ AI System
                 <Download size={16} /> Download
               </button>
               <button
-                onClick={() => setShowModal(false)}
+                onClick={() => setShowView(false)}
                 className="flex-1 py-3 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5 transition"
               >
                 Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ══ EDIT MODAL ══════════════════════════════════════════════════════════ */}
+      {showEdit && selected && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-[#0b1220] border border-white/10 rounded-2xl w-full max-w-md">
+
+            <div className="flex justify-between items-center p-6 border-b border-white/10">
+              <h3 className="text-xl font-semibold flex items-center gap-2">
+                <Edit2 size={18} className="text-cyan-400" /> Edit Report
+              </h3>
+              <button onClick={() => setShowEdit(false)} className="text-gray-400 hover:text-white">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-gray-400 text-xs mb-2 uppercase tracking-wider">
+                  Report Title
+                </label>
+                <input
+                  type="text"
+                  value={editData.report_name}
+                  onChange={(e) => setEditData((p) => ({ ...p, report_name: e.target.value }))}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500 outline-none transition"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-400 text-xs mb-2 uppercase tracking-wider">
+                  Battery ID (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={editData.battery_id}
+                  onChange={(e) => setEditData((p) => ({ ...p, battery_id: e.target.value }))}
+                  placeholder="e.g. BATT-001"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-cyan-500 outline-none transition"
+                />
+              </div>
+
+              {/* Read-only preview */}
+              <div className="bg-white/5 rounded-xl p-4 text-sm text-gray-400 space-y-1">
+                <p><span className="text-gray-500">SOH:</span> <span className={`font-bold ${sohColor(selected.soh_predicted)}`}>{selected.soh_predicted}%</span></p>
+                <p><span className="text-gray-500">RUL:</span> {selected.rul_predicted} cycles</p>
+                <p><span className="text-gray-500">Status:</span>{' '}
+                  <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${healthColor(selected.health_status)}`}>
+                    {selected.health_status}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-3 p-6 border-t border-white/10">
+              <button
+                onClick={handleEditSave}
+                disabled={saving}
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-black font-bold hover:brightness-110 transition disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                <Save size={16} /> {saving ? 'Saving...' : 'Save Changes'}
+              </button>
+              <button
+                onClick={() => setShowEdit(false)}
+                className="flex-1 py-3 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5 transition"
+              >
+                Cancel
               </button>
             </div>
           </div>
