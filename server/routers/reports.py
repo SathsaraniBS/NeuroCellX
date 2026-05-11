@@ -5,34 +5,36 @@ from sqlalchemy import text
 from pydantic import BaseModel
 from typing import Optional
 from database import get_db
-from datetime import datetime
-import jwt
-import os
+from jose import jwt, JWTError   # ✅ auth.py එකට match — jose use කරනවා
 
 router = APIRouter(prefix="/api/reports", tags=["Reports"])
 
-# 
-SECRET_KEY = os.getenv("SECRET_KEY", "your_secret_key")  
+# ─────────────────────────────────────────────────────────────────────────────
+# auth.py එකෙන් copy කළා — exact match වෙන්න ඕනේ
+# ─────────────────────────────────────────────────────────────────────────────
+SECRET_KEY = "voltiq-secret-key-change-in-production"
+ALGORITHM  = "HS256"
 
+
+# ─────────────────────────────────────────────────────────────────────────────
+# JWT Helper — token එකෙන් user_id ගන්නවා
+# auth.py: payload = { "sub": str(user_id), "email": ..., "role": ... }
+# ─────────────────────────────────────────────────────────────────────────────
 def get_current_user_id(authorization: Optional[str] = Header(None)) -> Optional[int]:
-    """
-    Authorization: Decodes user_id from Bearer <token> header.Authorization: Decodes user_id from Bearer <token> header.Returns None if token is not present (not required)
-    """
     if not authorization or not authorization.startswith("Bearer "):
         return None
     token = authorization.split(" ")[1]
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        
-        return payload.get("id") or payload.get("user_id") or payload.get("sub")
-    except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="Token expired")
-    except jwt.InvalidTokenError:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id = payload.get("sub")   # ✅ auth.py: "sub": str(user_id)
+        return int(user_id) if user_id else None
+    except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
 
-
+# ─────────────────────────────────────────────────────────────────────────────
 # Schemas
+# ─────────────────────────────────────────────────────────────────────────────
 class ReportCreate(BaseModel):
     report_name:   str
     report_type:   Optional[str]   = "Battery Health Report"
@@ -42,7 +44,7 @@ class ReportCreate(BaseModel):
     voltage:       Optional[float] = None
     current_a:     Optional[float] = None
     temperature:   Optional[float] = None
-    cycle_count:   Optional[float] = None   
+    cycle_count:   Optional[float] = None  # ✅ float — frontend parseFloat() use කරනවා
     capacity:      Optional[float] = None
     health_status: Optional[str]   = None
 
@@ -52,15 +54,16 @@ class ReportUpdate(BaseModel):
     battery_id:  Optional[str] = None
 
 
-
-
+# ─────────────────────────────────────────────────────────────────────────────
+# POST /api/reports/   — Report save කරනවා
+# ─────────────────────────────────────────────────────────────────────────────
 @router.post("/")
 def create_report(
     report: ReportCreate,
     db: Session = Depends(get_db),
     authorization: Optional[str] = Header(None),
 ):
-    user_id = get_current_user_id(authorization)
+    user_id = get_current_user_id(authorization)  # ✅ token එකෙන් user_id
 
     try:
         db.execute(
@@ -91,7 +94,7 @@ def create_report(
                 "cycle_count":   report.cycle_count,
                 "capacity":      report.capacity,
                 "health_status": report.health_status,
-                "generated_by":  user_id,        
+                "generated_by":  user_id,
             }
         )
         db.commit()
@@ -102,6 +105,9 @@ def create_report(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# GET /api/reports/   — Reports list ගන්නවා
+# ─────────────────────────────────────────────────────────────────────────────
 @router.get("/")
 def get_reports(db: Session = Depends(get_db)):
     try:
@@ -130,6 +136,9 @@ def get_reports(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# GET /api/reports/{report_id}   — Single report ගන්නවා
+# ─────────────────────────────────────────────────────────────────────────────
 @router.get("/{report_id}")
 def get_report(report_id: int, db: Session = Depends(get_db)):
     try:
@@ -154,6 +163,9 @@ def get_report(report_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# PUT /api/reports/{report_id}   — Report edit කරනවා
+# ─────────────────────────────────────────────────────────────────────────────
 @router.put("/{report_id}")
 def update_report(
     report_id: int,
@@ -161,7 +173,7 @@ def update_report(
     db: Session = Depends(get_db),
     authorization: Optional[str] = Header(None),
 ):
-    user_id = get_current_user_id(authorization)
+    get_current_user_id(authorization)  # token valid check
 
     try:
         existing = db.execute(
@@ -194,6 +206,10 @@ def update_report(
         db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
 
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DELETE /api/reports/{report_id}   — Report delete කරනවා
+# ─────────────────────────────────────────────────────────────────────────────
 @router.delete("/{report_id}")
 def delete_report(report_id: int, db: Session = Depends(get_db)):
     try:
