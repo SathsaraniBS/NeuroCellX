@@ -1,38 +1,67 @@
 # server/routers/reports.py
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from pydantic import BaseModel
 from typing import Optional
 from database import get_db
 from datetime import datetime
+import jwt
+import os
 
 router = APIRouter(prefix="/api/reports", tags=["Reports"])
 
-# ─────────────────────────────────────────
-# Schema
-# ─────────────────────────────────────────
+# 
+SECRET_KEY = os.getenv("SECRET_KEY", "your_secret_key")  
+
+def get_current_user_id(authorization: Optional[str] = Header(None)) -> Optional[int]:
+    """
+    Authorization: Decodes user_id from Bearer <token> header.Authorization: Decodes user_id from Bearer <token> header.Returns None if token is not present (not required)
+    """
+    if not authorization or not authorization.startswith("Bearer "):
+        return None
+    token = authorization.split(" ")[1]
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        
+        return payload.get("id") or payload.get("user_id") or payload.get("sub")
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+
+
+# Schemas
 class ReportCreate(BaseModel):
     report_name:   str
-    report_type:   Optional[str] = "Battery Health Report"
-    battery_id:    Optional[str] = "B0006"
+    report_type:   Optional[str]   = "Battery Health Report"
+    battery_id:    Optional[str]   = None
     soh_predicted: Optional[float] = None
     rul_predicted: Optional[float] = None
     voltage:       Optional[float] = None
     current_a:     Optional[float] = None
     temperature:   Optional[float] = None
-    cycle_count:   Optional[int]   = None
+    cycle_count:   Optional[float] = None   
     capacity:      Optional[float] = None
     health_status: Optional[str]   = None
-    generated_by:  Optional[int]   = None
 
 
-# ─────────────────────────────────────────
-# POST /api/reports
-# Create new report
-# ─────────────────────────────────────────
+class ReportUpdate(BaseModel):
+    report_name: str
+    battery_id:  Optional[str] = None
+
+
+
+
 @router.post("/")
-def create_report(report: ReportCreate, db: Session = Depends(get_db)):
+def create_report(
+    report: ReportCreate,
+    db: Session = Depends(get_db),
+    authorization: Optional[str] = Header(None),
+):
+    user_id = get_current_user_id(authorization)
+
     try:
         db.execute(
             text("""
@@ -62,7 +91,7 @@ def create_report(report: ReportCreate, db: Session = Depends(get_db)):
                 "cycle_count":   report.cycle_count,
                 "capacity":      report.capacity,
                 "health_status": report.health_status,
-                "generated_by":  report.generated_by
+                "generated_by":  user_id,        
             }
         )
         db.commit()
@@ -73,10 +102,6 @@ def create_report(report: ReportCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ─────────────────────────────────────────
-# GET /api/reports
-# Get all reports
-# ─────────────────────────────────────────
 @router.get("/")
 def get_reports(db: Session = Depends(get_db)):
     try:
@@ -98,17 +123,13 @@ def get_reports(db: Session = Depends(get_db)):
         return {
             "status":  "success",
             "count":   len(reports),
-            "reports": [dict(r._mapping) for r in reports]
+            "reports": [dict(r._mapping) for r in reports],
         }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ─────────────────────────────────────────
-# GET /api/reports/{report_id}
-# Get single report
-# ─────────────────────────────────────────
 @router.get("/{report_id}")
 def get_report(report_id: int, db: Session = Depends(get_db)):
     try:
@@ -125,21 +146,54 @@ def get_report(report_id: int, db: Session = Depends(get_db)):
         if not report:
             raise HTTPException(status_code=404, detail="Report not found")
 
-        return {
-            "status": "success",
-            "report": dict(report._mapping)
-        }
+        return {"status": "success", "report": dict(report._mapping)}
 
-    except HTTPException as e:
-        raise e
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# ─────────────────────────────────────────
-# DELETE /api/reports/{report_id}
-# Delete report
-# ─────────────────────────────────────────
+@router.put("/{report_id}")
+def update_report(
+    report_id: int,
+    report: ReportUpdate,
+    db: Session = Depends(get_db),
+    authorization: Optional[str] = Header(None),
+):
+    user_id = get_current_user_id(authorization)
+
+    try:
+        existing = db.execute(
+            text("SELECT 1 FROM reports WHERE id = :id"),
+            {"id": report_id}
+        ).scalar()
+
+        if not existing:
+            raise HTTPException(status_code=404, detail="Report not found")
+
+        db.execute(
+            text("""
+                UPDATE reports
+                SET report_name = :report_name,
+                    battery_id  = :battery_id
+                WHERE id = :id
+            """),
+            {
+                "report_name": report.report_name,
+                "battery_id":  report.battery_id,
+                "id":          report_id,
+            }
+        )
+        db.commit()
+        return {"status": "success", "message": "Report updated successfully"}
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.delete("/{report_id}")
 def delete_report(report_id: int, db: Session = Depends(get_db)):
     try:
@@ -156,11 +210,10 @@ def delete_report(report_id: int, db: Session = Depends(get_db)):
             {"id": report_id}
         )
         db.commit()
-
         return {"status": "success", "message": "Report deleted"}
 
-    except HTTPException as e:
-        raise e
+    except HTTPException:
+        raise
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
