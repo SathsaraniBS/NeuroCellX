@@ -162,20 +162,20 @@ const suitCards = [
 
 const faqs = [
   {
-    q: "What is the difference between BEV, PHEV, and HEV?",
-    a: "A BEV is fully electric, a PHEV can be plugged in and also uses an engine, while an HEV uses electric assistance without plug-in charging.",
+    question: "What is the difference between BEV, PHEV, and HEV?",
+    answer: "A BEV is fully electric, a PHEV can be plugged in and also uses an engine, while an HEV uses electric assistance without plug-in charging.",
   },
   {
-    q: "How long does it take to charge an EV?",
-    a: "Charging time depends on battery size and charger power. AC home charging usually takes hours, while DC fast charging can add useful range in minutes.",
+    question: "How long does it take to charge an EV?",
+    answer: "Charging time depends on battery size and charger power. AC home charging usually takes hours, while DC fast charging can add useful range in minutes.",
   },
   {
-    q: "Is a BEV better than a hybrid?",
-    a: "For daily use with charging access, BEVs usually offer the best savings and lowest emissions. Hybrids can suit users without reliable charging.",
+    question: "Is a BEV better than a hybrid?",
+    answer: "For daily use with charging access, BEVs usually offer the best savings and lowest emissions. Hybrids can suit users without reliable charging.",
   },
   {
-    q: "Can I install a home charger myself?",
-    a: "A certified electrician should install a home charger because load capacity, earthing, breaker protection, and safety compliance matter.",
+    question: "Can I install a home charger myself?",
+    answer: "A certified electrician should install a home charger because load capacity, earthing, breaker protection, and safety compliance matter.",
   },
 ];
 
@@ -366,20 +366,20 @@ const EVTypes = () => {
         {/* FAQ Section */}
         <section className="relative mx-auto max-w-5xl px-6 pb-28">
           <div className="mb-14">
-            <h2 className="text-left text-3xl font-black mb-12 uppercase">
+            <h2 className="text-center text-3xl font-black mb-12 uppercase">
               EV <span className="text-cyan-400">FAQ</span>
             </h2>
           </div>
 
           <div className="grid gap-4">
             {faqs.map((faq, index) => (
-              <div key={faq.q}>
+              <div key={faq.question}>
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left font-black tracking-wide text-white"
+                  className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left font-black tracking-wide text-white text-xl border-b border-white/10 pt-5"
                 >
-                  {faq.q}
+                  {faq.question}
                   <ChevronDown
                     className={`h-5 w-5 shrink-0 text-cyan-400 transition-transform duration-300 ${
                       openFaq === index ? "rotate-180" : ""
@@ -395,7 +395,7 @@ const EVTypes = () => {
                   } overflow-hidden`}
                 >
                   <p className="border-t border-white/10 pt-5 leading-7 text-slate-400">
-                    {faq.a}
+                    {faq.answer}
                   </p>
                 </div>
               </div>
