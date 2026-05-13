@@ -1,5 +1,20 @@
-import React from "react";
-import {Play,ArrowRight,BatteryCharging,Bolt,Car,Globe2,Leaf,Lightbulb,PlugZap,Rocket,ShieldCheck,ShoppingCart,Sprout,Wind,
+import React, { useState } from "react";
+import {
+  Play,
+  ArrowRight,
+  BatteryCharging,
+  Bolt,
+  Car,
+  Globe2,
+  Leaf,
+  Lightbulb,
+  PlugZap,
+  Rocket,
+  ShieldCheck,
+  ShoppingCart,
+  Sprout,
+  Wind,
+  ChevronDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -46,7 +61,7 @@ const EVHistoryPage = () => {
     {
       year: "2000s - Now",
       title: "The EV Revolution",
-      text: "Advanced batteries, smart tech, and sustainability pushed today’s EV boom.",
+      text: "Advanced batteries, smart tech, and sustainability pushed today's EV boom.",
       icon: Rocket,
       color: "text-emerald-300",
       glow: "shadow-[0_0_35px_rgba(16,185,129,0.35)]",
@@ -156,11 +171,41 @@ const EVHistoryPage = () => {
     },
   ];
 
+  const faqs = [
+    {
+      question: "When was the first electric vehicle invented ?",
+      answer:
+        "The first practical electric vehicles were developed in the late 1800s. In fact, EVs became popular before gasoline-powered cars because they were quieter, cleaner, and easier to operate at the time.",
+    },
+    {
+      question: "Why did electric vehicles disappear for many years ?",
+      answer:
+        "EVs declined in popularity during the early 1900s because gasoline cars became cheaper, roads improved for long-distance travel, and petrol was widely available. Mass production of fuel-powered vehicles also made them more affordable.",
+    },
+    {
+      question: "What caused the comeback of electric vehicles ?",
+      answer:
+        "Modern EVs returned due to advancements in battery technology, growing environmental concerns, rising fuel prices, and government support for cleaner transportation. Companies like Tesla helped accelerate global EV adoption.",
+    },
+    {
+      question: "How have EV batteries improved over time ?",
+      answer:
+        "Early EVs used heavy lead-acid batteries with limited range. Today’s EVs mainly use lithium-ion batteries, which provide better range, faster charging, improved safety, and longer lifespan. Future technologies like solid-state batteries aim to improve efficiency even more.",
+    },
+    {
+      question: "Why are electric vehicles important today ?",
+      answer:
+        "Electric vehicles help reduce air pollution, lower greenhouse-gas emissions, and decrease dependence on fossil fuels. They also offer lower running costs, quieter driving, and advanced smart technologies for modern transportation.",
+    },
+    
+  ];
+
   return (
     <div className="min-h-screen bg-[#050816] text-white font-sans selection:bg-cyan-500/30">
       <Navbar />
 
       <main className="overflow-hidden">
+        {/* Hero Section */}
         <section className="relative h-screen w-full overflow-hidden">
           <div className="absolute inset-0">
             <img
@@ -183,9 +228,8 @@ const EVHistoryPage = () => {
               </h1>
 
               <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">
-                From early experiments to today’s intelligent electric mobility
-                <br />
-                a journey of innovation, persistence, and a cleaner future.
+                From early experiments to today's intelligent electric mobility
+                <br />a journey of innovation, persistence, and a cleaner future.
               </p>
             </div>
           </div>
@@ -203,6 +247,7 @@ const EVHistoryPage = () => {
           </div>
         </section>
 
+        {/* Milestones Section */}
         <section id="milestones" className="relative px-6 py-24">
           <SectionTitle
             title={
@@ -220,7 +265,6 @@ const EVHistoryPage = () => {
               <div className="grid gap-6 md:grid-cols-5">
                 {milestones.map((item) => {
                   const Icon = item.icon;
-
                   return (
                     <div key={item.year} className="relative">
                       <div
@@ -250,6 +294,7 @@ const EVHistoryPage = () => {
           </div>
         </section>
 
+        {/* Models Section */}
         <section id="models" className="relative px-6 py-24">
           <SectionTitle
             title={
@@ -261,42 +306,33 @@ const EVHistoryPage = () => {
           />
 
           <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {models.map((model) => {
-              const Icon = model.icon;
+            {models.map((model) => (
+              <div
+                key={model.name}
+                className="group relative min-h-[360px] overflow-hidden rounded-3xl border border-cyan-300/20 bg-[#071124] shadow-[0_0_35px_rgba(34,211,238,0.10)] transition-all duration-500 hover:-translate-y-2 hover:border-cyan-300/50 hover:shadow-[0_0_55px_rgba(34,211,238,0.25)]"
+              >
+                <img
+                  src={model.image}
+                  alt={model.name}
+                  className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                />
 
-              return (
-                <div
-                  key={model.name}
-                  className="group relative min-h-[360px] overflow-hidden rounded-3xl border border-cyan-300/20 bg-[#071124] shadow-[0_0_35px_rgba(34,211,238,0.10)] transition-all duration-500 hover:-translate-y-2 hover:border-cyan-300/50 hover:shadow-[0_0_55px_rgba(34,211,238,0.25)]"
-                >
-                  <img
-                    src={model.image}
-                    alt={model.name}
-                    className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
-                  />
+                <div className="relative z-10 flex h-full min-h-[360px] flex-col justify-end p-7">
+                  <h3 className="max-w-[260px] text-2xl font-black leading-tight text-white drop-shadow-[0_0_18px_rgba(34,211,238,0.35)]">
+                    {model.name}
+                  </h3>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/45 to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-950/45 via-transparent to-blue-950/35" />
-                  <div className="absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100 bg-gradient-to-t from-[#030712] via-[#030712]/80 to-black/25" />
-
-                  <div className="relative z-10 flex h-full min-h-[360px] flex-col justify-end p-7">
-                    
-
-                    <h3 className="max-w-[260px] text-2xl font-black leading-tight text-white drop-shadow-[0_0_18px_rgba(34,211,238,0.35)]">
-                      {model.name}
-                    </h3>
-
-                    <p className="mt-4 max-h-0 translate-y-5 overflow-hidden text-lg leading-7 text-slate-200 opacity-0 transition-all duration-500 group-hover:max-h-40 group-hover:translate-y-0 group-hover:opacity-100">
-                      {model.text}
-                    </p>
-                  </div>
+                  <p className="mt-4 max-h-0 translate-y-5 overflow-hidden text-lg leading-7 text-slate-200 opacity-0 transition-all duration-500 group-hover:max-h-40 group-hover:translate-y-0 group-hover:opacity-100">
+                    {model.text}
+                  </p>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </section>
 
-        <section className="mx-auto mt-20 max-w-7xl">
+        {/* Battery Technology Section */}
+        <section className="mx-auto mt-20 max-w-7xl px-6">
           <SectionTitle
             title={
               <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
@@ -323,10 +359,7 @@ const EVHistoryPage = () => {
                     </div>
                     <BatteryCharging className={`h-20 w-20 ${battery.color}`} />
                   </div>
-
-                  <p className="text-lg leading-7 text-slate-300">
-                    {battery.text}
-                  </p>
+                  <p className="text-lg leading-7 text-slate-300">{battery.text}</p>
                 </div>
 
                 {index < batteries.length - 1 && (
@@ -337,7 +370,8 @@ const EVHistoryPage = () => {
           </div>
         </section>
 
-        <section className="mx-auto mt-20 max-w-7xl">
+        {/* Why EVs Matter Section */}
+        <section className="mx-auto mt-20 max-w-7xl px-6">
           <SectionTitle
             title={
               <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
@@ -350,7 +384,6 @@ const EVHistoryPage = () => {
           <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-3">
             {matters.map((item) => {
               const Icon = item.icon;
-
               return (
                 <div
                   key={item.title}
@@ -362,12 +395,8 @@ const EVHistoryPage = () => {
                     <Icon className="h-10 w-10" />
                   </div>
                   <div>
-                    <h2 className="mb-3 text-xl font-black text-white">
-                      {item.title}
-                    </h2>
-                    <p className="text-lg leading-7 text-slate-400">
-                      {item.text}
-                    </p>
+                    <h2 className="mb-3 text-xl font-black text-white">{item.title}</h2>
+                    <p className="text-lg leading-7 text-slate-400">{item.text}</p>
                   </div>
                 </div>
               );
@@ -375,7 +404,29 @@ const EVHistoryPage = () => {
           </div>
         </section>
 
-        <section className="mx-auto mt-20 max-w-7xl pb-12">
+        {/* FAQ Section */}
+        <section className="mx-auto mt-20 max-w-7xl px-6 py-10">
+          {/* Centered Header — matching Image 1 style */}
+          <div className="text-center mb-14">
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-white">
+              Ev History{" "}
+              <span className="text-cyan-400">FQA</span>
+            </h2>
+          </div>
+
+          {/* Accordion Items */}
+          <div className="py-24 bg-transparent">
+              <div className="max-w-4xl mx-auto px-6">
+
+            {faqs.map((faq, index) => (
+              <FAQItem key={index} question={faq.question} answer={faq.answer} />
+            ))}
+              </div>
+          </div>
+        </section>
+
+        {/* Explore More Section */}
+        <section className="mx-auto mt-20 max-w-7xl px-6 pb-12">
           <SectionTitle
             title={
               <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
@@ -388,7 +439,6 @@ const EVHistoryPage = () => {
           <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-3">
             {explore.map((item) => {
               const Icon = item.icon;
-
               return (
                 <Link
                   key={item.title}
@@ -397,12 +447,8 @@ const EVHistoryPage = () => {
                 >
                   <Icon className={`h-14 w-14 shrink-0 ${item.color}`} />
                   <div className="flex-1">
-                    <h3 className="mb-2 text-xl font-black text-white">
-                      {item.title}
-                    </h3>
-                    <p className="text-lg leading-6 text-slate-400">
-                      {item.text}
-                    </p>
+                    <h3 className="mb-2 text-xl font-black text-white">{item.title}</h3>
+                    <p className="text-lg leading-6 text-slate-400">{item.text}</p>
                   </div>
                   <ArrowRight
                     className={`h-6 w-6 shrink-0 transition group-hover:translate-x-1 ${item.color}`}
@@ -423,7 +469,6 @@ const EVHistoryPage = () => {
               0% { transform: scale(1); }
               100% { transform: scale(1.1); }
             }
-
             .animate-slow-zoom {
               animation: slow-zoom 20s infinite alternate ease-in-out;
             }
@@ -434,6 +479,42 @@ const EVHistoryPage = () => {
   );
 };
 
+/* ── FAQ Accordion Item ── */
+const FAQItem = ({ question, answer }) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div
+      className="border-b border-white/10 py-3 transition-all duration-300 ease-in-out last:border-0"
+    >
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-8 py-6 text-left group"
+      >
+        <span className="text-base md:text-lg font-black  tracking-wide text-white group-hover:text-cyan-100 transition-colors">
+          {question}
+        </span>
+        <ChevronDown
+          className={`h-5 w-5 shrink-0 ml-4 text-cyan-400 transition-transform duration-300 ${
+            open ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      <div
+        className={`transition-all duration-300 ease-in-out px-8 ${
+          open ? "max-h-60 pb-6 opacity-100" : "max-h-0 pb-0 opacity-0"
+        } overflow-hidden`}
+      >
+        <p className="text-slate-400 text-base leading-relaxed border-t border-white/10 pt-5">
+          {answer}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+/* ── Section Title ── */
 const SectionTitle = ({ eyebrow, title, text }) => (
   <div className="mx-auto mb-14 max-w-7xl text-left">
     {eyebrow && (
@@ -441,9 +522,7 @@ const SectionTitle = ({ eyebrow, title, text }) => (
         {eyebrow}
       </p>
     )}
-
     {title}
-
     {text && (
       <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 md:text-lg">
         {text}
