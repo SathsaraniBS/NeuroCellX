@@ -399,23 +399,23 @@ const QUICK_RULES = [
   {
     icon: Droplets,
     text: "Never pour water directly on a battery fire.",
-    color: "text-emerald-300",
-    border: "border-emerald-400/25",
-    bg: "bg-emerald-400/10",
+    color: "text-cyan-300",
+    border: "border-cyan-400/25",
+    bg: "bg-cyan-400/10",
   },
   {
     icon: PlugZap,
     text: "Use certified chargers and grounded outlets only.",
-    color: "text-violet-300",
-    border: "border-violet-400/25",
-    bg: "bg-violet-400/10",
+    color: "text-cyan-300",
+    border: "border-cyan-400/25",
+    bg: "bg-cyan-400/10",
   },
   {
     icon: Phone,
     text: "Call emergency services + roadside assistance for serious events.",
-    color: "text-orange-300",
-    border: "border-orange-400/25",
-    bg: "bg-orange-400/10",
+    color: "text-cyan-300",
+    border: "border-cyan-400/25",
+    bg: "bg-cyan-400/10",
   },
 ];
 
@@ -440,9 +440,9 @@ const SAFETY_CATEGORIES = [
   {
     icon: ClipboardList,
     title: "Daily Inspection Checklist",
-    color: "text-emerald-300",
-    border: "border-emerald-400/25",
-    bg: "bg-emerald-400/10",
+    color: "text-cyan-300",
+    border: "border-cyan-400/25",
+    bg: "bg-cyan-400/10",
     glow: "shadow-[0_0_35px_rgba(52,211,153,0.10)]",
     link: "#checklist",
     linkLabel: "Open checklist",
@@ -457,9 +457,9 @@ const SAFETY_CATEGORIES = [
   {
     icon: Package,
     title: "Storage & Transport",
-    color: "text-violet-300",
-    border: "border-violet-400/25",
-    bg: "bg-violet-400/10",
+    color: "text-cyan-300",
+    border: "border-cyan-400/25",
+    bg: "bg-cyan-400/10",
     glow: "shadow-[0_0_35px_rgba(167,139,250,0.10)]",
     link: "#storage",
     linkLabel: "Read more",
@@ -474,9 +474,9 @@ const SAFETY_CATEGORIES = [
   {
     icon: AlertTriangle,
     title: "Emergency Steps",
-    color: "text-orange-300",
-    border: "border-orange-400/25",
-    bg: "bg-orange-400/10",
+    color: "text-cyan-300",
+    border: "border-cyan-400/25",
+    bg: "bg-cyan-400/10",
     glow: "shadow-[0_0_35px_rgba(251,146,60,0.10)]",
     link: "#emergency",
     linkLabel: "See details",
@@ -492,9 +492,9 @@ const SAFETY_CATEGORIES = [
   {
     icon: Flame,
     title: "Fire & Thermal Runaway Basics",
-    color: "text-red-300",
-    border: "border-red-400/25",
-    bg: "bg-red-400/10",
+    color: "text-cyan-300",
+    border: "border-cyan-400/25",
+    bg: "bg-cyan-400/10",
     glow: "shadow-[0_0_35px_rgba(252,165,165,0.10)]",
     link: "#fire",
     linkLabel: "Read more",
@@ -507,9 +507,9 @@ const SAFETY_CATEGORIES = [
   {
     icon: Truck,
     title: "Towing & Service Guidance",
-    color: "text-blue-300",
-    border: "border-blue-400/25",
-    bg: "bg-blue-400/10",
+    color: "text-cyan-300",
+    border: "border-cyan-400/25",
+    bg: "bg-cyan-400/10",
     glow: "shadow-[0_0_35px_rgba(147,197,253,0.10)]",
     link: "#towing",
     linkLabel: "Read more",
@@ -523,9 +523,9 @@ const SAFETY_CATEGORIES = [
   {
     icon: Users,
     title: "First Responder Tips",
-    color: "text-emerald-300",
-    border: "border-emerald-400/25",
-    bg: "bg-emerald-400/10",
+    color: "text-cyan-300",
+    border: "border-cyan-400/25",
+    bg: "bg-cyan-400/10",
     glow: "shadow-[0_0_35px_rgba(52,211,153,0.10)]",
     link: "#responder",
     linkLabel: "Responder guides",
@@ -554,10 +554,10 @@ const SAFETY_CATEGORIES = [
 ];
 
 const WARNING_LABELS = [
-  { icon: Zap, label: "High Voltage", color: "text-yellow-300", border: "border-yellow-400/30", bg: "bg-yellow-400/10" },
-  { icon: Flame, label: "Fire Risk", color: "text-orange-300", border: "border-orange-400/30", bg: "bg-orange-400/10" },
-  { icon: BookOpen, label: "Read Manual", color: "text-blue-300", border: "border-blue-400/30", bg: "bg-blue-400/10" },
-  { icon: Droplets, label: "Do Not Use Water", color: "text-red-300", border: "border-red-400/30", bg: "bg-red-400/10" },
+  { icon: Zap, label: "High Voltage", color: "text-cyan-300", border: "border-cyan-400/30", bg: "bg-cyan-400/10" },
+  { icon: Flame, label: "Fire Risk", color: "text-cyan-300", border: "border-cyan-400/30", bg: "bg-cyan-400/10" },
+  { icon: BookOpen, label: "Read Manual", color: "text-cyan-300", border: "border-cyan-400/30", bg: "bg-cyan-400/10" },
+  { icon: Droplets, label: "Do Not Use Water", color: "text-cyan-300", border: "border-cyan-400/30", bg: "bg-cyan-400/10" },
 ];
 
 const FAQS = [
@@ -696,7 +696,7 @@ function EVBatterySafetyPage() {
               </section>
         
         {/* ── QUICK RULES STRIP ── */}
-        <section className="relative py-10 border-y border-white/10 bg-[#071124]/60 backdrop-blur-sm">
+        <section className="relative py-10 ">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {QUICK_RULES.map((rule, i) => {
@@ -709,7 +709,7 @@ function EVBatterySafetyPage() {
                     <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${rule.border} ${rule.bg} ${rule.color}`}>
                       <Icon className="h-5 w-5" />
                     </div>
-                    <p className="text-slate-300 text-sm leading-relaxed">{rule.text}</p>
+                    <p className="text-slate-300 text-sm font-bold leading-relaxed">{rule.text}</p>
                   </div>
                 );
               })}
@@ -719,29 +719,28 @@ function EVBatterySafetyPage() {
 
         {/* ── EMERGENCY BANNER ── */}
         <section className="py-6 max-w-7xl mx-auto px-6">
-          <div className="relative overflow-hidden rounded-[1.5rem] border border-red-400/40 bg-red-500/10 backdrop-blur-xl p-6 md:p-8 shadow-[0_0_50px_rgba(248,113,113,0.15)]">
+          <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-[#071124]/70 backdrop-blur-xl p-8 md:p-10 shadow-[0_0_45px_rgba(34,211,238,0.10)]">
             {/* accent line */}
-            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-red-400/60 to-transparent" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_50%,rgba(239,68,68,0.10),transparent_50%)]" />
+            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent" />
+            <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent " />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(34,211,238,0.07),transparent_40%)]" />
 
             <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div className="flex items-start gap-5">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-red-400/30 bg-red-400/15">
-                  <AlertTriangle className="h-7 w-7 text-red-300" />
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/30 bg-cyan-400/15">
+                  <AlertTriangle className="h-7 w-7 text-cyan-300" />
                 </div>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-red-300/80 mb-1">
-                    Critical Alert
-                  </p>
+                  
                   <h3 className="text-xl md:text-2xl font-black uppercase text-white mb-2">
                     Emergency:{" "}
-                    <span className="text-red-300">
+                    <span className="text-cyan-300">
                       If there's smoke or fire
                     </span>
                   </h3>
                   <p className="text-slate-300 text-base leading-relaxed">
                     Move people away (10–15 m), call emergency services.{" "}
-                    <span className="font-bold text-red-300">
+                    <span className="font-bold text-cyan-300">
                       Do NOT use water on battery fires.
                     </span>
                   </p>
@@ -750,7 +749,7 @@ function EVBatterySafetyPage() {
 
               <a
                 href="tel:112"
-                className="flex-shrink-0 inline-flex items-center gap-3 px-7 py-4 rounded-xl border border-red-400/40 bg-red-500/20 text-red-200 font-black text-base hover:bg-red-500/30 hover:border-red-400/70 hover:shadow-[0_0_25px_rgba(239,68,68,0.30)] transition-all duration-300"
+                className="flex-shrink-0 inline-flex items-center gap-3 px-7 py-4 rounded-xl border border-cyan-400/40 bg-cyan-500/20 text-cyan-200 font-black text-base hover:bg-cyan-500/30 hover:border-cyan-400/70 hover:shadow-[0_0_25px_rgba(239,68,68,0.30)] transition-all duration-300"
               >
                 <Phone className="h-5 w-5" />
                 Emergency 112 / 911
@@ -831,28 +830,27 @@ function EVBatterySafetyPage() {
 
         {/* ── OFFICIAL WARNINGS & LABELS ── */}
         <section className="py-14 max-w-7xl mx-auto px-6">
-          <div className="relative overflow-hidden rounded-[2rem] border border-yellow-400/25 bg-[#071124]/70 backdrop-blur-xl p-8 md:p-10 shadow-[0_0_45px_rgba(251,191,36,0.08)]">
-            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_5%_50%,rgba(251,191,36,0.06),transparent_40%)]" />
+          <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-[#071124]/70 backdrop-blur-xl p-8 md:p-10 shadow-[0_0_45px_rgba(34,211,238,0.10)]">
+            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent" />
+            <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent " />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(34,211,238,0.07),transparent_40%)]" />
 
             <div className="relative flex flex-col md:flex-row items-start md:items-center gap-10">
               {/* Text */}
               <div className="flex-1">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-yellow-400/30 bg-yellow-400/10">
-                    <AlertTriangle className="h-6 w-6 text-yellow-300" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-400/10">
+                    <AlertTriangle className="h-6 w-6 text-cyan-300" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.25em] text-yellow-300/70 mb-0.5">
-                      Compliance
-                    </p>
+                   
                     <h3 className="text-2xl font-black uppercase text-white">
                       Official Warnings &{" "}
-                      <span className="text-yellow-300">Labels</span>
+                      <span className="text-cyan-300">Labels</span>
                     </h3>
                   </div>
                 </div>
-                <p className="text-slate-400 text-base leading-relaxed max-w-xl">
+                <p className="text-slate-300 text-base leading-relaxed max-w-xl">
                   Always follow the warning labels on your vehicle and charger. High voltage inside.
                   Risk of electric shock or fire.
                 </p>
@@ -919,9 +917,7 @@ function EVBatterySafetyPage() {
 
             <div className="relative flex flex-col md:flex-row items-start md:items-center gap-8 justify-between">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300/80 mb-2">
-                  Assistance
-                </p>
+                
                 <h3 className="text-2xl font-black uppercase text-white mb-2">
                   Need{" "}
                   <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
