@@ -223,54 +223,64 @@ function EV() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { 
-                title: "EV Types", 
-                image: "src/assets/phev.jpg", 
-                desc: "BEV, PHEV, and HEV understand the different types of Electric Vehicles.", 
-                icon: <Fuel size={24} />, 
-                color: "text-blue-400", 
-                bg: "bg-blue-400/20 border-blue-400/30" 
+              {
+                title: "EV Types",
+                image: "src/assets/phev.jpg",
+                desc: "BEV, PHEV, and HEV understand the different types of Electric Vehicles.",
+                icon: <Fuel size={24} />,
+                color: "text-blue-400",
+                bg: "bg-blue-400/20 border-blue-400/30",
+                link: "/ev-types"
               },
-              { 
-                title: "EV History", 
-                image: "src/assets/hev.jpg", 
-                desc: "A short history of EVs and the road to today.", 
-                icon: <Zap size={24} />, 
-                color: "text-cyan-400", 
-                bg: "bg-cyan-400/20 border-cyan-400/30" 
+              {
+                title: "EV History",
+                image: "src/assets/hev.jpg",
+                desc: "A short history of EVs and the road to today.",
+                icon: <Zap size={24} />,
+                color: "text-cyan-400",
+                bg: "bg-cyan-400/20 border-cyan-400/30",
+                link: "/ev-history"
               },
-              { 
-                title: "Charging ", 
-                image: "src/assets/ev-chager.png", 
-                desc: "Learn about charging types,speeds and how it all works.", 
-                icon: <Settings size={24} />, 
-                color: "text-emerald-400", 
-                bg: "bg-emerald-400/20 border-emerald-400/30" 
+              {
+                title: "Charging",
+                image: "src/assets/ev-chager.png",
+                desc: "Learn about charging types, speeds and how it all works.",
+                icon: <Settings size={24} />,
+                color: "text-emerald-400",
+                bg: "bg-emerald-400/20 border-emerald-400/30",
+                link: "/charging"
               },
-              { title: "EV Maintenance", 
-                image: "src/assets/ev-chager.png", 
-                desc: "Protocols to maximize vehicle lifespan.", 
-                icon: <Compass size={24} />, 
-                color: "text-lime-400", 
-                bg: "bg-lime-400/20 border-lime-400/30" 
+              {
+                title: "EV Maintenance",
+                image: "src/assets/ev-chager.png",
+                desc: "Protocols to maximize vehicle lifespan.",
+                icon: <Compass size={24} />,
+                color: "text-lime-400",
+                bg: "bg-lime-400/20 border-lime-400/30",
+                link: "/ev-maintenance-guide"
               },
-              { 
-                title: "EV Battery ", 
-                image: "src/assets/ev-chager.png", 
-                desc: "Understand battery chemistry and performance.", icon: <Battery size={24} />, 
-                color: "text-purple-400", 
-                bg: "bg-purple-400/20 border-purple-400/30" 
+              {
+                title: "EV Battery",
+                image: "src/assets/ev-chager.png",
+                desc: "Understand battery chemistry and performance.",
+                icon: <Battery size={24} />,
+                color: "text-purple-400",
+                bg: "bg-purple-400/20 border-purple-400/30",
+                link: "/battery"
               },
-              { title: "Find EV Stations", 
-                image: "src/assets/ev-chager.png", 
-                desc: "Calculate trip feasibility and routing.", 
-                icon: <Map size={24} />, 
-                color: "text-orange-400", 
-                bg: "bg-orange-400/20 border-orange-400/30" 
+              {
+                title: "Find EV Stations",
+                image: "src/assets/ev-chager.png",
+                desc: "Calculate trip feasibility and routing.",
+                icon: <Map size={24} />,
+                color: "text-orange-400",
+                bg: "bg-orange-400/20 border-orange-400/30",
+                link: "/find-station"
               }
             ].map((topic, idx) => (
-              <div 
-                key={idx} 
+              <Link
+                to={topic.link}
+                key={idx}
                 className="group relative h-[400px] rounded-3xl overflow-hidden border border-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col justify-end p-6"
               >
                 {/* Background Image */}
@@ -289,11 +299,11 @@ function EV() {
                     <div className={`h-14 w-14 rounded-xl flex items-center justify-center border backdrop-blur-md ${topic.bg} ${topic.color} group-hover:scale-110 transition-transform duration-300`}>
                       {topic.icon}
                     </div>
-                    <ChevronRight size={24} className="text-white/40 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
+                    <ChevronRight size={50} className="text-white/40 font-bold group-hover:text-cyan-400 group-hover:translate-x-1 transition-all" />
                   </div>
-                  
+
                   <h4 className="font-bold text-white text-2xl group-hover:text-cyan-400 transition-colors mb-1">{topic.title}</h4>
-                  
+
                   {/* Hover Reveal Description */}
                   <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out">
                     <div className="overflow-hidden">
@@ -303,7 +313,7 @@ function EV() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </section>
