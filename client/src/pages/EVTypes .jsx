@@ -216,7 +216,7 @@ const EVTypes = () => {
       </section>
 
       <main className="relative overflow-hidden">
-        <GlowBackground />
+        {/* <GlowBackground /> */}
 
         {/* EV Type Sections */}
         {evTypeSections.map((item, index) => (
@@ -224,15 +224,14 @@ const EVTypes = () => {
         ))}
 
         {/* Charging Section */}
-        <section id="charging" className="relative border-y border-white/5 bg-white/[0.02] py-28">
+        <section id="charging" className="relative  py-28">
           <div className="mx-auto max-w-7xl px-6">
             <SectionHeader
-              eyebrow="02 / Charging"
               title="Charging Technology"
               text="AC charging is ideal for daily use. DC fast charging is built for long journeys, public hubs, and quick energy top-ups."
             />
 
-            <div className="mt-8 mb-10 rounded-[2rem] border border-white/10 bg-black/30 p-6 backdrop-blur-xl">
+            <div className="mt-8 mb-10  bg-transparent p-6 ">
               <ComparisonTable
                 title="Charging Types Comparison"
                 headers={["Type", "Speed", "Typical Use", "Battery Impact", "Cost / kWh"]}
@@ -448,7 +447,7 @@ const EVTypes = () => {
 /* ── EV Type Section ── */
 const EVTypeSection = ({ item, index }) => (
   <section id={item.id} className="relative border-t border-white/5 py-28 scroll-mt-24">
-    <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-cyan-500/20 blur-[150px]" />
+    <div className="absolute right-0 top-20 h-96 w-96 rounded-full bg-transparent" />
 
     <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2">
       <div>
@@ -465,13 +464,13 @@ const EVTypeSection = ({ item, index }) => (
         </div>
       </div>
 
-      <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-xl">
+      <div className="relative overflow-hidden  p-5 backdrop-blur-xl">
         <img
           src={item.image}
           alt={`${item.short} electric vehicle`}
-          className="h-[460px] w-full rounded-[2rem] object-cover"
+          className="h-full w-full object-cover animate-slow-zoom"
         />
-        <div className="absolute inset-5 rounded-[2rem] bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        
         <div className="absolute bottom-10 left-10 right-10">
           <h2 className="text-4xl font-black uppercase md:text-5xl">{item.short}</h2>
         </div>
@@ -481,13 +480,13 @@ const EVTypeSection = ({ item, index }) => (
 );
 
 /* ── Glow Background ── */
-const GlowBackground = () => (
-  <>
-    <div className="pointer-events-none absolute left-0 top-32 h-96 w-96 rounded-full bg-cyan-500/10 blur-[140px]" />
-    <div className="pointer-events-none absolute right-0 top-[680px] h-96 w-96 rounded-full bg-emerald-500/10 blur-[140px]" />
-    <div className="pointer-events-none absolute bottom-96 left-1/3 h-96 w-96 rounded-full bg-blue-500/10 blur-[140px]" />
-  </>
-);
+// const GlowBackground = () => (
+//   <>
+//     <div className="pointer-events-none absolute left-0 top-32 h-96 w-96 rounded-full bg-cyan-500/10 blur-[140px]" />
+//     <div className="pointer-events-none absolute right-0 top-[680px] h-96 w-96 rounded-full bg-emerald-500/10 blur-[140px]" />
+//     <div className="pointer-events-none absolute bottom-96 left-1/3 h-96 w-96 rounded-full bg-blue-500/10 blur-[140px]" />
+//   </>
+// );
 
 /* ── Section Header ── */
 /* align is now always "left" by default */
@@ -536,14 +535,14 @@ const InfoLine = ({ type, text }) => (
 
 /* ── Comparison Table ── */
 const ComparisonTable = ({ title, headers, rows }) => (
-  <div className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
+  <div className=" p-6 backdrop-blur-xl">
     <h3 className="mb-6 text-left text-2xl font-black uppercase tracking-tight text-white">
       {title}
     </h3>
     <div className="overflow-x-auto rounded-2xl border border-white/10">
-      <table className="w-full min-w-[900px] border-collapse text-sm">
+      <table className="w-full min-w-[900px] border-collapse text-lg">
         <thead>
-          <tr className="bg-cyan-400/10 text-cyan-200">
+          <tr className="bg-transparent text-cyan-200">
             {headers.map((head) => (
               <th
                 key={head}
