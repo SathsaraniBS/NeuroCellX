@@ -153,10 +153,28 @@ function EV() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: <Leaf className="text-lime-400" size={32} />, title: "Environment", image: "/src/assets/environment1.png", desc: "Zero tailpipe emissions help reduce ari pollution and combat climate change.", glow: "group-hover:border-lime-500/50 group-hover:shadow-[0_0_30px_rgba(163,230,53,0.1)]" },
-              { icon: <Wallet className="text-cyan-400" size={32} />, title: "Running Costs", image: "/src/assets/running-cost.png", desc: "Lower maintenance and cheaper electricity make EVs more affordable to run.", glow: "group-hover:border-cyan-500/50 group-hover:shadow-[0_0_30px_rgba(34,211,238,0.1)]" },
-              { icon: <Gauge className="text-blue-400" size={32} />, title: "Performance & Comfort", image: "/src/assets/performance.png", desc: "Instant torque, smooth acceleration, and a smooth quiet driving experience.", glow: "group-hover:border-blue-500/50 group-hover:shadow-[0_0_30px_rgba(96,165,250,0.1)]" },
-              { icon: <Wifi className="text-purple-400" size={32} />, title: "Smart & Connected", image: "/src/assets/ev3.png", desc: "Advanced tech,OTA updates, smart features, and seamiess connectivity .", glow: "group-hover:border-purple-500/50 group-hover:shadow-[0_0_30px_rgba(192,132,252,0.1)]" }
+              { 
+                icon: <Leaf className="text-lime-400" size={32} />, title: "Environment",
+                image: "/src/assets/environment1.png", 
+                desc: "Zero tailpipe emissions help reduce ari pollution and combat climate change.", 
+                glow: "group-hover:border-lime-500/50 group-hover:shadow-[0_0_30px_rgba(163,230,53,0.1)]" 
+              },
+              { 
+                icon: <Wallet className="text-cyan-400" size={32} />, title: "Running Costs", 
+                image: "/src/assets/running-cost.png", 
+                desc: "Lower maintenance and cheaper electricity make EVs more affordable to run.", 
+                glow: "group-hover:border-cyan-500/50 group-hover:shadow-[0_0_30px_rgba(34,211,238,0.1)]" 
+              },
+              { 
+                icon: <Gauge className="text-blue-400" size={32} />, title: "Performance & Comfort", 
+                image: "/src/assets/performance.png", desc: "Instant torque, smooth acceleration, and a smooth quiet driving experience.", 
+                glow: "group-hover:border-blue-500/50 group-hover:shadow-[0_0_30px_rgba(96,165,250,0.1)]" 
+              },
+              { 
+                icon: <Wifi className="text-purple-400" size={32} />, title: "Smart & Connected", 
+                image: "/src/assets/ev3.png", 
+                desc: "Advanced tech,OTA updates, smart features, and seamiess connectivity .", 
+                glow: "group-hover:border-purple-500/50 group-hover:shadow-[0_0_30px_rgba(192,132,252,0.1)]" }
             ].map((feature, idx) => (
               <div 
                 key={idx} 
@@ -169,20 +187,20 @@ function EV() {
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 z-0"
                 />
                 
-                {/* Dark Gradient Overlay for Readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/50 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-90"></div>
+                {/* Dark Gradient Overlay for Readability
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/50 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-90"></div> */}
 
                 {/* Content on top of image */}
                 <div className="relative z-20 flex flex-col">
                   <div className="mb-4 p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 w-fit group-hover:scale-110 transition-transform duration-500">
                     {feature.icon}
                   </div>
-                  <h4 className="font-bold text-2xl text-white mb-2">{feature.title}</h4>
+                  <h3 className="font-bold text-2xl text-white mb-2">{feature.title}</h3>
                   
                   {/* Hover Reveal Description */}
                   <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out">
                     <div className="overflow-hidden">
-                      <p className="text-slate-300 leading-relaxed text-sm pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                      <p className="text-slate-300 leading-relaxed text-xl pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                         {feature.desc}
                       </p>
                     </div>
@@ -205,12 +223,51 @@ function EV() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { title: "EV Types", image: "src/assets/phev.jpg", desc: "Analyze BEV, PHEV, and HEV systemic differences.", icon: <Fuel size={24} />, color: "text-blue-400", bg: "bg-blue-400/20 border-blue-400/30" },
-              { title: "EV History", image: "src/assets/hev.jpg", desc: "Deep dive into cell chemistry and BMS intelligence.", icon: <Zap size={24} />, color: "text-cyan-400", bg: "bg-cyan-400/20 border-cyan-400/30" },
-              { title: "Charging ", image: "src/assets/ev-chager.png", desc: "Understand AC vs DC charging protocols.", icon: <Settings size={24} />, color: "text-emerald-400", bg: "bg-emerald-400/20 border-emerald-400/30" },
-              { title: "EV Maintenance", image: "src/assets/ev-chager.png", desc: "Protocols to maximize vehicle lifespan.", icon: <Compass size={24} />, color: "text-lime-400", bg: "bg-lime-400/20 border-lime-400/30" },
-              { title: "EV Battery ", image: "src/assets/ev-chager.png", desc: "Understand battery chemistry and performance.", icon: <Battery size={24} />, color: "text-purple-400", bg: "bg-purple-400/20 border-purple-400/30" },
-              { title: "Find EV Stations", image: "src/assets/ev-chager.png", desc: "Calculate trip feasibility and routing.", icon: <Map size={24} />, color: "text-orange-400", bg: "bg-orange-400/20 border-orange-400/30" }
+              { 
+                title: "EV Types", 
+                image: "src/assets/phev.jpg", 
+                desc: "BEV, PHEV, and HEV understand the different types of Electric Vehicles.", 
+                icon: <Fuel size={24} />, 
+                color: "text-blue-400", 
+                bg: "bg-blue-400/20 border-blue-400/30" 
+              },
+              { 
+                title: "EV History", 
+                image: "src/assets/hev.jpg", 
+                desc: "A short history of EVs and the road to today.", 
+                icon: <Zap size={24} />, 
+                color: "text-cyan-400", 
+                bg: "bg-cyan-400/20 border-cyan-400/30" 
+              },
+              { 
+                title: "Charging ", 
+                image: "src/assets/ev-chager.png", 
+                desc: "Learn about charging types,speeds and how it all works.", 
+                icon: <Settings size={24} />, 
+                color: "text-emerald-400", 
+                bg: "bg-emerald-400/20 border-emerald-400/30" 
+              },
+              { title: "EV Maintenance", 
+                image: "src/assets/ev-chager.png", 
+                desc: "Protocols to maximize vehicle lifespan.", 
+                icon: <Compass size={24} />, 
+                color: "text-lime-400", 
+                bg: "bg-lime-400/20 border-lime-400/30" 
+              },
+              { 
+                title: "EV Battery ", 
+                image: "src/assets/ev-chager.png", 
+                desc: "Understand battery chemistry and performance.", icon: <Battery size={24} />, 
+                color: "text-purple-400", 
+                bg: "bg-purple-400/20 border-purple-400/30" 
+              },
+              { title: "Find EV Stations", 
+                image: "src/assets/ev-chager.png", 
+                desc: "Calculate trip feasibility and routing.", 
+                icon: <Map size={24} />, 
+                color: "text-orange-400", 
+                bg: "bg-orange-400/20 border-orange-400/30" 
+              }
             ].map((topic, idx) => (
               <div 
                 key={idx} 

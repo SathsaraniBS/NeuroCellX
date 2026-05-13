@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Zap, Battery, Wind, Gauge, ChevronRight, Info, ShieldCheck, 
   Leaf, Globe } from "lucide-react";
+import { FaMapMarkerAlt } from 'react-icons/fa';
+
 
 const DUMMY_VEHICLES = [
   {
@@ -114,11 +116,11 @@ const Hero = () => {
 
               <div className="flex gap-4 pt-6">
                 <Link
-                  to={`/inventory/${activeEV?._id}`}
+                  to="/find-station"
                   className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
                 >
-                  Configure Now
-                  <ChevronRight className="w-5 h-5" />
+                  Find Charging Station
+                  <FaMapMarkerAlt className="w-5 h-5" />
                 </Link>
                 <button
                   className="px-10 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/20 rounded-lg font-bold flex items-center gap-2 transition-all backdrop-blur-md"
