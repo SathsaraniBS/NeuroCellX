@@ -225,7 +225,7 @@ function EV() {
             {[
               {
                 title: "EV Types",
-                image: "src/assets/phev.jpg",
+                image: "src/assets/hev.jpg",
                 desc: "BEV, PHEV, and HEV understand the different types of Electric Vehicles.",
                 icon: <Fuel size={24} />,
                 color: "text-blue-400",
@@ -234,7 +234,7 @@ function EV() {
               },
               {
                 title: "EV History",
-                image: "src/assets/hev.jpg",
+                image: "src/assets/tesla-model-s.png",
                 desc: "A short history of EVs and the road to today.",
                 icon: <Zap size={24} />,
                 color: "text-cyan-400",
@@ -243,7 +243,7 @@ function EV() {
               },
               {
                 title: "Charging",
-                image: "src/assets/ev-chager.png",
+                image: "src/assets/electrical-load.png",
                 desc: "Learn about charging types, speeds and how it all works.",
                 icon: <Settings size={24} />,
                 color: "text-emerald-400",
@@ -252,8 +252,8 @@ function EV() {
               },
               {
                 title: "EV Maintenance",
-                image: "src/assets/ev-chager.png",
-                desc: "Protocols to maximize vehicle lifespan.",
+                image: "src/assets/ev-maintenance.png",
+                desc: "Tips to keep your EV healthy and running.",
                 icon: <Compass size={24} />,
                 color: "text-lime-400",
                 bg: "bg-lime-400/20 border-lime-400/30",
@@ -261,8 +261,8 @@ function EV() {
               },
               {
                 title: "EV Battery",
-                image: "src/assets/ev-chager.png",
-                desc: "Understand battery chemistry and performance.",
+                image: "src/assets/battery.png",
+                desc: "Learn about EV battery types and how they work.",
                 icon: <Battery size={24} />,
                 color: "text-purple-400",
                 bg: "bg-purple-400/20 border-purple-400/30",
@@ -270,8 +270,8 @@ function EV() {
               },
               {
                 title: "Find EV Stations",
-                image: "src/assets/ev-chager.png",
-                desc: "Calculate trip feasibility and routing.",
+                image: "src/assets/charging-hub.png",
+                desc: "Find EV charging stations near you.",
                 icon: <Map size={24} />,
                 color: "text-orange-400",
                 bg: "bg-orange-400/20 border-orange-400/30",
@@ -290,8 +290,8 @@ function EV() {
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 z-0"
                 />
 
-                {/* Dark Gradient Overlay for Readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/60 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-95"></div>
+                {/* Dark Gradient Overlay for Readability
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/60 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-95"></div> */}
 
                 {/* Content on top of image */}
                 <div className="relative z-20 flex flex-col">
@@ -307,7 +307,7 @@ function EV() {
                   {/* Hover Reveal Description */}
                   <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-in-out">
                     <div className="overflow-hidden">
-                      <p className="text-sm text-slate-300 pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                      <p className="text-xl text-slate-300 font-bold pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                         {topic.desc}
                       </p>
                     </div>
@@ -320,11 +320,13 @@ function EV() {
 
         {/* --- SYSTEM ARCHITECTURE --- */}
         <section>
-          <div className="text-center mb-16">
+          <div className="text-left mb-16">
             <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white mb-4">
-              System <span className="text-cyan-400">Architecture</span>
+              How <span className="text-cyan-400">Ev works</span>
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">The streamlined mechanical flow of an electric vehicle converts chemical energy to kinetic motion with minimal efficiency loss.</p>
+            <p className="text-slate-400 leading-relaxed text-lg mb-4">
+
+              EVs run on electricity stored in batteries. The battery powers an electric motor, which drives the wheels. Regenerative braking recovers energy, improving efficiency and range.</p>
           </div>
 
           <div className="bg-[#0a0f25]/80 p-8 md:p-12 rounded-[2.5rem] border border-white/10 backdrop-blur-xl shadow-2xl relative overflow-hidden">

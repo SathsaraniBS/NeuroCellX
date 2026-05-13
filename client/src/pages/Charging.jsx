@@ -386,7 +386,7 @@ function Charging() {
                 </p>
               </div>
 
-              <div className="bg-[url('src/assets/ev-charging.png')] bg-cover bg-no-repeat bg-center rounded-2xl border border-emerald-500/30 text-center w-full max-w-sm h-[280px] md:h-[360px] relative overflow-hidden" />
+              <div className="bg-[url('src/assets/ev-charging.png')] bg-cover bg-no-repeat bg-center rounded-2xl border border-emerald-500/30 text-center w-full  h-[280px] md:h-[360px] relative overflow-hidden" />
             </div>
           </div>
         </section>
