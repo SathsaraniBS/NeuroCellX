@@ -685,7 +685,7 @@ function Charging() {
 
         <section className="relative w-full overflow-hidden py-20">
           {/* Neon background glow */}
-          <div className="pointer-events-none absolute left-1/2 top-10 h-72 w-[700px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
+          <div className="pointer-events-none absolute left-1/2 top-10 h-72 w-[700px] -translate-x-1/2 rounded-full bg-transparent blur-[100px]" />
           <div className="pointer-events-none absolute right-0 bottom-8 h-64 w-64 rounded-full bg-blue-600/10 blur-[100px]" />
 
           <div className="relative mx-auto max-w-7xl px-6">
@@ -701,19 +701,19 @@ function Charging() {
 
             {/* Title */}
             <div className="mb-10 text-left">
-              <p className="mb-3 text-sm font-bold uppercase tracking-[0.35em] text-cyan-300/80">
-                Charging Speed Guide
-              </p>
               <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
-                How Long Does <span className="text-cyan-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.75)]">Charging Take?</span>
+                Charging <span className="text-cyan-400">Speed Guide </span>
               </h2>
+              {/* <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
+                How Long Does <span className="text-cyan-400">Charging Take?</span>
+              </h2> */}
               
             </div>
 
             {/* Table */}
             <div className="overflow-hidden rounded-[1.7rem] border border-cyan-300/25 bg-slate-950/70 shadow-[0_0_45px_rgba(34,211,238,0.18)] ring-1 ring-white/10 backdrop-blur-xl">
               {/* Header */}
-              <div className="grid grid-cols-1 border-b border-cyan-300/20 bg-gradient-to-r from-cyan-400/10 via-blue-500/10 to-emerald-400/10 md:grid-cols-4">
+              <div className="grid grid-cols-1 border-b border-cyan-300/20 bg-transparent md:grid-cols-4">
                 <div className="px-7 py-5 text-lg font-extrabold text-cyan-100">
                   Charger Type
                 </div>
@@ -758,7 +758,7 @@ function Charging() {
               ))}
 
               {/* Formula Footer */}
-              <div className="flex flex-col items-center justify-center gap-3 border-t border-cyan-300/20 bg-gradient-to-r from-blue-500/10 via-cyan-400/10 to-emerald-400/10 px-6 py-6 text-center md:flex-row md:gap-4">
+              <div className="flex flex-col items-center justify-center gap-3 border-t border-cyan-300/20 bg-transparent px-6 py-6 text-center md:flex-row md:gap-4">
                 <Zap className="h-7 w-7 text-cyan-300 drop-shadow-[0_0_16px_rgba(34,211,238,0.9)]" />
                 <p className="text-base font-bold text-cyan-50/85 md:text-lg">
                   Charging time ≈ Battery capacity ÷ Charger power × efficiency factor
@@ -820,54 +820,54 @@ function Charging() {
       </div>
     </section>
 
-    <section className="relative w-full overflow-hidden py-16">
-              {/* EV theme background glows */}
-              <div className="pointer-events-none absolute left-10 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[110px]" />
-              <div className="pointer-events-none absolute right-10 top-0 h-72 w-72 rounded-full bg-emerald-400/10 blur-[120px]" />
-    
-              <div className="relative mx-auto max-w-7xl px-6">
-                <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/25 bg-[#071124]/80 p-6 shadow-[0_0_45px_rgba(34,211,238,0.16)] ring-1 ring-white/10 backdrop-blur-xl md:p-8">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,0.14),transparent_35%),radial-gradient(circle_at_85%_35%,rgba(132,204,22,0.10),transparent_32%)]" />
-                  <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
-                  <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/50 to-transparent" />
-    
-                  <div className="relative grid items-center gap-8 md:grid-cols-[105px_1fr_300px]">
-                    {/* Left Icon */}
-                    <div className="flex justify-center md:justify-start">
-                      <div className="relative flex h-24 w-24 items-center justify-center rounded-3xl border border-cyan-300/35 bg-cyan-400/10 shadow-[0_0_30px_rgba(34,211,238,0.22)]">
-                        <div className="absolute inset-2 rounded-2xl border border-cyan-200/10" />
-                        <ShieldCheck className="h-12 w-12 text-cyan-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.85)]" />
-                      </div>
-                    </div>
-    
-                    {/* Text Content */}
-                    <div>
-                      <p className="mb-2 text-xs font-bold uppercase tracking-[0.32em] text-cyan-300/80">
-                        Charging Protection
-                      </p>
-                      <h2 className="mb-5 text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
-                        Safety and <span className="text-cyan-300">Best Practices</span>
-                      </h2>
-    
-                      <ul className="grid gap-3 ">
-                        {safetyTips.map((tip, index) => (
-                          <li
-                            key={index}
-                            className="flex items-start gap-3 rounded-2xl border border-cyan-300/10 bg-white/[0.03] px-4 py-3 text-lg font-semibold text-slate-300 transition-all duration-300 hover:border-cyan-300/35 hover:bg-cyan-400/10 hover:text-cyan-50"
-                          >
-                            <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-300 drop-shadow-[0_0_10px_rgba(110,231,183,0.75)]" />
-                            <span>{tip}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-    
-                    {/* Right Visual */}
-                    
+        <section className="relative w-full overflow-hidden py-16">
+          {/* EV theme background glows */}
+          <div className="pointer-events-none absolute left-10 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-[110px]" />
+          <div className="pointer-events-none absolute right-10 top-0 h-72 w-72 rounded-full bg-emerald-400/10 blur-[120px]" />
+
+          <div className="relative mx-auto max-w-7xl px-6">
+            <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/25 bg-[#071124]/80 p-6 shadow-[0_0_45px_rgba(34,211,238,0.16)] ring-1 ring-white/10 backdrop-blur-xl md:p-8">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,0.14),transparent_35%),radial-gradient(circle_at_85%_35%,rgba(132,204,22,0.10),transparent_32%)]" />
+              <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
+              <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/50 to-transparent" />
+
+              <div className="relative grid items-center gap-8 md:grid-cols-[105px_1fr_300px]">
+                {/* Left Icon */}
+                <div className="flex justify-center md:justify-start">
+                  <div className="relative flex h-24 w-24 items-center justify-center rounded-3xl border border-cyan-300/35 bg-cyan-400/10 shadow-[0_0_30px_rgba(34,211,238,0.22)]">
+                    <div className="absolute inset-2 rounded-2xl border border-cyan-200/10" />
+                    <ShieldCheck className="h-12 w-12 text-cyan-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.85)]" />
                   </div>
                 </div>
+
+                {/* Text Content */}
+                <div>
+                  <p className="mb-2 text-xs font-bold uppercase tracking-[0.32em] text-cyan-300/80">
+                    Charging Protection
+                  </p>
+                  <h2 className="mb-5 text-3xl font-black uppercase tracking-tight text-white md:text-4xl">
+                    Safety and <span className="text-cyan-300">Best Practices</span>
+                  </h2>
+
+                  <ul className="grid gap-3 ">
+                    {safetyTips.map((tip, index) => (
+                      <li
+                        key={index}
+                        className="flex items-start gap-3 rounded-2xl border border-cyan-300/10 bg-white/[0.03] px-4 py-3 text-lg font-semibold text-slate-300 transition-all duration-300 hover:border-cyan-300/35 hover:bg-cyan-400/10 hover:text-cyan-50"
+                      >
+                        <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-300 drop-shadow-[0_0_10px_rgba(110,231,183,0.75)]" />
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Right Visual */}
+
               </div>
-          </section>
+            </div>
+          </div>
+        </section>
 
           <section className="relative w-full overflow-hidden py-16">
           {/* EV theme background glows */}
@@ -877,11 +877,9 @@ function Charging() {
                     <div className="relative mx-auto max-w-7xl px-6">
                       {/* Title */}
                       <div className="mb-8 text-left">
-                        <p className="mb-3 text-xs font-bold uppercase tracking-[0.35em] text-cyan-300/75">
-                          Continue Learning
-                        </p>
+                        
                         <h2 className="text-4xl font-black uppercase tracking-tight text-white md:text-5xl">
-                          Explore More <span className="text-cyan-300 drop-shadow-[0_0_18px_rgba(34,211,238,0.75)]">Charging Tools</span>
+                          Explore More <br /><span className="text-cyan-400">Charging Tools</span>
                         </h2>
                         
                       </div>
@@ -935,12 +933,14 @@ function Charging() {
                         </Link>
           
                         {/* Card 3 */}
-                        <Link to="/public-charging" className="group relative overflow-hidden rounded-2xl border border-cyan-300/20 bg-[#071124]/80 p-5 shadow-[0_0_35px_rgba(34,211,238,0.12)] ring-1 ring-white/10 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300/45 hover:bg-emerald-400/10 hover:shadow-[0_0_45px_rgba(16,185,129,0.22)]">
-                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(16,185,129,0.14),transparent_34%)] opacity-80" />
+                        <Link to="/public-charging" 
+                           className="group relative overflow-hidden rounded-2xl border border-cyan-300/20 bg-[#071124]/80 p-5 shadow-[0_0_35px_rgba(34,211,238,0.12)] ring-1 ring-white/10 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/45 hover:bg-cyan-400/10 hover:shadow-[0_0_45px_rgba(34,211,238,0.24)]"
+                        >
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(34,211,238,0.14),transparent_34%)] opacity-80" />
                           <div className="relative flex items-center justify-between gap-5">
                             <div className="flex items-center gap-4">
                               <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-emerald-300/25 bg-emerald-400/10 ">
-                                <Calculator className="h-7 w-7 text-emerald-300 drop-shadow-[0_0_12px_rgba(16,185,129,0.7)]" />
+                                <Calculator className="h-7 w-7 text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]"  />
                               </div>
                               <div>
                                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-300/70">
