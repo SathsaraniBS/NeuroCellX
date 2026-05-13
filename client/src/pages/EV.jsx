@@ -319,54 +319,59 @@ function EV() {
         </section>
 
         {/* --- SYSTEM ARCHITECTURE --- */}
-        <section>
-          <div className="text-left mb-16">
-            <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-white mb-4">
-              How <span className="text-cyan-400">Ev works</span>
-            </h2>
-            <p className="text-slate-400 leading-relaxed text-lg mb-4">
 
-              EVs run on electricity stored in batteries. The battery powers an electric motor, which drives the wheels. Regenerative braking recovers energy, improving efficiency and range.</p>
-          </div>
+        <section className="py-20 relative">
+          <div className="absolute top-10 left-0 w-[500px] h-[500px] bg-transparent pointer-events-none -z-10" />
 
-          <div className="bg-[#0a0f25]/80 p-8 md:p-12 rounded-[2.5rem] border border-white/10 backdrop-blur-xl shadow-2xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-white/5 opacity-10" />
-            <div className="flex flex-col lg:flex-row items-center justify-between relative z-10 gap-8">
-              <div className="flex flex-col items-center group">
-                <div className="h-24 w-24 bg-gradient-to-br from-cyan-900/50 to-transparent border border-cyan-500/30 rounded-2xl flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(34,211,238,0.2)] group-hover:border-cyan-400 transition-colors">
-                  <Zap className="text-cyan-400" size={40} />
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+              {/* LEFT — Text Box */}
+              <div className="flex flex-col justify-center gap-6 p-8 md:p-12  backdrop-blur-sm">
+
+                <h2 className="text-5xl font-black uppercase tracking-tight leading-tight">
+                  How{" "}
+                  <span className="text-cyan-400">EV Works</span>
+
+                </h2>
+
+                <p className="text-slate-300 leading-relaxed text-lg">
+                  EVs run on electricity stored in batteries. The battery powers an
+                  electric motor, which drives the wheels. Regenerative braking
+                  recovers energy, improving efficiency and range.
+                </p>
+
+                <div className="flex flex-col gap-3 mt-2">
+                  {[
+                    { label: "Battery Pack", desc: "Stores electrical energy" },
+                    { label: "Electric Motor", desc: "Converts energy to motion" },
+                    { label: "Regenerative Braking", desc: "Recovers energy on deceleration" },
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-start gap-3">
+
+                      <div>
+                        <span className="text-slate-300 font-semibold text-lg">{item.label}</span>
+                        <span className="text-slate-300 text-lg"> — {item.desc}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <span className="font-bold tracking-wider uppercase text-white">Battery Pack</span>
-                <span className="text-xs text-cyan-400 font-mono mt-1">DC Energy Storage</span>
               </div>
 
-              <div className="hidden lg:block h-px w-16 bg-gradient-to-r from-cyan-500/50 to-emerald-500/50 relative">
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399]" />
+              {/* RIGHT — Image Box */}
+              <div
+                className="rounded-[2rem] border border-emerald-500/30 overflow-hidden relative h-[360px] md:h-[480px] shadow-[0_0_60px_rgba(6,182,212,0.08)]"
+                style={{ backgroundImage: "url('src/assets/ev-works.png')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}
+              >
+                {/* Subtle overlay for depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#020c18]/60 via-transparent to-transparent" />
+
               </div>
 
-              <div className="flex flex-col items-center group">
-                <div className="h-24 w-24 bg-gradient-to-br from-emerald-900/50 to-transparent border border-emerald-500/30 rounded-2xl flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(52,211,153,0.2)] group-hover:border-emerald-400 transition-colors">
-                  <Settings className="text-emerald-400" size={40} />
-                </div>
-                <span className="font-bold tracking-wider uppercase text-white">Inverter</span>
-                <span className="text-xs text-emerald-400 font-mono mt-1">DC to AC Conversion</span>
-              </div>
-
-              <div className="hidden lg:block h-px w-16 bg-gradient-to-r from-emerald-500/50 to-blue-500/50 relative">
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_10px_#60a5fa]" />
-              </div>
-
-              <div className="flex flex-col items-center group">
-                <div className="h-24 w-24 bg-gradient-to-br from-blue-900/50 to-transparent border border-blue-500/30 rounded-2xl flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(96,165,250,0.2)] group-hover:border-blue-400 transition-colors">
-                  <Gauge className="text-blue-400" size={40} />
-                </div>
-                <span className="font-bold tracking-wider uppercase text-white">Drive Motor</span>
-                <span className="text-xs text-blue-400 font-mono mt-1">Kinetic Generation</span>
-              </div>
             </div>
           </div>
         </section>
-
+        
         {/* --- FAQ --- */}
         <section className="py-24 bg-transparent">
           <div className="max-w-4xl mx-auto px-6">
