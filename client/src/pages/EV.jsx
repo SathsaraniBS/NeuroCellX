@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, CheckCircle2, Download, Leaf, Wallet, Gauge, Wifi, Settings, Battery, Map, ChevronRight, Zap, Compass, Fuel 
+import { ChevronDown, CheckCircle2, Download, Leaf, Wallet, Gauge, Wifi, Settings, Battery, Map, ChevronRight, Zap, Compass, Fuel ,PlugZap ,ArrowRight 
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -77,6 +77,24 @@ const FAQS = [
   { id: 5, question: "What happens to the battery after years of use ?", answer: "EV batteries degrade slowly. Once they drop below automotive grade (usually 70%), they are highly valuable for repurposing in grid storage systems or full raw material recycling." },
   { id: 6, question: "Are EVs safe in extreme weather ?", answer: "Absolutely. EV battery packs and high-voltage systems are rigorously sealed, waterproofed, and tested for safety in deep water, heavy rain, and extreme temperatures." },
 ];
+
+const NextCard = ({ icon: Icon, title, text, path }) => (
+  <Link
+    to={path}
+    className="group flex items-center gap-5 rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl transition hover:-translate-y-2 hover:border-cyan-400/30 hover:bg-white/[0.07] hover:shadow-2xl hover:shadow-cyan-500/10"
+  >
+    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/10 text-cyan-300">
+      <Icon className="h-8 w-8" />
+    </div>
+
+    <div className="flex-1">
+      <h3 className="mb-2 font-black uppercase text-white">{title}</h3>
+      <p className="text-sm leading-6 text-slate-400">{text}</p>
+    </div>
+
+    <ArrowRight className="h-6 w-6 text-emerald-300 transition group-hover:translate-x-1" />
+  </Link>
+);
 
 function EV() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -350,7 +368,7 @@ function EV() {
                     <div key={item.label} className="flex items-start gap-3">
 
                       <div>
-                        <span className="text-slate-300 font-semibold text-lg">{item.label}</span>
+                        <span className="text-slate-300 font-bold text-lg">{item.label}</span>
                         <span className="text-slate-300 text-lg"> — {item.desc}</span>
                       </div>
                     </div>
@@ -390,6 +408,29 @@ function EV() {
               ))}
             </div>
           </div>
+        </section>
+        
+        <section className="relative mx-auto grid max-w-7xl gap-6 px-6 pb-28 md:grid-cols-3">
+          <NextCard
+            icon={Leaf}
+            title="EV Buying Guide"
+            text="Find the right EV for your budget and driving pattern."
+            path="/ev"
+          />
+
+          <NextCard
+            icon={PlugZap}
+            title="Charging Guide"
+            text="Learn about home, public, AC, and DC fast charging."
+            path="/charging"
+          />
+
+          <NextCard
+            icon={Map}
+            title="EV History"
+            text="Explore the journey and future of electric mobility."
+            path="/ev-history"
+          />
         </section>
       </main>
       <Footer />
