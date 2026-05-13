@@ -563,35 +563,30 @@ const WARNING_LABELS = [
 const FAQS = [
   {
     id: 1,
-    icon: Droplets,
     question: "Can I charge my EV in the rain?",
     answer:
       "Yes. EV charging systems are designed and certified to be weatherproof. Connectors and ports meet IP ratings for water resistance. However, always use manufacturer-approved equipment and avoid visibly damaged cables.",
   },
   {
     id: 2,
-    icon: AlertTriangle,
     question: "What if my car shows a battery fault light?",
     answer:
       "Stop driving when safe and contact your EV manufacturer's support line immediately. Do not attempt to diagnose or repair battery issues yourself. Fault lights can indicate anything from a minor sensor issue to a serious cell problem.",
   },
   {
     id: 3,
-    icon: Clock,
     question: "Is it safe to leave my EV charging overnight?",
     answer:
       "Yes, most modern EVs are designed for overnight charging and will stop automatically at the set limit. Use a certified Level 2 home charger with a dedicated circuit and set a charge limit of 80% for daily use.",
   },
   {
     id: 4,
-    icon: Flame,
     question: "What should I do if I see smoke coming from the battery area?",
     answer:
       "Immediately move everyone at least 10–15 metres away. Do not open the bonnet. Call emergency services (112/911) and inform them it is an EV. Do NOT use water — call trained firefighters.",
   },
   {
     id: 5,
-    icon: Eye,
     question: "How often should I inspect my charging cable and port?",
     answer:
       "Inspect the charging cable and port before every session. Look for cuts, burns, bent pins, moisture, or unusual smells. Replace damaged cables immediately and have the port inspected by a certified technician annually.",
@@ -600,20 +595,19 @@ const FAQS = [
 
 const HELP_CONTACTS = [
   { icon: Phone, label: "Roadside Assistance", number: "+94 77 123 4567", color: "text-cyan-300", border: "border-cyan-400/25", bg: "bg-cyan-400/10" },
-  { icon: Wrench, label: "Service Support", number: "+94 11 987 6543", color: "text-emerald-300", border: "border-emerald-400/25", bg: "bg-emerald-400/10" },
+  { icon: Wrench, label: "Service Support", number: "+94 11 987 6543", color: "text-cyan-300", border: "border-cyan-400/25", bg: "bg-cyan-400/10" },
 ];
 
 const BOTTOM_LINKS = [
   { icon: Download, label: "Download Safety Checklist (PDF)", sub: "One-page checklist for quick reference.", href: "/safety-checklist.pdf", color: "text-cyan-300", border: "border-cyan-400/25", bg: "bg-cyan-400/10" },
-  { icon: Calendar, label: "Book Service / Report Damage", sub: "Get professional help and support.", href: "/book-service", color: "text-emerald-300", border: "border-emerald-400/25", bg: "bg-emerald-400/10" },
-  { icon: BatteryCharging, label: "Visit Battery Maintenance", sub: "Tips to keep your battery healthy.", href: "/battery-safety", color: "text-violet-300", border: "border-violet-400/25", bg: "bg-violet-400/10" },
+  { icon: Calendar, label: "Book Service / Report Damage", sub: "Get professional help and support.", href: "/book-service", color: "text-cyan-300", border: "border-cyan-400/25", bg: "bg-cyan-400/10" },
+  { icon: BatteryCharging, label: "Visit Battery Maintenance", sub: "Tips to keep your battery healthy.", href: "/battery-safety", color: "text-cyan-300", border: "border-cyan-400/25", bg: "bg-cyan-400/10" },
 ];
 
 /* ─────────────────────────────────────────
    Sub-Components
 ───────────────────────────────────────── */
 const FAQItem = ({ faq, isOpen, onToggle }) => {
-  const Icon = faq.icon;
   return (
     <div className="border-b border-white/10 last:border-0">
       <button
@@ -621,9 +615,7 @@ const FAQItem = ({ faq, isOpen, onToggle }) => {
         className="w-full py-5 flex items-center justify-between text-left gap-4 group"
       >
         <div className="flex items-center gap-4">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
-            <Icon className="h-4 w-4 text-cyan-300" />
-          </div>
+          
           <span className="font-semibold text-base md:text-lg text-white group-hover:text-cyan-100 transition-colors">
             {faq.question}
           </span>
@@ -764,12 +756,10 @@ function EVBatterySafetyPage() {
           <div className="pointer-events-none absolute right-0 bottom-10 h-96 w-96 rounded-full bg-emerald-400/6 blur-[130px]" />
 
           <div className="mb-12">
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300/80 mb-3">
-              Safety Guidelines
-            </p>
+            
             <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
               Safety{" "}
-              <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
+              <span className="text-cyan-400 ">
                 Categories
               </span>
             </h2>
@@ -808,7 +798,7 @@ function EVBatterySafetyPage() {
                           ) : (
                             <CheckCircle2 className={`h-4 w-4 shrink-0 mt-0.5 ${cat.color}`} />
                           )}
-                          <span className="text-slate-400 text-sm leading-relaxed">{point}</span>
+                          <span className="text-slate-300 text-sm leading-relaxed">{point}</span>
                         </li>
                       ))}
                     </ul>
@@ -817,7 +807,7 @@ function EVBatterySafetyPage() {
                   {/* Link */}
                   <a
                     href={cat.link}
-                    className={`mt-6 inline-flex items-center gap-2 text-sm font-bold ${cat.color} hover:opacity-80 transition-opacity`}
+                    className={`mt-6 inline-flex items-center gap-2 text-lg font-bold ${cat.color} hover:opacity-80 transition-opacity`}
                   >
                     {cat.linkLabel}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -844,13 +834,13 @@ function EVBatterySafetyPage() {
                   </div>
                   <div>
                    
-                    <h3 className="text-2xl font-black uppercase text-white">
-                      Official Warnings &{" "}
-                      <span className="text-cyan-300">Labels</span>
+                    <h3 className="text-3xl font-black uppercase text-white">
+                      Official {" "}
+                      <span className="text-cyan-300">Warnings & Labels</span>
                     </h3>
                   </div>
                 </div>
-                <p className="text-slate-300 text-base leading-relaxed max-w-xl">
+                <p className="text-slate-300 text-lg font-bold leading-relaxed max-w-xl">
                   Always follow the warning labels on your vehicle and charger. High voltage inside.
                   Risk of electric shock or fire.
                 </p>
@@ -865,7 +855,7 @@ function EVBatterySafetyPage() {
                       key={w.label}
                       className={`flex flex-col items-center gap-2 px-6 py-4 rounded-2xl border ${w.border} ${w.bg} backdrop-blur-sm transition-all duration-300 hover:-translate-y-1`}
                     >
-                      <Icon className={`h-8 w-8 ${w.color}`} />
+                      <Icon className={`h-9 w-9 ${w.color}`} />
                       <span className={`text-xs font-bold text-center ${w.color} leading-tight`}>
                         {w.label}
                       </span>
@@ -882,20 +872,17 @@ function EVBatterySafetyPage() {
           <div className="max-w-4xl mx-auto px-6">
             {/* Header */}
             <div className="text-center mb-12">
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300/80 mb-4">
-                Got Questions?
-              </p>
+             
               <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight">
-                Frequently Asked{" "}
+                 Safety {" "}
                 <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
-                  Questions
+                  FAQ
                 </span>
               </h2>
-              {/* underline accent */}
-              <div className="mx-auto mt-4 h-px w-24 bg-gradient-to-r from-cyan-400 to-emerald-400" />
+              
             </div>
 
-            <div className="rounded-[2rem] border border-white/10 bg-[#071124]/60 backdrop-blur-xl overflow-hidden divide-y-0 px-6 md:px-10 shadow-[0_0_40px_rgba(34,211,238,0.06)]">
+            <div className="">
               {FAQS.map((faq) => (
                 <FAQItem
                   key={faq.id}
@@ -918,14 +905,14 @@ function EVBatterySafetyPage() {
             <div className="relative flex flex-col md:flex-row items-start md:items-center gap-8 justify-between">
               <div>
                 
-                <h3 className="text-2xl font-black uppercase text-white mb-2">
+                <h3 className="text-3xl font-black uppercase text-white mb-2">
                   Need{" "}
                   <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
                     Help?
                   </span>
                 </h3>
-                <p className="text-slate-400 text-base leading-relaxed max-w-md">
-                  For roadside assistance, service, or reporting a damaged charger or station.
+                <p className="text-slate-300 text-lg font-bold leading-relaxed max-w-md">
+                  For roadside assistance, service, <br />or reporting a damaged charger or station.
                 </p>
               </div>
 
@@ -942,10 +929,10 @@ function EVBatterySafetyPage() {
                         <Icon className="h-5 w-5" />
                       </div>
                       <div>
-                        <p className={`text-xs font-bold uppercase tracking-wider ${c.color} mb-0.5`}>
+                        <p className={`text-lg font-bold uppercase tracking-wider ${c.color} mb-0.5`}>
                           {c.label}
                         </p>
-                        <p className="text-white font-black text-sm">{c.number}</p>
+                        <p className="text-white font-black text-lg">{c.number}</p>
                       </div>
                     </a>
                   );
@@ -970,10 +957,10 @@ function EVBatterySafetyPage() {
                     <Icon className="h-7 w-7" />
                   </div>
                   <div className="flex-1">
-                    <h4 className={`font-black text-sm uppercase mb-1 ${link.color}`}>
+                    <h3 className={`font-black text-lg font-bold uppercase mb-1 ${link.color}`}>
                       {link.label}
-                    </h4>
-                    <p className="text-slate-400 text-sm leading-relaxed">{link.sub}</p>
+                    </h3>
+                    <p className="text-slate-300 text-lg font-bold leading-relaxed">{link.sub}</p>
                   </div>
                   <ArrowRight className={`h-5 w-5 ${link.color} transition-transform group-hover:translate-x-1`} />
                 </a>
@@ -982,16 +969,7 @@ function EVBatterySafetyPage() {
           </div>
         </section>
 
-        {/* ── FOOTER TAGLINE ── */}
-        <div className="pb-10 text-center">
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-cyan-400/20 bg-cyan-400/5 backdrop-blur-sm">
-            <ShieldCheck className="h-4 w-4 text-cyan-400" />
-            <p className="text-slate-400 text-sm font-semibold">
-              Your safety comes first. Drive smart. Charge safe.
-            </p>
-          </div>
-        </div>
-
+        
       </main>
 
       <Footer />
