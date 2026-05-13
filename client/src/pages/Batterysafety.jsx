@@ -196,10 +196,10 @@ function Batterysafety() {
 
                 {/* DID YOU KNOW Section */}
                 <div className="mb-16">
-                    <h2 className="text-2xl md:text-3xl font-bold text-[#3B82F6] uppercase tracking-wide text-center mb-8">
+                    <h2 className="text-2xl text-left md:text-3xl font-bold uppercase tracking-wide text-center mb-8">
                         DID YOU <span className="text-cyan-400">KNOW ?</span>
                     </h2>
-                    <p className="text-gray-400 text-lg  text-base md:text-lg mb-6 leading-relaxed">
+                    <p className="text-slate-300 text-lg  text-base md:text-lg mb-6 leading-relaxed">
                         MG ZS EV battery conforms to the most advanced safety tests and its battery safety management meets stringent requirements to enhance overall durability, maintain stable battery operation and ensures a longer lifespan in Indian environmental conditions.
                     </p>
                     <ul className="list-disc pl-8 space-y-2 text-gray-400 text-lg  text-base md:text-lg">
@@ -211,13 +211,13 @@ function Batterysafety() {
 
                 {/* YOUR BIT IN ENSURING BATTERY SAFETY Section */}
                 <div className="mb-16">
-                    <h2 className="text-2xl md:text-3xl font-bold text-gray-400 text-lg  uppercase tracking-wide text-center mb-8">
+                    <h2 className="text-2xl md:text-3xl font-bold  uppercase tracking-wide text-left mb-8">
                         YOUR BIT IN ENSURING <span className="text-cyan-400"> BATTERY SAFETY </span>
                     </h2>
-                    <p className="text-gray-400 text-lg  text-base md:text-lg mb-6 leading-relaxed">
+                    <p className="text-slate-300 text-lg  text-base md:text-lg mb-6 leading-relaxed">
                         Safety isn't just about the initial design; it's also about maintenance. Here's how you can ensure the longevity and safety of your EV battery
                     </p>
-                    <ul className="list-disc pl-8 space-y-2 text-gray-400 text-lg  text-base md:text-lg">
+                    <ul className="list-disc pl-8 space-y-2 text-slate-300 text-lg  text-base md:text-lg">
                         <li>Maintain proper charging habits.</li>
                         <li>Regular software and firmware updates.</li>
                         <li>Scheduled maintenance checks.</li>
@@ -226,8 +226,8 @@ function Batterysafety() {
 
                 {/* FACTORS AFFECTING THE PERFORMANCE Section */}
                 <div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-[#3B82F6] uppercase tracking-wide text-center mb-8">
-                        FACTORS AFFECTING THE PERFORMANCE <span className="text-cyan-400">OF EV BATTERIES </span>
+                    <h2 className="text-2xl md:text-3xl font-bold  uppercase tracking-wide text-left mb-8">
+                        FACTORS AFFECTING  <br /><span className="text-cyan-400">THE PERFORMANCE OF EV BATTERIES </span>
                     </h2>
                     <p className="text-gray-400 text-lg text-base md:text-lg leading-relaxed">
                         EV batteries can be affected due to various reasons, some of them are:

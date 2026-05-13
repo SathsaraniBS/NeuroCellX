@@ -479,15 +479,6 @@ const EVTypeSection = ({ item, index }) => (
   </section>
 );
 
-/* ── Glow Background ── */
-// const GlowBackground = () => (
-//   <>
-//     <div className="pointer-events-none absolute left-0 top-32 h-96 w-96 rounded-full bg-cyan-500/10 blur-[140px]" />
-//     <div className="pointer-events-none absolute right-0 top-[680px] h-96 w-96 rounded-full bg-emerald-500/10 blur-[140px]" />
-//     <div className="pointer-events-none absolute bottom-96 left-1/3 h-96 w-96 rounded-full bg-blue-500/10 blur-[140px]" />
-//   </>
-// );
-
 /* ── Section Header ── */
 /* align is now always "left" by default */
 const SectionHeader = ({ eyebrow, title, text, align = "left" }) => (
