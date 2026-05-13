@@ -379,32 +379,9 @@
 // export default Batterysafety;
 
 import React, { useState } from "react";
-import {
-  ShieldCheck,
-  Zap,
-  AlertTriangle,
-  Phone,
-  CheckCircle2,
-  ChevronDown,
-  ArrowRight,
-  BatteryCharging,
-  Thermometer,
-  Truck,
-  Users,
-  Recycle,
-  ClipboardList,
-  Package,
-  BookOpen,
-  Download,
-  Calendar,
-  Wrench,
-  Flame,
-  Droplets,
-  PlugZap,
-  Clock,
-  Eye,
-  WifiOff,
-} from "lucide-react";
+import {ShieldCheck,Zap,AlertTriangle,Phone,CheckCircle2,ChevronDown,
+  ArrowRight,BatteryCharging,Thermometer,Truck,Users,Recycle,ClipboardList,Package,BookOpen,Download,Calendar,Wrench,Flame,
+  Droplets,PlugZap,Clock,Eye,WifiOff,} from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -681,61 +658,43 @@ function EVBatterySafetyPage() {
 
       <main className="overflow-hidden">
 
-        {/* ── HERO ── */}
-        <section className="relative min-h-[70vh] w-full overflow-hidden flex items-center">
-          {/* Background */}
-          <div className="absolute inset-0">
-            <img
-              src="/src/assets/ev3.png"
-              alt="EV Battery Safety"
-              className="w-full h-full object-cover scale-105 animate-slow-zoom"
-              onError={(e) => {
-                e.target.src =
-                  "https://images.unsplash.com/photo-1593941707882-a5bba14938cb?q=80&w=2072&auto=format&fit=crop";
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/60 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/30 to-transparent" />
-          </div>
+              {/* ── HERO ── */}
+              <section className="relative h-screen w-full overflow-hidden">
+                  <div className="absolute inset-0">
+                      <img
+                          src="/src/assets/ev3.png"
+                          alt="EV Background"
+                          className="w-full h-full object-cover scale-105 animate-slow-zoom transition-opacity duration-1000"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
+                  </div>
 
-          {/* Ambient glows */}
-          <div className="pointer-events-none absolute left-0 top-1/4 h-80 w-80 rounded-full bg-cyan-500/10 blur-[120px]" />
-          <div className="pointer-events-none absolute right-0 bottom-0 h-80 w-80 rounded-full bg-emerald-400/10 blur-[120px]" />
+                  <div className="relative h-full max-w-7xl mx-auto px-6 flex items-center">
+                      <div className="max-w-3xl space-y-6 pt-20">
 
-          <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-20 w-full">
-            <div className="max-w-3xl space-y-6">
-              {/* Eyebrow */}
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300/80">
-                VoltIQ Safety Centre
-              </p>
+                          <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tighter">Battery Safety:<br /><span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">Maintenance & Ownership Guide</span></h1>
+                          <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">Practical safety tips, emergency steps,
+                              ,<br />
+                              and when to call professionals.
 
-              {/* Title */}
-              <div className="flex items-center gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/30 bg-cyan-400/15">
-                  <ShieldCheck className="h-7 w-7 text-cyan-300" />
-                </div>
-                <h1 className="text-5xl md:text-7xl font-black leading-tight tracking-tighter">
-                  EV Battery{" "}
-                  <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
-                    Safety
-                  </span>
-                </h1>
-              </div>
+                          </p>
+                      </div>
+                  </div>
+                  <div className="flex gap-4 pt-6 pl-6 absolute left-30 bottom-10">
+                      {/* Fixed: removed undefined activeEV variable from the link path */}
+                      <a
+                          href="/ev-manual.pdf"
+                          download="EV_Maintenance_Manual.pdf"
+                          className="px-10 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold flex items-center gap-2 transition-all hover:shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                      >
+                          Download Manual
+                          <Download className="w-5 h-5" />
+                      </a>
 
-              {/* Subtitle */}
-              <p className="text-2xl text-cyan-100/90 font-medium italic border-l-4 border-cyan-500 pl-4">
-                Practical safety tips, emergency steps,
-                <br />
-                and when to call professionals.
-              </p>
-              <p className="text-slate-400 text-lg leading-relaxed max-w-2xl">
-                Follow these guidelines to reduce risk during charging, storage, transport, and
-                accidents.
-              </p>
-            </div>
-          </div>
-        </section>
-
+                  </div>
+              </section>
+        
         {/* ── QUICK RULES STRIP ── */}
         <section className="relative py-10 border-y border-white/10 bg-[#071124]/60 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-6">
