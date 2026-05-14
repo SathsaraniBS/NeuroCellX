@@ -16,9 +16,9 @@ const BatteryTypes = () => {
       image: "/src/assets/Nimh.png",
       desc: "Heavy, low-energy-density technology, widely used in older cars and 12V systems.",
       icon: BatteryCharging,
-      color: "text-slate-300",
+      color: "text-cyan-300",
       glow: "shadow-[0_0_35px_rgba(148,163,184,0.25)]",
-      bg: "from-slate-500/20 to-white/[0.03]",
+      bg: "from-cyan-500/20 to-white/[0.03]",
       rows: [
         ["Range / Energy", "bad", "Very Low"],
         ["Cost", "good", "Very Low"],
@@ -32,9 +32,9 @@ const BatteryTypes = () => {
       sub: "Nickel-metal Hydride",
       desc: "Used mainly in hybrids. More energy than lead-acid but heavier than Li-ion.",
       icon: BatteryCharging,
-      color: "text-emerald-300",
+      color: "text-cyan-300",
       glow: "shadow-[0_0_35px_rgba(16,185,129,0.25)]",
-      bg: "from-emerald-500/20 to-white/[0.03]",
+      bg: "from-cyan-500/20 to-white/[0.03]",
       rows: [
         ["Range / Energy", "bad", "Low"],
         ["Cost", "warn", "Medium"],
@@ -46,7 +46,7 @@ const BatteryTypes = () => {
       no: "3.",
       title: "Lithium-ion",
       sub: "General EV Standard",
-      desc: "Today’s dominant EV battery family. Includes NMC, NCA, LFP, LMFP and more.",
+      desc: "Today's dominant EV battery family. Includes NMC, NCA, LFP, LMFP and more.",
       icon: BatteryCharging,
       color: "text-cyan-300",
       glow: "shadow-[0_0_35px_rgba(34,211,238,0.25)]",
@@ -63,10 +63,10 @@ const BatteryTypes = () => {
       title: "LFP",
       sub: "Lithium Iron Phosphate",
       desc: "Cobalt-free lithium-ion chemistry known for safety, durability and lower cost.",
-      icon: ShieldCheck,
-      color: "text-teal-300",
+      icon: BatteryCharging,
+      color: "text-cyan-300",
       glow: "shadow-[0_0_35px_rgba(45,212,191,0.25)]",
-      bg: "from-teal-500/20 to-white/[0.03]",
+      bg: "from-cyan-500/20 to-white/[0.03]",
       rows: [
         ["Range / Energy", "warn", "Medium"],
         ["Cost", "good", "Low"],
@@ -79,10 +79,10 @@ const BatteryTypes = () => {
       title: "NMC / NCA",
       sub: "High Performance Chemistry",
       desc: "High energy density chemistry offering long range and strong performance.",
-      icon: Zap,
-      color: "text-violet-300",
+      icon: BatteryCharging,
+      color: "text-cyan-300",
       glow: "shadow-[0_0_35px_rgba(139,92,246,0.25)]",
-      bg: "from-violet-500/20 to-white/[0.03]",
+      bg: "from-cyan-500/20 to-white/[0.03]",
       rows: [
         ["Range / Energy", "good", "Very High"],
         ["Cost", "bad", "High"],
@@ -95,10 +95,10 @@ const BatteryTypes = () => {
       title: "Solid-State",
       sub: "Next Generation",
       desc: "Uses solid electrolyte instead of liquid. Very high energy density and superior safety.",
-      icon: Sparkles,
-      color: "text-blue-300",
+      icon: BatteryCharging,
+      color: "text-cyan-300",
       glow: "shadow-[0_0_35px_rgba(96,165,250,0.25)]",
-      bg: "from-blue-500/20 to-white/[0.03]",
+      bg: "from-cyan-500/20 to-white/[0.03]",
       rows: [
         ["Range / Energy", "good", "Very High"],
         ["Cost", "bad", "Very High"],
@@ -111,16 +111,54 @@ const BatteryTypes = () => {
       title: "Sodium-ion",
       sub: "Low Cost Future Tech",
       desc: "Uses sodium instead of lithium. Low cost, safe, and good for cold climates.",
-      icon: Snowflake,
-      color: "text-orange-300",
+      icon: BatteryCharging,
+      color: "text-cyan-300",
       glow: "shadow-[0_0_35px_rgba(251,146,60,0.25)]",
-      bg: "from-orange-500/20 to-white/[0.03]",
+      bg: "from-cyan-500/20 to-white/[0.03]",
       rows: [
         ["Range / Energy", "warn", "Low – Medium"],
         ["Cost", "good", "Low"],
         ["Safety", "good", "Good"],
         ["Life / Longevity", "warn", "Medium – Long Potential"],
       ],
+    },
+  ];
+
+  const batteryCards = [
+    {
+      no: "1.",
+      title: "Lead-acid",
+      image: "/src/assets/Nimh.png",
+    },
+    {
+      no: "2.",
+      title: "Lithium-ion",
+      image: "/src/assets/Nimh.png",
+    },
+    {
+      no: "3.",
+      title: "Lithium Iron Phosphate",
+      image: "/src/assets/Nimh.png",
+    },
+    {
+      no: "4.",
+      title: "Nickel Cobalt Aluminum",
+      image: "/src/assets/Nimh.png",
+    },
+    {
+      no: "5.",
+      title: "Nickel Metal Hydride",
+      image: "/src/assets/Nimh.png",
+    },
+    {
+      no: "6.",
+      title: "Solid-State",
+      image: "/src/assets/Nimh.png",
+    },
+    {
+      no: "7.",
+      title: "Sodium-ion",
+      image: "/src/assets/Nimh.png",
     },
   ];
 
@@ -146,21 +184,21 @@ const BatteryTypes = () => {
       text: "LFP is the best balance of safety, life, and total cost of ownership.",
       link: "See Battery Care Guide",
       icon: ShieldCheck,
-      color: "text-emerald-300",
+      color: "text-cyan-300",
     },
     {
       title: "Curious about future-tech and high-end cars?",
       text: "Solid-state offers very high potential in range and safety.",
       link: "See EV Technologies",
       icon: Sparkles,
-      color: "text-violet-300",
+      color: "text-cyan-300",
     },
     {
       title: "Cost-sensitive or city-use focused?",
       text: "LFP or Sodium-ion are ideal for daily city use where available.",
       link: "See Trip Planner",
       icon: BatteryCharging,
-      color: "text-orange-300",
+      color: "text-cyan-300",
     },
   ];
 
@@ -230,13 +268,6 @@ const BatteryTypes = () => {
                   Explore Chemistry
                   <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
                 </a>
-
-                <a
-                  href="#comparison"
-                  className="inline-flex items-center gap-3 rounded-xl border border-white/15 bg-white/10 px-8 py-4 font-bold uppercase text-white backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-emerald-400/50 hover:text-emerald-300"
-                >
-                  Compare Batteries
-                </a>
               </div>
             </div>
           </div>
@@ -274,7 +305,6 @@ const BatteryTypes = () => {
                 <span className="text-cyan-400">Chemistry Explained</span>
               </h2>
             }
-            text="Each chemistry has different strengths. Some are cheaper, some are safer, and some are better for long range."
           />
 
           <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -290,15 +320,38 @@ const BatteryTypes = () => {
           </div>
         </section>
 
+        {/* ✅ FIXED: Battery Types section now uses BatteryTypeCard component */}
+        <section id="battery-types" className="relative px-6 py-24">
+          <SectionTitle
+            title={
+              <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
+                Battery{" "}
+                <span className="text-cyan-400">Types</span>
+              </h2>
+            }
+          />
+
+          <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {batteryCards.slice(0, 4).map((item) => (
+              <BatteryTypeCard key={item.title} item={item} />
+            ))}
+          </div>
+
+          <div className="mx-auto mt-6 grid max-w-7xl gap-6 md:grid-cols-3">
+            {batteryCards.slice(4).map((item) => (
+              <BatteryTypeCard key={item.title} item={item} />
+            ))}
+          </div>
+        </section>
+
         <section id="comparison" className="relative px-6 py-24">
           <SectionTitle
             title={
               <h2 className="text-4xl md:text-5xl text-left text-white font-black uppercase mb-4 tracking-tight">
-                Quick <br />
-                <span className="text-cyan-400">Battery Comparison</span>
+                 Battery 
+                <span className="text-cyan-400"> Comparison</span>
               </h2>
             }
-            text="Use this table to compare battery chemistry by energy density, cost, safety, cycle life, and maturity."
           />
 
           <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.05] shadow-[0_0_45px_rgba(34,211,238,0.08)] backdrop-blur-xl">
@@ -349,10 +402,6 @@ const BatteryTypes = () => {
               </table>
             </div>
           </div>
-
-          <p className="mx-auto mt-4 max-w-7xl text-sm font-semibold text-slate-500">
-            * Solid-state values are estimated potential values because the technology is still emerging.
-          </p>
         </section>
 
         <section className="relative px-6 py-24">
@@ -364,7 +413,6 @@ const BatteryTypes = () => {
                 <span className="text-cyan-400">Fits Your EV?</span>
               </h2>
             }
-            text="The best battery depends on whether you need maximum range, lower cost, safety, or future-ready technology."
           />
 
           <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-4">
@@ -386,7 +434,7 @@ const BatteryTypes = () => {
                     {card.title}
                   </h3>
 
-                  <p className="mb-6 text-sm leading-7 text-slate-400">
+                  <p className="mb-6 text-lg leading-7 text-slate-300">
                     {card.text}
                   </p>
 
@@ -408,32 +456,30 @@ const BatteryTypes = () => {
             center
             eyebrow="FAQ"
             title={
-              <h2 className="text-4xl md:text-6xl text-center text-white font-black uppercase tracking-tight leading-tight">
-                Frequently Asked{" "}
-                <span className="text-cyan-400">Questions</span>
+              <h2 className="text-4xl text-center text-white font-black uppercase tracking-tight leading-tight">
+                Battery{" "}
+                <span className="text-cyan-400">FAQ</span>
               </h2>
             }
-            text="Quick answers for common questions about EV categories, charging, and battery health."
           />
 
-          <div className="mx-auto max-w-5xl grid gap-5">
+          <div className="mx-auto max-w-4xl grid gap-5">
             {faqs.map((faq, index) => (
               <div
                 key={faq.q}
-                className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl transition-all duration-300 hover:border-cyan-400/30"
+                className="border-b border-white/10"
               >
                 <button
                   type="button"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                   className="flex w-full items-center justify-between gap-6 px-7 py-6 text-left"
                 >
-                  <span className="text-lg md:text-xl font-black uppercase text-white">
+                  <span className="text-xl text-white">
                     {faq.q}
                   </span>
 
                   <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-cyan-300 transition-transform duration-300 ${openFaq === index ? "rotate-180" : ""
-                      }`}
+                    className={`h-5 w-5 shrink-0 text-cyan-300 transition-transform duration-300 ${openFaq === index ? "rotate-180" : ""}`}
                   />
                 </button>
 
@@ -453,7 +499,7 @@ const BatteryTypes = () => {
               icon={Wrench}
               title="Next: Battery Maintenance & Care"
               text="Keep your battery healthy with better charging and ownership habits."
-              color="text-emerald-300"
+              color="text-cyan-300"
             />
 
             <NextCard
@@ -467,7 +513,7 @@ const BatteryTypes = () => {
               icon={ShieldCheck}
               title="Next: Battery Safety & Warranty"
               text="Know your warranty, safety protections, and battery coverage."
-              color="text-violet-300"
+              color="text-cyan-300"
             />
           </div>
         </section>
@@ -541,10 +587,35 @@ const ChemistryCard = ({ item }) => {
   );
 };
 
+// ✅ NEW: BatteryTypeCard component — renders image + title for each battery type
+const BatteryTypeCard = ({ item }) => (
+  <div className="group rounded-3xl border border-white/10 bg-white/[0.05] p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/40 hover:shadow-[0_0_45px_rgba(34,211,238,0.14)] flex flex-col items-center text-center">
+    <div className="mb-5 w-full h-40 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] flex items-center justify-center">
+      <img
+        src={item.image}
+        alt={item.title}
+        className="h-full w-full object-contain p-4"
+        onError={(e) => {
+          e.currentTarget.style.display = "none";
+          e.currentTarget.parentElement.innerHTML = `<div class="flex items-center justify-center h-full w-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-cyan-400/40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7h2l1-2h12l1 2h2a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V8a1 1 0 011-1z"/></svg></div>`;
+        }}
+      />
+    </div>
+
+    <span className="text-xs font-black uppercase tracking-widest text-cyan-400 mb-1">
+      {item.no}
+    </span>
+
+    <h3 className="text-lg font-black text-white leading-snug">
+      {item.title}
+    </h3>
+  </div>
+);
+
 const StatusDot = ({ value }) => {
   const lower = String(value).toLowerCase();
 
-  let color = "bg-slate-400";
+  let color = "bg-slate-300";
 
   if (
     lower.includes("excellent") ||
@@ -588,7 +659,7 @@ const NextCard = ({ icon: Icon, title, text, color }) => (
 
     <div className="flex-1">
       <h3 className="mb-2 text-lg font-black text-white">{title}</h3>
-      <p className="text-sm leading-6 text-slate-400">{text}</p>
+      <p className="text-sm font-bold leading-6 text-slate-300">{text}</p>
     </div>
 
     <ArrowRight
@@ -599,8 +670,6 @@ const NextCard = ({ icon: Icon, title, text, color }) => (
 
 const SectionTitle = ({ eyebrow, title, text }) => (
   <div className="mx-auto mb-14 max-w-7xl text-left">
-    
-
     <div className="text-left">
       {typeof title === "string" ? (
         <h2 className="text-4xl font-black uppercase leading-tight tracking-tight text-white md:text-6xl">
