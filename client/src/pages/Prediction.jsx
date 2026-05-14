@@ -155,6 +155,10 @@ export default function Prediction() {
             <p className="text-gray-400 text-sm mt-1">
               Simulate healthy, mid-life, or critical battery scenarios
             </p>
+            <p className="text-2xl text-white/50 mt-2">
+               * Based on NASA CALCE research dataset.
+            For demonstration purposes only.
+            </p>
           </div>
           <button
             onClick={handleReset}

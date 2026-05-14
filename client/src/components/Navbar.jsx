@@ -55,7 +55,7 @@ const Navbar = () => {
             onMouseEnter={() => setIsBatteryOpen(true)}
             onMouseLeave={() => setIsBatteryOpen(false)}
           >
-            <Link to="/battery"
+            <Link to="/battery-types"
               className="flex items-center gap-1 hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)] focus:outline-none"
             >
               Battery  <span className={`transition-transform duration-200 ${isBatteryOpen ? 'rotate-180' : ''}`}>▾</span>
@@ -64,17 +64,12 @@ const Navbar = () => {
             {isBatteryOpen && (
               <div className="absolute left-0 mt-0 w-48 bg-[#0f172a] border border-white/10 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
                 <Link
-                  to="/battery"
-                  className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
-                >
-                  EV Battery Basics
-                </Link>
-                <Link
                   to="/battery-types"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"
                 >
-                  Types of EV Battery
+                  EV Battery 
                 </Link>
+               
                 <Link
                   to="/battery-life"
                   className="block px-4 py-2 text-sm text-gray-300 hover:bg-cyan-400/10 hover:text-cyan-400 transition"

@@ -224,6 +224,107 @@ const StarRow = ({ count }) => (
 );
 
 /* ─────────────────────────────────────────
+   ✅ NEW: EV Card — image as full background
+   Idle:  brand badge (top-left) + badge (top-right) + car name + range/battery/price overlaid
+   Hover: dark overlay slides in, shows all details + "View Details" CTA
+───────────────────────────────────────── */
+const EVCard = ({ ev }) => (
+    <div className="group relative flex-shrink-0 w-[calc(25%-15px)] min-w-[240px] h-80 rounded-[2rem] overflow-hidden cursor-pointer border border-white/10 transition-all duration-500 hover:-translate-y-2 hover:border-cyan-400/50 hover:shadow-[0_0_45px_rgba(34,211,238,0.22)]">
+
+        {/* ── Full-card background image ── */}
+        <img
+            src={ev.image}
+            alt={ev.model}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+            onError={e => {
+                e.target.src = "https://images.unsplash.com/photo-1593941707882-a5bba14938cb?q=80&w=400&auto=format&fit=crop";
+            }}
+        />
+
+        {/* ── Permanent bottom gradient so idle text is readable ── */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 transition-opacity duration-500 group-hover:opacity-0" />
+
+        {/* ── Hover dark overlay ── */}
+        <div className="absolute inset-0 bg-black/80 backdrop-blur-[3px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
+        {/* ── TOP ROW: brand (left) + badge (right) — always visible, fades on hover ── */}
+        <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10 transition-opacity duration-300 group-hover:opacity-0">
+            <span className="text-xs font-black uppercase tracking-widest text-white/80 bg-black/40 px-2.5 py-1 rounded-lg backdrop-blur-sm">
+                {ev.brand}
+            </span>
+            <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${ev.badgeColor}`}>
+                {ev.badge}
+            </span>
+        </div>
+
+        {/* ── IDLE BOTTOM INFO: model + stats ── */}
+        <div className="absolute bottom-0 left-0 right-0 p-5 z-10 transition-all duration-500 group-hover:translate-y-3 group-hover:opacity-0">
+            <h3 className="font-black text-xl text-white mb-3 drop-shadow-lg">{ev.model}</h3>
+
+            <div className="flex gap-4 mb-2">
+                <div>
+                    <div className="flex items-center gap-1 text-cyan-300">
+                        <Gauge className="h-3.5 w-3.5" />
+                        <span className="text-sm font-black">{ev.range}</span>
+                    </div>
+                    <p className="text-slate-400 text-xs">{ev.rangeLabel}</p>
+                </div>
+                <div>
+                    <div className="flex items-center gap-1 text-emerald-300">
+                        <BatteryCharging className="h-3.5 w-3.5" />
+                        <span className="text-sm font-black">{ev.battery}</span>
+                    </div>
+                    <p className="text-slate-400 text-xs">Battery</p>
+                </div>
+            </div>
+
+            <p className="text-white font-black text-base">{ev.price}</p>
+        </div>
+
+        {/* ── HOVER PANEL: all details centred + CTA ── */}
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center p-6 opacity-0 translate-y-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+            {/* Brand + badge row */}
+            <div className="flex items-center gap-2 mb-2">
+                <span className="text-xs font-black uppercase tracking-widest text-white/70">{ev.brand}</span>
+                <span className={`px-2 py-0.5 rounded-full text-xs font-bold border ${ev.badgeColor}`}>{ev.badge}</span>
+            </div>
+
+            {/* Model name */}
+            <h3 className="font-black text-2xl text-white text-center mb-4 leading-tight">{ev.model}</h3>
+
+            {/* Stats grid */}
+            <div className="w-full grid grid-cols-2 gap-3 mb-4">
+                <div className="rounded-xl bg-white/10 border border-white/10 px-3 py-2 text-center">
+                    <div className="flex items-center justify-center gap-1 text-cyan-300 mb-0.5">
+                        <Gauge className="h-3.5 w-3.5" />
+                        <span className="text-sm font-black">{ev.range}</span>
+                    </div>
+                    <p className="text-slate-400 text-xs">{ev.rangeLabel}</p>
+                </div>
+                <div className="rounded-xl bg-white/10 border border-white/10 px-3 py-2 text-center">
+                    <div className="flex items-center justify-center gap-1 text-emerald-300 mb-0.5">
+                        <BatteryCharging className="h-3.5 w-3.5" />
+                        <span className="text-sm font-black">{ev.battery}</span>
+                    </div>
+                    <p className="text-slate-400 text-xs">Battery</p>
+                </div>
+            </div>
+
+            {/* Price */}
+            <p className="text-cyan-300 font-black text-lg mb-5">{ev.price}</p>
+
+            {/* CTA */}
+            <Link
+                to={ev.path}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-cyan-400/50 bg-cyan-500/20 text-cyan-200 font-black text-sm hover:bg-cyan-500/40 hover:border-cyan-400 transition-all duration-300"
+            >
+                View Details <ArrowRight className="h-4 w-4" />
+            </Link>
+        </div>
+    </div>
+);
+
+/* ─────────────────────────────────────────
    Main Component
 ───────────────────────────────────────── */
 export default function HomePage() {
@@ -238,7 +339,6 @@ export default function HomePage() {
     const [evData, setEvData] = useState(TRENDING_EVS);
     const visibleEVs = 4;
 
-    // FastAPI fetch (with graceful fallback)
     useEffect(() => {
         const fetchEVs = async () => {
             try {
@@ -276,10 +376,7 @@ export default function HomePage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-navy-950 via-dark-500 to-navy-950 text-white font-sans">
-            {/* Navigation */}
             <Navbar />
-
-            {/* Hero Section Component */}
             <Hero />
 
             {/* ── TRUST BADGES ── */}
@@ -312,9 +409,7 @@ export default function HomePage() {
                 <div className="mb-12">
                     <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
                         Start{" "}
-                        <span className="text-cyan-400">
-                            Exploring
-                        </span>
+                        <span className="text-cyan-400">Exploring</span>
                     </h2>
                 </div>
 
@@ -327,9 +422,7 @@ export default function HomePage() {
                                 to={card.path}
                                 className={`relative group flex items-start gap-5 rounded-[2rem] border ${card.border} bg-[#071124]/60 backdrop-blur-xl p-7 transition-all duration-300 hover:-translate-y-2 hover:bg-white/[0.07] ${card.glow}`}
                             >
-                                {/* Top accent line */}
                                 <div className={`absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-current to-transparent opacity-20 ${card.color}`} />
-
                                 <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border ${card.border} ${card.bg} ${card.color}`}>
                                     <Icon className="h-7 w-7" />
                                 </div>
@@ -353,14 +446,10 @@ export default function HomePage() {
                 <div className="max-w-7xl mx-auto px-6">
                     {/* Header row */}
                     <div className="flex items-end justify-between mb-10">
-                        <div>
-                            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
-                                Trending{" "}
-                                <span className="text-cyan-400">
-                                    EVs
-                                </span>
-                            </h2>
-                        </div>
+                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
+                            Trending{" "}
+                            <span className="text-cyan-400">EVs</span>
+                        </h2>
                         <Link
                             to="/ev-types"
                             className="inline-flex items-center gap-2 text-2xl font-bold text-cyan-300 hover:text-cyan-100 transition-colors"
@@ -376,55 +465,9 @@ export default function HomePage() {
                                 className="flex gap-5 transition-transform duration-500 ease-in-out"
                                 style={{ transform: `translateX(calc(-${evSlide * (100 / visibleEVs)}% - ${evSlide * 20 / visibleEVs}px))` }}
                             >
+                                {/* ✅ Now uses new EVCard component */}
                                 {evData.map((ev, i) => (
-                                    <div
-                                        key={i}
-                                        className="flex-shrink-0 w-[calc(25%-15px)] min-w-[240px] rounded-[2rem] border border-white/10 bg-[#071124]/70 backdrop-blur-xl overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:shadow-[0_0_40px_rgba(34,211,238,0.12)]"
-                                    >
-                                        {/* Image */}
-                                        <div className="relative overflow-hidden h-44 bg-gradient-to-br from-white/5 to-white/[0.02]">
-                                            <div className="absolute top-3 left-3 flex gap-2 z-10">
-                                                <span className="text-xs font-bold text-slate-300">{ev.brand}</span>
-                                            </div>
-                                            <span className={`absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold border ${ev.badgeColor}`}>
-                                                {ev.badge}
-                                            </span>
-                                            <img
-                                                src={ev.image}
-                                                alt={ev.model}
-                                                className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
-                                                onError={e => {
-                                                    e.target.src = "https://images.unsplash.com/photo-1593941707882-a5bba14938cb?q=80&w=400&auto=format&fit=crop";
-                                                }}
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-[#071124] via-transparent to-transparent" />
-                                        </div>
-
-                                        {/* Info */}
-                                        <div className="p-5">
-                                            <h3 className="font-black text-lg text-white mb-4">{ev.model}</h3>
-
-                                            <div className="flex gap-4 mb-4">
-                                                <div>
-                                                    <div className="flex items-center gap-1 text-cyan-300">
-                                                        <Gauge className="h-3.5 w-3.5" />
-                                                        <span className="text-sm font-black">{ev.range}</span>
-                                                    </div>
-                                                    <p className="text-slate-500 text-xs">{ev.rangeLabel}</p>
-                                                </div>
-                                                <div>
-                                                    <div className="flex items-center gap-1 text-emerald-300">
-                                                        <BatteryCharging className="h-3.5 w-3.5" />
-                                                        <span className="text-sm font-black">{ev.battery}</span>
-                                                    </div>
-                                                    <p className="text-slate-500 text-xs">Battery</p>
-                                                </div>
-                                            </div>
-
-                                            <p className="text-white font-black text-base mb-4">{ev.price}</p>
-
-                                        </div>
-                                    </div>
+                                    <EVCard key={i} ev={ev} />
                                 ))}
                             </div>
                         </div>
@@ -474,14 +517,10 @@ export default function HomePage() {
                                 🎁
                             </div>
                             <div>
-                                <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300/80 mb-1">
-                                    Limited Time Offer
-                                </p>
+                                <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300/80 mb-1">Limited Time Offer</p>
                                 <h3 className="text-2xl md:text-3xl font-black text-white mb-1">
                                     Get up to{" "}
-                                    <span className="bg-clip-text bg-cyan-400 text-transparent">
-                                        ₹75,000 off
-                                    </span>{" "}
+                                    <span className="bg-clip-text bg-cyan-400 text-transparent">₹75,000 off</span>{" "}
                                     on your next EV purchase
                                 </h3>
                                 <p className="text-slate-300 text-base">
@@ -496,7 +535,6 @@ export default function HomePage() {
                             >
                                 See Offer Details <ArrowRight className="h-5 w-5" />
                             </Link>
-                           
                         </div>
                     </div>
                 </div>
@@ -509,9 +547,7 @@ export default function HomePage() {
                 <div className="mb-12">
                     <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
                         Why Choose{" "}
-                        <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
-                            EVs?
-                        </span>
+                        <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">EVs?</span>
                     </h2>
                 </div>
 
@@ -543,15 +579,12 @@ export default function HomePage() {
                         <SectionLabel>Community</SectionLabel>
                         <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight">
                             What Our Users{" "}
-                            <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
-                                Say
-                            </span>
+                            <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">Say</span>
                         </h2>
                         <div className="mx-auto mt-4 h-px w-24 bg-gradient-to-r from-cyan-400 to-emerald-400" />
                     </div>
 
                     <div className="relative">
-                        {/* Cards */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {TESTIMONIALS.map((t, i) => (
                                 <div
@@ -559,13 +592,9 @@ export default function HomePage() {
                                     className={`relative overflow-hidden rounded-[2rem] border ${t.border} bg-[#071124]/60 backdrop-blur-xl p-8 transition-all duration-300 hover:-translate-y-2 hover:bg-white/[0.07]`}
                                 >
                                     <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-current to-transparent opacity-30 ${t.color}`} />
-
-                                    {/* Quote mark */}
                                     <div className={`text-6xl font-black leading-none mb-4 ${t.color} opacity-40`}>"</div>
-
                                     <StarRow count={t.stars} />
                                     <p className="text-slate-300 text-base leading-relaxed my-5">"{t.text}"</p>
-
                                     <div className="flex items-center gap-3 border-t border-white/10 pt-5">
                                         <div className={`flex h-9 w-9 items-center justify-center rounded-full border ${t.border} ${t.color} font-black text-sm`}>
                                             {t.name[0]}
@@ -579,7 +608,6 @@ export default function HomePage() {
                             ))}
                         </div>
 
-                        {/* Dots */}
                         <div className="flex justify-center gap-2 mt-8">
                             {TESTIMONIALS.map((_, i) => (
                                 <button
@@ -601,7 +629,6 @@ export default function HomePage() {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_50%,rgba(34,211,238,0.08),transparent_40%),radial-gradient(circle_at_90%_50%,rgba(52,211,153,0.06),transparent_40%)]" />
 
                     <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-                        {/* Text */}
                         <div className="flex items-start gap-5">
                             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/25 bg-cyan-400/10">
                                 <Mail className="h-7 w-7 text-cyan-300" />
@@ -618,7 +645,6 @@ export default function HomePage() {
                             </div>
                         </div>
 
-                        {/* Input */}
                         {subscribed ? (
                             <div className="flex items-center gap-3 px-6 py-4 rounded-xl border border-emerald-400/30 bg-emerald-400/10">
                                 <CheckCircle2 className="h-5 w-5 text-emerald-400" />
@@ -661,7 +687,6 @@ export default function HomePage() {
                 </div>
             </div>
 
-            {/* Footer */}
             <Footer />
         </div>
     );
