@@ -97,10 +97,10 @@ const Navbar = () => {
             )}
           </div>
 
-          <Link to="/landingpage"
+          <Link to="/models"
             className="hover:text-white transition duration-300 hover:drop-shadow-[0_0_8px_rgba(0,255,255,0.8)]"
           >
-            Landing Page
+            Models
           </Link>
 
           {/* About Link (Fixed to use Link component) */}

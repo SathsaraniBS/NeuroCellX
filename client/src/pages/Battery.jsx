@@ -1,434 +1,755 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Zap, ShieldCheck, Banknote, LayoutGrid, ChevronLeft, ChevronRight, ChevronDown, ArrowRight, BatteryCharging    
-} from "lucide-react";
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import { useState, useEffect, useRef } from "react";
 
-const BatteryTypes = [
-    {
-        id: 1,
-        title: "Lithium-ion batteries",
-        image: "/src/assets/battery1.png",
-        description: "These are the most widely used type of EV batteries, possessing a high energy density. This means they can store more energy per unit mass than other batteries. The two widely used variants are LFP (Lithium Ferrous Phosphate) and NMC (Nickel Manganese Cobalt).",
-        sub_title: "Did you know?",
-        sub_description: "LFP batteries have excellent thermal stability, making them highly tolerant to high temperatures and a safer choice for EVs.",
-        icon: <Zap className="text-cyan-400" size={24} />,
-        glowColor: "group-hover:shadow-cyan-500/20"
-    },
-    {
-        id: 2,
-        title: "Nickel-metal hydride batteries",
-        image: "/src/assets/battery2.png",
-        description: "Often used in hybrid vehicles, these batteries combine an electric motor with a gasoline engine, acting as a reliable bridge between traditional and future mobility.",
-        sub_title: "Did you know?",
-        sub_description: "These were used in some of the earliest electric vehicles in the 90s. However, due to high costs and memory effect, most manufacturers shifted to Lithium-ion.",
-        icon: <Banknote className="text-lime-400" size={24} />,
-        glowColor: "group-hover:shadow-lime-500/20"
-    },
-    {
-        id: 3,
-        title: "Lead-acid batteries",
-        image: "/src/assets/ev10.png",
-        description: "The oldest type of EV batteries, still heavily utilized in low-cost or low-performance EVs such as three-wheelers and two-wheelers.",
-        sub_title: "Did you know?",
-        sub_description: "Lead-acid batteries are the traditional power source used in almost all gasoline vehicles to crank the internal combustion engine.",
-        icon: <ShieldCheck className="text-blue-400" size={24} />,
-        glowColor: "group-hover:shadow-blue-500/20"
-    },
-    {
-        id: 4,
-        title: "Sodium-ion battery",
-        image: "/src/assets/ev11.png",
-        description: "An emerging alternative to lithium-ion. These batteries are currently in intensive development to deliver low-cost, sustainable electric vehicles.",
-        sub_title: "Did you know?",
-        sub_description: "Solid-state sodium-ion batteries eliminate liquid electrolytes entirely, opting for solid electrolytes which drastically improves safety!",
-        icon: <LayoutGrid className="text-yellow-400" size={24} />,
-        glowColor: "group-hover:shadow-yellow-500/20"
-    }
-];
-
-function Battery() {
-    const navigate = useNavigate(); // Added for navigation
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [openFaqId, setOpenFaqId] = useState(null);
-    const [articleIndex, setArticleIndex] = useState(0); 
-
-    const [faqs] = useState([
-        { id: 1, question: "How long do EV batteries last?", answer: "Most EV batteries are engineered to last 10-20 years. Manufacturers typically provide warranties guaranteeing performance for 8 years or 100,000 miles." },
-        { id: 2, question: "Can EV batteries be recycled?", answer: "Yes, up to 95% of the rare earth metals and materials in an EV battery can be recovered and recycled for use in next-generation batteries." },
-        { id: 3, question: "Does weather affect battery range?", answer: "Extreme cold or hot temperatures can temporarily reduce driving range by altering battery chemistry efficiency and requiring extra energy for thermal management." }
-    ]);
-
-    // Added paths to the articles
-    const [articles] = useState([
-        {
-            id: 1,
-            title: "Electric Vehicle Design: The Anatomy of an Electric Car",
-            image: "/src/assets/evanatomy.png",
-            tag: "Design",
-            path: "/ev-architecture" // Added route path here
-        },
-        {
-            id: 2,
-            title: "Inside an Electric Vehicle Battery: What You Need to Know",
-            image: "/src/assets/libattery-img.png", 
-            tag: "Technology",
-            path: "/inside-battery"
-        },
-        {
-            id: 3,
-            title: "Breathe New Life: Repurposing Used Lithium-Ion Batteries (LIBs)",
-            image: "/src/assets/article3.png",
-            tag: "Sustainability",
-            path: "#"
-
-        },
-        {
-            id: 4,
-            title: "History of EV's",
-            image: "/src/assets/ev12.png",
-            tag: "History",
-            path: "#"
-        }
-    ]);
-
-    const [batteries, setBatteries] = useState([
-        {
-            id: 1,
-            name: "Lithium-ion",
-            benefits: "High energy density, superior power-to-weight ratio, efficient, durable, safe.",
-            drawbacks: "Expensive, sensitive to extreme temperatures, requires complex thermal management."
-        },
-        {
-            id: 2,
-            name: "Nickel-metal hydride",
-            benefits: "Highly reliable, longer overall lifespan, more life cycles than standard lithium-ion.",
-            drawbacks: "Lower energy density, heavier, bulkier, susceptible to memory effect."
-        },
-        {
-            id: 3,
-            name: "Lead-acid",
-            benefits: "Extremely cost-effective, easily and widely recycled.",
-            drawbacks: "Low energy density, heavy, inefficient, shorter lifecycle, environmentally toxic if mishandled."
-        },
-        {
-            id: 4,
-            name: "Sodium-ion",
-            benefits: "Significantly cheaper materials compared to lithium, abundant resources.",
-            drawbacks: "Lower power-to-weight ratio. Still in developmental phases for long-range applications."
-        }
-    ]);
-
-    // FastAPI Backend Fetch
-    useEffect(() => {
-        const fetchBatteries = async () => {
-            try {
-                const response = await fetch('http://localhost:8000/api/batteries');
-                if (response.ok) {
-                    const data = await response.json();
-                    setBatteries(data);
-                }
-            } catch (error) {
-                console.error("Failed to fetch batteries from FastAPI, using fallback data.", error);
-            }
-        };
-        // fetchBatteries();
-    }, []);
-
-    const toggleFaq = (id) => {
-        setOpenFaqId(openFaqId === id ? null : id);
-    };
-
-    const nextSlide = () => {
-        setCurrentSlide((prev) => (prev === BatteryTypes.length - 1 ? 0 : prev + 1));
-    };
-
-    const prevSlide = () => {
-        setCurrentSlide((prev) => (prev === 0 ? BatteryTypes.length - 1 : prev - 1));
-    };
-
-    const nextArticle = () => {
-        setArticleIndex((prev) => (prev + 1) % articles.length);
-    };
-
-    const prevArticle = () => {
-        setArticleIndex((prev) => (prev - 1 + articles.length) % articles.length);
-    };
-
-    const getVisibleArticles = () => {
-        const visible = [];
-        for (let i = 0; i < 3; i++) {
-            visible.push(articles[(articleIndex + i) % articles.length]);
-        }
-        return visible;
-    };
-
-    // Added function to handle article clicks
-    const handleArticleClick = (path) => {
-        if (path && path !== "#") {
-            navigate(path);
-        }
-    };
-
-    return (
-        <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
-            <Navbar />
-
-            {/* --- HERO SECTION --- */}
-            <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <img
-                        src="/src/assets/anatomy.png"
-                        alt="EV Battery Anatomy"
-                        className="w-full h-full object-cover opacity-40 animate-slow-zoom"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#050816] via-transparent to-[#050816]" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#050816] via-transparent to-[#050816]" />
-                </div>
-
-                <div className="relative z-10 text-center px-6 max-w-5xl mt-10">
-                    <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight uppercase leading-tight">
-                        BATTERIES THAT ARE <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400">CHARGING THE FUTURE</span>
-                    </h1>
-                </div>
-            </section>
-
-            {/* --- INTRO SECTION --- */}
-            <section className="py-24 relative overflow-hidden">
-                <div className="absolute top-1/4 left-0 w-96 h-96 bg-cyan-600/10 blur-[150px] -z-10" />
-
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <div className="space-y-8">
-                            <div>
-                                <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase text-white mb-6">
-                                    How do they <span className="text-cyan-400">run?</span>
-                                </h2>
-                                <p className="text-lg text-slate-400 leading-relaxed">
-                                    Imagine driving a vehicle that runs purely on electrons instead of combustible fuel. Zero emissions, drastically reduced daily costs, and a ride that is whisper-quiet, incredibly smooth, and highly intelligent.
-                                </p>
-                            </div>
-
-                            <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                                <h3 className="text-xl font-bold text-lime-400 mb-3 uppercase tracking-wider">There’s more than one type?</h3>
-                                <p className="text-slate-300 leading-relaxed">
-                                    Absolutely. EVs utilize different chemical architectures to store and distribute electricity. Every battery chemistry offers a unique balance of energy density, lifecycle, and thermal stability tailored to specific mobility needs.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="relative group">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-lime-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                            <div className="relative bg-[#0a0f25] rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                                <img src="/src/assets/evanatomy.png" alt="EV Anatomy Architecture" className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
-                                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6">
-                                    <p className="text-sm text-cyan-400 font-mono tracking-widest uppercase">Platform Architecture</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* --- TRENDS SLIDER --- */}
-            <section className="py-24 max-w-7xl mx-auto px-6 relative">
-                <div className="absolute right-0 top-1/2 w-96 h-96 bg-lime-600/10 blur-[150px] -z-10" />
-
-                <div className="flex justify-between items-end mb-12">
-                    <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight">Battery <span className="text-cyan-400">Technologies</span></h2>
-                    <div className="flex gap-3">
-                        <button onClick={prevSlide} className="p-3 bg-white/5 hover:bg-cyan-500/20 border border-white/10 rounded-full transition-all text-white hover:text-cyan-400">
-                            <ChevronLeft size={24} />
-                        </button>
-                        <button onClick={nextSlide} className="p-3 bg-white/5 hover:bg-cyan-500/20 border border-white/10 rounded-full transition-all text-white hover:text-cyan-400">
-                            <ChevronRight size={24} />
-                        </button>
-                    </div>
-                </div>
-
-                <div className="relative grid lg:grid-cols-12 gap-8 items-center">
-                    <div className="lg:col-span-7 rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl h-[450px] bg-[#0a0f25]">
-                        <img
-                            src={BatteryTypes[currentSlide].image}
-                            alt={BatteryTypes[currentSlide].title}
-                            className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                        />
-                    </div>
-
-                    <div className="lg:col-span-5 bg-white/[0.03] backdrop-blur-xl p-10 rounded-[2rem] border border-white/10 relative shadow-2xl">
-                        <span className="absolute -top-8 right-8 text-8xl font-black text-white/[0.03] select-none pointer-events-none">
-                            0{BatteryTypes[currentSlide].id}
-                        </span>
-
-                        <div className="inline-flex p-3 rounded-xl bg-white/5 border border-white/10 mb-6">
-                            {BatteryTypes[currentSlide].icon}
-                        </div>
-
-                        <h3 className="text-3xl font-bold mb-4">{BatteryTypes[currentSlide].title}</h3>
-                        <p className="text-slate-400 text-lg leading-relaxed mb-8">
-                            {BatteryTypes[currentSlide].description}
-                        </p>
-
-                        <div className="p-5 rounded-xl bg-gradient-to-br from-cyan-950/40 to-transparent border border-cyan-500/20">
-                            <h4 className="text-sm font-bold text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                                <Zap size={14} />
-                                {BatteryTypes[currentSlide].sub_title}
-                            </h4>
-                            <p className="text-slate-300 text-sm leading-relaxed">
-                                {BatteryTypes[currentSlide].sub_description}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* --- COMPARISON TABLE SECTION --- */}
-            <section className="py-24 max-w-6xl mx-auto px-6">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-4">Chemical <span className="text-lime-400">Comparison</span></h2>
-                    <p className="text-slate-400 text-lg max-w-2xl mx-auto">Analyze the operational benefits and systemic drawbacks of different power units.</p>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-[#0a0f25]/50 backdrop-blur-md overflow-hidden shadow-2xl">
-                    {/* Headers */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 bg-white/5 border-b border-white/10 text-sm uppercase tracking-wider font-bold text-cyan-400">
-                        <div className="p-6">Chemistry Type</div>
-                        <div className="p-6 md:border-l border-white/10">Key Benefits</div>
-                        <div className="p-6 md:border-l border-white/10 text-lime-400">Drawbacks</div>
-                    </div>
-
-                    {/* Rows */}
-                    <div className="divide-y divide-white/5">
-                        {batteries.map((battery) => (
-                            <div key={battery.id} className="grid grid-cols-1 md:grid-cols-3 transition-colors hover:bg-white/[0.02]">
-                                <div className="p-6 font-bold text-lg flex items-center">
-                                    {battery.name}
-                                </div>
-                                <div className="p-6 md:border-l border-white/5 text-slate-300 text-sm leading-relaxed">
-                                    {battery.benefits}
-                                </div>
-                                <div className="p-6 md:border-l border-white/5 text-slate-400 text-sm leading-relaxed">
-                                    {battery.drawbacks}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* --- KNOWLEDGE BASE (FAQ & Articles) --- */}
-            <section className="py-24 relative mt-12 border-t border-white/10 bg-[#070b1e]">
-                <div className="max-w-7xl mx-auto px-6">
-
-                    {/* FAQ Area */}
-                    <div className="max-w-3xl mx-auto mb-32">
-                        <h2 className="text-center text-3xl font-black text-white mb-12 tracking-wide uppercase">
-                            Frequently Asked <span className="text-cyan-400">Questions</span>
-                        </h2>
-
-                        <div className="space-y-4">
-                            {faqs.map((faq) => (
-                                <div
-                                    key={faq.id}
-                                    className={`rounded-xl border transition-all duration-300 ${openFaqId === faq.id ? 'bg-white/10 border-cyan-500/30' : 'bg-white/5 border-white/10 hover:border-white/20'}`}
-                                >
-                                    <button
-                                        onClick={() => toggleFaq(faq.id)}
-                                        className="w-full flex justify-between items-center p-6 text-left focus:outline-none"
-                                    >
-                                        <span className="font-semibold text-white text-lg">
-                                            {faq.question}
-                                        </span>
-                                        <ChevronDown
-                                            className={`text-cyan-400 transform transition-transform duration-300 ${openFaqId === faq.id ? 'rotate-180' : ''}`}
-                                            size={20}
-                                        />
-                                    </button>
-                                    <div
-                                        className={`overflow-hidden transition-all duration-300 ease-in-out ${openFaqId === faq.id ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
-                                    >
-                                        <p className="p-6 pt-0 text-slate-400 leading-relaxed border-t border-white/5 mt-2">
-                                            {faq.answer}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Articles Area */}
-                    <div>
-                        <div className="flex justify-between items-end border-b border-white/10 pb-6 mb-10">
-                            <h2 className="text-3xl font-black uppercase tracking-tight">Latest <span className="text-lime-400">Insights</span></h2>
-                        </div>
-
-                        {/* Articles Carousel Section */}
-                        <div className="flex items-center justify-between gap-4">
-                            {/* Left Arrow */}
-                            <button onClick={prevArticle} className="bg-gray-200 hover:bg-gray-300 p-2 flex-shrink-0 transition-colors rounded-md">
-                                <svg className="w-6 h-6 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-
-                            {/* Cards Container - Using dynamically sliced array */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 flex-1">
-                                {getVisibleArticles().map((article, idx) => (
-                                    <div 
-                                        key={`${article.id}-${idx}`} 
-                                        onClick={() => handleArticleClick(article.path)} // Added click event here
-                                        className="group cursor-pointer flex flex-col bg-white/5 rounded-2xl border border-white/10 overflow-hidden hover:border-cyan-500/30 transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyan-500/10"
-                                    >
-                                        <div className="w-full h-56 overflow-hidden relative">
-                                            <div className="absolute top-4 left-4 z-10 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-xs font-bold text-lime-400 uppercase tracking-wider">
-                                                {article.tag}
-                                            </div>
-                                            <img
-                                                src={article.image}
-                                                alt={article.title}
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                                onError={(e) => {
-                                                    e.target.onerror = null;
-                                                    
-                                                }}
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f25] to-transparent opacity-80" />
-                                        </div>
-                                        <div className="p-6">
-                                            <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors leading-snug">
-                                                {article.title}
-                                            </h3>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Right Arrow */}
-                            <button onClick={nextArticle} className="bg-[#2a7ba8] hover:bg-[#1f6288] p-2 flex-shrink-0 transition-colors rounded-md">
-                                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <Footer />
-
-            <style>{`
-                @keyframes slow-zoom {
-                    0% { transform: scale(1.05); }
-                    100% { transform: scale(1.15); }
-                }
-                .animate-slow-zoom {
-                    animation: slow-zoom 25s infinite alternate ease-in-out;
-                }
-            `}</style>
-        </div>
-    );
+// ─── Particle (Li-ion) flowing along a path ───────────────────────────────────
+function IonParticle({ x, y, delay, color, size = 6 }) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: x,
+        top: y,
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        background: color,
+        boxShadow: `0 0 ${size * 2}px ${color}`,
+        animation: `ionPulse 2s ${delay}s ease-in-out infinite`,
+        pointerEvents: "none",
+      }}
+    />
+  );
 }
 
-export default Battery;
+// ─── Animated flowing ion stream ──────────────────────────────────────────────
+function IonStream({ isCharging }) {
+  const particles = Array.from({ length: 12 }, (_, i) => i);
+  return (
+    <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
+      {particles.map((i) => {
+        const progress = i / particles.length;
+        const x = isCharging
+          ? `${85 - progress * 55}%`
+          : `${30 + progress * 55}%`;
+        const y = `${38 + Math.sin(progress * Math.PI * 2) * 8}%`;
+        return (
+          <IonParticle
+            key={i}
+            x={x}
+            y={y}
+            delay={i * 0.15}
+            color={isCharging ? "#22d3ee" : "#f97316"}
+            size={5 + Math.sin(progress * Math.PI) * 3}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── 3D Battery Layer ─────────────────────────────────────────────────────────
+function BatteryLayer({ label, color, depth, zIndex, isActive, children }) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        transform: `translateZ(${depth}px)`,
+        zIndex,
+        border: `1px solid ${isActive ? color + "cc" : color + "44"}`,
+        background: isActive
+          ? `linear-gradient(135deg, ${color}22 0%, ${color}08 100%)`
+          : `linear-gradient(135deg, #0a1628 0%, #071020 100%)`,
+        backdropFilter: "blur(4px)",
+        transition: "all 0.8s ease",
+        boxShadow: isActive ? `inset 0 0 30px ${color}22, 0 0 20px ${color}33` : "none",
+        borderRadius: 4,
+      }}
+    >
+      {children}
+      <div
+        style={{
+          position: "absolute",
+          top: 6,
+          left: 8,
+          fontSize: 9,
+          fontWeight: 700,
+          letterSpacing: "0.15em",
+          textTransform: "uppercase",
+          color: isActive ? color : color + "66",
+          fontFamily: "'Courier New', monospace",
+          transition: "color 0.8s ease",
+        }}
+      >
+        {label}
+      </div>
+    </div>
+  );
+}
+
+// ─── Electrode Grid (cathode / anode structure) ───────────────────────────────
+function ElectrodeGrid({ color, rows = 5, cols = 8, filledRatio }) {
+  const cells = Array.from({ length: rows * cols }, (_, i) => i);
+  const filled = Math.floor(cells.length * filledRatio);
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: `repeat(${cols}, 1fr)`,
+        gap: 3,
+        padding: 8,
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      {cells.map((i) => (
+        <div
+          key={i}
+          style={{
+            borderRadius: "50%",
+            background: i < filled ? color : color + "22",
+            boxShadow: i < filled ? `0 0 6px ${color}` : "none",
+            transition: `background 0.3s ${(i % 8) * 0.05}s ease, box-shadow 0.3s ease`,
+            aspectRatio: "1",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─── Carbon Anode Hexagonal Grid ──────────────────────────────────────────────
+function HexGrid({ filledRatio, color }) {
+  const hexes = Array.from({ length: 24 }, (_, i) => i);
+  const filled = Math.floor(hexes.length * filledRatio);
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 2,
+        padding: 8,
+        alignContent: "flex-start",
+      }}
+    >
+      {hexes.map((i) => (
+        <div
+          key={i}
+          style={{
+            width: 14,
+            height: 16,
+            clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+            background: i < filled ? color : color + "22",
+            boxShadow: i < filled ? `0 0 4px ${color}` : "none",
+            transition: `background 0.4s ${(i % 6) * 0.06}s ease`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─── Electrolyte Flow Visualization ───────────────────────────────────────────
+function ElectrolyteLayer({ isCharging, intensity }) {
+  return (
+    <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}>
+      {/* Wave lines */}
+      {[0, 1, 2, 3, 4].map((i) => (
+        <div
+          key={i}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: `${15 + i * 16}%`,
+            height: 1,
+            background: `linear-gradient(90deg, transparent, ${
+              isCharging ? "#22d3ee" : "#34d399"
+            }${Math.floor(intensity * 160).toString(16).padStart(2, "0")}, transparent)`,
+            animation: `waveLine ${1.5 + i * 0.2}s ${i * 0.1}s ease-in-out infinite alternate`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ─── Charge Level Bar ─────────────────────────────────────────────────────────
+function ChargeMeter({ level, isCharging }) {
+  const segments = 10;
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 4, alignItems: "center" }}>
+      <div style={{ fontSize: 10, color: "#94a3b8", letterSpacing: "0.2em", fontFamily: "monospace" }}>
+        CHARGE
+      </div>
+      <div style={{ display: "flex", gap: 3 }}>
+        {Array.from({ length: segments }, (_, i) => {
+          const filled = i / segments < level;
+          const color = i < 3 ? "#ef4444" : i < 7 ? "#f59e0b" : "#22d3ee";
+          return (
+            <div
+              key={i}
+              style={{
+                width: 8,
+                height: 24,
+                borderRadius: 2,
+                background: filled ? color : color + "22",
+                boxShadow: filled ? `0 0 6px ${color}` : "none",
+                transition: `background 0.3s ${i * 0.05}s, box-shadow 0.3s ${i * 0.05}s`,
+              }}
+            />
+          );
+        })}
+      </div>
+      <div
+        style={{
+          fontSize: 18,
+          fontWeight: 900,
+          fontFamily: "monospace",
+          color: isCharging ? "#22d3ee" : "#f97316",
+          textShadow: `0 0 20px ${isCharging ? "#22d3ee" : "#f97316"}`,
+          transition: "color 0.5s, text-shadow 0.5s",
+        }}
+      >
+        {Math.round(level * 100)}%
+      </div>
+    </div>
+  );
+}
+
+// ─── Electron Flow Arrow ──────────────────────────────────────────────────────
+function ElectronFlow({ isCharging }) {
+  const direction = isCharging ? "←" : "→";
+  const color = isCharging ? "#22d3ee" : "#f97316";
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 4,
+        padding: "6px 14px",
+        border: `1px solid ${color}44`,
+        borderRadius: 20,
+        background: color + "11",
+      }}
+    >
+      <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#f59e0b", boxShadow: "0 0 8px #f59e0b" }} />
+      <span style={{ fontSize: 11, color: "#94a3b8", fontFamily: "monospace", letterSpacing: "0.1em" }}>
+        e⁻
+      </span>
+      <div
+        style={{
+          fontSize: 18,
+          color,
+          animation: "arrowPulse 1s ease-in-out infinite",
+          textShadow: `0 0 10px ${color}`,
+          transition: "color 0.5s",
+        }}
+      >
+        {direction}
+      </div>
+      <span style={{ fontSize: 9, color: "#64748b", fontFamily: "monospace" }}>
+        {isCharging ? "CHARGER" : "LOAD"}
+      </span>
+    </div>
+  );
+}
+
+// ─── 3D Battery Scene ─────────────────────────────────────────────────────────
+function Battery3D({ isCharging, chargeLevel }) {
+  const cathodeRatio = isCharging ? 1 - chargeLevel : chargeLevel;
+  const anodeRatio = isCharging ? chargeLevel : 1 - chargeLevel;
+
+  return (
+    <div
+      style={{
+        width: 480,
+        height: 220,
+        position: "relative",
+        perspective: 1200,
+        perspectiveOrigin: "50% 40%",
+        margin: "0 auto",
+      }}
+    >
+      {/* 3D container */}
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          transformStyle: "preserve-3d",
+          transform: "rotateX(20deg) rotateY(-15deg)",
+          animation: "gentleRotate 20s ease-in-out infinite",
+        }}
+      >
+        {/* ── CATHODE (LiMetal Oxides – left green) ── */}
+        <div
+          style={{
+            position: "absolute",
+            left: "2%",
+            top: "10%",
+            width: "28%",
+            height: "80%",
+            transformStyle: "preserve-3d",
+          }}
+        >
+          <BatteryLayer label="Cathode (+)" color="#34d399" depth={0} zIndex={1} isActive={!isCharging}>
+            <ElectrodeGrid color="#34d399" filledRatio={cathodeRatio} rows={5} cols={5} />
+          </BatteryLayer>
+          {/* Aluminium current collector top edge */}
+          <div
+            style={{
+              position: "absolute",
+              top: -12,
+              left: 0,
+              right: 0,
+              height: 12,
+              background: "linear-gradient(180deg, #94a3b8 0%, #475569 100%)",
+              transform: "rotateX(90deg) translateZ(-6px)",
+              fontSize: 7,
+              color: "#1e293b",
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              letterSpacing: "0.1em",
+            }}
+          >
+            Al COLLECTOR
+          </div>
+        </div>
+
+        {/* ── SEPARATOR ── */}
+        <div
+          style={{
+            position: "absolute",
+            left: "31%",
+            top: "8%",
+            width: "8%",
+            height: "84%",
+            transformStyle: "preserve-3d",
+          }}
+        >
+          <BatteryLayer label="Sep." color="#a78bfa" depth={0} zIndex={2} isActive={true}>
+            <div style={{ padding: 4 }}>
+              {Array.from({ length: 20 }, (_, i) => (
+                <div
+                  key={i}
+                  style={{
+                    height: 3,
+                    margin: "2px 0",
+                    background: `rgba(167,139,250,${0.2 + Math.sin(i) * 0.15})`,
+                    borderRadius: 2,
+                  }}
+                />
+              ))}
+            </div>
+          </BatteryLayer>
+        </div>
+
+        {/* ── ELECTROLYTE ── */}
+        <div
+          style={{
+            position: "absolute",
+            left: "30%",
+            top: "5%",
+            width: "40%",
+            height: "90%",
+            transformStyle: "preserve-3d",
+            zIndex: 3,
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: isCharging
+                ? "linear-gradient(135deg, rgba(34,211,238,0.08) 0%, rgba(6,182,212,0.04) 100%)"
+                : "linear-gradient(135deg, rgba(52,211,153,0.08) 0%, rgba(16,185,129,0.04) 100%)",
+              border: `1px solid ${isCharging ? "#22d3ee" : "#34d399"}22`,
+              borderRadius: 4,
+              overflow: "hidden",
+              transition: "background 0.8s, border-color 0.8s",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                top: 6,
+                left: "50%",
+                transform: "translateX(-50%)",
+                fontSize: 9,
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                color: "#22d3ee99",
+                fontFamily: "monospace",
+                whiteSpace: "nowrap",
+              }}
+            >
+              ELECTROLYTE
+            </div>
+            <ElectrolyteLayer isCharging={isCharging} intensity={0.7} />
+
+            {/* Li+ ions floating */}
+            {Array.from({ length: 8 }, (_, i) => (
+              <div
+                key={i}
+                style={{
+                  position: "absolute",
+                  left: `${10 + (i % 4) * 22}%`,
+                  top: `${20 + Math.floor(i / 4) * 40}%`,
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: "#ef4444",
+                  boxShadow: "0 0 8px #ef4444",
+                  fontSize: 6,
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: 900,
+                  fontFamily: "monospace",
+                  animation: `ionFloat ${1.5 + i * 0.2}s ${i * 0.18}s ease-in-out infinite`,
+                }}
+              >
+                Li
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── ANODE (Carbon – right blue) ── */}
+        <div
+          style={{
+            position: "absolute",
+            right: "2%",
+            top: "10%",
+            width: "28%",
+            height: "80%",
+            transformStyle: "preserve-3d",
+          }}
+        >
+          <BatteryLayer label="Anode (–)" color="#22d3ee" depth={0} zIndex={1} isActive={isCharging}>
+            <HexGrid filledRatio={anodeRatio} color="#22d3ee" />
+          </BatteryLayer>
+          {/* Copper current collector */}
+          <div
+            style={{
+              position: "absolute",
+              top: -12,
+              left: 0,
+              right: 0,
+              height: 12,
+              background: "linear-gradient(180deg, #f59e0b 0%, #b45309 100%)",
+              transform: "rotateX(90deg) translateZ(-6px)",
+              fontSize: 7,
+              color: "#1e293b",
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              letterSpacing: "0.1em",
+            }}
+          >
+            Cu COLLECTOR
+          </div>
+        </div>
+
+        {/* ── ION STREAM (moving particles) ── */}
+        <IonStream isCharging={isCharging} />
+      </div>
+    </div>
+  );
+}
+
+// ─── Info Panel ───────────────────────────────────────────────────────────────
+function InfoPanel({ label, value, unit, color, icon }) {
+  return (
+    <div
+      style={{
+        background: "rgba(7,17,36,0.8)",
+        border: `1px solid ${color}33`,
+        borderRadius: 8,
+        padding: "10px 16px",
+        backdropFilter: "blur(12px)",
+        minWidth: 100,
+      }}
+    >
+      <div style={{ fontSize: 9, color: "#64748b", letterSpacing: "0.2em", fontFamily: "monospace", marginBottom: 4 }}>
+        {label}
+      </div>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 3 }}>
+        <span style={{ fontSize: 22, fontWeight: 900, color, fontFamily: "monospace", textShadow: `0 0 15px ${color}` }}>
+          {value}
+        </span>
+        <span style={{ fontSize: 11, color: "#64748b", fontFamily: "monospace" }}>{unit}</span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Component ────────────────────────────────────────────────────────────
+export default function LithiumBatteryAnimation() {
+  const [isCharging, setIsCharging] = useState(false);
+  const [chargeLevel, setChargeLevel] = useState(0.35);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [voltage, setVoltage] = useState(3.7);
+  const [current, setCurrent] = useState(0);
+  const intervalRef = useRef(null);
+
+  // Simulate charge/discharge
+  useEffect(() => {
+    if (!isAnimating) return;
+    intervalRef.current = setInterval(() => {
+      setChargeLevel((prev) => {
+        const delta = isCharging ? 0.004 : -0.004;
+        const next = Math.max(0.02, Math.min(0.98, prev + delta));
+        if (next >= 0.98 || next <= 0.02) {
+          setIsAnimating(false);
+        }
+        return next;
+      });
+      setVoltage(isCharging ? +(3.0 + chargeLevel * 1.2).toFixed(2) : +(2.8 + chargeLevel * 1.3).toFixed(2));
+      setCurrent(isCharging ? 2.4 : -1.8);
+    }, 60);
+    return () => clearInterval(intervalRef.current);
+  }, [isAnimating, isCharging, chargeLevel]);
+
+  const handleToggle = () => {
+    setIsCharging((c) => !c);
+    setIsAnimating(true);
+  };
+
+  const modeColor = isCharging ? "#22d3ee" : "#f97316";
+  const modeLabel = isCharging ? "CHARGING" : "DISCHARGING";
+
+  return (
+    <>
+      <style>{`
+        @keyframes gentleRotate {
+          0%, 100% { transform: rotateX(20deg) rotateY(-15deg); }
+          50% { transform: rotateX(18deg) rotateY(-10deg); }
+        }
+        @keyframes ionPulse {
+          0%, 100% { opacity: 0.2; transform: scale(0.8); }
+          50% { opacity: 1; transform: scale(1.2); }
+        }
+        @keyframes ionFloat {
+          0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+          33% { transform: translateY(-6px) translateX(3px); opacity: 1; }
+          66% { transform: translateY(4px) translateX(-3px); opacity: 0.8; }
+        }
+        @keyframes waveLine {
+          0% { transform: scaleX(0.8) translateX(-5%); opacity: 0.3; }
+          100% { transform: scaleX(1.1) translateX(5%); opacity: 0.8; }
+        }
+        @keyframes arrowPulse {
+          0%, 100% { transform: translateX(0px); opacity: 0.7; }
+          50% { transform: translateX(3px); opacity: 1; }
+        }
+        @keyframes glowPulse {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 0.8; }
+        }
+        @keyframes scanLine {
+          0% { top: 0%; }
+          100% { top: 100%; }
+        }
+      `}</style>
+
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#050816",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "system-ui, sans-serif",
+          padding: "32px 16px",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        {/* Ambient glows */}
+        <div style={{ position: "absolute", top: "15%", left: "5%", width: 350, height: 350, borderRadius: "50%", background: "rgba(34,211,238,0.07)", filter: "blur(100px)", animation: "glowPulse 4s ease-in-out infinite", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: "15%", right: "5%", width: 300, height: 300, borderRadius: "50%", background: "rgba(52,211,153,0.07)", filter: "blur(110px)", animation: "glowPulse 5s 1s ease-in-out infinite", pointerEvents: "none" }} />
+
+        {/* Scan line effect */}
+        <div style={{ position: "absolute", left: 0, right: 0, height: 2, background: "linear-gradient(90deg, transparent, rgba(34,211,238,0.15), transparent)", animation: "scanLine 8s linear infinite", pointerEvents: "none" }} />
+
+        {/* Header */}
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <div style={{ fontSize: 11, letterSpacing: "0.4em", color: "#22d3ee99", fontWeight: 700, textTransform: "uppercase", fontFamily: "monospace", marginBottom: 10 }}>
+            ⬡ ELECTROCHEMICAL CELL SIMULATION
+          </div>
+          <h1
+            style={{
+              fontSize: "clamp(28px, 5vw, 48px)",
+              fontWeight: 900,
+              margin: 0,
+              background: "linear-gradient(135deg, #22d3ee 0%, #34d399 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              letterSpacing: "-0.03em",
+              textTransform: "uppercase",
+              lineHeight: 1.1,
+            }}
+          >
+            Lithium-Ion Battery
+          </h1>
+          <div style={{ fontSize: 13, color: "#475569", marginTop: 8, letterSpacing: "0.05em" }}>
+            Interactive 3D Charge / Discharge Cycle Visualization
+          </div>
+        </div>
+
+        {/* Mode badge */}
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "8px 20px",
+            borderRadius: 100,
+            border: `1.5px solid ${modeColor}55`,
+            background: modeColor + "11",
+            marginBottom: 24,
+            transition: "all 0.5s ease",
+          }}
+        >
+          <div
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: "50%",
+              background: modeColor,
+              boxShadow: `0 0 12px ${modeColor}`,
+              animation: isAnimating ? "ionPulse 0.8s ease-in-out infinite" : "none",
+            }}
+          />
+          <span style={{ fontSize: 12, fontWeight: 700, color: modeColor, letterSpacing: "0.25em", fontFamily: "monospace" }}>
+            {modeLabel}
+          </span>
+          {isAnimating && (
+            <span style={{ fontSize: 10, color: modeColor + "88", fontFamily: "monospace" }}>● LIVE</span>
+          )}
+        </div>
+
+        {/* 3D Battery */}
+        <div style={{ width: "100%", maxWidth: 600, position: "relative" }}>
+          <Battery3D isCharging={isCharging} chargeLevel={chargeLevel} />
+        </div>
+
+        {/* Labels below battery */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            maxWidth: 500,
+            marginTop: 8,
+            padding: "0 10px",
+          }}
+        >
+          {[
+            { label: "Li-Metal Oxides", sub: "LiCoO₂ / NMC", color: "#34d399" },
+            { label: "Separator", sub: "Polyethylene", color: "#a78bfa" },
+            { label: "Electrolyte", sub: "LiPF₆ Solution", color: "#22d3ee" },
+            { label: "Carbon Anode", sub: "Graphite Layers", color: "#22d3ee" },
+          ].map((item, i) => (
+            <div key={i} style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: item.color, fontFamily: "monospace", letterSpacing: "0.05em" }}>
+                {item.label}
+              </div>
+              <div style={{ fontSize: 8, color: "#475569", fontFamily: "monospace" }}>{item.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Electron flow + charge meter */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 24,
+            marginTop: 28,
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
+          <ElectronFlow isCharging={isCharging} />
+          <ChargeMeter level={chargeLevel} isCharging={isCharging} />
+
+          {/* Stats */}
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
+            <InfoPanel label="VOLTAGE" value={voltage.toFixed(1)} unit="V" color="#22d3ee" />
+            <InfoPanel label="CURRENT" value={Math.abs(current).toFixed(1)} unit="A" color={isCharging ? "#22d3ee" : "#f97316"} />
+            <InfoPanel label="CYCLE" value="247" unit="cyc" color="#34d399" />
+          </div>
+        </div>
+
+        {/* Control Button */}
+        <button
+          onClick={handleToggle}
+          style={{
+            marginTop: 32,
+            padding: "14px 40px",
+            borderRadius: 100,
+            border: `2px solid ${modeColor}66`,
+            background: `linear-gradient(135deg, ${modeColor}22 0%, transparent 100%)`,
+            color: modeColor,
+            fontSize: 13,
+            fontWeight: 700,
+            letterSpacing: "0.25em",
+            fontFamily: "monospace",
+            cursor: "pointer",
+            textTransform: "uppercase",
+            backdropFilter: "blur(12px)",
+            boxShadow: `0 0 30px ${modeColor}22`,
+            transition: "all 0.3s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.boxShadow = `0 0 50px ${modeColor}44`;
+            e.target.style.transform = "translateY(-2px)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.boxShadow = `0 0 30px ${modeColor}22`;
+            e.target.style.transform = "translateY(0)";
+          }}
+        >
+          {isCharging ? "⚡ Switch to Discharge" : "🔋 Switch to Charge"}
+        </button>
+
+        {/* Legend */}
+        <div
+          style={{
+            marginTop: 28,
+            display: "flex",
+            gap: 20,
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
+          {[
+            { color: "#ef4444", label: "Li⁺ Ions" },
+            { color: "#f59e0b", label: "Electrons (e⁻)" },
+            { color: "#34d399", label: "Cathode Material" },
+            { color: "#22d3ee", label: "Anode (Graphite)" },
+            { color: "#a78bfa", label: "Separator" },
+          ].map((item, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <div style={{ width: 8, height: 8, borderRadius: "50%", background: item.color, boxShadow: `0 0 6px ${item.color}` }} />
+              <span style={{ fontSize: 10, color: "#64748b", fontFamily: "monospace", letterSpacing: "0.1em" }}>{item.label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer note */}
+        <div style={{ marginTop: 24, fontSize: 10, color: "#1e3a5f", fontFamily: "monospace", letterSpacing: "0.15em" }}>
+          LI-ION CELL · 3.6V NOMINAL · 3000mAh · NMC CHEMISTRY
+        </div>
+      </div>
+    </>
+  );
+}

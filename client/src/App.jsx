@@ -27,6 +27,7 @@ import EVArchitecture from './pages/EVArchitecture';
 import InsideBattery from './pages/InsideBattery';
 import Batterysafety from './pages/Batterysafety';
 import RepairandMaintenance from './pages/RepairandMaintenance';
+import Models from './pages/Models';
 import EV from './pages/EV';
 import EVHistory from './pages/EVHistory';
 import EVTypes from './pages/EVTypes ';
@@ -89,6 +90,12 @@ function App() {
                             <Route path="/battery-safety" element={
                                 <ProtectedRoute>
                                     <Batterysafety />
+                                </ProtectedRoute>
+                            } />
+
+                            <Route path="/models" element={
+                                <ProtectedRoute>
+                                    <Models />
                                 </ProtectedRoute>
                             } />
 

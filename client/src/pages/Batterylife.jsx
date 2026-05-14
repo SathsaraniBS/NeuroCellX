@@ -331,21 +331,17 @@ function Batterylife() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-24 relative border-t border-white/5 bg-[#050816]">
+        <section className="py-24 relative border-b border-white/10 ">
           <div className="max-w-4xl mx-auto px-6">
-            <h2 className="text-center text-3xl md:text-5xl font-black text-white mb-16 tracking-wide uppercase">
-              Frequently Asked <span className="text-cyan-400">Questions</span>
+            <h2 className="text-center text-3xl md:text-4xl font-black text-white mb-16 tracking-wide uppercase">
+              Battery <span className="text-cyan-400">FAQ</span>
             </h2>
 
             <div className="space-y-4">
               {faqs.map((faq) => (
                 <div
                   key={faq.id}
-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                    openFaqId === faq.id 
-                      ? 'bg-gradient-to-r from-cyan-900/20 to-[#050816] border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.1)]' 
-                      : 'bg-white/5 border-white/10 hover:border-cyan-500/20 hover:bg-white/10'
-                  }`}
+                  className="border border-white/10 "
                 >
                   <button
                     onClick={() => toggleFaq(faq.id)}

@@ -148,34 +148,7 @@ const Hero = () => {
         </div>
       )}
 
-      {/* Feature Grid Section */}
-      <div className="bg-[#050816] py-24 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-            <div className="space-y-4 p-8 rounded-2xl bg-white/5 border border-white/10">
-              <div className="w-16 h-16 bg-cyan-500/20 rounded-full flex items-center justify-center mx-auto">
-                <ShieldCheck className="text-cyan-400 w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">Safe & Secure</h3>
-              <p className="text-gray-400">5-Star safety ratings across our entire fleet with advanced autopilot features.</p>
-            </div>
-            <div className="space-y-4 p-8 rounded-2xl bg-white/5 border border-white/10">
-              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
-                <Leaf className="text-green-400 w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">100% Sustainable</h3>
-              <p className="text-gray-400">Responsibly sourced battery materials and carbon-neutral manufacturing processes.</p>
-            </div>
-            <div className="space-y-4 p-8 rounded-2xl bg-white/5 border border-white/10">
-              <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto">
-                <Globe className="text-blue-400 w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">Global Charging</h3>
-              <p className="text-gray-400">Access to over 50,000+ Superchargers worldwide for seamless long-distance travel.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </>
   );
 };
