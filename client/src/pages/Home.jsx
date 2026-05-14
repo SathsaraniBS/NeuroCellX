@@ -425,12 +425,6 @@ export default function HomePage() {
 
                                             <p className="text-white font-black text-base mb-4">{ev.price}</p>
 
-                                            <Link
-                                                to={ev.path}
-                                                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 font-bold text-sm hover:bg-cyan-400/20 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(34,211,238,0.20)] transition-all duration-300"
-                                            >
-                                                View Details <ArrowRight className="h-4 w-4" />
-                                            </Link>
                                         </div>
                                     </div>
                                 ))}
