@@ -35,7 +35,7 @@ const EXPLORE_CARDS = [
         icon: MapPin,
         title: "Charging & Map",
         desc: "Find charging stations near you. Plan your trip.",
-        path: "/charging",
+        path: "/find-station",
         color: "text-cyan-300",
         border: "border-cyan-400/25",
         bg: "bg-cyan-400/10",
@@ -45,7 +45,7 @@ const EXPLORE_CARDS = [
         icon: CreditCard,
         title: "EV Financing",
         desc: "EMI calculator, loan options, and exclusive offers.",
-        path: "/financing",
+        path: "/ev-charging-cost",
         color: "text-cyan-300",
         border: "border-cyan-400/25",
         bg: "bg-cyan-400/10",
@@ -55,7 +55,7 @@ const EXPLORE_CARDS = [
         icon: HeadphonesIcon,
         title: "Support & Help",
         desc: "FAQs, service booking, roadside assistance.",
-        path: "/support",
+        path: "/contact",
         color: "text-cyan-300",
         border: "border-cyan-400/25",
         bg: "bg-cyan-400/10",
@@ -65,7 +65,7 @@ const EXPLORE_CARDS = [
         icon: BatteryCharging,
         title: "EV Battery Basics",
         desc: "Understand batteries, chemistry, safety & more.",
-        path: "/battery-basics",
+        path: "/battery-types",
         color: "text-cyan-300",
         border: "border-cyan-400/25",
         bg: "bg-cyan-400/10",
@@ -290,12 +290,12 @@ export default function HomePage() {
                             const Icon = b.icon;
                             return (
                                 <div key={b.label} className="flex items-center gap-3">
-                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
-                                        <Icon className="h-5 w-5 text-cyan-300" />
+                                    <div className="flex h-15 w-15 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
+                                        <Icon className="h-10 w-10 text-cyan-300" />
                                     </div>
                                     <div>
-                                        <p className="font-bold text-sm text-white">{b.label}</p>
-                                        <p className="text-slate-500 text-xs">{b.sub}</p>
+                                        <p className="font-bold text-2xl text-white">{b.label}</p>
+                                        <p className="text-slate-300 text-lg">{b.sub}</p>
                                     </div>
                                 </div>
                             );
@@ -310,10 +310,9 @@ export default function HomePage() {
                 <div className="pointer-events-none absolute right-0 bottom-0 h-80 w-80 rounded-full bg-emerald-400/6 blur-[120px]" />
 
                 <div className="mb-12">
-                    <SectionLabel>Navigation</SectionLabel>
                     <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
                         Start{" "}
-                        <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
+                        <span className="text-cyan-400">
                             Exploring
                         </span>
                     </h2>
@@ -336,9 +335,9 @@ export default function HomePage() {
                                 </div>
                                 <div className="flex-1">
                                     <h3 className={`font-black text-base uppercase mb-2 ${card.color}`}>{card.title}</h3>
-                                    <p className="text-slate-400 text-sm leading-relaxed mb-4">{card.desc}</p>
-                                    <span className={`inline-flex items-center gap-1 text-xs font-bold ${card.color} group-hover:gap-2 transition-all`}>
-                                        Explore <ArrowRight className="h-3 w-3" />
+                                    <p className="text-slate-300 text-sm font-bold leading-relaxed mb-4">{card.desc}</p>
+                                    <span className={`inline-flex items-center gap-1 text-xl font-bold ${card.color} group-hover:gap-2 transition-all`}>
+                                        Explore <ArrowRight className="font-bold h-5 w-5" />
                                     </span>
                                 </div>
                             </Link>
@@ -355,17 +354,16 @@ export default function HomePage() {
                     {/* Header row */}
                     <div className="flex items-end justify-between mb-10">
                         <div>
-                            <SectionLabel>Hot Right Now</SectionLabel>
                             <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
                                 Trending{" "}
-                                <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
+                                <span className="text-cyan-400">
                                     EVs
                                 </span>
                             </h2>
                         </div>
                         <Link
                             to="/ev-types"
-                            className="inline-flex items-center gap-2 text-sm font-bold text-cyan-300 hover:text-cyan-100 transition-colors"
+                            className="inline-flex items-center gap-2 text-2xl font-bold text-cyan-300 hover:text-cyan-100 transition-colors"
                         >
                             View all EVs <ArrowRight className="h-4 w-4" />
                         </Link>
@@ -386,7 +384,7 @@ export default function HomePage() {
                                         {/* Image */}
                                         <div className="relative overflow-hidden h-44 bg-gradient-to-br from-white/5 to-white/[0.02]">
                                             <div className="absolute top-3 left-3 flex gap-2 z-10">
-                                                <span className="text-xs font-bold text-slate-400">{ev.brand}</span>
+                                                <span className="text-xs font-bold text-slate-300">{ev.brand}</span>
                                             </div>
                                             <span className={`absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold border ${ev.badgeColor}`}>
                                                 {ev.badge}
@@ -465,28 +463,28 @@ export default function HomePage() {
 
             {/* ── LIMITED TIME OFFER ── */}
             <section className="py-8 max-w-7xl mx-auto px-6">
-                <div className="relative overflow-hidden rounded-[2rem] border border-emerald-400/30 bg-emerald-500/10 backdrop-blur-xl p-8 md:p-10 shadow-[0_0_50px_rgba(52,211,153,0.12)]">
-                    <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/60 to-transparent" />
+                <div className="relative overflow-hidden rounded-[2rem] border border-cyan-400/30 bg-cyan-500/10 backdrop-blur-xl p-8 md:p-10 shadow-[0_0_50px_rgba(52,211,153,0.12)]">
+                    <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent" />
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_5%_50%,rgba(52,211,153,0.10),transparent_45%)]" />
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_95%_50%,rgba(34,211,238,0.08),transparent_45%)]" />
 
                     <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                         <div className="flex items-start gap-5">
-                            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-emerald-400/30 bg-emerald-400/15 text-3xl">
+                            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/30 bg-cyan-400/15 text-3xl">
                                 🎁
                             </div>
                             <div>
-                                <p className="text-xs font-bold uppercase tracking-[0.25em] text-emerald-300/80 mb-1">
+                                <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300/80 mb-1">
                                     Limited Time Offer
                                 </p>
                                 <h3 className="text-2xl md:text-3xl font-black text-white mb-1">
                                     Get up to{" "}
-                                    <span className="bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent">
+                                    <span className="bg-clip-text bg-cyan-400 text-transparent">
                                         ₹75,000 off
                                     </span>{" "}
                                     on your next EV purchase
                                 </h3>
-                                <p className="text-slate-400 text-base">
+                                <p className="text-slate-300 text-base">
                                     or <span className="text-white font-bold">Free home charger installation</span> on select models.
                                 </p>
                             </div>
@@ -494,11 +492,11 @@ export default function HomePage() {
                         <div className="flex flex-col items-start md:items-end gap-2 shrink-0">
                             <Link
                                 to="/offers"
-                                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl border border-emerald-400/40 bg-emerald-500/20 text-emerald-200 font-black text-base hover:bg-emerald-500/30 hover:border-emerald-400/70 hover:shadow-[0_0_25px_rgba(52,211,153,0.30)] transition-all duration-300 whitespace-nowrap"
+                                className="inline-flex items-center gap-2 px-7 py-4 rounded-xl border border-cyan-400/40 bg-cyan-500/20 text-cyan-200 font-black text-base hover:bg-cyan-500/30 hover:border-cyan-400/70 hover:shadow-[0_0_25px_rgba(52,211,153,0.30)] transition-all duration-300 whitespace-nowrap"
                             >
                                 See Offer Details <ArrowRight className="h-5 w-5" />
                             </Link>
-                            <p className="text-slate-500 text-xs">T&C Apply.</p>
+                           
                         </div>
                     </div>
                 </div>
@@ -509,7 +507,6 @@ export default function HomePage() {
                 <div className="pointer-events-none absolute left-0 top-0 h-80 w-80 rounded-full bg-emerald-500/6 blur-[120px]" />
 
                 <div className="mb-12">
-                    <SectionLabel>Benefits</SectionLabel>
                     <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
                         Why Choose{" "}
                         <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
