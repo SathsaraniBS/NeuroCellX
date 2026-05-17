@@ -17,6 +17,7 @@ import Dashboard from './pages/Dashboard';
 import Prediction from './pages/Prediction'; // this is ml models frontend file
 import Profile from './pages/ProfilePage';
 import Reports from './pages/Reports';
+import ModelEvaluate from './pages/ModelEvaluate';
 import HistoryPage from './pages/History';  
 import FindStations from './pages/FindStations';
 import PublicCharging from './pages/PublicCharging';
@@ -103,7 +104,7 @@ function App() {
 
                             <Route path="/models" element={
                                 <ProtectedRoute>
-                                    <Models />
+                                    <Models />    ← This is NOT ModelEvaluate
                                 </ProtectedRoute>
                             } />
 
@@ -203,6 +204,13 @@ function App() {
                                 <ProtectedRoute>
                                     <Reports />
                                 </ProtectedRoute>
+                            } />
+
+                            <Route path="/evaluate" element={
+                                <ProtectedRoute>
+                                    <ModelEvaluate />
+                                </ProtectedRoute>
+
                             } />
 
 

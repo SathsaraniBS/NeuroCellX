@@ -79,6 +79,7 @@ from routers import contact
 from routers import calculator  
 from routers import stations
 # from routers import ml_models  
+from routers import evaluate
 from routers import newpredict  
 from routers import reports   
 
@@ -118,6 +119,7 @@ app.include_router(stations.router, prefix="/api")
 # app.include_router(ml_models.router)  
 app.include_router(newpredict.router)
 app.include_router(reports.router)  # ← register
+app.include_router(evaluate.router)
 
 # Startup database tables
 Base.metadata.create_all(bind=engine)  

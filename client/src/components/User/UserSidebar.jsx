@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   LayoutDashboard, LineChart, History,
-  FileText, Settings, LogOut, ExternalLink, Cpu
+  FileText, Settings, LogOut, ExternalLink, Cpu, BarChart2
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -16,7 +16,8 @@ const Sidebar = () => {
   // ─────────────────────────────────────────────────────────
   const menuItems = [
     { path: '/dashboard',  name: 'Dashboard',         icon: <LayoutDashboard size={20} /> },
-    { path: '/prediction', name: 'Predictions',       icon: <LineChart size={20} />       },
+    { path: '/prediction', name: 'Predictions',       icon: <LineChart size={20} /> },
+    { path: '/evaluate', name: 'Evaluate', icon: <BarChart2 size={20} /> },
     { path: '/models',     name: 'ModelsPredictions', icon: <Cpu size={20} />             },
     { path: '/history',    name: 'History',           icon: <History size={20} />         },
     { path: '/reports',    name: 'Reports',           icon: <FileText size={20} />        },
