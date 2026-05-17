@@ -1,54 +1,110 @@
-import { useState, useRef, useEffect } from "react";
-import ChatMessage, { TypingIndicator } from "./ChatMessage";
-import QuickTopics from "./QuickTopics";
+import React, { useState, useEffect, useRef } from "react";
+import { Bot, X, Send, ChevronRight, Minimize2, Maximize2 } from "lucide-react";
+import api from "../../services/api";
 
-const WELCOME = {
-  role: "assistant",
-  content:
-    "👋 Welcome to **VoltIQ Learning Hub**!\n\nI'm **VoltBot**, your personal EV & battery expert.\n\nAsk me about:\n- **EV Basics** & vehicle types\n- **Battery types** & technologies\n- **Charging tips** for longer battery life\n- **EV & Battery user guides**\n\nSelect a topic above or type your question! ⚡",
+// ─── Suggested quick prompts ───────────────────────────────────────────────────
+const QUICK_PROMPTS = [
+  "What is SOH?",
+  "How to charge faster?",
+  "Best EV in Sri Lanka?",
+  "Battery tips?",
+];
+
+// ─── Message Bubble (compact for widget) ──────────────────────────────────────
+const Bubble = ({ msg }) => {
+  const isUser = msg.role === "user";
+  return (
+    <div className={`flex gap-2 ${isUser ? "flex-row-reverse" : "flex-row"} items-end`}>
+      <div
+        className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-[10px]
+          ${isUser
+            ? "bg-gradient-to-br from-cyan-500 to-emerald-500 text-white"
+            : "bg-[#071124] border border-cyan-500/30 text-cyan-400"
+          }`}
+      >
+        {isUser ? "U" : <Bot size={10} />}
+      </div>
+      <div
+        className={`max-w-[80%] px-3 py-2 rounded-xl text-xs leading-relaxed
+          ${isUser
+            ? "bg-gradient-to-br from-cyan-600/80 to-emerald-600/80 text-white rounded-br-sm"
+            : "bg-white/[0.06] border border-white/10 text-slate-200 rounded-bl-sm"
+          }`}
+      >
+        {msg.content}
+      </div>
+    </div>
+  );
 };
 
+// ─── Typing Dots ───────────────────────────────────────────────────────────────
+const TypingDots = () => (
+  <div className="flex gap-2 items-end">
+    <div className="w-6 h-6 rounded-full bg-[#071124] border border-cyan-500/30 flex items-center justify-center shrink-0">
+      <Bot size={10} className="text-cyan-400" />
+    </div>
+    <div className="px-3 py-2 rounded-xl rounded-bl-sm bg-white/[0.06] border border-white/10">
+      <div className="flex gap-1 items-center h-3">
+        <span className="w-1 h-1 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: "0ms" }} />
+        <span className="w-1 h-1 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: "150ms" }} />
+        <span className="w-1 h-1 rounded-full bg-cyan-400 animate-bounce" style={{ animationDelay: "300ms" }} />
+      </div>
+    </div>
+  </div>
+);
+
+// ─── Main Widget Component ─────────────────────────────────────────────────────
 export default function EVChatbot() {
-  const [open, setOpen]         = useState(false);
-  const [messages, setMessages] = useState([WELCOME]);
-  const [input, setInput]       = useState("");
-  const [loading, setLoading]   = useState(false);
-  const bottomRef               = useRef(null);
+  const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      role: "assistant",
+      content: "Hi! I'm your EV Assistant ⚡ How can I help you today?",
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [sessionId] = useState(() => `widget_${Date.now()}`);
+  const bottomRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
+    if (open) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => inputRef.current?.focus(), 100);
+    }
+  }, [messages, loading, open]);
 
   const sendMessage = async (text) => {
     const userText = (text || input).trim();
     if (!userText || loading) return;
 
+    setMessages((prev) => [...prev, { id: Date.now(), role: "user", content: userText }]);
     setInput("");
-    const updated = [...messages, { role: "user", content: userText }];
-    setMessages(updated);
     setLoading(true);
 
     try {
-      const apiMessages = updated
-        .filter((m) => m.role === "user" || m.role === "assistant")
-        .map((m) => ({ role: m.role, content: m.content }));
-
-      const res = await fetch("http://localhost:8000/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: apiMessages }),
+      const res = await api.post("/api/chat/message", {
+        session_id: sessionId,
+        message: userText,
       });
-
-      if (!res.ok) throw new Error(`Server error: ${res.status}`);
-
-      const data = await res.json();
-      setMessages([...updated, { role: "assistant", content: data.reply }]);
-    } catch (err) {
-      setMessages([
-        ...updated,
+      setMessages((prev) => [
+        ...prev,
         {
+          id: Date.now() + 1,
           role: "assistant",
-          content: `⚠️ **Connection error.**\n\n_${err.message}_`,
+          content: res.data?.reply || "Sorry, I couldn't get a response. Please try again.",
+        },
+      ]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          role: "assistant",
+          content: "⚠️ Connection issue. Please check the backend.",
         },
       ]);
     } finally {
@@ -56,115 +112,133 @@ export default function EVChatbot() {
     }
   };
 
-  const handleKey = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
     }
   };
 
+  // Widget dimensions based on expanded state
+  const widgetW = expanded ? "w-96" : "w-80";
+  const widgetH = expanded ? "h-[550px]" : "h-[440px]";
+
   return (
     <>
-      {/* ── Toggle Button (z-[1001]) ── */}
-      <div 
-        onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 z-[1001] cursor-pointer flex flex-col items-center justify-center hover:scale-110 transition-all duration-300 active:scale-95"
-      >
-        <div className="absolute w-16 h-16 rounded-full border-[2px] border-cyan-400/50 blur-[2px] animate-pulse"></div>
-        <div className="absolute w-20 h-20 rounded-full bg-cyan-500/10 blur-xl"></div>
-
-        <div className="relative w-14 h-14 rounded-full overflow-hidden border border-cyan-400/60 shadow-[0_0_15px_rgba(34,211,238,0.4)] bg-[#0a1628]">
-          <img
-            src="src/assets/chatbot.png" 
-            alt="VoltIQ Bot"
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        <div className="absolute -top-10 bg-cyan-950/90 backdrop-blur-md border border-cyan-400/40 rounded-full px-3 py-1 shadow-lg pointer-events-none">
-          <div className="flex items-center gap-1.5 text-cyan-300">
-            <span className="text-[10px] font-bold uppercase tracking-wider whitespace-nowrap">
-              {open ? "Close" : "Ask Me"}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Chat Window (z-[1000]) ── */}
+      {/* ── Chat Window ───────────────────────────────────────────────────────── */}
       {open && (
         <div
-          className="
-            fixed bottom-24 right-6 z-[1000]
-            w-[380px] max-w-[calc(100vw-48px)]
-            /* FIX 1: Set a max height so it doesn't hit the navbar */
-            max-h-[80vh] h-[600px]
-            rounded-2xl overflow-hidden
-            border border-white/[0.1]
-            shadow-[0_20px_60px_rgba(0,0,0,0.8)]
-            flex flex-col
-            bg-[#070f1c]
-          "
-          style={{ animation: "fadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)" }}
+          className={`fixed bottom-24 right-6 z-50 ${widgetW} ${widgetH} flex flex-col
+            bg-[#070e1e]/95 backdrop-blur-2xl border border-white/10 rounded-3xl
+            shadow-[0_30px_80px_rgba(0,0,0,0.6),0_0_40px_rgba(6,182,212,0.08)]
+            transition-all duration-300 origin-bottom-right`}
+          style={{ animation: "widgetIn 0.2s ease-out" }}
         >
-          <style>{`
-            @keyframes fadeUp {
-              from { opacity: 0; transform: translateY(20px) scale(0.95); }
-              to { opacity: 1; transform: translateY(0) scale(1); }
-            }
-          `}</style>
-
-          {/* Header (Shrink-0 prevents it from squishing) */}
-          <div className="bg-[#0a1628] border-b border-white/[0.06] px-4 py-4 flex items-center gap-3 flex-shrink-0">
-            <span className="text-[15px] font-bold text-white tracking-tight select-none">
-              Volt<span className="text-cyan-400">IQ</span>
-            </span>
-
-            <div className="flex items-center gap-2 bg-cyan-400/5 border border-cyan-400/20 rounded-full px-2.5 py-1">
-              <div className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse" />
-              <p className="text-[11px] font-bold text-cyan-100 uppercase tracking-widest">VoltBot</p>
+          {/* Header */}
+          <div className="flex items-center gap-2.5 px-4 py-3 border-b border-white/[0.07] bg-white/[0.02] rounded-t-3xl">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500/30 to-emerald-500/30 border border-cyan-400/30 flex items-center justify-center">
+              <Bot size={15} className="text-cyan-400" />
             </div>
-
-            <button onClick={() => setOpen(false)} className="ml-auto text-gray-500 hover:text-white transition-colors">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold text-white">EV Assistant</p>
+              <p className="text-[10px] text-emerald-400 flex items-center gap-1">
+                <span className="w-1 h-1 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                Online
+              </p>
+            </div>
+            <button
+              onClick={() => setExpanded((e) => !e)}
+              className="p-1.5 rounded-lg text-slate-500 hover:text-cyan-400 hover:bg-white/5 transition-all"
+              title={expanded ? "Collapse" : "Expand"}
+            >
+              {expanded ? <Minimize2 size={13} /> : <Maximize2 size={13} />}
+            </button>
+            <button
+              onClick={() => setOpen(false)}
+              className="p-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-white/5 transition-all"
+            >
+              <X size={13} />
             </button>
           </div>
 
-          <div className="bg-[#0a1628]/50 border-b border-white/[0.03] flex-shrink-0">
-            <QuickTopics onSelect={sendMessage} disabled={loading} />
-          </div>
-
-          {/* ── Messages Area (Flex-1 + Overflow ensures it scrolls correctly) ── */}
-          <div className="flex-1 overflow-y-auto px-4 py-6 flex flex-col gap-4 scroll-smooth [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.1)_transparent]">
-            {messages.map((msg, i) => (
-              <ChatMessage key={i} role={msg.role} content={msg.content} />
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+            {messages.map((msg) => (
+              <Bubble key={msg.id} msg={msg} />
             ))}
-            {loading && <TypingIndicator />}
+            {loading && <TypingDots />}
             <div ref={bottomRef} />
           </div>
 
-          {/* Input Area (Shrink-0) */}
-          <div className="bg-[#0a1628] border-t border-white/[0.06] p-4 flex gap-2 items-center flex-shrink-0">
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKey}
-              disabled={loading}
-              placeholder="Message VoltBot..."
-              className="flex-1 bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-sm text-white outline-none focus:border-cyan-400/50 transition-all"
-            />
-            <button
-              onClick={() => sendMessage()}
-              disabled={loading || !input.trim()}
-              className="w-11 h-11 rounded-xl flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 text-white disabled:opacity-30 transition-all"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-              </svg>
-            </button>
+          {/* Quick Prompts — show only when no messages from user yet */}
+          {messages.length <= 1 && (
+            <div className="px-4 pb-2 flex flex-wrap gap-1.5">
+              {QUICK_PROMPTS.map((q, i) => (
+                <button
+                  key={i}
+                  onClick={() => sendMessage(q)}
+                  className="flex items-center gap-1 text-[10px] px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 hover:border-cyan-500/30 hover:text-cyan-300 transition-all"
+                >
+                  <ChevronRight size={9} className="text-cyan-400 shrink-0" />
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Input */}
+          <div className="px-3 py-3 border-t border-white/[0.07] bg-white/[0.02] rounded-b-3xl">
+            <div className="flex gap-2 items-center bg-white/[0.04] border border-white/10 rounded-xl px-3 py-2 focus-within:border-cyan-500/40 transition-all">
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Ask about EVs..."
+                className="flex-1 bg-transparent text-xs text-white placeholder-slate-500 focus:outline-none"
+              />
+              <button
+                onClick={() => sendMessage()}
+                disabled={loading || !input.trim()}
+                className="w-7 h-7 rounded-lg bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center shrink-0 hover:from-cyan-400 hover:to-emerald-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              >
+                <Send size={11} className="text-white" />
+              </button>
+            </div>
           </div>
         </div>
       )}
+
+      {/* ── Toggle Button ─────────────────────────────────────────────────────── */}
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center
+          bg-gradient-to-br from-cyan-500 to-emerald-500
+          shadow-[0_8px_30px_rgba(6,182,212,0.4)]
+          hover:from-cyan-400 hover:to-emerald-400 hover:scale-110
+          transition-all duration-300
+          ${open ? "rotate-0" : "rotate-0"}`}
+        title="Open EV Assistant"
+      >
+        {open ? (
+          <X size={22} className="text-white" />
+        ) : (
+          <Bot size={22} className="text-white" />
+        )}
+        {/* Pulse ring when closed */}
+        {!open && (
+          <span className="absolute inset-0 rounded-full border-2 border-cyan-400/50 animate-ping" />
+        )}
+      </button>
+
+      {/* Widget open animation */}
+      <style>{`
+        @keyframes widgetIn {
+          from { opacity: 0; transform: scale(0.92) translateY(10px); }
+          to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+      `}</style>
     </>
   );
 }

@@ -18,7 +18,9 @@ import Prediction from './pages/Prediction'; // this is ml models frontend file
 import Profile from './pages/ProfilePage';
 import Reports from './pages/Reports';
 import ModelEvaluate from './pages/ModelEvaluate';
-import HistoryPage from './pages/History';  
+import ChatPage from './pages/Chat/Messageschatbot';
+import ChatHistoryPage from './pages/Chat/ChatHistoryPage';
+import HistoryPage from './pages/History';
 import FindStations from './pages/FindStations';
 import PublicCharging from './pages/PublicCharging';
 import Homecharging from './pages/Homecharging';
@@ -62,7 +64,7 @@ function App() {
                                 <Route index element={<Home />} />
                                 <Route path="login" element={<Login />} />
                                 <Route path="register" element={<Register />} />
-                                <Route path="ev" element={<EV/>} />
+                                <Route path="ev" element={<EV />} />
                                 <Route path="landingpage" element={<LandingPage />} />
                                 <Route path="forgot-password" element={<ResetPassword />} />
                                 <Route path="about" element={<About />} />
@@ -128,15 +130,15 @@ function App() {
 
                             <Route path="charging" element={
                                 <ProtectedRoute>
-                                <Charging />
+                                    <Charging />
                                 </ProtectedRoute>
-                            } /> 
+                            } />
 
                             <Route path="/home-charging" element={
                                 <ProtectedRoute>
                                     <Homecharging />
                                 </ProtectedRoute>
-                            }/>
+                            } />
                             <Route path="/public-charging" element={
                                 <ProtectedRoute>
                                     <PublicCharging />
@@ -145,7 +147,7 @@ function App() {
 
                             <Route path="/find-station" element={
                                 <ProtectedRoute>
-                                    <FindStations/>
+                                    <FindStations />
                                 </ProtectedRoute>
                             } />
 
@@ -160,7 +162,7 @@ function App() {
                                     <EVHistory />
                                 </ProtectedRoute>
                             } />
-                            
+
 
                             <Route path="/ev-maintenance-guide" element={
                                 <ProtectedRoute>
@@ -168,13 +170,13 @@ function App() {
                                 </ProtectedRoute>
                             } />
 
-                        
+
                             <Route path="/dashboard" element={
                                 <ProtectedRoute>
                                     <Dashboard />
                                 </ProtectedRoute>
                             } />
-                            
+
                             {/* ML models Predictions page */}
                             <Route path="/prediction" element={
                                 <ProtectedRoute>
@@ -194,11 +196,11 @@ function App() {
                                 <ProtectedRoute>
                                     <HistoryPage />
                                 </ProtectedRoute>
-                                
+
                             } />
 
 
-                            
+
                             {/* Reports page */}
                             <Route path="/reports" element={
                                 <ProtectedRoute>
@@ -211,6 +213,20 @@ function App() {
                                     <ModelEvaluate />
                                 </ProtectedRoute>
 
+                            } />
+
+                            <Route path="/chat" element={
+                                <ProtectedRoute>
+                                    <ChatPage />
+                                </ProtectedRoute>
+                            
+                            } />
+
+                            <Route path="/chat-history" element={
+                                <ProtectedRoute>
+                                    <ChatHistoryPage />
+                                </ProtectedRoute>
+                            
                             } />
 
 

@@ -9,6 +9,7 @@ import {
     Zap, Car, MapPin, CreditCard, HeadphonesIcon, BatteryCharging, BookOpen, ArrowRight, ChevronLeft, ChevronRight, Star, Leaf, DollarSign,
     Gauge, Wifi, ShieldCheck, Newspaper, Bell, Mail, Calendar, CheckCircle2, TrendingUp, Globe, ChevronDown
 } from "lucide-react";
+import EVChatbot from '../components/EVChatbot/EVChatbot';
 
 /* ─────────────────────────────────────────
    DATA
