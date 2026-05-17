@@ -19,6 +19,8 @@ const EVChargingCost = () => {
 
             {/* Footer */}
             <Footer />
+            <EVChatbot />
+
         </div>
     );
 };

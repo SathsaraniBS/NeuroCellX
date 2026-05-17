@@ -438,6 +438,8 @@ const PublicCharging = () => {
       </main>
 
       <Footer />
+      <EVChatbot />
+
 
       <style>{`
         @keyframes slow-zoom {

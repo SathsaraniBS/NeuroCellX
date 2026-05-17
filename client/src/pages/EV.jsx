@@ -434,6 +434,8 @@ function EV() {
         </section>
       </main>
       <Footer />
+      <EVChatbot />
+
 
       <style dangerouslySetInnerHTML={{
         __html: `

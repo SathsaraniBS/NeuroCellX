@@ -461,6 +461,8 @@ const EVHistoryPage = () => {
       </main>
 
       <Footer />
+      <EVChatbot />
+
 
       <style
         dangerouslySetInnerHTML={{

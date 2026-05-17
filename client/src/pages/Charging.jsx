@@ -961,6 +961,8 @@ function Charging() {
       </main>
 
       <Footer />
+      <EVChatbot />
+
 
       <style>{`
         @keyframes slow-zoom {

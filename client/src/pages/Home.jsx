@@ -689,6 +689,8 @@ export default function HomePage() {
             </div>
 
             <Footer />
+            {/* ✅ EVChatbot Widget */}
+            <EVChatbot />   
         </div>
     );
 }

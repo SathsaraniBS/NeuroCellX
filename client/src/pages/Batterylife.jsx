@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Download, ChevronDown, ChevronLeft, ChevronRight, BatteryCharging, Zap, ShieldCheck } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import EVChatbot from '../components/EVChatbot/EVChatbot';
 
 const leftColumnTips = [
   {
@@ -376,6 +377,7 @@ function Batterylife() {
       </main>
 
       <Footer />
+      <EVChatbot />
 
       <style>{`
         @keyframes slow-zoom {

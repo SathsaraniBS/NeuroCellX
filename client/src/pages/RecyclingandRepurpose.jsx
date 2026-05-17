@@ -195,6 +195,8 @@ function RecyclingandRepurpose() {
                     </div>
                 </div>
             </section>
+            <EVChatbot />
+
 
             <Footer />
 

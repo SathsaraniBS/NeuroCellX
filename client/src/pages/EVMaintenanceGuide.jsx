@@ -323,6 +323,8 @@ function EVCare() {
             </section>
 
             <Footer />
+            <EVChatbot />
+
 
             <style dangerouslySetInnerHTML={{
                 __html: `

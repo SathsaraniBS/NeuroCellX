@@ -352,6 +352,8 @@ function Homecharging() {
             </section>
 
             <Footer />
+            <EVChatbot />
+
 
             <style>{`
                 @keyframes slow-zoom {

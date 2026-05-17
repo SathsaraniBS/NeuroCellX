@@ -444,6 +444,7 @@ const BatteryTypes = () => {
       </main>
 
       <Footer />
+      <EVChatbot />
     </div>
   );
 };

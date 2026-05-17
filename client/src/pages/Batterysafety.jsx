@@ -594,6 +594,7 @@ function EVBatterySafetyPage() {
       </main>
 
       <Footer />
+      <EVChatbot />
 
       <style>{`
         @keyframes slow-zoom {

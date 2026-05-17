@@ -195,6 +195,8 @@ const ContactPage = () => {
             </div>
 
             <Footer />
+            <EVChatbot />
+
         </div>
     );
 }
