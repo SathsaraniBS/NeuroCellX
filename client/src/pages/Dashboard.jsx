@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
@@ -6,17 +6,17 @@ import {
   Bell, Search, Battery, BatteryCharging,
   TrendingUp, TrendingDown, Activity, AlertTriangle,
   Clock, BarChart2, Zap, RefreshCw,
-  ChevronRight, FileText, Cpu, ThermometerSun
+  ChevronRight, FileText, Cpu, ThermometerSun, X
 } from 'lucide-react';
 import Sidebar from '../components/User/UserSidebar';
 import api from '../services/api';
 
 // ─────────────────────────────────────────────────────────────
-//  ✅ CONFIRMED API Field Names (from reports table):
-//     id, report_name, report_type, battery_id,
-//     soh_predicted, rul_predicted, health_status,
-//     voltage, current_a, temperature, cycle_count,
-//     capacity, created_at, generated_by_name
+//  Field names (reports table — confirmed from API):
+//  id, report_name, report_type, battery_id,
+//  soh_predicted, rul_predicted, health_status,
+//  voltage, current_a, temperature, cycle_count,
+//  capacity, created_at, generated_by_name
 // ─────────────────────────────────────────────────────────────
 
 function getHealthStatus(soh) {
@@ -36,9 +36,13 @@ function getTimeAgo(dateStr) {
   return `${Math.floor(h / 24)}d ago`;
 }
 
-function StatCard({ icon: Icon, label, value, sub, colorText, colorBg, colorBorder, trend }) {
+// ── Stat Card ─────────────────────────────────────────────────
+function StatCard({ icon: Icon, label, value, sub, colorText, colorBg, colorBorder, trend, onClick }) {
   return (
-    <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-start gap-4 hover:bg-white/[0.06] transition">
+    <div
+      onClick={onClick}
+      className={`bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-start gap-4 hover:bg-white/[0.06] transition ${onClick ? 'cursor-pointer' : ''}`}
+    >
       <div className={`p-2.5 rounded-xl border ${colorBg} ${colorBorder}`}>
         <Icon size={18} className={colorText} />
       </div>
@@ -57,6 +61,7 @@ function StatCard({ icon: Icon, label, value, sub, colorText, colorBg, colorBord
   );
 }
 
+// ── Loading Skeleton ──────────────────────────────────────────
 function LoadingSkeleton() {
   return (
     <div className="animate-pulse space-y-6">
@@ -71,16 +76,111 @@ function LoadingSkeleton() {
   );
 }
 
-export default function Dashboard() {
-  const [batteryLogs, setBatteryLogs] = useState([]);
-  const [loading,     setLoading]     = useState(true);
-  const [error,       setError]       = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [lastUpdated, setLastUpdated] = useState(null);
+// ── Critical Alerts Dropdown ──────────────────────────────────
+function AlertsDropdown({ alerts, onClose }) {
+  return (
+    <div className="absolute right-0 top-10 w-80 bg-[#0d1628] border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-red-500/10">
+        <div className="flex items-center gap-2">
+          <AlertTriangle size={14} className="text-red-400" />
+          <span className="text-red-400 font-bold text-sm">
+            Critical Alerts ({alerts.length})
+          </span>
+        </div>
+        <button onClick={onClose} className="text-gray-400 hover:text-white">
+          <X size={15} />
+        </button>
+      </div>
 
+      {/* Alert List */}
+      <div className="max-h-72 overflow-y-auto divide-y divide-white/5">
+        {alerts.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-8 gap-2">
+            <div className="w-10 h-10 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+              <Battery size={18} className="text-green-400" />
+            </div>
+            <p className="text-green-400 text-sm font-semibold">All batteries healthy!</p>
+            <p className="text-gray-500 text-xs">No critical alerts at this time.</p>
+          </div>
+        ) : (
+          alerts.map((log, i) => {
+            const soh = parseFloat(log.soh_predicted) || 0;
+            return (
+              <div key={log.id ?? i} className="px-4 py-3 hover:bg-white/5 transition">
+                <div className="flex items-start gap-3">
+                  {/* Severity icon */}
+                  <div className="p-1.5 rounded-lg bg-red-500/15 border border-red-500/20 shrink-0 mt-0.5">
+                    <AlertTriangle size={12} className="text-red-400" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-white truncate">
+                      {log.report_name || log.battery_id || `Log #${i + 1}`}
+                    </p>
+                    <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                      {log.battery_id && (
+                        <span className="text-[10px] text-gray-500">{log.battery_id}</span>
+                      )}
+                      {log.report_type && (
+                        <span className="text-[10px] text-gray-600 bg-white/5 px-1.5 py-0.5 rounded">
+                          {log.report_type.replace(/_/g, ' ')}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-3 mt-1.5">
+                      <span className="text-red-400 text-xs font-bold">SOH: {soh.toFixed(1)}%</span>
+                      <span className="text-gray-500 text-xs">
+                        RUL: {Math.round(parseFloat(log.rul_predicted) || 0)} cycles
+                      </span>
+                      <span className="text-gray-600 text-[10px]">{getTimeAgo(log.created_at)}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {/* Footer */}
+      <div className="px-4 py-3 border-t border-white/10 bg-white/[0.02]">
+        <Link
+          to="/reports"
+          onClick={onClose}
+          className="flex items-center justify-center gap-2 text-cyan-400 text-xs font-semibold hover:text-cyan-300 transition"
+        >
+          View all reports <ChevronRight size={13} />
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+// ── Main Dashboard ────────────────────────────────────────────
+export default function Dashboard() {
+  const [batteryLogs,   setBatteryLogs]   = useState([]);
+  const [loading,       setLoading]       = useState(true);
+  const [error,         setError]         = useState(null);
+  const [searchQuery,   setSearchQuery]   = useState('');
+  const [lastUpdated,   setLastUpdated]   = useState(null);
+  const [showAlerts,    setShowAlerts]    = useState(false);
+  const [showCritModal, setShowCritModal] = useState(false);
+
+  const alertsRef = useRef(null);
   const { user }     = useAuth();
   const { addToast } = useToast();
   const navigate     = useNavigate();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (alertsRef.current && !alertsRef.current.contains(e.target)) {
+        setShowAlerts(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const fetchBatteryLogs = async () => {
     setLoading(true);
@@ -102,11 +202,8 @@ export default function Dashboard() {
 
   useEffect(() => { fetchBatteryLogs(); }, []);
 
-  // ─────────────────────────────────────────────────────────
-  //  ✅ FIXED field names — using soh_predicted, rul_predicted
-  //     (reports table fields, now returned by dashboard API)
-  // ─────────────────────────────────────────────────────────
-  const totalLogs     = batteryLogs.length;
+  // ── Derived stats ─────────────────────────────────────────
+  const totalLogs = batteryLogs.length;
 
   const avgSoh = totalLogs
     ? Math.round(batteryLogs.reduce((s, l) => s + (parseFloat(l.soh_predicted) || 0), 0) / totalLogs)
@@ -116,7 +213,9 @@ export default function Dashboard() {
     ? Math.round(batteryLogs.reduce((s, l) => s + (parseFloat(l.rul_predicted) || 0), 0) / totalLogs)
     : null;
 
-  const criticalCount = batteryLogs.filter(l => (parseFloat(l.soh_predicted) || 100) < 75).length;
+  // ✅ Critical = SOH < 75%
+  const criticalLogs  = batteryLogs.filter(l => (parseFloat(l.soh_predicted) || 100) < 75);
+  const criticalCount = criticalLogs.length;
   const healthyCount  = batteryLogs.filter(l => (parseFloat(l.soh_predicted) || 0) >= 90).length;
   const moderateCount = batteryLogs.filter(l => {
     const s = parseFloat(l.soh_predicted) || 0;
@@ -160,6 +259,7 @@ export default function Dashboard() {
           </div>
 
           <div className="flex items-center gap-5">
+            {/* Refresh */}
             <button
               onClick={fetchBatteryLogs}
               disabled={loading}
@@ -169,15 +269,33 @@ export default function Dashboard() {
               <RefreshCw size={17} className={loading ? 'animate-spin' : ''} />
             </button>
 
-            <div className="relative">
-              <Bell size={17} className="text-gray-400 cursor-pointer hover:text-cyan-400 transition" />
-              {criticalCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[9px] font-bold flex items-center justify-center">
-                  {criticalCount}
-                </span>
+            {/* ✅ WORKING Notification Bell with Dropdown */}
+            <div className="relative" ref={alertsRef}>
+              <button
+                onClick={() => setShowAlerts(!showAlerts)}
+                className={`relative transition ${criticalCount > 0 ? 'text-red-400 hover:text-red-300' : 'text-gray-400 hover:text-cyan-400'}`}
+                title={criticalCount > 0 ? `${criticalCount} critical alerts` : 'No alerts'}
+              >
+                <Bell size={17} />
+
+                {/* ✅ Badge — shows count */}
+                {criticalCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] bg-red-500 rounded-full text-[9px] font-bold flex items-center justify-center px-1 animate-pulse">
+                    {criticalCount > 9 ? '9+' : criticalCount}
+                  </span>
+                )}
+              </button>
+
+              {/* ✅ Alerts Dropdown */}
+              {showAlerts && (
+                <AlertsDropdown
+                  alerts={criticalLogs}
+                  onClose={() => setShowAlerts(false)}
+                />
               )}
             </div>
 
+            {/* User Avatar */}
             <div className="flex items-center gap-3 border-l border-white/10 pl-5">
               <div className="text-right hidden md:block">
                 <p className="text-sm font-semibold leading-tight">{user?.name || 'User'}</p>
@@ -261,14 +379,19 @@ export default function Dashboard() {
                   colorBg="bg-purple-500/10"
                   colorBorder="border-purple-500/20"
                 />
+                {/* ✅ Critical Alerts Card — click to open modal */}
                 <StatCard
                   icon={AlertTriangle}
                   label="Critical Alerts"
                   value={criticalCount}
-                  sub={`${healthyCount} healthy · ${moderateCount} moderate`}
-                  colorText="text-red-400"
-                  colorBg="bg-red-500/10"
-                  colorBorder="border-red-500/20"
+                  sub={criticalCount > 0
+                    ? `Click to view ${criticalCount} alert${criticalCount > 1 ? 's' : ''}`
+                    : `${healthyCount} healthy · ${moderateCount} moderate`
+                  }
+                  colorText={criticalCount > 0 ? 'text-red-400' : 'text-gray-400'}
+                  colorBg={criticalCount > 0 ? 'bg-red-500/10' : 'bg-gray-500/10'}
+                  colorBorder={criticalCount > 0 ? 'border-red-500/20' : 'border-gray-500/20'}
+                  onClick={() => criticalCount > 0 && setShowCritModal(true)}
                 />
               </div>
 
@@ -304,7 +427,6 @@ export default function Dashboard() {
                   ) : (
                     <div className="divide-y divide-white/5">
                       {filteredLogs.map((log, i) => {
-                        // ✅ Correct field names from reports table
                         const soh    = parseFloat(log.soh_predicted) || 0;
                         const rul    = parseFloat(log.rul_predicted)  || null;
                         const status = getHealthStatus(soh);
@@ -318,20 +440,17 @@ export default function Dashboard() {
                             <div className={`w-2 h-2 rounded-full shrink-0 ${status.dot}`} />
 
                             <div className="flex-1 min-w-0">
-                              {/* ✅ report_name field */}
                               <p className="text-sm font-semibold text-white truncate">
                                 {log.report_name || log.battery_id || `Log #${i + 1}`}
                               </p>
                               <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                                {/* ✅ report_type field */}
                                 {log.report_type && (
                                   <span className="text-[10px] text-gray-500 bg-white/5 px-2 py-0.5 rounded-full">
                                     {log.report_type.replace(/_/g, ' ')}
                                   </span>
                                 )}
-                                {/* ✅ battery_id field */}
                                 {log.battery_id && (
-                                  <span className="text-[10px] text-cyan-600">
+                                  <span className="text-[10px] text-cyan-600 capitalize">
                                     {log.battery_id}
                                   </span>
                                 )}
@@ -341,7 +460,6 @@ export default function Dashboard() {
                               </div>
                             </div>
 
-                            {/* ✅ soh_predicted field */}
                             <div className="text-right shrink-0">
                               <p className={`text-sm font-bold ${status.color}`}>
                                 {soh > 0 ? `${soh.toFixed(1)}%` : '—'}
@@ -349,15 +467,13 @@ export default function Dashboard() {
                               <p className="text-[10px] text-gray-500">SOH</p>
                             </div>
 
-                            {/* ✅ rul_predicted field */}
-                            <div className="text-right shrink-0 w-16">
+                            <div className="text-right shrink-0 w-14">
                               <p className="text-sm font-bold text-cyan-400">
                                 {rul !== null ? Math.round(rul) : '—'}
                               </p>
                               <p className="text-[10px] text-gray-500">RUL</p>
                             </div>
 
-                            {/* ✅ health_status field */}
                             <span className={`hidden md:inline-block px-2.5 py-1 rounded-full text-[10px] font-bold border shrink-0 ${status.bg} ${status.color} ${status.border}`}>
                               {log.health_status || status.label}
                             </span>
@@ -381,19 +497,23 @@ export default function Dashboard() {
                     ) : (
                       <div className="space-y-3">
                         {[
-                          { label: 'Healthy',  count: healthyCount,  color: 'bg-green-400'  },
-                          { label: 'Moderate', count: moderateCount, color: 'bg-yellow-400' },
-                          { label: 'Critical', count: criticalCount, color: 'bg-red-400'    },
-                        ].map(({ label, count, color }) => (
+                          { label: 'Healthy',  count: healthyCount,  color: 'bg-green-400',  text: 'text-green-400'  },
+                          { label: 'Moderate', count: moderateCount, color: 'bg-yellow-400', text: 'text-yellow-400' },
+                          { label: 'Critical', count: criticalCount, color: 'bg-red-400',    text: 'text-red-400'    },
+                        ].map(({ label, count, color, text }) => (
                           <div key={label}>
                             <div className="flex justify-between text-xs mb-1.5">
-                              <span className="text-gray-400">{label}</span>
-                              <span className="text-white font-bold">{count}</span>
+                              <span className={count > 0 && label === 'Critical' ? text : 'text-gray-400'}>
+                                {label}
+                              </span>
+                              <span className={`font-bold ${count > 0 && label === 'Critical' ? text : 'text-white'}`}>
+                                {count}
+                              </span>
                             </div>
                             <div className="w-full bg-white/5 rounded-full h-1.5">
                               <div
                                 className={`h-1.5 rounded-full ${color} transition-all duration-700`}
-                                style={{ width: `${(count / totalLogs) * 100}%` }}
+                                style={{ width: `${totalLogs > 0 ? (count / totalLogs) * 100 : 0}%` }}
                               />
                             </div>
                           </div>
@@ -453,30 +573,109 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {/* ── Critical Alert Banner ── */}
+              {/* ✅ Critical Alert Banner — only shows when critical > 0 */}
               {criticalCount > 0 && (
                 <div className="flex items-center gap-4 bg-red-500/10 border border-red-500/20 rounded-2xl px-6 py-4">
-                  <AlertTriangle size={20} className="text-red-400 shrink-0" />
+                  <div className="p-2 bg-red-500/20 rounded-xl border border-red-500/30">
+                    <AlertTriangle size={20} className="text-red-400" />
+                  </div>
                   <div className="flex-1">
-                    <p className="text-red-400 font-semibold text-sm">
-                      {criticalCount} Critical Battery Alert{criticalCount > 1 ? 's' : ''}
+                    <p className="text-red-400 font-bold text-sm">
+                      ⚠️ {criticalCount} Critical Battery Alert{criticalCount > 1 ? 's' : ''} Detected
                     </p>
                     <p className="text-red-300/60 text-xs mt-0.5">
-                      {criticalCount} prediction{criticalCount > 1 ? 's' : ''} show SOH below 75%. Immediate attention recommended.
+                      {criticalCount} battery prediction{criticalCount > 1 ? 's' : ''} showing SOH below 75%.
+                      Immediate inspection recommended.
                     </p>
                   </div>
-                  <Link
-                    to="/reports"
+                  <button
+                    onClick={() => setShowCritModal(true)}
                     className="px-4 py-2 bg-red-500/20 border border-red-500/30 text-red-400 rounded-xl text-xs font-bold hover:bg-red-500/30 transition shrink-0"
                   >
-                    View Reports
-                  </Link>
+                    View Alerts
+                  </button>
                 </div>
               )}
             </>
           )}
         </div>
       </div>
+
+      {/* ✅ Critical Alerts MODAL */}
+      {showCritModal && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-[#0d1628] border border-red-500/20 rounded-2xl w-full max-w-lg overflow-hidden">
+
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-red-500/10">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-red-500/20 rounded-xl border border-red-500/30">
+                  <AlertTriangle size={16} className="text-red-400" />
+                </div>
+                <div>
+                  <h3 className="text-red-400 font-bold">Critical Battery Alerts</h3>
+                  <p className="text-red-300/60 text-xs">{criticalCount} battery{criticalCount > 1 ? 'ies' : 'y'} below 75% SOH</p>
+                </div>
+              </div>
+              <button onClick={() => setShowCritModal(false)} className="text-gray-400 hover:text-white transition">
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Alert List */}
+            <div className="divide-y divide-white/5 max-h-80 overflow-y-auto">
+              {criticalLogs.map((log, i) => {
+                const soh    = parseFloat(log.soh_predicted) || 0;
+                const rul    = parseFloat(log.rul_predicted) || 0;
+                const status = getHealthStatus(soh);
+                return (
+                  <div key={log.id ?? i} className="px-6 py-4 flex items-center gap-4">
+                    <div className={`w-2 h-2 rounded-full ${status.dot} shrink-0`} />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-white truncate">
+                        {log.report_name || `Log #${i + 1}`}
+                      </p>
+                      <div className="flex items-center gap-2 mt-0.5 text-xs text-gray-500">
+                        {log.battery_id && <span>{log.battery_id}</span>}
+                        {log.report_type && <span className="bg-white/5 px-1.5 py-0.5 rounded">{log.report_type.replace(/_/g, ' ')}</span>}
+                        <span>{getTimeAgo(log.created_at)}</span>
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className="text-red-400 font-bold text-sm">{soh.toFixed(1)}%</p>
+                      <p className="text-[10px] text-gray-500">SOH</p>
+                    </div>
+                    <div className="text-right shrink-0 w-14">
+                      <p className="text-cyan-400 font-bold text-sm">{Math.round(rul)}</p>
+                      <p className="text-[10px] text-gray-500">RUL</p>
+                    </div>
+                    <span className={`hidden sm:inline-block px-2.5 py-1 rounded-full text-[10px] font-bold border ${status.bg} ${status.color} ${status.border}`}>
+                      {log.health_status || status.label}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex gap-3 px-6 py-4 border-t border-white/10">
+              <Link
+                to="/reports"
+                onClick={() => setShowCritModal(false)}
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold text-sm hover:brightness-110 transition flex items-center justify-center gap-2"
+              >
+                <FileText size={15} /> View All Reports
+              </Link>
+              <button
+                onClick={() => setShowCritModal(false)}
+                className="flex-1 py-3 rounded-xl border border-white/10 text-gray-400 hover:bg-white/5 transition text-sm"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

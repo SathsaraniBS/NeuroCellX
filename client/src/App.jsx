@@ -17,6 +17,7 @@ import Dashboard from './pages/Dashboard';
 import Prediction from './pages/Prediction'; // this is ml models frontend file
 import Profile from './pages/ProfilePage';
 import Reports from './pages/Reports';
+import HistoryPage from './pages/History';  
 import FindStations from './pages/FindStations';
 import PublicCharging from './pages/PublicCharging';
 import Homecharging from './pages/Homecharging';
@@ -187,6 +188,14 @@ function App() {
                                     <Profile />
                                 </ProtectedRoute>
                             } />
+
+                            <Route path="/history" element={
+                                <ProtectedRoute>
+                                    <HistoryPage />
+                                </ProtectedRoute>
+                                
+                            } />
+
 
                             
                             {/* Reports page */}
