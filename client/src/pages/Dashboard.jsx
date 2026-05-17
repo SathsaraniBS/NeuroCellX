@@ -3,25 +3,32 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useToast } from '../contexts/ToastContext';
 import {
-  Bell, User, Search, Battery, BatteryCharging,
+  Bell, Search, Battery, BatteryCharging,
   TrendingUp, TrendingDown, Activity, AlertTriangle,
-  CheckCircle, Clock, BarChart2, Zap, RefreshCw,
+  Clock, BarChart2, Zap, RefreshCw,
   ChevronRight, FileText, Cpu, ThermometerSun
 } from 'lucide-react';
 import Sidebar from '../components/User/UserSidebar';
 import api from '../services/api';
 
-// ─── Helper ──────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────
+//  ✅ CONFIRMED API Field Names (from reports table):
+//     id, report_name, report_type, battery_id,
+//     soh_predicted, rul_predicted, health_status,
+//     voltage, current_a, temperature, cycle_count,
+//     capacity, created_at, generated_by_name
+// ─────────────────────────────────────────────────────────────
+
 function getHealthStatus(soh) {
-  if (soh >= 90) return { label: 'Healthy',   color: 'text-green-400',  bg: 'bg-green-500/15',  border: 'border-green-500/25',  dot: 'bg-green-400' };
-  if (soh >= 75) return { label: 'Moderate',  color: 'text-yellow-400', bg: 'bg-yellow-500/15', border: 'border-yellow-500/25', dot: 'bg-yellow-400' };
-  return               { label: 'Critical',   color: 'text-red-400',    bg: 'bg-red-500/15',    border: 'border-red-500/25',    dot: 'bg-red-400' };
+  if (soh >= 90) return { label: 'Healthy',  color: 'text-green-400',  bg: 'bg-green-500/15',  border: 'border-green-500/25',  dot: 'bg-green-400'  };
+  if (soh >= 75) return { label: 'Moderate', color: 'text-yellow-400', bg: 'bg-yellow-500/15', border: 'border-yellow-500/25', dot: 'bg-yellow-400' };
+  return               { label: 'Critical',  color: 'text-red-400',    bg: 'bg-red-500/15',    border: 'border-red-500/25',    dot: 'bg-red-400'    };
 }
 
 function getTimeAgo(dateStr) {
   if (!dateStr) return '—';
   const diff = Date.now() - new Date(dateStr).getTime();
-  const m = Math.floor(diff / 60000);
+  const m    = Math.floor(diff / 60000);
   if (m < 1)  return 'Just now';
   if (m < 60) return `${m}m ago`;
   const h = Math.floor(m / 60);
@@ -29,21 +36,20 @@ function getTimeAgo(dateStr) {
   return `${Math.floor(h / 24)}d ago`;
 }
 
-// ─── Sub-components ──────────────────────────────────────────
-function StatCard({ icon: Icon, label, value, sub, color, trend }) {
+function StatCard({ icon: Icon, label, value, sub, colorText, colorBg, colorBorder, trend }) {
   return (
     <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5 flex items-start gap-4 hover:bg-white/[0.06] transition">
-      <div className={`p-2.5 rounded-xl border ${color.bg} ${color.border}`}>
-        <Icon size={18} className={color.text} />
+      <div className={`p-2.5 rounded-xl border ${colorBg} ${colorBorder}`}>
+        <Icon size={18} className={colorText} />
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-gray-400 text-xs uppercase font-bold tracking-wider mb-1">{label}</p>
-        <p className={`text-2xl font-bold ${color.text}`}>{value}</p>
+        <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider mb-1">{label}</p>
+        <p className={`text-2xl font-bold ${colorText}`}>{value}</p>
         {sub && <p className="text-gray-500 text-xs mt-1">{sub}</p>}
       </div>
       {trend !== undefined && (
         <div className={`flex items-center gap-1 text-xs font-bold ${trend >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-          {trend >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+          {trend >= 0 ? <TrendingUp size={13} /> : <TrendingDown size={13} />}
           {Math.abs(trend)}%
         </div>
       )}
@@ -55,25 +61,22 @@ function LoadingSkeleton() {
   return (
     <div className="animate-pulse space-y-6">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="bg-white/5 rounded-2xl h-28" />
-        ))}
+        {[...Array(4)].map((_, i) => <div key={i} className="bg-white/5 rounded-2xl h-28" />)}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white/5 rounded-2xl h-64" />
-        <div className="bg-white/5 rounded-2xl h-64" />
+        <div className="lg:col-span-2 bg-white/5 rounded-2xl h-72" />
+        <div className="bg-white/5 rounded-2xl h-72" />
       </div>
     </div>
   );
 }
 
-// ─── Main Component ───────────────────────────────────────────
 export default function Dashboard() {
-  const [batteryLogs, setBatteryLogs]   = useState([]);
-  const [loading,     setLoading]       = useState(true);
-  const [error,       setError]         = useState(null);
-  const [searchQuery, setSearchQuery]   = useState('');
-  const [lastUpdated, setLastUpdated]   = useState(null);
+  const [batteryLogs, setBatteryLogs] = useState([]);
+  const [loading,     setLoading]     = useState(true);
+  const [error,       setError]       = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [lastUpdated, setLastUpdated] = useState(null);
 
   const { user }     = useAuth();
   const { addToast } = useToast();
@@ -99,32 +102,42 @@ export default function Dashboard() {
 
   useEffect(() => { fetchBatteryLogs(); }, []);
 
-  // ── Derived stats ──────────────────────────────────────────
-  const totalLogs    = batteryLogs.length;
-  const avgSoh       = totalLogs
-    ? Math.round(batteryLogs.reduce((s, l) => s + (l.soh_predicted ?? 0), 0) / totalLogs)
+  // ─────────────────────────────────────────────────────────
+  //  ✅ FIXED field names — using soh_predicted, rul_predicted
+  //     (reports table fields, now returned by dashboard API)
+  // ─────────────────────────────────────────────────────────
+  const totalLogs     = batteryLogs.length;
+
+  const avgSoh = totalLogs
+    ? Math.round(batteryLogs.reduce((s, l) => s + (parseFloat(l.soh_predicted) || 0), 0) / totalLogs)
     : null;
-  const avgRul       = totalLogs
-    ? Math.round(batteryLogs.reduce((s, l) => s + (l.rul_predicted ?? 0), 0) / totalLogs)
+
+  const avgRul = totalLogs
+    ? Math.round(batteryLogs.reduce((s, l) => s + (parseFloat(l.rul_predicted) || 0), 0) / totalLogs)
     : null;
-  const criticalCount = batteryLogs.filter(l => (l.soh_predicted ?? 100) < 75).length;
-  const healthyCount  = batteryLogs.filter(l => (l.soh_predicted ?? 0)   >= 90).length;
+
+  const criticalCount = batteryLogs.filter(l => (parseFloat(l.soh_predicted) || 100) < 75).length;
+  const healthyCount  = batteryLogs.filter(l => (parseFloat(l.soh_predicted) || 0) >= 90).length;
+  const moderateCount = batteryLogs.filter(l => {
+    const s = parseFloat(l.soh_predicted) || 0;
+    return s >= 75 && s < 90;
+  }).length;
 
   const recentLogs = [...batteryLogs]
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
     .slice(0, 6);
 
   const filteredLogs = recentLogs.filter(log =>
+    (log.report_name ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
     (log.battery_id  ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (log.report_name ?? '').toLowerCase().includes(searchQuery.toLowerCase())
+    (log.report_type ?? '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // ── Quick actions ──────────────────────────────────────────
   const QUICK_ACTIONS = [
-    { icon: Zap,       label: 'New Prediction', path: '/prediction', color: 'from-cyan-500 to-emerald-500' },
-    { icon: FileText,  label: 'View Reports',   path: '/reports',    color: 'from-purple-500 to-pink-500'  },
-    { icon: Cpu,       label: 'ML Models',      path: '/models',     color: 'from-blue-500 to-cyan-500'    },
-    { icon: Clock,     label: 'History',        path: '/history',    color: 'from-orange-500 to-yellow-500'},
+    { icon: Zap,      label: 'New Prediction', path: '/prediction', color: 'from-cyan-500 to-emerald-500'  },
+    { icon: FileText, label: 'View Reports',   path: '/reports',    color: 'from-purple-500 to-pink-500'   },
+    { icon: Cpu,      label: 'ML Models',      path: '/models',     color: 'from-blue-500 to-cyan-500'     },
+    { icon: Clock,    label: 'History',        path: '/history',    color: 'from-orange-500 to-yellow-500' },
   ];
 
   return (
@@ -133,10 +146,10 @@ export default function Dashboard() {
 
       <div className="flex-1 flex flex-col min-w-0">
 
-        {/* ── Top Navigation Bar ── */}
+        {/* ── Top Nav ── */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-black/20 backdrop-blur-sm sticky top-0 z-10">
           <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/10 w-72">
-            <Search size={16} className="text-gray-400 shrink-0" />
+            <Search size={15} className="text-gray-400 shrink-0" />
             <input
               type="text"
               placeholder="Search logs..."
@@ -147,19 +160,17 @@ export default function Dashboard() {
           </div>
 
           <div className="flex items-center gap-5">
-            {/* Refresh */}
             <button
               onClick={fetchBatteryLogs}
               disabled={loading}
-              title="Refresh data"
+              title="Refresh"
               className="text-gray-400 hover:text-cyan-400 transition disabled:opacity-50"
             >
-              <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
+              <RefreshCw size={17} className={loading ? 'animate-spin' : ''} />
             </button>
 
-            {/* Notification */}
             <div className="relative">
-              <Bell size={18} className="text-gray-400 cursor-pointer hover:text-cyan-400 transition" />
+              <Bell size={17} className="text-gray-400 cursor-pointer hover:text-cyan-400 transition" />
               {criticalCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[9px] font-bold flex items-center justify-center">
                   {criticalCount}
@@ -167,18 +178,14 @@ export default function Dashboard() {
               )}
             </div>
 
-            {/* User */}
-            <div className="flex items-center gap-2 border-l border-white/10 pl-5">
+            <div className="flex items-center gap-3 border-l border-white/10 pl-5">
               <div className="text-right hidden md:block">
-                <p className="text-sm font-semibold">{user?.name || 'User'}</p>
-                <p className="text-[10px] text-gray-500">{user?.email}</p>
+                <p className="text-sm font-semibold leading-tight">{user?.name || 'User'}</p>
+                <p className="text-[10px] text-gray-500 leading-tight">{user?.email}</p>
               </div>
-              <Link
-                to="/profile"
-                className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center text-black font-bold text-sm hover:opacity-80 transition"
-              >
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-emerald-500 flex items-center justify-center text-black font-bold text-sm cursor-pointer hover:opacity-80 transition">
                 {(user?.name?.[0] || user?.email?.[0] || 'U').toUpperCase()}
-              </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -186,40 +193,35 @@ export default function Dashboard() {
         {/* ── Main Content ── */}
         <div className="flex-1 p-6 lg:p-8 overflow-auto space-y-8">
 
-          {/* ── Welcome Header ── */}
-          <div className="flex items-start justify-between">
+          {/* Welcome */}
+          <div className="flex items-start justify-between flex-wrap gap-3">
             <div>
               <h1 className="text-3xl font-bold">
                 Hello, {user?.name || user?.email?.split('@')[0] || 'User'}!
                 <span className="ml-2">👋</span>
               </h1>
-              <p className="text-gray-400 text-sm mt-1">
-                Here's your EV battery health overview.
-              </p>
+              <p className="text-gray-400 text-sm mt-1">Here's your EV battery health overview.</p>
               {user?.role && (
                 <span className={`inline-block mt-3 px-3 py-1 rounded-full text-xs font-bold border
                   ${user.role === 'admin'    ? 'bg-red-500/15    text-red-400    border-red-500/25'    :
                     user.role === 'engineer' ? 'bg-blue-500/15   text-blue-400   border-blue-500/25'   :
-                    user.role === 'analyst'  ? 'bg-purple-500/15 text-purple-400 border-purple-500/25' :
                                                'bg-cyan-500/15   text-cyan-400   border-cyan-500/25'}`}>
                   {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
                 </span>
               )}
             </div>
             {lastUpdated && (
-              <p className="text-gray-600 text-xs mt-1">
+              <p className="text-gray-600 text-xs self-start mt-1">
                 Updated {getTimeAgo(lastUpdated)}
               </p>
             )}
           </div>
 
           {/* ── Loading / Error / Content ── */}
-          {loading ? (
-            <LoadingSkeleton />
-          ) : error ? (
+          {loading ? <LoadingSkeleton /> : error ? (
             <div className="flex flex-col items-center justify-center py-20 gap-4">
               <AlertTriangle size={48} className="text-red-400" />
-              <p className="text-red-400 font-semibold">{error}</p>
+              <p className="text-red-400 font-semibold text-sm">{error}</p>
               <button
                 onClick={fetchBatteryLogs}
                 className="px-5 py-2.5 bg-red-500/20 border border-red-500/30 text-red-400 rounded-xl hover:bg-red-500/30 transition text-sm"
@@ -236,14 +238,18 @@ export default function Dashboard() {
                   label="Total Predictions"
                   value={totalLogs}
                   sub="All time records"
-                  color={{ text: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' }}
+                  colorText="text-cyan-400"
+                  colorBg="bg-cyan-500/10"
+                  colorBorder="border-cyan-500/20"
                 />
                 <StatCard
                   icon={Battery}
                   label="Avg SOH"
                   value={avgSoh !== null ? `${avgSoh}%` : '—'}
                   sub="State of Health"
-                  color={{ text: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' }}
+                  colorText="text-green-400"
+                  colorBg="bg-green-500/10"
+                  colorBorder="border-green-500/20"
                   trend={avgSoh !== null ? (avgSoh >= 80 ? 2 : -3) : undefined}
                 />
                 <StatCard
@@ -251,30 +257,31 @@ export default function Dashboard() {
                   label="Avg RUL"
                   value={avgRul !== null ? `${avgRul}` : '—'}
                   sub="Remaining cycles"
-                  color={{ text: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' }}
+                  colorText="text-purple-400"
+                  colorBg="bg-purple-500/10"
+                  colorBorder="border-purple-500/20"
                 />
                 <StatCard
                   icon={AlertTriangle}
                   label="Critical Alerts"
                   value={criticalCount}
-                  sub={`${healthyCount} healthy batteries`}
-                  color={{ text: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/20' }}
+                  sub={`${healthyCount} healthy · ${moderateCount} moderate`}
+                  colorText="text-red-400"
+                  colorBg="bg-red-500/10"
+                  colorBorder="border-red-500/20"
                 />
               </div>
 
               {/* ── Middle Section ── */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                {/* Recent Prediction Logs */}
+                {/* Recent Logs */}
                 <div className="lg:col-span-2 bg-white/[0.03] border border-white/10 rounded-2xl overflow-hidden">
                   <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
-                    <h3 className="font-semibold flex items-center gap-2">
-                      <Clock size={16} className="text-cyan-400" /> Recent Predictions
+                    <h3 className="font-semibold text-sm flex items-center gap-2">
+                      <Clock size={15} className="text-cyan-400" /> Recent Predictions
                     </h3>
-                    <Link
-                      to="/history"
-                      className="text-cyan-400 text-xs hover:underline flex items-center gap-1"
-                    >
+                    <Link to="/history" className="text-cyan-400 text-xs hover:underline flex items-center gap-1">
                       View all <ChevronRight size={13} />
                     </Link>
                   </div>
@@ -297,46 +304,62 @@ export default function Dashboard() {
                   ) : (
                     <div className="divide-y divide-white/5">
                       {filteredLogs.map((log, i) => {
-                        const soh    = log.soh_predicted ?? 0;
+                        // ✅ Correct field names from reports table
+                        const soh    = parseFloat(log.soh_predicted) || 0;
+                        const rul    = parseFloat(log.rul_predicted)  || null;
                         const status = getHealthStatus(soh);
+
                         return (
                           <div
                             key={log.id ?? i}
                             className="flex items-center gap-4 px-6 py-4 hover:bg-white/5 transition cursor-pointer"
                             onClick={() => navigate('/reports')}
                           >
-                            {/* Status dot */}
                             <div className={`w-2 h-2 rounded-full shrink-0 ${status.dot}`} />
 
-                            {/* Battery ID */}
                             <div className="flex-1 min-w-0">
+                              {/* ✅ report_name field */}
                               <p className="text-sm font-semibold text-white truncate">
                                 {log.report_name || log.battery_id || `Log #${i + 1}`}
                               </p>
-                              <p className="text-xs text-gray-500 mt-0.5">
-                                {log.report_type || 'Unknown model'} • {getTimeAgo(log.created_at)}
-                              </p>
+                              <div className="flex items-center gap-2 mt-0.5 flex-wrap">
+                                {/* ✅ report_type field */}
+                                {log.report_type && (
+                                  <span className="text-[10px] text-gray-500 bg-white/5 px-2 py-0.5 rounded-full">
+                                    {log.report_type.replace(/_/g, ' ')}
+                                  </span>
+                                )}
+                                {/* ✅ battery_id field */}
+                                {log.battery_id && (
+                                  <span className="text-[10px] text-cyan-600">
+                                    {log.battery_id}
+                                  </span>
+                                )}
+                                <span className="text-[10px] text-gray-500">
+                                  {getTimeAgo(log.created_at)}
+                                </span>
+                              </div>
                             </div>
 
-                            {/* SOH */}
+                            {/* ✅ soh_predicted field */}
                             <div className="text-right shrink-0">
                               <p className={`text-sm font-bold ${status.color}`}>
-                                {soh.toFixed(1)}%
+                                {soh > 0 ? `${soh.toFixed(1)}%` : '—'}
                               </p>
                               <p className="text-[10px] text-gray-500">SOH</p>
                             </div>
 
-                            {/* RUL */}
+                            {/* ✅ rul_predicted field */}
                             <div className="text-right shrink-0 w-16">
                               <p className="text-sm font-bold text-cyan-400">
-                                {(log.rul_predicted ?? 0).toFixed(0)}
+                                {rul !== null ? Math.round(rul) : '—'}
                               </p>
-                              <p className="text-[10px] text-gray-500">RUL cyc</p>
+                              <p className="text-[10px] text-gray-500">RUL</p>
                             </div>
 
-                            {/* Status badge */}
+                            {/* ✅ health_status field */}
                             <span className={`hidden md:inline-block px-2.5 py-1 rounded-full text-[10px] font-bold border shrink-0 ${status.bg} ${status.color} ${status.border}`}>
-                              {status.label}
+                              {log.health_status || status.label}
                             </span>
                           </div>
                         );
@@ -348,30 +371,29 @@ export default function Dashboard() {
                 {/* Right Column */}
                 <div className="space-y-4">
 
-                  {/* Battery Health Summary */}
+                  {/* Health Summary */}
                   <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5">
                     <h3 className="font-semibold text-sm mb-4 flex items-center gap-2">
                       <Battery size={15} className="text-cyan-400" /> Health Summary
                     </h3>
-
                     {totalLogs === 0 ? (
                       <p className="text-gray-500 text-xs text-center py-4">No data available</p>
                     ) : (
                       <div className="space-y-3">
                         {[
-                          { label: 'Healthy',  count: healthyCount,                              color: 'bg-green-400'  },
-                          { label: 'Moderate', count: batteryLogs.filter(l => { const s = l.soh_predicted ?? 100; return s >= 75 && s < 90; }).length, color: 'bg-yellow-400' },
-                          { label: 'Critical', count: criticalCount,                             color: 'bg-red-400'    },
+                          { label: 'Healthy',  count: healthyCount,  color: 'bg-green-400'  },
+                          { label: 'Moderate', count: moderateCount, color: 'bg-yellow-400' },
+                          { label: 'Critical', count: criticalCount, color: 'bg-red-400'    },
                         ].map(({ label, count, color }) => (
                           <div key={label}>
-                            <div className="flex justify-between text-xs mb-1">
+                            <div className="flex justify-between text-xs mb-1.5">
                               <span className="text-gray-400">{label}</span>
                               <span className="text-white font-bold">{count}</span>
                             </div>
                             <div className="w-full bg-white/5 rounded-full h-1.5">
                               <div
                                 className={`h-1.5 rounded-full ${color} transition-all duration-700`}
-                                style={{ width: totalLogs > 0 ? `${(count / totalLogs) * 100}%` : '0%' }}
+                                style={{ width: `${(count / totalLogs) * 100}%` }}
                               />
                             </div>
                           </div>
@@ -385,15 +407,15 @@ export default function Dashboard() {
 
                   {/* Dataset Info */}
                   <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-5">
-                    <h3 className="font-semibold text-sm mb-4 flex items-center gap-2">
+                    <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
                       <ThermometerSun size={15} className="text-cyan-400" /> Dataset Info
                     </h3>
-                    <div className="space-y-2.5">
+                    <div className="space-y-2">
                       {[
-                        { label: 'Dataset',   value: 'NASA CALCE' },
-                        { label: 'Batteries', value: 'B0005-B0018' },
-                        { label: 'Max Cycles',value: '~168' },
-                        { label: 'Capacity',  value: '2.0 Ah' },
+                        { label: 'Dataset',    value: 'NASA CALCE'  },
+                        { label: 'Batteries',  value: 'B0005-B0018' },
+                        { label: 'Max Cycles', value: '~168'        },
+                        { label: 'Capacity',   value: '2.0 Ah'      },
                       ].map(({ label, value }) => (
                         <div key={label} className="flex justify-between text-xs">
                           <span className="text-gray-500">{label}</span>
@@ -402,7 +424,7 @@ export default function Dashboard() {
                       ))}
                     </div>
                     <p className="text-gray-600 text-[10px] mt-3 leading-relaxed">
-                      For research purposes only. NASA lab scale.
+                      Research purposes only. NASA lab scale.
                     </p>
                   </div>
                 </div>
@@ -410,7 +432,7 @@ export default function Dashboard() {
 
               {/* ── Quick Actions ── */}
               <div>
-                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">
+                <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">
                   Quick Actions
                 </h3>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -451,7 +473,6 @@ export default function Dashboard() {
                   </Link>
                 </div>
               )}
-
             </>
           )}
         </div>
