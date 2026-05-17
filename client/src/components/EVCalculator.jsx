@@ -28,7 +28,7 @@ const EVCalculator = () => {
     const chargingTime = (capacity / charger).toFixed(2);
 
     return (
-        <div className="flex flex-col items-center justify-center p-6 bg-[#050816] min-h-[80vh] font-sans selection:bg-cyan-500/30 text-white relative overflow-hidden">
+        <div className="pt-30 flex flex-col items-center justify-center p-6 bg-[#050816] min-h-[80vh] font-sans selection:bg-cyan-500/30 text-white relative overflow-hidden">
 
             {/* Background Glow Effects */}
             <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-cyan-600/10 blur-[120px] rounded-full pointer-events-none" />

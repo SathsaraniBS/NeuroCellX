@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { LayoutDashboard, LineChart, History, FileText, Settings, Moon, LogOut, ExternalLink } from "lucide-react";
 const Sidebar = () => {
   // const [active, setActive] = useState("Dashboard");
-  const [darkMode, setDarkMode] = useState(true);
+  // const [darkMode, setDarkMode] = useState(true);
   const { user, logout } = useAuth();  
   const navigate         = useNavigate(); 
   const location         = useLocation(); 
@@ -97,7 +97,7 @@ const Sidebar = () => {
         {/* Divider */}
         <div className="border-t border-white/10 my-8"></div>
 
-        {/* Dark Mode Toggle */}
+        {/* Dark Mode Toggle
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-3 text-gray-300">
             <Moon size={20} />
@@ -114,7 +114,7 @@ const Sidebar = () => {
               ${darkMode ? "translate-x-7" : "translate-x-0"}`}
             ></div>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Bottom Section */}

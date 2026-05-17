@@ -330,5 +330,8 @@ export default function Prediction() {
         </div>
       )}
     </div>
+    
+
   );
 }
+

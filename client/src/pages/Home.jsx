@@ -484,7 +484,7 @@ export default function HomePage() {
                         {evSlide < evData.length - visibleEVs && (
                             <button
                                 onClick={nextEV}
-                                className="absolute -right-5 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-[#071124]/80 backdrop-blur-sm text-white hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 z-10"
+                                className="absolute -right-5 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-white/20  backdrop-blur-sm text-white hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 z-10"
                             >
                                 <ChevronRight className="h-5 w-5" />
                             </button>

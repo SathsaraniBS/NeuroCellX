@@ -1,740 +1,607 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import {Zap,Car,MapPin,CreditCard,HeadphonesIcon,BatteryCharging,    BookOpen,ArrowRight,ChevronLeft,ChevronRight,Star,Leaf,DollarSign,
-Gauge,Wifi,ShieldCheck,Newspaper,Bell,Mail,Calendar,CheckCircle2,TrendingUp,Globe,ChevronDown} from "lucide-react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import React, { useState } from 'react';
+import {
+  Brain, Zap, Thermometer, Battery, RefreshCw,
+  ChevronDown, ChevronUp, CheckCircle, AlertTriangle,
+  Database, Cpu, TrendingUp, Activity, BarChart2, Info,
+  ArrowRight,
+} from 'lucide-react';
 
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 /* ─────────────────────────────────────────
-   DATA
+   DATA  (unchanged — same as original)
 ───────────────────────────────────────── */
-const TRUST_BADGES = [
-  { icon: Zap,        label: "100% EV Focused",   sub: "Trusted Information" },
-  { icon: Newspaper,  label: "Up-to-date",         sub: "EV Market & News" },
-  { icon: BookOpen,   label: "Expert Guides",      sub: "For Every Buyer" },
-  { icon: ShieldCheck,label: "Secure & Reliable",  sub: "Your Data, Our Priority" },
+const STATS = [
+  { label: 'ML Models',      value: '5',       icon: Brain,     color: 'text-cyan-300',   border: 'border-cyan-400/25',   bg: 'bg-cyan-400/10',   glow: 'shadow-[0_0_30px_rgba(34,211,238,0.12)]' },
+  { label: 'Predictions',    value: 'SOH+RUL', icon: TrendingUp, color: 'text-emerald-300', border: 'border-emerald-400/25', bg: 'bg-emerald-400/10', glow: 'shadow-[0_0_30px_rgba(52,211,153,0.12)]' },
+  { label: 'Input Features', value: '5',       icon: Activity,  color: 'text-violet-300', border: 'border-violet-400/25', bg: 'bg-violet-400/10', glow: 'shadow-[0_0_30px_rgba(167,139,250,0.12)]' },
+  { label: 'Dataset',        value: 'NASA',    icon: Database,  color: 'text-orange-300', border: 'border-orange-400/25', bg: 'bg-orange-400/10', glow: 'shadow-[0_0_30px_rgba(251,146,60,0.12)]' },
 ];
 
-const EXPLORE_CARDS = [
-  {
-    icon: Car,
-    title: "Explore EVs",
-    desc: "Compare EV models, specs, range, and prices.",
-    path: "/ev-types",
-    color: "text-cyan-300",
-    border: "border-cyan-400/25",
-    bg: "bg-cyan-400/10",
-    glow: "hover:shadow-[0_0_35px_rgba(34,211,238,0.15)]",
-  },
-  {
-    icon: MapPin,
-    title: "Charging & Map",
-    desc: "Find charging stations near you. Plan your trip.",
-    path: "/charging",
-    color: "text-emerald-300",
-    border: "border-emerald-400/25",
-    bg: "bg-emerald-400/10",
-    glow: "hover:shadow-[0_0_35px_rgba(52,211,153,0.15)]",
-  },
-  {
-    icon: CreditCard,
-    title: "EV Financing",
-    desc: "EMI calculator, loan options, and exclusive offers.",
-    path: "/financing",
-    color: "text-violet-300",
-    border: "border-violet-400/25",
-    bg: "bg-violet-400/10",
-    glow: "hover:shadow-[0_0_35px_rgba(167,139,250,0.15)]",
-  },
-  {
-    icon: HeadphonesIcon,
-    title: "Support & Help",
-    desc: "FAQs, service booking, roadside assistance.",
-    path: "/support",
-    color: "text-orange-300",
-    border: "border-orange-400/25",
-    bg: "bg-orange-400/10",
-    glow: "hover:shadow-[0_0_35px_rgba(251,146,60,0.15)]",
-  },
-  {
-    icon: BatteryCharging,
-    title: "EV Battery Basics",
-    desc: "Understand batteries, chemistry, safety & more.",
-    path: "/battery-basics",
-    color: "text-blue-300",
-    border: "border-blue-400/25",
-    bg: "bg-blue-400/10",
-    glow: "hover:shadow-[0_0_35px_rgba(147,197,253,0.15)]",
-  },
-  {
-    icon: BookOpen,
-    title: "EV Buying Guide",
-    desc: "Tips, checklists, and advice for first-time buyers.",
-    path: "/buying-guide",
-    color: "text-pink-300",
-    border: "border-pink-400/25",
-    bg: "bg-pink-400/10",
-    glow: "hover:shadow-[0_0_35px_rgba(249,168,212,0.15)]",
-  },
+const INPUT_FEATURES = [
+  { icon: Battery,     label: 'Capacity',    unit: 'Ah',  desc: 'Current battery capacity',          range: '0 – 2.0 Ah' },
+  { icon: Zap,         label: 'Voltage',     unit: 'V',   desc: 'Terminal voltage of battery',       range: '3.4 – 4.2 V' },
+  { icon: Activity,    label: 'Current',     unit: 'A',   desc: 'Charge / discharge current',        range: '0 – 2.0 A' },
+  { icon: Thermometer, label: 'Temperature', unit: '°C',  desc: 'Battery cell temperature',          range: '20 – 45 °C' },
+  { icon: RefreshCw,   label: 'Cycle Count', unit: '',    desc: 'Number of charge-discharge cycles', range: '0 – 168' },
 ];
 
-const TRENDING_EVS = [
+const MODELS = [
   {
-    brand: "Tata",
-    model: "Nexon EV",
-    badge: "Popular",
-    badgeColor: "bg-emerald-500/20 border-emerald-400/40 text-emerald-300",
-    image: "/src/assets/nexon.png",
-    range: "465 km",
-    rangeLabel: "Range (ARAI)",
-    battery: "40.5 kWh",
-    price: "₹14.49 – 19.29 Lakh",
-    path: "/ev/nexon-ev",
+    key: 'random_forest', icon: '🌲', name: 'Random Forest', badge: 'Ensemble',
+    badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30',
+    cardBorder: 'border-emerald-400/20', accentColor: 'text-emerald-300',
+    barColor: 'bg-emerald-400', barGlow: 'shadow-[0_0_8px_rgba(52,211,153,0.6)]',
+    headerGlow: 'shadow-[0_0_35px_rgba(52,211,153,0.10)]',
+    accuracy: 92, speed: 90, status: 'active',
+    library: 'scikit-learn', inputShape: '2D (1×5)', outputType: 'Numeric',
+    description: 'An ensemble method that builds multiple decision trees during training and outputs the mean prediction. Each tree is trained on a random subset of data and features, reducing overfitting and improving generalization.',
+    howItWorks: ['Splits training data into random subsets', 'Builds 100+ independent decision trees', 'Each tree votes on the prediction', 'Final output = average of all tree votes'],
+    strengths: ['High accuracy', 'Stable predictions', 'Fast inference', 'Handles non-linear patterns'],
+    limitations: ['RUL scaling variation', 'Less interpretable', 'Memory intensive'],
+    sohRange: '61% – 95%', rulRange: '6 – 76 cycles', note: null,
   },
   {
-    brand: "MG",
-    model: "ZS EV",
-    badge: "Popular",
-    badgeColor: "bg-emerald-500/20 border-emerald-400/40 text-emerald-300",
-    image: "/src/assets/zs.png",
-    range: "461 km",
-    rangeLabel: "Range (ARAI)",
-    battery: "50.3 kWh",
-    price: "₹18.98 – 24.98 Lakh",
-    path: "/ev/mg-zs-ev",
+    key: 'svr', icon: '📐', name: 'SVR (Support Vector Regression)', badge: 'Kernel-based',
+    badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-400/30',
+    cardBorder: 'border-blue-400/20', accentColor: 'text-blue-300',
+    barColor: 'bg-blue-400', barGlow: 'shadow-[0_0_8px_rgba(96,165,250,0.6)]',
+    headerGlow: 'shadow-[0_0_35px_rgba(96,165,250,0.10)]',
+    accuracy: 55, speed: 85, status: 'limited',
+    library: 'scikit-learn', inputShape: '2D scaled (1×5)', outputType: 'Numeric',
+    description: 'Support Vector Regression maps input features into a high-dimensional space using a kernel function and finds the best-fit hyperplane. Effective for small datasets but sensitive to feature scaling.',
+    howItWorks: ['Scales input features using MinMaxScaler', 'Maps features to high-dimensional space via RBF kernel', 'Finds optimal regression hyperplane', 'Predictions based on support vectors near the boundary'],
+    strengths: ['Works on small datasets', 'Robust to outliers', 'Effective with scaling'],
+    limitations: ['All inputs give same output ⚠️', 'Limited generalization', 'Needs retraining'],
+    sohRange: '84.61% (fixed)', rulRange: '37 cycles (fixed)',
+    note: '⚠️ Model outputs identical predictions for all inputs — retraining required for proper differentiation.',
   },
   {
-    brand: "BYD",
-    model: "Atto 3",
-    badge: "New",
-    badgeColor: "bg-cyan-500/20 border-cyan-400/40 text-cyan-300",
-    image: "/src/assets/atto3.png",
-    range: "521 km",
-    rangeLabel: "Range (WLTP)",
-    battery: "60.5 kWh",
-    price: "₹33.99 – 35.99 Lakh",
-    path: "/ev/byd-atto-3",
+    key: 'naive_bayes', icon: '📊', name: 'Naive Bayes', badge: 'Probabilistic',
+    badgeColor: 'bg-yellow-500/20 text-yellow-300 border-yellow-400/30',
+    cardBorder: 'border-yellow-400/20', accentColor: 'text-yellow-300',
+    barColor: 'bg-yellow-400', barGlow: 'shadow-[0_0_8px_rgba(250,204,21,0.6)]',
+    headerGlow: 'shadow-[0_0_35px_rgba(250,204,21,0.08)]',
+    accuracy: 40, speed: 95, status: 'limited',
+    library: 'scikit-learn', inputShape: '2D raw (1×5)', outputType: 'Class Label',
+    description: 'A probabilistic classifier based on Bayes theorem with the "naive" assumption of feature independence. Predicts SOH and RUL as class labels (e.g., Poor, Fair, Good) rather than exact numeric values.',
+    howItWorks: ['Assumes all input features are independent', 'Calculates probability for each class label', 'SOH classes: Critical, Poor, Fair, Good, Excellent', 'RUL classes: End, Critical, Late, Mid, Early', 'Assigns label with highest probability'],
+    strengths: ['Extremely fast', 'Simple to understand', 'Works with small data'],
+    limitations: ['Always predicts "Poor"/"End" ⚠️', 'No scaler used', 'Class imbalance issue', 'Needs retraining'],
+    sohRange: '62% (Poor label)', rulRange: '5 cycles (End label)',
+    note: '⚠️ Model is biased — always predicts worst class with 100% confidence. Class-balanced retraining required.',
   },
   {
-    brand: "Hyundai",
-    model: "IONIQ 5",
-    badge: "Popular",
-    badgeColor: "bg-emerald-500/20 border-emerald-400/40 text-emerald-300",
-    image: "/src/assets/ioniq5.png",
-    range: "631 km",
-    rangeLabel: "Range (WLTP)",
-    battery: "72.6 kWh",
-    price: "₹44.95 – 46.05 Lakh",
-    path: "/ev/hyundai-ioniq5",
+    key: 'gru_randomforest', icon: '🔀', name: 'GRU + Random Forest Hybrid', badge: 'Hybrid Deep',
+    badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-400/30',
+    cardBorder: 'border-purple-400/20', accentColor: 'text-purple-300',
+    barColor: 'bg-purple-400', barGlow: 'shadow-[0_0_8px_rgba(192,132,252,0.6)]',
+    headerGlow: 'shadow-[0_0_35px_rgba(192,132,252,0.10)]',
+    accuracy: 88, speed: 70, status: 'active',
+    library: 'scikit-learn + TensorFlow', inputShape: 'RF: 2D (1×5)', outputType: 'Numeric',
+    description: 'A hybrid architecture combining Gated Recurrent Unit (GRU) temporal feature extraction with Random Forest regression. The GRU captures sequential battery degradation patterns while the RF provides robust final predictions.',
+    howItWorks: ['Scales input using MinMaxScaler', 'GRU extracts temporal degradation patterns', 'Random Forest uses GRU features for prediction', 'SOH output: direct numeric percentage', 'RUL output: normalized 0-1 range (scaled to cycles)'],
+    strengths: ['Captures time patterns', 'High SOH accuracy', 'Robust hybrid approach'],
+    limitations: ['RUL small for mid-life inputs', 'Complex architecture', 'Slower than pure ML'],
+    sohRange: '61% – 95%', rulRange: '9 – 134 cycles', note: null,
   },
   {
-    brand: "Kia",
-    model: "EV6",
-    badge: "Popular",
-    badgeColor: "bg-emerald-500/20 border-emerald-400/40 text-emerald-300",
-    image: "/src/assets/ev6.png",
-    range: "528 km",
-    rangeLabel: "Range (WLTP)",
-    battery: "77.4 kWh",
-    price: "₹60.97 – 65.97 Lakh",
-    path: "/ev/kia-ev6",
+    key: 'lstm_transformer', icon: '🤖', name: 'LSTM + Transformer', badge: 'Deep Learning',
+    badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-400/30',
+    cardBorder: 'border-cyan-400/20', accentColor: 'text-cyan-300',
+    barColor: 'bg-cyan-400', barGlow: 'shadow-[0_0_8px_rgba(34,211,238,0.6)]',
+    headerGlow: 'shadow-[0_0_35px_rgba(34,211,238,0.10)]',
+    accuracy: 82, speed: 55, status: 'active',
+    library: 'TensorFlow / Keras', inputShape: '3D (1×15×5)', outputType: 'Linear (scaled)',
+    description: 'A deep learning architecture combining Long Short-Term Memory (LSTM) networks with Transformer attention mechanisms. Designed to capture both sequential and global patterns in battery degradation sequences.',
+    howItWorks: ['Input reshaped to 3D sequence: (1, 15, 5)', 'LSTM captures sequential degradation over time', 'Transformer attention focuses on key features', 'SOH output is inverted linear (negated + mapped)', 'RUL output is linear (0-15 range → 5-160 cycles)'],
+    strengths: ['Captures complex patterns', 'Attention mechanism', 'Good SOH accuracy'],
+    limitations: ['Inverted SOH output (requires post-processing)', 'Slowest inference', 'Needs more data'],
+    sohRange: '61% – 90%', rulRange: '43 – 112 cycles',
+    note: '⚠️ SOH output is inverted by the model — backend applies calibration fix before displaying results.',
   },
 ];
 
-const WHY_EVS = [
-  {
-    icon: Leaf,
-    title: "Better for the Planet",
-    desc: "Zero tailpipe emissions. Cleaner air, greener future.",
-    color: "text-emerald-300",
-    border: "border-emerald-400/25",
-    bg: "bg-emerald-400/10",
-  },
-  {
-    icon: DollarSign,
-    title: "Lower Running Cost",
-    desc: "Electricity is cheaper than petrol. Less maintenance.",
-    color: "text-cyan-300",
-    border: "border-cyan-400/25",
-    bg: "bg-cyan-400/10",
-  },
-  {
-    icon: Gauge,
-    title: "Performance & Comfort",
-    desc: "Instant torque, smooth drive, quiet and refined.",
-    color: "text-violet-300",
-    border: "border-violet-400/25",
-    bg: "bg-violet-400/10",
-  },
-  {
-    icon: Wifi,
-    title: "Smart & Connected",
-    desc: "App control, OTA updates, smart features and more.",
-    color: "text-orange-300",
-    border: "border-orange-400/25",
-    bg: "bg-orange-400/10",
-  },
+const DATASET_INFO = [
+  { label: 'Dataset Name',  value: 'NASA CALCE Li-ion Battery Dataset' },
+  { label: 'Battery IDs',   value: 'B0005, B0006, B0007, B0018' },
+  { label: 'Battery Type',  value: '18650 Li-ion Cells' },
+  { label: 'Capacity',      value: '2.0 Ah (nominal)' },
+  { label: 'Voltage Range', value: '3.6V – 4.2V' },
+  { label: 'Max Cycles',    value: '~168 cycles' },
+  { label: 'Environment',   value: 'Controlled Laboratory' },
+  { label: 'Purpose',       value: 'Research / Proof of Concept' },
 ];
 
-const TESTIMONIALS = [
-  {
-    name: "Sameera",
-    role: "EV Owner",
-    stars: 5,
-    text: "VoltIQ helped me compare EVs easily and find the right one.",
-    color: "text-cyan-300",
-    border: "border-cyan-400/20",
-  },
-  {
-    name: "Nuwan",
-    role: "EV Enthusiast",
-    stars: 5,
-    text: "The charging map and trip planner are super helpful for long drives.",
-    color: "text-emerald-300",
-    border: "border-emerald-400/20",
-  },
-  {
-    name: "Dilshan",
-    role: "First-time EV Buyer",
-    stars: 5,
-    text: "Financing options and guides made my EV purchase simple.",
-    color: "text-violet-300",
-    border: "border-violet-400/20",
-  },
+const COMPARISON_ROWS = [
+  { icon:'🌲', name:'Random Forest',     type:'Ensemble',      soh:'High',    sohColor:'text-emerald-400', rul:'Good',    rulColor:'text-emerald-400', speed:'Fast',    speedColor:'text-cyan-400',   status:'active'  },
+  { icon:'📐', name:'SVR',               type:'Kernel SVM',    soh:'Fixed ⚠️', sohColor:'text-yellow-400', rul:'Fixed ⚠️',rulColor:'text-yellow-400', speed:'Fast',    speedColor:'text-cyan-400',   status:'limited' },
+  { icon:'📊', name:'Naive Bayes',       type:'Probabilistic', soh:'Biased ⚠️',sohColor:'text-red-400',    rul:'Biased ⚠️',rulColor:'text-red-400',   speed:'Fastest', speedColor:'text-emerald-400',status:'limited' },
+  { icon:'🔀', name:'GRU + RF Hybrid',   type:'Hybrid',        soh:'High',    sohColor:'text-emerald-400', rul:'Good',    rulColor:'text-emerald-400', speed:'Medium',  speedColor:'text-orange-400', status:'active'  },
+  { icon:'🤖', name:'LSTM + Transformer',type:'Deep Learning', soh:'Good',    sohColor:'text-cyan-400',    rul:'Good',    rulColor:'text-cyan-400',    speed:'Slow',    speedColor:'text-red-400',    status:'active'  },
 ];
 
 /* ─────────────────────────────────────────
    Sub-Components
 ───────────────────────────────────────── */
 const SectionLabel = ({ children }) => (
-  <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300/80 mb-4">{children}</p>
+  <p className="text-xs font-bold uppercase tracking-[0.3em] text-cyan-300/80 mb-3">{children}</p>
 );
 
-const StarRow = ({ count }) => (
-  <div className="flex gap-0.5">
-    {Array.from({ length: count }).map((_, i) => (
-      <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-    ))}
-  </div>
-);
+function StatusBadge({ status }) {
+  return status === 'active' ? (
+    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-400/25">
+      <CheckCircle size={11} /> Active
+    </span>
+  ) : (
+    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-yellow-500/15 text-yellow-300 border border-yellow-400/25">
+      <AlertTriangle size={11} /> Limited
+    </span>
+  );
+}
+
+function MiniBar({ value, barColor, barGlow, label }) {
+  return (
+    <div className="space-y-1.5">
+      <div className="flex justify-between text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+        <span>{label}</span>
+        <span className="text-slate-300">{value}%</span>
+      </div>
+      <div className="w-full bg-white/[0.06] rounded-full h-1.5">
+        <div
+          className={`h-1.5 rounded-full transition-all duration-1000 ${barColor} ${barGlow}`}
+          style={{ width: `${value}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function ModelCard({ model }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className={`relative overflow-hidden rounded-[1.75rem] border ${model.cardBorder} bg-[#071124]/70 backdrop-blur-xl ${model.headerGlow} transition-all duration-300 hover:bg-white/[0.05]`}>
+      {/* Top accent line */}
+      <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-current to-transparent opacity-40 ${model.accentColor}`} />
+
+      {/* Card Header */}
+      <div className="p-7">
+        {/* Title row */}
+        <div className="flex items-start justify-between mb-5">
+          <div className="flex items-center gap-4">
+            <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border ${model.cardBorder} bg-white/[0.04] text-2xl`}>
+              {model.icon}
+            </div>
+            <div>
+              <h3 className={`text-lg font-black tracking-tight ${model.accentColor}`}>{model.name}</h3>
+              <span className={`inline-flex items-center mt-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${model.badgeColor}`}>
+                {model.badge}
+              </span>
+            </div>
+          </div>
+          <StatusBadge status={model.status} />
+        </div>
+
+        <p className="text-slate-400 text-sm leading-relaxed mb-6">{model.description}</p>
+
+        {/* Warning Note */}
+        {model.note && (
+          <div className="flex items-start gap-3 rounded-2xl border border-yellow-400/25 bg-yellow-400/8 p-4 mb-6">
+            <AlertTriangle size={14} className="text-yellow-300 mt-0.5 shrink-0" />
+            <p className="text-yellow-200/80 text-xs leading-relaxed">{model.note}</p>
+          </div>
+        )}
+
+        {/* Quick stats chips */}
+        <div className="grid grid-cols-3 gap-3 mb-6">
+          {[
+            { label: 'Library',     value: model.library },
+            { label: 'Input Shape', value: model.inputShape },
+            { label: 'Output',      value: model.outputType },
+          ].map((s) => (
+            <div key={s.label} className={`rounded-xl border ${model.cardBorder} bg-white/[0.04] p-3 text-center`}>
+              <p className="text-slate-500 text-[9px] uppercase font-bold tracking-wider mb-1">{s.label}</p>
+              <p className="text-white text-xs font-bold leading-snug">{s.value}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Progress bars */}
+        <div className="space-y-3 mb-6">
+          <MiniBar value={model.accuracy} barColor={model.barColor} barGlow={model.barGlow} label="Accuracy" />
+          <MiniBar value={model.speed}    barColor={model.barColor} barGlow={model.barGlow} label="Speed" />
+        </div>
+
+        {/* SOH / RUL range chips */}
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { label: 'SOH Range', value: model.sohRange },
+            { label: 'RUL Range', value: model.rulRange },
+          ].map((r) => (
+            <div key={r.label} className={`rounded-xl border ${model.cardBorder} bg-white/[0.04] p-4 text-center`}>
+              <p className="text-slate-500 text-[9px] uppercase font-bold tracking-wider mb-1">{r.label}</p>
+              <p className={`text-sm font-black ${model.accentColor}`}>{r.value}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Toggle button */}
+      <button
+        onClick={() => setOpen(!open)}
+        className={`w-full px-7 py-4 border-t border-white/[0.07] flex items-center justify-between text-slate-400 hover:text-white hover:bg-white/[0.04] transition-all text-sm font-semibold`}
+      >
+        <span>{open ? 'Hide Details' : 'Show Details'}</span>
+        {open ? <ChevronUp size={16} className={model.accentColor} /> : <ChevronDown size={16} className={model.accentColor} />}
+      </button>
+
+      {/* Expanded details */}
+      {open && (
+        <div className="px-7 pb-7 space-y-6 border-t border-white/[0.07] pt-6">
+          {/* How it works */}
+          <div>
+            <SectionLabel>How It Works</SectionLabel>
+            <ol className="space-y-3">
+              {model.howItWorks.map((step, i) => (
+                <li key={i} className="flex items-start gap-3 text-sm text-slate-300">
+                  <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${model.barColor} text-[#050816] text-[10px] font-black mt-0.5`}>
+                    {i + 1}
+                  </span>
+                  {step}
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* Strengths & Limitations */}
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-emerald-300/80 mb-3">Strengths</p>
+              <ul className="space-y-2">
+                {model.strengths.map((s) => (
+                  <li key={s} className="flex items-start gap-2 text-xs text-slate-400">
+                    <CheckCircle size={12} className="text-emerald-400 mt-0.5 shrink-0" />
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-red-300/80 mb-3">Limitations</p>
+              <ul className="space-y-2">
+                {model.limitations.map((l) => (
+                  <li key={l} className="flex items-start gap-2 text-xs text-slate-400">
+                    <AlertTriangle size={12} className="text-red-400 mt-0.5 shrink-0" />
+                    {l}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ─────────────────────────────────────────
    Main Page
 ───────────────────────────────────────── */
-export default function HomePage() {
-  const [evSlide, setEvSlide] = useState(0);
-  const [testimonialSlide, setTestimonialSlide] = useState(0);
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-  const [evData, setEvData] = useState(TRENDING_EVS);
-  const visibleEVs = 4;
-
-  // FastAPI fetch (with graceful fallback)
-  useEffect(() => {
-    const fetchEVs = async () => {
-      try {
-        const base = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-        const res = await fetch(`${base}/api/trending-evs`);
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.length) setEvData(data);
-        }
-      } catch {
-        // silently use fallback data
-      }
-    };
-    fetchEVs();
-  }, []);
-
-  const nextEV = () => setEvSlide(p => Math.min(p + 1, evData.length - visibleEVs));
-  const prevEV = () => setEvSlide(p => Math.max(p - 1, 0));
-  const nextTestimonial = () => setTestimonialSlide(p => (p + 1) % TESTIMONIALS.length);
-  const prevTestimonial = () => setTestimonialSlide(p => (p - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
-
-  const handleSubscribe = async () => {
-    if (!email) return;
-    try {
-      const base = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-      await fetch(`${base}/api/newsletter`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-    } catch { }
-    setSubscribed(true);
-    setEmail("");
-  };
-
+export default function ModelsPrediction() {
   return (
-    <div className="min-h-screen bg-[#050816] text-white flex flex-col font-sans selection:bg-cyan-500/30">
+    <div className="min-h-screen bg-[#050816] text-white font-sans selection:bg-cyan-500/30">
       <Navbar />
 
-      <main className="overflow-hidden">
+      {/* ── Page shell (assumes sidebar is rendered by parent layout) ── */}
+      <div className="pt-40 max-w-[1400px] mx-auto overflow-auto">
 
-        {/* ── HERO ── */}
-        <section className="relative min-h-screen w-full overflow-hidden flex items-center">
-          {/* BG image */}
-          <div className="absolute inset-0">
-            <img
-              src="/src/assets/ev3.png"
-              alt="Electric Vehicle"
-              className="w-full h-full object-cover scale-105 animate-slow-zoom"
-              onError={e => {
-                e.target.src = "https://images.unsplash.com/photo-1593941707882-a5bba14938cb?q=80&w=2072&auto=format&fit=crop";
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/50 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
-          </div>
+        {/* ── Page Header ── */}
+        <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-[#071124]/70 backdrop-blur-xl p-8 mb-8 shadow-[0_0_60px_rgba(34,211,238,0.10)]">
+          {/* accent lines */}
+          <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent" />
+          <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_5%_50%,rgba(34,211,238,0.07),transparent_40%),radial-gradient(circle_at_95%_50%,rgba(52,211,153,0.05),transparent_40%)]" />
 
-          {/* Ambient glows */}
-          <div className="pointer-events-none absolute left-0 top-1/4 h-96 w-96 rounded-full bg-cyan-500/10 blur-[130px]" />
-          <div className="pointer-events-none absolute right-0 bottom-1/4 h-96 w-96 rounded-full bg-emerald-400/10 blur-[130px]" />
-
-          <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-24 w-full">
-            <div className="max-w-3xl space-y-7">
-              <SectionLabel>Welcome to VoltIQ</SectionLabel>
-
-              <h1 className="text-5xl md:text-7xl font-black leading-tight tracking-tighter">
-                Explore the World of
-                <br />
+          <div className="relative flex items-center gap-5">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/30 bg-cyan-400/15">
+              <Brain size={28} className="text-cyan-300" />
+            </div>
+            <div>
+              <SectionLabel>VoltIQ AI Engine</SectionLabel>
+              <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">
+                ML Models{' '}
                 <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
-                  Electric Vehicles.
+                  Overview
                 </span>
               </h1>
-
-              <p className="text-xl text-slate-300 leading-relaxed max-w-xl">
-                Discover EVs, charging, financing, and support in one place.
+              <p className="text-slate-400 text-sm mt-1">
+                5 machine learning models used for SOH &amp; RUL prediction of EV batteries
               </p>
+            </div>
+          </div>
+        </div>
 
-              {/* CTAs */}
-              <div className="flex flex-wrap gap-4 pt-2">
-                <Link
-                  to="/book-test-drive"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 font-bold text-base hover:bg-cyan-500/30 hover:border-cyan-400/70 hover:shadow-[0_0_28px_rgba(34,211,238,0.30)] transition-all duration-300 backdrop-blur-sm"
-                >
-                  <Calendar className="w-5 h-5" />
-                  Book a Test Drive
-                </Link>
-                <Link
-                  to="/ev-types"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/[0.07] border border-white/20 text-white font-bold text-base hover:bg-white/[0.12] hover:border-white/30 transition-all duration-300 backdrop-blur-sm"
-                >
-                  <Car className="w-5 h-5" />
-                  Explore EVs
-                </Link>
+        {/* ── Overview Stats ── */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+          {STATS.map(({ label, value, icon: Icon, color, border, bg, glow }) => (
+            <div
+              key={label}
+              className={`relative overflow-hidden rounded-[1.75rem] border ${border} bg-[#071124]/60 backdrop-blur-xl p-6 flex items-center gap-4 ${glow} transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.06]`}
+            >
+              <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-current to-transparent opacity-30 ${color}`} />
+              <div className={`flex h-13 w-13 shrink-0 items-center justify-center rounded-2xl border ${border} ${bg} ${color} h-12 w-12`}>
+                <Icon size={20} />
               </div>
-            </div>
-          </div>
-
-          {/* Scroll cue */}
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
-            <div className="w-px h-12 bg-gradient-to-b from-transparent to-cyan-400" />
-            <ChevronRight className="w-4 h-4 text-cyan-400 rotate-90" />
-          </div>
-        </section>
-
-        {/* ── TRUST BADGES ── */}
-        <section className="border-y border-white/10 bg-[#071124]/60 backdrop-blur-sm py-8">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {TRUST_BADGES.map((b) => {
-                const Icon = b.icon;
-                return (
-                  <div key={b.label} className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
-                      <Icon className="h-5 w-5 text-cyan-300" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-sm text-white">{b.label}</p>
-                      <p className="text-slate-500 text-xs">{b.sub}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* ── START EXPLORING ── */}
-        <section className="py-20 max-w-7xl mx-auto px-6 relative">
-          <div className="pointer-events-none absolute left-0 top-0 h-80 w-80 rounded-full bg-cyan-500/6 blur-[120px]" />
-          <div className="pointer-events-none absolute right-0 bottom-0 h-80 w-80 rounded-full bg-emerald-400/6 blur-[120px]" />
-
-          <div className="mb-12">
-            <SectionLabel>Navigation</SectionLabel>
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
-              Start{" "}
-              <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
-                Exploring
-              </span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {EXPLORE_CARDS.map((card) => {
-              const Icon = card.icon;
-              return (
-                <Link
-                  key={card.title}
-                  to={card.path}
-                  className={`group flex items-start gap-5 rounded-[2rem] border ${card.border} bg-[#071124]/60 backdrop-blur-xl p-7 transition-all duration-300 hover:-translate-y-2 hover:bg-white/[0.07] ${card.glow}`}
-                >
-                  {/* Top accent line */}
-                  <div className={`absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-current to-transparent opacity-20 ${card.color}`} />
-
-                  <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border ${card.border} ${card.bg} ${card.color}`}>
-                    <Icon className="h-7 w-7" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className={`font-black text-base uppercase mb-2 ${card.color}`}>{card.title}</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed mb-4">{card.desc}</p>
-                    <span className={`inline-flex items-center gap-1 text-xs font-bold ${card.color} group-hover:gap-2 transition-all`}>
-                      Explore <ArrowRight className="h-3 w-3" />
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* ── TRENDING EVS CAROUSEL ── */}
-        <section className="py-16 relative">
-          <div className="pointer-events-none absolute right-0 top-0 h-96 w-96 rounded-full bg-violet-500/6 blur-[130px]" />
-
-          <div className="max-w-7xl mx-auto px-6">
-            {/* Header row */}
-            <div className="flex items-end justify-between mb-10">
               <div>
-                <SectionLabel>Hot Right Now</SectionLabel>
-                <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
-                  Trending{" "}
-                  <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
-                    EVs
-                  </span>
-                </h2>
+                <p className="text-2xl font-black text-white">{value}</p>
+                <p className="text-slate-500 text-xs mt-0.5 font-semibold uppercase tracking-wider">{label}</p>
               </div>
-              <Link
-                to="/ev-types"
-                className="inline-flex items-center gap-2 text-sm font-bold text-cyan-300 hover:text-cyan-100 transition-colors"
-              >
-                View all EVs <ArrowRight className="h-4 w-4" />
-              </Link>
             </div>
+          ))}
+        </div>
 
-            {/* Cards + arrows */}
-            <div className="relative">
-              <div className="overflow-hidden">
+        {/* ── Input Features + Output Metrics ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+          {/* Input Features */}
+          <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-[#071124]/60 backdrop-blur-xl p-7 shadow-[0_0_40px_rgba(34,211,238,0.08)]">
+            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/50 to-transparent" />
+
+            <div className="flex items-center gap-3 mb-1">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
+                <Activity size={16} className="text-cyan-300" />
+              </div>
+              <div>
+                <SectionLabel>Sensors</SectionLabel>
+                <h2 className="text-lg font-black uppercase tracking-tight text-white -mt-2">Input Features</h2>
+              </div>
+            </div>
+            <p className="text-slate-500 text-xs mb-6 pl-12">5 sensor parameters used by all models</p>
+
+            <div className="flex flex-col gap-3">
+              {INPUT_FEATURES.map(({ icon: Icon, label, unit, desc, range }) => (
                 <div
-                  className="flex gap-5 transition-transform duration-500 ease-in-out"
-                  style={{ transform: `translateX(calc(-${evSlide * (100 / visibleEVs)}% - ${evSlide * 20 / visibleEVs}px))` }}
+                  key={label}
+                  className="flex items-center gap-4 rounded-2xl border border-white/[0.07] bg-white/[0.04] p-4 hover:border-cyan-400/25 hover:bg-white/[0.07] transition-all duration-300"
                 >
-                  {evData.map((ev, i) => (
-                    <div
-                      key={i}
-                      className="flex-shrink-0 w-[calc(25%-15px)] min-w-[240px] rounded-[2rem] border border-white/10 bg-[#071124]/70 backdrop-blur-xl overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-cyan-400/30 hover:shadow-[0_0_40px_rgba(34,211,238,0.12)]"
-                    >
-                      {/* Image */}
-                      <div className="relative overflow-hidden h-44 bg-gradient-to-br from-white/5 to-white/[0.02]">
-                        <div className="absolute top-3 left-3 flex gap-2 z-10">
-                          <span className="text-xs font-bold text-slate-400">{ev.brand}</span>
-                        </div>
-                        <span className={`absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold border ${ev.badgeColor}`}>
-                          {ev.badge}
-                        </span>
-                        <img
-                          src={ev.image}
-                          alt={ev.model}
-                          className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
-                          onError={e => {
-                            e.target.src = "https://images.unsplash.com/photo-1593941707882-a5bba14938cb?q=80&w=400&auto=format&fit=crop";
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#071124] via-transparent to-transparent" />
-                      </div>
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
+                    <Icon size={15} className="text-cyan-300" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-sm font-black text-white">{label}</span>
+                      {unit && <span className="text-[10px] text-slate-500">({unit})</span>}
+                    </div>
+                    <p className="text-xs text-slate-500 truncate">{desc}</p>
+                  </div>
+                  <span className="text-[10px] text-cyan-300 font-mono font-bold bg-cyan-500/10 border border-cyan-400/20 px-3 py-1.5 rounded-xl shrink-0">
+                    {range}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
 
-                      {/* Info */}
-                      <div className="p-5">
-                        <h3 className="font-black text-lg text-white mb-4">{ev.model}</h3>
+          {/* Output Metrics */}
+          <div className="relative overflow-hidden rounded-[2rem] border border-emerald-300/20 bg-[#071124]/60 backdrop-blur-xl p-7 shadow-[0_0_40px_rgba(52,211,153,0.08)]">
+            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/50 to-transparent" />
 
-                        <div className="flex gap-4 mb-4">
-                          <div>
-                            <div className="flex items-center gap-1 text-cyan-300">
-                              <Gauge className="h-3.5 w-3.5" />
-                              <span className="text-sm font-black">{ev.range}</span>
-                            </div>
-                            <p className="text-slate-500 text-xs">{ev.rangeLabel}</p>
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-1 text-emerald-300">
-                              <BatteryCharging className="h-3.5 w-3.5" />
-                              <span className="text-sm font-black">{ev.battery}</span>
-                            </div>
-                            <p className="text-slate-500 text-xs">Battery</p>
-                          </div>
-                        </div>
+            <div className="flex items-center gap-3 mb-1">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-emerald-400/20 bg-emerald-400/10">
+                <BarChart2 size={16} className="text-emerald-300" />
+              </div>
+              <div>
+                <SectionLabel>Results</SectionLabel>
+                <h2 className="text-lg font-black uppercase tracking-tight text-white -mt-2">Output Predictions</h2>
+              </div>
+            </div>
+            <p className="text-slate-500 text-xs mb-6 pl-12">What the models predict from the inputs</p>
 
-                        <p className="text-white font-black text-base mb-4">{ev.price}</p>
-
-                        <Link
-                          to={ev.path}
-                          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-cyan-400/30 bg-cyan-400/10 text-cyan-300 font-bold text-sm hover:bg-cyan-400/20 hover:border-cyan-400/60 hover:shadow-[0_0_20px_rgba(34,211,238,0.20)] transition-all duration-300"
-                        >
-                          View Details <ArrowRight className="h-4 w-4" />
-                        </Link>
-                      </div>
+            <div className="flex flex-col gap-5">
+              {/* SOH */}
+              <div className="relative overflow-hidden rounded-2xl border border-emerald-400/25 bg-emerald-500/8 p-6">
+                <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_50%,rgba(52,211,153,0.08),transparent_50%)]" />
+                <div className="relative flex items-start justify-between mb-3">
+                  <div>
+                    <p className="text-emerald-300 font-black text-2xl leading-none">SOH</p>
+                    <p className="text-white text-base font-bold mt-1">State of Health</p>
+                  </div>
+                  <span className="text-4xl font-black text-emerald-400/25">%</span>
+                </div>
+                <p className="text-slate-400 text-xs leading-relaxed mb-4 relative">
+                  Ratio of current capacity to rated capacity. Indicates how degraded the battery is.
+                </p>
+                <div className="grid grid-cols-3 gap-2 relative">
+                  {[['Range','0% – 100%'],['Healthy','≥ 90%'],['Critical','< 65%']].map(([k, v]) => (
+                    <div key={k} className="rounded-xl border border-emerald-400/15 bg-emerald-400/8 p-3 text-center">
+                      <p className="text-[9px] text-slate-500 uppercase font-bold tracking-wider mb-1">{k}</p>
+                      <p className="text-xs font-black text-emerald-300">{v}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Arrows */}
-              {evSlide > 0 && (
-                <button
-                  onClick={prevEV}
-                  className="absolute -left-5 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-[#071124]/80 backdrop-blur-sm text-white hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 z-10"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-              )}
-              {evSlide < evData.length - visibleEVs && (
-                <button
-                  onClick={nextEV}
-                  className="absolute -right-5 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-[#071124]/80 backdrop-blur-sm text-white hover:border-cyan-400/50 hover:text-cyan-300 transition-all duration-300 z-10"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              )}
-            </div>
-
-            {/* Dots */}
-            <div className="flex justify-center gap-2 mt-8">
-              {Array.from({ length: Math.max(1, evData.length - visibleEVs + 1) }).map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setEvSlide(i)}
-                  className={`rounded-full transition-all duration-300 ${evSlide === i ? "w-6 h-2 bg-cyan-400" : "w-2 h-2 bg-white/20 hover:bg-white/40"}`}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── LIMITED TIME OFFER ── */}
-        <section className="py-8 max-w-7xl mx-auto px-6">
-          <div className="relative overflow-hidden rounded-[2rem] border border-emerald-400/30 bg-emerald-500/10 backdrop-blur-xl p-8 md:p-10 shadow-[0_0_50px_rgba(52,211,153,0.12)]">
-            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/60 to-transparent" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_5%_50%,rgba(52,211,153,0.10),transparent_45%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_95%_50%,rgba(34,211,238,0.08),transparent_45%)]" />
-
-            <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div className="flex items-start gap-5">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-emerald-400/30 bg-emerald-400/15 text-3xl">
-                  🎁
-                </div>
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-emerald-300/80 mb-1">
-                    Limited Time Offer
-                  </p>
-                  <h3 className="text-2xl md:text-3xl font-black text-white mb-1">
-                    Get up to{" "}
-                    <span className="bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 text-transparent">
-                      ₹75,000 off
-                    </span>{" "}
-                    on your next EV purchase
-                  </h3>
-                  <p className="text-slate-400 text-base">
-                    or <span className="text-white font-bold">Free home charger installation</span> on select models.
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col items-start md:items-end gap-2 shrink-0">
-                <Link
-                  to="/offers"
-                  className="inline-flex items-center gap-2 px-7 py-4 rounded-xl border border-emerald-400/40 bg-emerald-500/20 text-emerald-200 font-black text-base hover:bg-emerald-500/30 hover:border-emerald-400/70 hover:shadow-[0_0_25px_rgba(52,211,153,0.30)] transition-all duration-300 whitespace-nowrap"
-                >
-                  See Offer Details <ArrowRight className="h-5 w-5" />
-                </Link>
-                <p className="text-slate-500 text-xs">T&C Apply.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── WHY CHOOSE EVs ── */}
-        <section className="py-20 max-w-7xl mx-auto px-6 relative">
-          <div className="pointer-events-none absolute left-0 top-0 h-80 w-80 rounded-full bg-emerald-500/6 blur-[120px]" />
-
-          <div className="mb-12">
-            <SectionLabel>Benefits</SectionLabel>
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
-              Why Choose{" "}
-              <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
-                EVs?
-              </span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {WHY_EVS.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.title}
-                  className={`flex flex-col items-center text-center gap-4 p-8 rounded-[2rem] border ${item.border} bg-[#071124]/60 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:bg-white/[0.07] hover:shadow-[0_0_35px_rgba(34,211,238,0.10)]`}
-                >
-                  <div className={`flex h-16 w-16 items-center justify-center rounded-2xl border ${item.border} ${item.bg} ${item.color}`}>
-                    <Icon className="h-8 w-8" />
+              {/* RUL */}
+              <div className="relative overflow-hidden rounded-2xl border border-cyan-400/25 bg-cyan-500/8 p-6">
+                <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_50%,rgba(34,211,238,0.08),transparent_50%)]" />
+                <div className="relative flex items-start justify-between mb-3">
+                  <div>
+                    <p className="text-cyan-300 font-black text-2xl leading-none">RUL</p>
+                    <p className="text-white text-base font-bold mt-1">Remaining Useful Life</p>
                   </div>
-                  <h3 className={`font-black text-base uppercase ${item.color}`}>{item.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                  <span className="text-4xl font-black text-cyan-400/25">⟳</span>
                 </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* ── TESTIMONIALS ── */}
-        <section className="py-16 relative">
-          <div className="pointer-events-none absolute right-0 top-0 h-80 w-80 rounded-full bg-violet-500/6 blur-[130px]" />
-
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-12">
-              <SectionLabel>Community</SectionLabel>
-              <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight">
-                What Our Users{" "}
-                <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
-                  Say
-                </span>
-              </h2>
-              <div className="mx-auto mt-4 h-px w-24 bg-gradient-to-r from-cyan-400 to-emerald-400" />
-            </div>
-
-            <div className="relative">
-              {/* Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {TESTIMONIALS.map((t, i) => (
-                  <div
-                    key={i}
-                    className={`relative overflow-hidden rounded-[2rem] border ${t.border} bg-[#071124]/60 backdrop-blur-xl p-8 transition-all duration-300 hover:-translate-y-2 hover:bg-white/[0.07]`}
-                  >
-                    <div className={`absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-current to-transparent opacity-30 ${t.color}`} />
-
-                    {/* Quote mark */}
-                    <div className={`text-6xl font-black leading-none mb-4 ${t.color} opacity-40`}>"</div>
-
-                    <StarRow count={t.stars} />
-                    <p className="text-slate-300 text-base leading-relaxed my-5">"{t.text}"</p>
-
-                    <div className="flex items-center gap-3 border-t border-white/10 pt-5">
-                      <div className={`flex h-9 w-9 items-center justify-center rounded-full border ${t.border} ${t.color} font-black text-sm`}>
-                        {t.name[0]}
-                      </div>
-                      <div>
-                        <p className="font-bold text-sm text-white">— {t.name}</p>
-                        <p className="text-slate-500 text-xs">{t.role}</p>
-                      </div>
+                <p className="text-slate-400 text-xs leading-relaxed mb-4 relative">
+                  Estimated cycles remaining before battery reaches end-of-life threshold.
+                </p>
+                <div className="grid grid-cols-3 gap-2 relative">
+                  {[['Scale','NASA cycles'],['Max','~168 cycles'],['Dataset','B0005-B0018']].map(([k, v]) => (
+                    <div key={k} className="rounded-xl border border-cyan-400/15 bg-cyan-400/8 p-3 text-center">
+                      <p className="text-[9px] text-slate-500 uppercase font-bold tracking-wider mb-1">{k}</p>
+                      <p className="text-xs font-black text-cyan-300">{v}</p>
                     </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Dots */}
-              <div className="flex justify-center gap-2 mt-8">
-                {TESTIMONIALS.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setTestimonialSlide(i)}
-                    className={`rounded-full transition-all duration-300 ${testimonialSlide === i ? "w-6 h-2 bg-cyan-400" : "w-2 h-2 bg-white/20 hover:bg-white/40"}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── NEWSLETTER ── */}
-        <section className="py-10 max-w-7xl mx-auto px-6">
-          <div className="relative overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-[#071124]/70 backdrop-blur-xl p-10 md:p-14 shadow-[0_0_60px_rgba(34,211,238,0.10)]">
-            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent" />
-            <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/40 to-transparent" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_50%,rgba(34,211,238,0.08),transparent_40%),radial-gradient(circle_at_90%_50%,rgba(52,211,153,0.06),transparent_40%)]" />
-
-            <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-              {/* Text */}
-              <div className="flex items-start gap-5">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/25 bg-cyan-400/10">
-                  <Mail className="h-7 w-7 text-cyan-300" />
-                </div>
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300/80 mb-1">Newsletter</p>
-                  <h3 className="text-2xl font-black uppercase text-white mb-1">
-                    Stay Updated on{" "}
-                    <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
-                      EV News & Offers
-                    </span>
-                  </h3>
-                  <p className="text-slate-400 text-sm">Subscribe to our newsletter and never miss an update.</p>
+                  ))}
                 </div>
               </div>
-
-              {/* Input */}
-              {subscribed ? (
-                <div className="flex items-center gap-3 px-6 py-4 rounded-xl border border-emerald-400/30 bg-emerald-400/10">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400" />
-                  <p className="text-emerald-300 font-bold text-sm">You're subscribed!</p>
-                </div>
-              ) : (
-                <div className="flex gap-3 w-full md:w-auto">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    onKeyDown={e => e.key === "Enter" && handleSubscribe()}
-                    placeholder="Enter your email address"
-                    className="flex-1 md:w-64 px-5 py-3.5 rounded-xl border border-white/10 bg-white/[0.06] text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400/50 focus:bg-white/[0.09] transition-all backdrop-blur-sm"
-                  />
-                  <button
-                    onClick={handleSubscribe}
-                    className="px-6 py-3.5 rounded-xl border border-cyan-400/40 bg-cyan-500/20 text-cyan-200 font-bold text-sm hover:bg-cyan-500/30 hover:border-cyan-400/70 hover:shadow-[0_0_20px_rgba(34,211,238,0.25)] transition-all duration-300 whitespace-nowrap"
-                  >
-                    Subscribe
-                  </button>
-                </div>
-              )}
             </div>
-          </div>
-        </section>
-
-        {/* Tagline */}
-        <div className="py-10 text-center">
-          <div className="inline-flex flex-col items-center gap-1">
-            <div className="flex items-center gap-2 mb-1">
-              <div className="h-px w-12 bg-gradient-to-r from-transparent to-cyan-400" />
-              <Zap className="h-4 w-4 text-cyan-400" />
-              <div className="h-px w-12 bg-gradient-to-l from-transparent to-cyan-400" />
-            </div>
-            <p className="text-slate-500 text-sm">Your trusted EV guide for smarter mobility and a sustainable future.</p>
-            <p className="font-black text-base bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent uppercase tracking-wide mt-1">
-              Drive electric. Drive the future.
-            </p>
           </div>
         </div>
 
-      </main>
+        {/* ── Model Cards ── */}
+        <div className="mb-8">
+          <div className="mb-8">
+            <SectionLabel>AI Engine</SectionLabel>
+            <h2 className="text-3xl font-black uppercase tracking-tight">
+              Model{' '}
+              <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
+                Details
+              </span>
+            </h2>
+            <p className="text-slate-500 text-sm mt-2">Click "Show Details" on each card to see full model information</p>
+          </div>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+            {MODELS.map((m) => <ModelCard key={m.key} model={m} />)}
+          </div>
+        </div>
 
-      <Footer />
+        {/* ── Comparison Table ── */}
+        <div className=" relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#071124]/70 backdrop-blur-xl p-8 mb-8 shadow-[0_0_40px_rgba(34,211,238,0.06)]">
+          <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/50 to-transparent" />
 
-      <style>{`
-        @keyframes slow-zoom {
-          0%   { transform: scale(1); }
-          100% { transform: scale(1.1); }
-        }
-        .animate-slow-zoom {
-          animation: slow-zoom 20s infinite alternate ease-in-out;
-        }
-      `}</style>
+          <div className="mb-6">
+            <SectionLabel>Side-by-Side</SectionLabel>
+            <h2 className="text-2xl font-black uppercase tracking-tight">
+              Model{' '}
+              <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
+                Comparison
+              </span>
+            </h2>
+            <p className="text-slate-500 text-xs mt-1">Side-by-side comparison of all 5 models</p>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-white/10">
+                  {['Model','Type','SOH Accuracy','RUL Accuracy','Speed','Status'].map(h => (
+                    <th key={h} className="text-left py-4 px-4 text-xs font-bold uppercase tracking-[0.2em] text-cyan-300/70 whitespace-nowrap">
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {COMPARISON_ROWS.map((row, i) => (
+                  <tr
+                    key={row.name}
+                    className={`border-b border-white/[0.05] transition-colors hover:bg-white/[0.03] ${i % 2 === 0 ? '' : 'bg-white/[0.015]'}`}
+                  >
+                    <td className="py-4 px-4">
+                      <div className="flex items-center gap-2">
+                        <span>{row.icon}</span>
+                        <span className="font-bold text-white">{row.name}</span>
+                      </div>
+                    </td>
+                    <td className="py-4 px-4 text-slate-400">{row.type}</td>
+                    <td className={`py-4 px-4 font-bold ${row.sohColor}`}>{row.soh}</td>
+                    <td className={`py-4 px-4 font-bold ${row.rulColor}`}>{row.rul}</td>
+                    <td className={`py-4 px-4 font-bold ${row.speedColor}`}>{row.speed}</td>
+                    <td className="py-4 px-4"><StatusBadge status={row.status} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* ── Dataset Info ── */}
+        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#071124]/70 backdrop-blur-xl p-8 shadow-[0_0_40px_rgba(34,211,238,0.06)]">
+          <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-300/50 to-transparent" />
+          <div className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-emerald-300/30 to-transparent" />
+
+          <div className="mb-6 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
+              <Database size={18} className="text-cyan-300" />
+            </div>
+            <div>
+              <SectionLabel>Source Data</SectionLabel>
+              <h2 className="text-2xl font-black uppercase tracking-tight -mt-2">
+                Training{' '}
+                <span className="bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-transparent">
+                  Dataset
+                </span>
+              </h2>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Dataset rows */}
+            <div className="flex flex-col gap-0">
+              {DATASET_INFO.map(({ label, value }, i) => (
+                <div
+                  key={label}
+                  className={`flex items-center justify-between py-3.5 border-b border-white/[0.07] ${i === 0 ? 'border-t border-white/[0.07]' : ''}`}
+                >
+                  <span className="text-slate-400 text-sm">{label}</span>
+                  <span className="text-white text-sm font-bold">{value}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Info callouts */}
+            <div className="flex flex-col gap-4">
+              {/* Research disclaimer */}
+              <div className="relative overflow-hidden rounded-2xl border border-yellow-400/25 bg-yellow-400/8 p-5">
+                <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-yellow-400/40 to-transparent" />
+                <div className="flex items-start gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-yellow-400/20 bg-yellow-400/10">
+                    <Info size={15} className="text-yellow-300" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-yellow-300/80 mb-2">Research Disclaimer</p>
+                    <p className="text-yellow-200/70 text-xs leading-relaxed">
+                      Predictions are based on NASA laboratory test batteries (18650 Li-ion, ~168 max cycles).
+                      Results are for research and demonstration purposes only and may not directly
+                      translate to real-world EV battery systems (1000–2000 cycle range).
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* SOH vs RUL note */}
+              <div className="pb-20 relative overflow-hidden rounded-2xl border border-cyan-400/25 bg-cyan-400/8 p-5">
+                <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
+                <div className="flex items-start gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10">
+                    <Info size={15} className="text-cyan-300" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-cyan-300/80 mb-2">SOH vs RUL Interpretation</p>
+                    <p className="text-cyan-200/70 text-xs leading-relaxed">
+                      <strong className="text-cyan-300">SOH %</strong> is universally applicable across all battery types.
+                      <br /><br />
+                      <strong className="text-cyan-300">RUL cycles</strong> are NASA-scale (0–168). For real EV batteries,
+                      interpret RUL as a relative health indicator, not absolute cycle count.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    <Footer />
+
     </div>
+    
   );
 }
