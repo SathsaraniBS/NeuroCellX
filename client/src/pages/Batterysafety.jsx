@@ -5,6 +5,7 @@ import {ShieldCheck,Zap,AlertTriangle,Phone,CheckCircle2,ChevronDown,
   Droplets,PlugZap,Clock,Eye,WifiOff,} from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import EVChatbot from '../components/EVChatbot/EVChatbot';
 
 /* ─────────────────────────────────────────
    DATA

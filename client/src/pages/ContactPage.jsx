@@ -5,6 +5,7 @@ import { useToast } from '../contexts/ToastContext';
 import api from '../api/api';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import EVChatbot from '../components/EVChatbot/EVChatbot';
 
 const ContactPage = () => {
     const { settings } = useSettings();

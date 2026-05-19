@@ -5,6 +5,7 @@ BatteryCharging, BatteryMedium, BatteryWarning
 } from "lucide-react";
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import EVChatbot from '../components/EVChatbot/EVChatbot';
 
 // Mock Data
 const leftColumnTips = [
@@ -387,6 +388,7 @@ function RepairandMaintenance() {
             </section>
 
             <Footer />
+            <EVChatbot />
 
             <style>{`
                 .animate-spin-slow {

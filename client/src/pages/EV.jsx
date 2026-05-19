@@ -4,7 +4,7 @@ import { ChevronDown, CheckCircle2, Download, Leaf, Wallet, Gauge, Wifi, Setting
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import EVChatbot from "../components/EVChatbot/EVChatbot";
+import EVChatbot from '../components/EVChatbot/EVChatbot';
 
 const SectionBlock = ({ title, imageSrc, reverse, children }) => (
   <div className={`flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-16 items-center bg-transparent p-8 lg:p-12 rounded-3xl relative transition-all duration-500 hover:border-cyan-500/30 hover:bg-white/[0.07] overflow-hidden`}>

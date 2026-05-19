@@ -1,24 +1,12 @@
 import React, { useState } from "react";
-import {
-  Play,
-  ArrowRight,
-  BatteryCharging,
-  Bolt,
-  Car,
-  Globe2,
-  Leaf,
-  Lightbulb,
-  PlugZap,
-  Rocket,
-  ShieldCheck,
-  ShoppingCart,
-  Sprout,
-  Wind,
-  ChevronDown,
+import { Play,ArrowRight, BatteryCharging, Bolt, Car, Globe2,
+  Leaf,Lightbulb,PlugZap,Rocket,ShieldCheck,ShoppingCart,
+  Sparkles,Sprout,Wind,ChevronDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import EVChatbot from '../components/EVChatbot/EVChatbot';
 
 const EVHistoryPage = () => {
   const milestones = [

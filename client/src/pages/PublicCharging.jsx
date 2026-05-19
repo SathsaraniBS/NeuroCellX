@@ -4,6 +4,7 @@ import { Zap, ChevronRight, ChevronLeft,  BatteryCharging, ShieldCheck, Globe } 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import EVCalculator from '../components/EVCalculator';
+import EVChatbot from '../components/EVChatbot/EVChatbot';
 import { Link } from 'react-router-dom';
 
 // Data moved to constants for cleaner component logic

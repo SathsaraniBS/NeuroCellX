@@ -4,6 +4,7 @@ import {ArrowRight,BatteryCharging,BarChart3,CheckCircle2,ChevronDown,CircleDot,
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import EVChatbot from '../components/EVChatbot/EVChatbot';
 
 const BatteryTypes = () => {
   const [openFaq, setOpenFaq] = useState(null);

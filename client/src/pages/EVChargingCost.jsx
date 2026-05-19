@@ -4,6 +4,7 @@ import { useToast } from '../contexts/ToastContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import EVCalculator from '../components/EVCalculator';
+import EVChatbot from '../components/EVChatbot/EVChatbot';
 
 const EVChargingCost = () => {
     const { user } = useAuth();
