@@ -106,7 +106,7 @@ const AboutUs = () => {
               <div className="absolute -inset-8 rounded-full bg-cyan-400/20 blur-[90px]" />
               <div className="relative overflow-hidden rounded-[2.5rem] border border-cyan-400/20 bg-white/[0.06] p-5 shadow-[0_0_70px_rgba(34,211,238,0.16)] backdrop-blur-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1593941707882-a5bba53b0998?auto=format&fit=crop&w=1200&q=80"
+                  src="/src/assets/evstation.png"
                   alt="EV charging"
                   className="h-[420px] w-full rounded-[2rem] object-cover"
                 />

@@ -122,12 +122,13 @@ const Hero = () => {
                   Find Charging Station
                   <FaMapMarkerAlt className="w-5 h-5" />
                 </Link>
-                <button
+                <Link
+                  to="/technical-specs"
                   className="px-10 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/20 rounded-lg font-bold flex items-center gap-2 transition-all backdrop-blur-md"
                 >
                   <Info className="w-5 h-5" />
                   Technical Specs
-                </button>
+                </Link>
               </div>
             </div>
           </div>

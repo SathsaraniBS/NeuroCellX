@@ -9,7 +9,6 @@ import re
 from sqlalchemy import Column, Integer, String, Text, DateTime
 from sqlalchemy.orm import Session
 
-# ✅ ඔබේ existing database.py use කරනවා — duplicate engine නෑ!
 from database import Base, engine, get_db
 
 
@@ -34,7 +33,6 @@ class ChatMessage(Base):
     created_at = Column(DateTime,    default=datetime.utcnow)
 
 
-# ✅ ඔබේ existing engine use කරලා tables create කරනවා
 Base.metadata.create_all(bind=engine)
 
 

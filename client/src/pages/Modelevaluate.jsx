@@ -474,10 +474,10 @@ function ModelEvaluate() {
                       <MetricCard label="R² Score" value={result.metrics.soh.r2} icon={TrendingUp}
                         color={{ text: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' }}
                         tooltip="1.0 = perfect fit. Higher is better." />
-                      <MetricCard label="MAE" value={result.metrics.soh.mae} unit="%" icon={Activity}
+                      <MetricCard label="MAE (Mean Absolute Error)" value={result.metrics.soh.mae} unit="%" icon={Activity}
                         color={{ text: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' }}
                         tooltip="Mean Absolute Error — lower is better" />
-                      <MetricCard label="MAPE" value={result.metrics.soh.mape} unit="%" icon={BarChart2}
+                      <MetricCard label="MAPE (Mean Absolute Percentage Error)" value={result.metrics.soh.mape} unit="%" icon={BarChart2}
                         color={{ text: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/20' }}
                         tooltip="Mean Absolute Percentage Error" />
                     </div>

@@ -241,7 +241,6 @@ function FindStations() {
                 </div>
             </div>
             <Footer />
-            <EVChatbot />
 
         </div>
     );

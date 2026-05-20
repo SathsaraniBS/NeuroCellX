@@ -102,7 +102,6 @@ export default function Prediction() {
     }
   };
 
-  // ── Save Report — ✅ createReport() service use කරනවා (direct fetch නෙවෙයි) ──
   const handleSaveReport = async () => {
     if (!reportName.trim()) {
       addToast('Give the report name!', 'error');
@@ -129,7 +128,6 @@ export default function Prediction() {
       navigate('/reports');
 
     } catch (err) {
-      // ✅ Exact error message console එකේ පෙන්වනවා — debug කරන්න ලේසියි
       console.error('Save report error:', err);
       addToast(`Report was not saved! ${err?.response?.data?.detail || err.message}`, 'error');
     } finally {
@@ -150,7 +148,7 @@ export default function Prediction() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-3xl font-bold">
-              Battery Prediction <span className="text-cyan-400">🔋</span>
+              Battery Prediction 
             </h2>
             <p className="text-gray-400 text-sm mt-1">
               Simulate healthy, mid-life, or critical battery scenarios

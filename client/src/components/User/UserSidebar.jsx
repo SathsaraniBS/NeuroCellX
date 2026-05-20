@@ -21,7 +21,7 @@ const Sidebar = () => {
     { path: '/models',     name: 'ModelsPredictions', icon: <Cpu size={20} />             },
     { path: '/history',    name: 'History',           icon: <History size={20} />         },
     { path: '/reports',    name: 'Reports',           icon: <FileText size={20} />        },
-    { path: '/settings',   name: 'Settings',          icon: <Settings size={20} />        },
+    { path: '/user-settings',   name: 'Settings',          icon: <Settings size={20} />        },
   ];
 
   // ─────────────────────────────────────────────────────────

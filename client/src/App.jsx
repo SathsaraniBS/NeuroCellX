@@ -1,56 +1,56 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import { ToastProvider } from './contexts/ToastContext';
+import { AuthProvider }    from './contexts/AuthContext';
+import { ToastProvider }   from './contexts/ToastContext';
 import { SettingsProvider } from './contexts/SettingsContext';
-import React, { useState, useEffect } from 'react';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Layout from './components/Layout';
-import LearningHub from './pages/EV';
-import LandingPage from './pages/LandingPage';
-import About from './pages/About';
-import ContactPage from './pages/ContactPage';
-import Charging from './pages/Charging';  // ← NEW: Import Charging page
-// ─── Protected Pages ────────────────────
-import Dashboard from './pages/Dashboard';
-import Prediction from './pages/Prediction'; // this is ml models frontend file
-import Profile from './pages/ProfilePage';
-import Reports from './pages/Reports';
-import ModelEvaluate from './pages/ModelEvaluate';
-import ChatPage from './pages/Chat/Messageschatbot';
-import ChatHistoryPage from './pages/Chat/ChatHistoryPage';
-import HistoryPage from './pages/History';
-import FindStations from './pages/FindStations';
-import PublicCharging from './pages/PublicCharging';
-import Homecharging from './pages/Homecharging';
-import Battery from './pages/Battery';
-import BatteryTypes from './pages/BatteryTypes';
-import Batterylife from './pages/Batterylife';
-import EVArchitecture from './pages/EVArchitecture';
-import InsideBattery from './pages/InsideBattery';
-import Batterysafety from './pages/Batterysafety';
+import React               from 'react';
+
+// ─── Public Pages ────────────────────────
+import Home            from './pages/Home';
+import Login           from './pages/Login';
+import Register        from './pages/Register';
+import Layout          from './components/Layout';
+import LandingPage     from './pages/LandingPage';
+import About           from './pages/About';
+import ContactPage     from './pages/ContactPage';
+import Charging        from './pages/Charging';
+import BatteryTypes    from './pages/BatteryTypes';
+import EV              from './pages/EV';
+import ResetPassword   from './pages/ResetPassword';
+import TechnicalSpecs  from './pages/TechnicalSpecs';
+
+// ─── Protected Pages ─────────────────────
+import Dashboard            from './pages/Dashboard';
+import Prediction           from './pages/Prediction';
+import Profile              from './pages/ProfilePage';
+import Reports              from './pages/Reports';
+import ModelEvaluate        from './pages/ModelEvaluate';
+import HistoryPage          from './pages/History';
+import FindStations         from './pages/FindStations';
+import PublicCharging       from './pages/PublicCharging';
+import Homecharging         from './pages/Homecharging';
+import Battery              from './pages/Battery';
+import Batterylife          from './pages/Batterylife';
+import EVArchitecture       from './pages/EVArchitecture';
+import InsideBattery        from './pages/InsideBattery';
+import Batterysafety        from './pages/Batterysafety';
 import RepairandMaintenance from './pages/RepairandMaintenance';
-import Models from './pages/Models';
-import EVChargingCost from './pages/EVChargingCost';
-import EV from './pages/EV';
-import EVHistory from './pages/EVHistory';
-import EVTypes from './pages/EVTypes ';
+import Models               from './pages/Models';
+import EVChargingCost       from './pages/EVChargingCost';
+import EVHistory            from './pages/EVHistory';
+import EVTypes              from './pages/EVTypes ';
+import EVMaintenanceGuide   from './pages/EVMaintenanceGuide';
+import ChatPage             from './pages/Chat/Messageschatbot';
+import ChatHistoryPage      from './pages/Chat/ChatHistoryPage';
+import UserSettings from './pages/UserSettings';
 
-import EVMaintenanceGuide from './pages/EVMaintenanceGuide';
-// ─── Admin Pages ────────────────────────
-import AdminDashboard from './pages/admin/AdminDashboard';
+// ─── Admin Pages ──────────────────────────
+import AdminDashboard    from './pages/admin/AdminDashboard';
 
-// ─── Engineer Pages ─────────────────────
+// ─── Engineer Pages ───────────────────────
 import EngineerDashboard from './pages/Engineer/EngineerDashboard';
 
-
-// ─── Route Guard ────────────────────────
-import ProtectedRoute from './components/ProtectedRoute'
-import ResetPassword from './pages/ResetPassword';
-// import ContactPage from './pages/ContactPage';
-
-const API_URL = "http://127.0.0.1:8000/records/";
+// ─── Route Guard ──────────────────────────
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
     return (
@@ -59,196 +59,142 @@ function App() {
                 <AuthProvider>
                     <SettingsProvider>
                         <Routes>
-                            {/* Public Routes (no login needed) */}
+
+                            {/* ── Public Routes (no login needed) ── */}
                             <Route path="/" element={<Layout />}>
-                                <Route index element={<Home />} />
-                                <Route path="login" element={<Login />} />
-                                <Route path="register" element={<Register />} />
-                                <Route path="ev" element={<EV />} />
-                                <Route path="landingpage" element={<LandingPage />} />
-                                <Route path="forgot-password" element={<ResetPassword />} />
-                                <Route path="about" element={<About />} />
-                                <Route path="battery-types" element={<BatteryTypes />} />
-                                <Route path="contact" element={<ContactPage />} />
+                                <Route index                    element={<Home />} />
+                                <Route path="login"             element={<Login />} />
+                                <Route path="register"          element={<Register />} />
+                                <Route path="ev"                element={<EV />} />
+                                <Route path="landingpage"       element={<LandingPage />} />
+                                <Route path="forgot-password"   element={<ResetPassword />} />
+                                <Route path="about"             element={<About />} />
+                                <Route path="battery-types"     element={<BatteryTypes />} />
+                                <Route path="contact"           element={<ContactPage />} />
+                                {/* ✅ Technical Specs — public page */}
+                                <Route path="technical-specs"   element={<TechnicalSpecs />} />
                             </Route>
 
-                            {/* Protected Routes (login required) */}
+                            {/* ── Protected Routes (login required) ── */}
 
                             <Route path="/battery" element={
-                                <ProtectedRoute>
-                                    <Battery />
-                                </ProtectedRoute>
+                                <ProtectedRoute><Battery /></ProtectedRoute>
                             } />
 
                             <Route path="/battery-types" element={
-                                <ProtectedRoute>
-                                    <BatteryTypes />
-                                </ProtectedRoute>
+                                <ProtectedRoute><BatteryTypes /></ProtectedRoute>
                             } />
 
                             <Route path="/battery-life" element={
-                                <ProtectedRoute>
-                                    <Batterylife />
-                                </ProtectedRoute>
+                                <ProtectedRoute><Batterylife /></ProtectedRoute>
                             } />
 
                             <Route path="/battery-safety" element={
-                                <ProtectedRoute>
-                                    <Batterysafety />
-                                </ProtectedRoute>
+                                <ProtectedRoute><Batterysafety /></ProtectedRoute>
                             } />
 
                             <Route path="/ev-charging-cost" element={
-                                <ProtectedRoute>
-                                    <EVChargingCost />
-                                </ProtectedRoute>
+                                <ProtectedRoute><EVChargingCost /></ProtectedRoute>
                             } />
 
+                            {/* ✅ FIXED: removed invalid comment from JSX */}
                             <Route path="/models" element={
-                                <ProtectedRoute>
-                                    <Models />    ← This is NOT ModelEvaluate
-                                </ProtectedRoute>
+                                <ProtectedRoute><Models /></ProtectedRoute>
                             } />
 
                             <Route path="/ev-architecture" element={
-                                <ProtectedRoute>
-                                    <EVArchitecture />
-                                </ProtectedRoute>
+                                <ProtectedRoute><EVArchitecture /></ProtectedRoute>
                             } />
 
                             <Route path="/inside-battery" element={
-                                <ProtectedRoute>
-                                    <InsideBattery />
-                                </ProtectedRoute>
+                                <ProtectedRoute><InsideBattery /></ProtectedRoute>
                             } />
 
                             <Route path="/repair-and-maintenance" element={
-                                <ProtectedRoute>
-                                    <RepairandMaintenance />
-                                </ProtectedRoute>
+                                <ProtectedRoute><RepairandMaintenance /></ProtectedRoute>
                             } />
 
                             <Route path="charging" element={
-                                <ProtectedRoute>
-                                    <Charging />
-                                </ProtectedRoute>
+                                <ProtectedRoute><Charging /></ProtectedRoute>
                             } />
 
                             <Route path="/home-charging" element={
-                                <ProtectedRoute>
-                                    <Homecharging />
-                                </ProtectedRoute>
+                                <ProtectedRoute><Homecharging /></ProtectedRoute>
                             } />
+
                             <Route path="/public-charging" element={
-                                <ProtectedRoute>
-                                    <PublicCharging />
-                                </ProtectedRoute>
+                                <ProtectedRoute><PublicCharging /></ProtectedRoute>
                             } />
 
                             <Route path="/find-station" element={
-                                <ProtectedRoute>
-                                    <FindStations />
-                                </ProtectedRoute>
+                                <ProtectedRoute><FindStations /></ProtectedRoute>
                             } />
 
                             <Route path="/ev-types" element={
-                                <ProtectedRoute>
-                                    <EVTypes />
-                                </ProtectedRoute>
+                                <ProtectedRoute><EVTypes /></ProtectedRoute>
                             } />
 
                             <Route path="/ev-history" element={
-                                <ProtectedRoute>
-                                    <EVHistory />
-                                </ProtectedRoute>
+                                <ProtectedRoute><EVHistory /></ProtectedRoute>
                             } />
-
 
                             <Route path="/ev-maintenance-guide" element={
-                                <ProtectedRoute>
-                                    <EVMaintenanceGuide />
-                                </ProtectedRoute>
+                                <ProtectedRoute><EVMaintenanceGuide /></ProtectedRoute>
                             } />
-
 
                             <Route path="/dashboard" element={
-                                <ProtectedRoute>
-                                    <Dashboard />
-                                </ProtectedRoute>
+                                <ProtectedRoute><Dashboard /></ProtectedRoute>
                             } />
 
-                            {/* ML models Predictions page */}
                             <Route path="/prediction" element={
-                                <ProtectedRoute>
-                                    <Prediction />
-                                </ProtectedRoute>
+                                <ProtectedRoute><Prediction /></ProtectedRoute>
                             } />
 
-
-                            {/* Profile Route (profile only) */}
                             <Route path="/profile" element={
-                                <ProtectedRoute>
-                                    <Profile />
-                                </ProtectedRoute>
+                                <ProtectedRoute><Profile /></ProtectedRoute>
                             } />
 
                             <Route path="/history" element={
-                                <ProtectedRoute>
-                                    <HistoryPage />
-                                </ProtectedRoute>
-
+                                <ProtectedRoute><HistoryPage /></ProtectedRoute>
                             } />
 
-
-
-                            {/* Reports page */}
                             <Route path="/reports" element={
-                                <ProtectedRoute>
-                                    <Reports />
-                                </ProtectedRoute>
+                                <ProtectedRoute><Reports /></ProtectedRoute>
                             } />
 
                             <Route path="/evaluate" element={
-                                <ProtectedRoute>
-                                    <ModelEvaluate />
-                                </ProtectedRoute>
-
+                                <ProtectedRoute><ModelEvaluate /></ProtectedRoute>
                             } />
 
                             <Route path="/chat" element={
-                                <ProtectedRoute>
-                                    <ChatPage />
-                                </ProtectedRoute>
-                            
+                                <ProtectedRoute><ChatPage /></ProtectedRoute>
                             } />
 
                             <Route path="/chat-history" element={
-                                <ProtectedRoute>
-                                    <ChatHistoryPage />
-                                </ProtectedRoute>
-                            
+                                <ProtectedRoute><ChatHistoryPage /></ProtectedRoute>
                             } />
 
+                            <Route path="/user-settings" element={
+                                <ProtectedRoute><UserSettings /></ProtectedRoute>
+                            } />
 
-                            {/* ENGINEER ROUTES (engineer only) */}
+                            {/* ── Engineer Routes ── */}
                             <Route path="/engineer/dashboard" element={
                                 <ProtectedRoute allowedRoles={['engineer', 'admin']}>
                                     <EngineerDashboard />
                                 </ProtectedRoute>
                             } />
 
-                            {/* ADMIN ROUTES (admin only) */}
-
-                            {/* added import + allowedRoles */}
+                            {/* ── Admin Routes ── */}
                             <Route path="/admin/dashboard" element={
                                 <ProtectedRoute allowedRoles={['admin']}>
                                     <AdminDashboard />
                                 </ProtectedRoute>
                             } />
 
+                            {/* ── Catch All ── */}
+                            <Route path="*" element={<Navigate to="/login" />} />
 
-                            {/* CATCH ALL — redirect to login */}
-                            <Route path="*" element={<Navigate to="/login" />} />   {/* ← NEW: Catch-all redirect */}
                         </Routes>
                     </SettingsProvider>
                 </AuthProvider>

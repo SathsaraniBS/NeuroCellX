@@ -83,6 +83,7 @@ from routers import evaluate
 from routers import newpredict  
 from routers import reports   
 from routers import chatbot      
+from routers import usersettings
 
 
 app = FastAPI(
@@ -122,7 +123,7 @@ app.include_router(newpredict.router)
 app.include_router(reports.router)  # ← register
 app.include_router(evaluate.router)
 app.include_router(chatbot.router)    
-
+app.include_router(usersettings.router)
 # Startup database tables
 Base.metadata.create_all(bind=engine)  
 
